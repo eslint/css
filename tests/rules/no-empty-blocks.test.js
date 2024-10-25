@@ -23,10 +23,7 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run("no-empty-blocks", rule, {
-	valid: [
-		"a { color: red; }",
-		"@media print { a { color: red; } }",
-	],
+	valid: ["a { color: red; }", "@media print { a { color: red; } }"],
 	invalid: [
 		{
 			code: "a { }",

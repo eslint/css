@@ -19,12 +19,13 @@ describe("CSSLanguage", () => {
 		it("should have visitorKeys property", () => {
 			const language = new CSSLanguage();
 
-			assert.deepStrictEqual(language.visitorKeys.StyleSheet, ["children"]);
+			assert.deepStrictEqual(language.visitorKeys.StyleSheet, [
+				"children",
+			]);
 		});
 	});
 
 	describe("parse()", () => {
-
 		it("should parse CSS", () => {
 			const language = new CSSLanguage();
 			const result = language.parse({
@@ -33,10 +34,9 @@ describe("CSSLanguage", () => {
 			});
 
 			assert.strictEqual(result.ok, true);
-			assert.strictEqual(result.ast.type, "StyleSheet"); 
+			assert.strictEqual(result.ast.type, "StyleSheet");
 			assert.strictEqual(result.ast.children[0].type, "Rule");
 		});
-
 	});
 
 	describe("createSourceCode()", () => {

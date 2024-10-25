@@ -9,7 +9,7 @@
 
 import { parse, toPlainObject } from "css-tree";
 import { CSSSourceCode } from "./css-source-code.js";
-import { visitorKeys } from "./css-visitor-keys.js"
+import { visitorKeys } from "./css-visitor-keys.js";
 
 //-----------------------------------------------------------------------------
 // Types
@@ -91,22 +91,24 @@ export class CSSLanguage {
 		 * problem that ESLint identified just like any other.
 		 */
 		try {
-			const root = toPlainObject(parse(text, {
-				filename: file.path,
-				positions: true,
-				onComment(value, loc) {
-					comments.push({
-						type: "Comment",
-						value,
-						loc,
-					});
-				}
-			}));
+			const root = toPlainObject(
+				parse(text, {
+					filename: file.path,
+					positions: true,
+					onComment(value, loc) {
+						comments.push({
+							type: "Comment",
+							value,
+							loc,
+						});
+					},
+				}),
+			);
 
 			return {
 				ok: true,
 				ast: root,
-				comments
+				comments,
 			};
 		} catch (ex) {
 			// error messages end with (line:column) so we strip that off for ESLint
@@ -136,7 +138,7 @@ export class CSSLanguage {
 		return new CSSSourceCode({
 			text: /** @type {string} */ (file.body),
 			ast: parseResult.ast,
-			comments: parseResult.comments
+			comments: parseResult.comments,
 		});
 	}
 }

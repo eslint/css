@@ -35,7 +35,7 @@ describe("CSSSourceCode", () => {
 											type: "TypeSelector",
 											name: "a",
 										},
-									]
+									],
 								},
 							],
 						},
@@ -43,15 +43,15 @@ describe("CSSSourceCode", () => {
 							type: "Block",
 							children: [],
 						},
-					}
-				]
+					},
+				],
 			};
 			const text = "a {}";
 			const comments = [];
 			const sourceCode = new CSSSourceCode({
 				text,
 				ast,
-				comments
+				comments,
 			});
 
 			assert.strictEqual(sourceCode.constructor.name, "CSSSourceCode");
@@ -105,7 +105,6 @@ describe("CSSSourceCode", () => {
 	});
 
 	describe("getBlockLocWithBraces()", () => {
-
 		let sourceCode;
 
 		beforeEach(() => {
@@ -130,7 +129,7 @@ describe("CSSSourceCode", () => {
 				text,
 				ast,
 			});
-		});			
+		});
 
 		it("should throw an error when passed a non-block node", () => {
 			assert.throws(() => {
@@ -172,7 +171,6 @@ describe("CSSSourceCode", () => {
 	});
 
 	describe("getBlockRangeWithBraces()", () => {
-
 		let sourceCode;
 
 		beforeEach(() => {
@@ -223,7 +221,10 @@ describe("CSSSourceCode", () => {
 				},
 			};
 
-			assert.deepStrictEqual(sourceCode.getBlockRangeWithBraces(ast), [1, 4]);
+			assert.deepStrictEqual(
+				sourceCode.getBlockRangeWithBraces(ast),
+				[1, 4],
+			);
 		});
 	});
 
@@ -264,7 +265,7 @@ describe("CSSSourceCode", () => {
 			const sourceCode = new CSSSourceCode({
 				text: file.body,
 				ast: parseResult.ast,
-				comments: parseResult.comments
+				comments: parseResult.comments,
 			});
 
 			assert.deepStrictEqual(sourceCode.comments, []);
@@ -277,7 +278,7 @@ describe("CSSSourceCode", () => {
 			const sourceCode = new CSSSourceCode({
 				text: file.body,
 				ast: parseResult.ast,
-				comments: parseResult.comments
+				comments: parseResult.comments,
 			});
 
 			// should contain one comment
@@ -324,7 +325,7 @@ describe("CSSSourceCode", () => {
 											type: "TypeSelector",
 											name: "a",
 										},
-									]
+									],
 								},
 							],
 						},
@@ -332,8 +333,8 @@ describe("CSSSourceCode", () => {
 							type: "Block",
 							children: [],
 						},
-					}
-				]
+					},
+				],
 			};
 			const text = "a {}";
 			const sourceCode = new CSSSourceCode({
@@ -364,7 +365,7 @@ describe("CSSSourceCode", () => {
 											type: "TypeSelector",
 											name: "a",
 										},
-									]
+									],
 								},
 							],
 						},
@@ -372,8 +373,8 @@ describe("CSSSourceCode", () => {
 							type: "Block",
 							children: [],
 						},
-					}
-				]
+					},
+				],
 			};
 			const text = '{"foo":{}}';
 			const sourceCode = new CSSSourceCode({
@@ -385,7 +386,10 @@ describe("CSSSourceCode", () => {
 			// call traverse to initialize the parent map
 			sourceCode.traverse();
 
-			assert.strictEqual(sourceCode.getParent(node), ast.children[0].prelude.children[0]);
+			assert.strictEqual(
+				sourceCode.getParent(node),
+				ast.children[0].prelude.children[0],
+			);
 		});
 	});
 
@@ -406,7 +410,7 @@ describe("CSSSourceCode", () => {
 											type: "TypeSelector",
 											name: "a",
 										},
-									]
+									],
 								},
 							],
 						},
@@ -414,8 +418,8 @@ describe("CSSSourceCode", () => {
 							type: "Block",
 							children: [],
 						},
-					}
-				]
+					},
+				],
 			};
 			const text = "a {}";
 			const sourceCode = new CSSSourceCode({
@@ -446,7 +450,7 @@ describe("CSSSourceCode", () => {
 											type: "TypeSelector",
 											name: "a",
 										},
-									]
+									],
 								},
 							],
 						},
@@ -454,8 +458,8 @@ describe("CSSSourceCode", () => {
 							type: "Block",
 							children: [],
 						},
-					}
-				]
+					},
+				],
 			};
 			const text = "a {}";
 			const sourceCode = new CSSSourceCode({
@@ -471,7 +475,7 @@ describe("CSSSourceCode", () => {
 				ast,
 				ast.children[0],
 				ast.children[0].prelude,
-				ast.children[0].prelude.children[0]
+				ast.children[0].prelude.children[0],
 			]);
 		});
 	});
@@ -513,7 +517,7 @@ describe("CSSSourceCode", () => {
 			sourceCode = new CSSSourceCode({
 				text: file.body,
 				ast: parseResult.ast,
-				comments: parseResult.comments
+				comments: parseResult.comments,
 			});
 		});
 
@@ -524,12 +528,9 @@ describe("CSSSourceCode", () => {
 		describe("getInlineConfigNodes()", () => {
 			it("should return inline config comments", () => {
 				const allComments = sourceCode.comments;
-				const configComments =
-					sourceCode.getInlineConfigNodes();
+				const configComments = sourceCode.getInlineConfigNodes();
 
-				const configCommentsIndexes = [
-					1, 2, 3, 5, 6, 7, 8, 10, 13
-				];
+				const configCommentsIndexes = [1, 2, 3, 5, 6, 7, 8, 10, 13];
 
 				assert.strictEqual(
 					configComments.length,
@@ -548,8 +549,7 @@ describe("CSSSourceCode", () => {
 		describe("applyInlineConfig()", () => {
 			it("should return rule configs and problems", () => {
 				const allComments = sourceCode.comments;
-				const { configs, problems } =
-					sourceCode.applyInlineConfig();
+				const { configs, problems } = sourceCode.applyInlineConfig();
 
 				assert.deepStrictEqual(configs, [
 					{
@@ -612,7 +612,7 @@ describe("CSSSourceCode", () => {
 							value: "css/no-duplicate-selectors",
 							justification: "ok here",
 							node: allComments[8],
-						}
+						},
 					],
 				);
 
@@ -622,16 +622,12 @@ describe("CSSSourceCode", () => {
 					problems[0].message,
 					"eslint-disable-line comment should not span multiple lines.",
 				);
-				assert.strictEqual(
-					problems[0].loc,
-					allComments[10].loc,
-				);
+				assert.strictEqual(problems[0].loc, allComments[10].loc);
 			});
 		});
 	});
 
 	describe("traverse()", () => {
-
 		const css = dedent`
 
 		body {
@@ -652,68 +648,68 @@ describe("CSSSourceCode", () => {
 			const steps = sourceCode.traverse();
 			const stepsArray = Array.from(steps).map(step => [
 				step.phase,
-				step.target.type
+				step.target.type,
 			]);
 
 			assert.deepStrictEqual(stepsArray, [
-				[1, 'StyleSheet'],
-				[1, 'Rule'],
-				[1, 'SelectorList'],
-				[1, 'Selector'],
-				[1, 'TypeSelector'],
-				[2, 'TypeSelector'],
-				[2, 'Selector'],
-				[2, 'SelectorList'],
-				[1, 'Block'],
-				[1, 'Declaration'],
-				[1, 'Value'],
-				[1, 'Number'],
-				[2, 'Number'],
-				[2, 'Value'],
-				[2, 'Declaration'],
-				[1, 'Declaration'],
-				[1, 'Value'],
-				[1, 'Identifier'],
-				[2, 'Identifier'],
-				[1, 'Operator'],
-				[2, 'Operator'],
-				[1, 'Identifier'],
-				[2, 'Identifier'],
-				[2, 'Value'],
-				[2, 'Declaration'],
-				[2, 'Block'],
-				[2, 'Rule'],
-				[1, 'Rule'],
-				[1, 'SelectorList'],
-				[1, 'Selector'],
-				[1, 'TypeSelector'],
-				[2, 'TypeSelector'],
-				[1, 'Combinator'],
-				[2, 'Combinator'],
-				[1, 'TypeSelector'],
-				[2, 'TypeSelector'],
-				[1, 'PseudoClassSelector'],
-				[2, 'PseudoClassSelector'],
-				[2, 'Selector'],
-				[2, 'SelectorList'],
-				[1, 'Block'],
-				[1, 'Declaration'],
-				[1, 'Value'],
-				[1, 'Hash'],
-				[2, 'Hash'],
-				[2, 'Value'],
-				[2, 'Declaration'],
-				[1, 'Declaration'],
-				[1, 'Value'],
-				[1, 'Dimension'],
-				[2, 'Dimension'],
-				[1, 'Number'],
-				[2, 'Number'],
-				[2, 'Value'],
-				[2, 'Declaration'],
-				[2, 'Block'],
-				[2, 'Rule'],
-				[2, 'StyleSheet']
+				[1, "StyleSheet"],
+				[1, "Rule"],
+				[1, "SelectorList"],
+				[1, "Selector"],
+				[1, "TypeSelector"],
+				[2, "TypeSelector"],
+				[2, "Selector"],
+				[2, "SelectorList"],
+				[1, "Block"],
+				[1, "Declaration"],
+				[1, "Value"],
+				[1, "Number"],
+				[2, "Number"],
+				[2, "Value"],
+				[2, "Declaration"],
+				[1, "Declaration"],
+				[1, "Value"],
+				[1, "Identifier"],
+				[2, "Identifier"],
+				[1, "Operator"],
+				[2, "Operator"],
+				[1, "Identifier"],
+				[2, "Identifier"],
+				[2, "Value"],
+				[2, "Declaration"],
+				[2, "Block"],
+				[2, "Rule"],
+				[1, "Rule"],
+				[1, "SelectorList"],
+				[1, "Selector"],
+				[1, "TypeSelector"],
+				[2, "TypeSelector"],
+				[1, "Combinator"],
+				[2, "Combinator"],
+				[1, "TypeSelector"],
+				[2, "TypeSelector"],
+				[1, "PseudoClassSelector"],
+				[2, "PseudoClassSelector"],
+				[2, "Selector"],
+				[2, "SelectorList"],
+				[1, "Block"],
+				[1, "Declaration"],
+				[1, "Value"],
+				[1, "Hash"],
+				[2, "Hash"],
+				[2, "Value"],
+				[2, "Declaration"],
+				[1, "Declaration"],
+				[1, "Value"],
+				[1, "Dimension"],
+				[2, "Dimension"],
+				[1, "Number"],
+				[2, "Number"],
+				[2, "Value"],
+				[2, "Declaration"],
+				[2, "Block"],
+				[2, "Rule"],
+				[2, "StyleSheet"],
 			]);
 		});
 	});

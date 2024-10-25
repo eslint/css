@@ -146,9 +146,8 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	 * @param {BlockPlain} block The node to get the location of.
 	 * @returns {SourceLocationWithOffset} The location of the node.
 	 * @throws {TypeError} When the node is not a block node.
-	 */ 
+	 */
 	getBlockLocWithBraces(block) {
-
 		assertBlock(block);
 
 		const { start, end } = block.loc;
@@ -164,8 +163,7 @@ export class CSSSourceCode extends TextSourceCodeBase {
 				column: end.column + 1,
 				offset: end.offset + 1,
 			},
-		}
-
+		};
 	}
 
 	/**

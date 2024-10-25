@@ -18,7 +18,6 @@ import assert from "node:assert";
 //-----------------------------------------------------------------------------
 
 describe("Plugin", () => {
-
 	describe("Configuration Comments", () => {
 		const config = {
 			files: ["*.css"],
@@ -69,16 +68,18 @@ describe("Plugin", () => {
 			);
 			assert.strictEqual(results[0].messages[0].line, 4);
 			assert.strictEqual(results[0].messages[0].column, 3);
-			
+
 			assert.strictEqual(results[0].suppressedMessages.length, 1);
-			assert.strictEqual(results[0].suppressedMessages[0].message, "Unexpected empty block found.");
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
 			assert.strictEqual(results[0].suppressedMessages[0].line, 2);
 			assert.strictEqual(results[0].suppressedMessages[0].column, 3);
 		});
 
 		it("should not report empty block when a disable configuration comment is present", async () => {
-			const code =
-				"/* eslint-disable css/no-empty-blocks */\na {}";
+			const code = "/* eslint-disable css/no-empty-blocks */\na {}";
 			const results = await eslint.lintText(code, {
 				filePath: "test.css",
 			});
@@ -86,14 +87,16 @@ describe("Plugin", () => {
 			assert.strictEqual(results.length, 1);
 			assert.strictEqual(results[0].messages.length, 0);
 			assert.strictEqual(results[0].suppressedMessages.length, 1);
-			assert.strictEqual(results[0].suppressedMessages[0].message, "Unexpected empty block found.");
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
 			assert.strictEqual(results[0].suppressedMessages[0].line, 2);
 			assert.strictEqual(results[0].suppressedMessages[0].column, 3);
 		});
 
 		it("should not report empty block when a disable-line configuration comment is present", async () => {
-			const code =
-				"a {} /* eslint-disable-line css/no-empty-blocks */";
+			const code = "a {} /* eslint-disable-line css/no-empty-blocks */";
 			const results = await eslint.lintText(code, {
 				filePath: "test.css",
 			});
@@ -102,10 +105,12 @@ describe("Plugin", () => {
 			assert.strictEqual(results[0].messages.length, 0);
 
 			assert.strictEqual(results[0].suppressedMessages.length, 1);
-			assert.strictEqual(results[0].suppressedMessages[0].message, "Unexpected empty block found.");
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
 			assert.strictEqual(results[0].suppressedMessages[0].line, 1);
 			assert.strictEqual(results[0].suppressedMessages[0].column, 3);
-
 		});
 
 		it("should not report empty block when a disable-next-line configuration comment is present", async () => {
@@ -119,15 +124,16 @@ describe("Plugin", () => {
 			assert.strictEqual(results[0].messages.length, 0);
 
 			assert.strictEqual(results[0].suppressedMessages.length, 1);
-			assert.strictEqual(results[0].suppressedMessages[0].message, "Unexpected empty block found.");
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
 			assert.strictEqual(results[0].suppressedMessages[0].line, 2);
 			assert.strictEqual(results[0].suppressedMessages[0].column, 3);
-
 		});
 
 		it("should not report empty block when a configuration comment disables a rule is present", async () => {
-			const code =
-				"/* eslint css/no-empty-blocks: off */\na {}";
+			const code = "/* eslint css/no-empty-blocks: off */\na {}";
 			const results = await eslint.lintText(code, {
 				filePath: "test.css",
 			});

@@ -8,9 +8,9 @@ CSS blocks are indicated by opening `{` and closing `}` characters, and can occu
 
 ```css
 @media (print) {
-    a {
-        color: black;
-    }
+	a {
+		color: black;
+	}
 }
 ```
 
@@ -23,24 +23,25 @@ This rule warns when it finds a block that is empty. For the purposes of this ru
 Examples of incorrect code:
 
 ```css
-a { }
+a {
+}
 
 a {
-
 }
-
-.class-name { /* a comment */ }
 
 .class-name {
-    /* a comment */
+	/* a comment */
+}
+
+.class-name {
+	/* a comment */
 }
 
 @media (print) {
-
 }
 
 @media (print) {
-    /* a comment */
+	/* a comment */
 }
 ```
 
@@ -50,5 +51,5 @@ If you aren't concerned with empty blocks, you can safely disable this rule.
 
 ## Prior Art
 
-* [empty-rules](https://github.com/CSSLint/csslint/wiki/Disallow-empty-rules)
-* [`block-no-empty`](https://stylelint.io/user-guide/rules/block-no-empty)
+-   [empty-rules](https://github.com/CSSLint/csslint/wiki/Disallow-empty-rules)
+-   [`block-no-empty`](https://stylelint.io/user-guide/rules/block-no-empty)

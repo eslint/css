@@ -9,7 +9,7 @@ export default {
 
 		docs: {
 			description: "Disallow empty blocks.",
-			recommended: true
+			recommended: true,
 		},
 
 		messages: {
@@ -18,7 +18,6 @@ export default {
 	},
 
 	create(context) {
-
 		const { sourceCode } = context;
 
 		return {
@@ -29,8 +28,7 @@ export default {
 						messageId: "emptyBlock",
 					});
 				}
-			}
-
+			},
 		};
 	},
 };
