@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@eslint/core": "^0.6.0",
+    "@eslint/json": "^0.5.0",
     "@types/css-tree": "^2.3.8",
     "@types/eslint": "^8.56.10",
     "c8": "^9.1.0",

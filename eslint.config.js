@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 
 import eslintConfigESLint from "eslint-config-eslint";
-import json from "./src/index.js";
+import json from "@eslint/json";
 
 //-----------------------------------------------------------------------------
 // Helpers
