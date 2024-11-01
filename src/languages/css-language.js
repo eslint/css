@@ -104,7 +104,7 @@ export class CSSLanguage {
 					},
 					onParseError(error) {
 						throw error;
-					}
+					},
 				}),
 			);
 
@@ -114,12 +114,9 @@ export class CSSLanguage {
 				comments,
 			};
 		} catch (ex) {
-
 			return {
 				ok: false,
-				errors: [
-					ex
-				],
+				errors: [ex],
 			};
 		}
 	}
