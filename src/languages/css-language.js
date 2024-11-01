@@ -102,6 +102,9 @@ export class CSSLanguage {
 							loc,
 						});
 					},
+					onParseError(error) {
+						throw error;
+					}
 				}),
 			);
 
@@ -111,18 +114,11 @@ export class CSSLanguage {
 				comments,
 			};
 		} catch (ex) {
-			// error messages end with (line:column) so we strip that off for ESLint
-			const message = ex.message
-				.slice(0, ex.message.lastIndexOf("("))
-				.trim();
 
 			return {
 				ok: false,
 				errors: [
-					{
-						...ex,
-						message,
-					},
+					ex
 				],
 			};
 		}

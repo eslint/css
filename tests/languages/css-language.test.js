@@ -37,11 +37,38 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.ast.type, "StyleSheet");
 			assert.strictEqual(result.ast.children[0].type, "Rule");
 		});
+
+		it("should return an error when parsing invalid CSS", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "a { foo; bar: 1! }",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 1);
+			assert.strictEqual(result.errors[0].message, "Colon is expected");
+		});
+
+		// https://github.com/csstree/csstree/issues/301
+		it.skip("should return an error when EOF is discovered before block close", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "a {",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 1);
+			assert.strictEqual(result.errors[0].message, "Colon is expected");
+		});
 	});
 
 	describe("createSourceCode()", () => {
 		it("should create a CSSSourceCode instance", () => {
-			const file = { body: "{\n\n}", path: "test.css" };
+			const file = { body: "a {\n\n}", path: "test.css" };
 			const language = new CSSLanguage();
 			const parseResult = language.parse(file);
 			const sourceCode = language.createSourceCode(file, parseResult);
