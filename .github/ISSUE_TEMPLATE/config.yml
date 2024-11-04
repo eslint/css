@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
     - name: 🗣 Ask a Question, Discuss
-      url: https://github.com/eslint/json/discussions
+      url: https://github.com/eslint/css/discussions
       about: Get help using this plugin
     - name: Discord Server
       url: https://eslint.org/chat
