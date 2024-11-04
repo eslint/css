@@ -44,18 +44,6 @@ const INLINE_CONFIG =
 	/^\s*(?:eslint(?:-enable|-disable(?:(?:-next)?-line)?)?)(?:\s|$)/u;
 
 /**
- * Asserts that the given node is a block node.
- * @param {CssNodePlain} node The node to check.
- * @throws {TypeError} When the node is not a block node.
- * @returns {void}
- */
-function assertBlock(node) {
-	if (node.type !== "Block") {
-		throw new TypeError("Expected a block node.");
-	}
-}
-
-/**
  * A class to represent a step in the traversal process.
  */
 class CSSTraversalStep extends VisitNodeStep {
