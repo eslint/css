@@ -117,7 +117,7 @@ import css from "@eslint/css";
 
 export default [
 	{
-		files: ["**/*.md"],
+		files: ["**/*.css"],
 		plugins: {
 			css,
 		},
