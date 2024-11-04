@@ -84,7 +84,7 @@ class CSSTraversalStep extends VisitNodeStep {
 //-----------------------------------------------------------------------------
 
 /**
- * JSON Source Code Object
+ * CSS Source Code Object
  */
 export class CSSSourceCode extends TextSourceCodeBase {
 	/**
