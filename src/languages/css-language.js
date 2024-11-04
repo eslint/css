@@ -23,6 +23,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /** @typedef {import("@eslint/core").OkParseResult<CssNodePlain> & { comments: Comment[] }} OkParseResult */
 /** @typedef {import("@eslint/core").ParseResult<CssNodePlain>} ParseResult */
 /** @typedef {import("@eslint/core").File} File */
+/** @typedef {import("@eslint/core").FileError} FileError */
 
 //-----------------------------------------------------------------------------
 // Exports
@@ -84,6 +85,9 @@ export class CSSLanguage {
 		/** @type {Comment[]} */
 		const comments = [];
 
+		/** @type {FileError[]} */
+		const errors = [];
+
 		/*
 		 * Check for parsing errors first. If there's a parsing error, nothing
 		 * else can happen. However, a parsing error does not throw an error
@@ -103,10 +107,18 @@ export class CSSLanguage {
 						});
 					},
 					onParseError(error) {
-						throw error;
+						// @ts-ignore -- types are incorrect
+						errors.push(error);
 					},
 				}),
 			);
+
+			if (errors.length) {
+				return {
+					ok: false,
+					errors,
+				};
+			}
 
 			return {
 				ok: true,

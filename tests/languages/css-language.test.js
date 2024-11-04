@@ -47,8 +47,15 @@ describe("CSSLanguage", () => {
 
 			assert.strictEqual(result.ok, false);
 			assert.strictEqual(result.ast, undefined);
-			assert.strictEqual(result.errors.length, 1);
+			assert.strictEqual(result.errors.length, 2);
+
 			assert.strictEqual(result.errors[0].message, "Colon is expected");
+			assert.strictEqual(result.errors[0].line, 1);
+			assert.strictEqual(result.errors[0].column, 8);
+
+			assert.strictEqual(result.errors[1].message, "Identifier is expected");
+			assert.strictEqual(result.errors[1].line, 1);
+			assert.strictEqual(result.errors[1].column, 18);
 		});
 
 		// https://github.com/csstree/csstree/issues/301
