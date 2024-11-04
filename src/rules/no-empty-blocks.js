@@ -18,7 +18,6 @@ export default {
 	},
 
 	create(context) {
-
 		return {
 			Block(node) {
 				if (node.children.length === 0) {

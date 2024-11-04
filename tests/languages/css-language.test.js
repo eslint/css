@@ -53,7 +53,10 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.errors[0].line, 1);
 			assert.strictEqual(result.errors[0].column, 8);
 
-			assert.strictEqual(result.errors[1].message, "Identifier is expected");
+			assert.strictEqual(
+				result.errors[1].message,
+				"Identifier is expected",
+			);
 			assert.strictEqual(result.errors[1].line, 1);
 			assert.strictEqual(result.errors[1].column, 18);
 		});
