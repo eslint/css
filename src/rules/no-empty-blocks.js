@@ -18,13 +18,12 @@ export default {
 	},
 
 	create(context) {
-		const { sourceCode } = context;
 
 		return {
 			Block(node) {
 				if (node.children.length === 0) {
 					context.report({
-						loc: sourceCode.getBlockLocWithBraces(node),
+						loc: node.loc,
 						messageId: "emptyBlock",
 					});
 				}

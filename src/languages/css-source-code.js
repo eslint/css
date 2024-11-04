@@ -141,44 +141,6 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	}
 
 	/**
-	 * Returns the location of the given node, expanding it to include the
-	 * surrounding braces.
-	 * @param {BlockPlain} block The node to get the location of.
-	 * @returns {SourceLocationWithOffset} The location of the node.
-	 * @throws {TypeError} When the node is not a block node.
-	 */
-	getBlockLocWithBraces(block) {
-		assertBlock(block);
-
-		const { start, end } = block.loc;
-
-		return {
-			start: {
-				line: start.line,
-				column: start.column - 1,
-				offset: start.offset - 1,
-			},
-			end: {
-				line: end.line,
-				column: end.column + 1,
-				offset: end.offset + 1,
-			},
-		};
-	}
-
-	/**
-	 * Returns the range of the given node, expanding it to include the
-	 * surrounding braces.
-	 * @param {BlockPlain} block The node to get the range of.
-	 * @returns {SourceRange} The range of the node.
-	 * @throws {TypeError} When the node is not a block node.
-	 */
-	getBlockRangeWithBraces(block) {
-		const loc = this.getBlockLocWithBraces(block);
-		return [loc.start.offset, loc.end.offset];
-	}
-
-	/**
 	 * Returns an array of all inline configuration nodes found in the
 	 * source code.
 	 * @returns {Array<Comment>} An array of all inline configuration nodes.
