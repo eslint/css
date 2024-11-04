@@ -30,8 +30,12 @@
       "eslint --fix",
       "prettier --write"
     ],
+    "README.md": [
+      "npm run build:update-rules-docs",
+      "prettier --write"
+    ],
     "!(*.js)": "prettier --write --ignore-unknown",
-    "{src/rules/*.js,tools/update-rules-docs.js,README.md}": "npm run build:update-rules-docs"
+    "{src/rules/*.js,tools/update-rules-docs.js}": "npm run build:update-rules-docs"
   },
   "repository": {
     "type": "git",
