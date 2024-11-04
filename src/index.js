@@ -1,5 +1,5 @@
 /**
- * @fileoverview JSON plugin.
+ * @fileoverview CSS plugin.
  * @author Nicholas C. Zakas
  */
 
