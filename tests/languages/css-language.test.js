@@ -94,11 +94,7 @@ describe("CSSLanguage", () => {
 			const language = new CSSLanguage();
 			const file = { body: "a {\n/*test*/\n}", path: "test.css" };
 			const parseResult = language.parse(file);
-			const sourceCode = language.createSourceCode(
-				file,
-				parseResult,
-				"test.jsonc",
-			);
+			const sourceCode = language.createSourceCode(file, parseResult);
 
 			assert.strictEqual(sourceCode.constructor.name, "CSSSourceCode");
 
