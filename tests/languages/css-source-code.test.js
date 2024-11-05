@@ -147,7 +147,7 @@ describe("CSSSourceCode", () => {
 			assert.deepStrictEqual(sourceCode.comments, []);
 		});
 
-		it("should contain an array of comments when parsing JSONC", () => {
+		it("should contain an array of comments when parsing CSS with comments", () => {
 			const file = { body: "a {\n/*test*/\n}", path: "test.css" };
 			const language = new CSSLanguage();
 			const parseResult = language.parse(file);
