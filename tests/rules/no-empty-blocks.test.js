@@ -38,6 +38,18 @@ ruleTester.run("no-empty-blocks", rule, {
 			],
 		},
 		{
+			code: "a { /* comment */ }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 20,
+				},
+			],
+		},
+		{
 			code: "a {\n}",
 			errors: [
 				{
