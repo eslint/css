@@ -31,6 +31,7 @@ export const visitorKeys = {
 	LayerList: ["children"],
 	MediaQuery: ["condition"],
 	MediaQueryList: ["children"],
+	NestingSelector: [],
 	Nth: ["nth", "selector"],
 	Number: [],
 	Operator: [],
