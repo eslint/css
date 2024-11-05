@@ -63,7 +63,7 @@ describe("CSSSourceCode", () => {
 
 	describe("getText()", () => {
 		it("should return the text of the source code", () => {
-			const file = { body: "a {}", path: "test.json" };
+			const file = { body: "a {}", path: "test.css" };
 			const language = new CSSLanguage();
 			const parseResult = language.parse(file);
 			const sourceCode = new CSSSourceCode({
