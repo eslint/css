@@ -162,6 +162,7 @@ describe("CSSSourceCode", () => {
 
 			const comment = sourceCode.comments[0];
 			assert.strictEqual(comment.type, "Comment");
+			assert.strictEqual(comment.value, "test");
 			assert.deepStrictEqual(comment.loc, {
 				source: "test.css",
 				start: { line: 2, column: 1, offset: 4 },
