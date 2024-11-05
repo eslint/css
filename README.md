@@ -86,6 +86,7 @@ export default [
 
 You can individually config, disable, and enable rules in CSS using comments, such as:
 
+<!-- prettier-ignore -->
 ```css
 /* eslint css/no-empty-blocks: error */
 
@@ -94,8 +95,7 @@ a {
 }
 /* eslint-enable css/no-empty-blocks */
 
-b {
-	/* eslint-disable-line css/no-empty-blocks */
+b { /* eslint-disable-line css/no-empty-blocks */
 }
 
 /* eslint-disable-next-line css/no-empty-blocks */
