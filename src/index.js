@@ -10,6 +10,7 @@
 import { CSSLanguage } from "./languages/css-language.js";
 import { CSSSourceCode } from "./languages/css-source-code.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
+import noDuplicateImports from "./rules/no-duplicate-imports.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -25,6 +26,7 @@ const plugin = {
 	},
 	rules: {
 		"no-empty-blocks": noEmptyBlocks,
+		"no-duplicate-imports": noDuplicateImports,
 	},
 	configs: {},
 };
