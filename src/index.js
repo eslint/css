@@ -34,6 +34,7 @@ Object.assign(plugin.configs, {
 		plugins: { css: plugin },
 		rules: {
 			"css/no-empty-blocks": "error",
+			"css/no-duplicate-imports": "error",
 		},
 	},
 });

@@ -56,9 +56,10 @@ export default [
 
 <!-- Rule Table Start -->
 
-| **Rule Name**                                        | **Description**        | **Recommended** |
-| :--------------------------------------------------- | :--------------------- | :-------------: |
-| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md) | Disallow empty blocks. |       yes       |
+| **Rule Name**                                                  | **Description**                   | **Recommended** |
+| :------------------------------------------------------------- | :-------------------------------- | :-------------: |
+| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md) | Disallow duplicate @import rules. |       yes       |
+| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)           | Disallow empty blocks.            |       yes       |
 
 <!-- Rule Table End -->
 
