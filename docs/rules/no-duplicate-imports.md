@@ -38,4 +38,4 @@ If you aren't concerned with duplicate `@import` rules, you can safely disable t
 
 ## Prior Art
 
--   [`no-duplicate-at-import-rule`](https://stylelint.io/user-guide/rules/no-duplicate-at-import-rule)
+-   [`no-duplicate-at-import-rules`](https://stylelint.io/user-guide/rules/no-duplicate-at-import-rules)
