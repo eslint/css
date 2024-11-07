@@ -26,7 +26,7 @@ Examples of incorrect code:
 @import "b.css";
 @import url("c.css");
 
-// duplicates
+/* duplicates */
 @import "a.css";
 @import url(b.css);
 @import "c.css";
