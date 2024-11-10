@@ -11,6 +11,7 @@ import { CSSLanguage } from "./languages/css-language.js";
 import { CSSSourceCode } from "./languages/css-source-code.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
+import noInvalidHexColor from "./rules/no-invalid-hex-color.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -27,6 +28,7 @@ const plugin = {
 	rules: {
 		"no-empty-blocks": noEmptyBlocks,
 		"no-duplicate-imports": noDuplicateImports,
+		"no-invalid-hex-color": noInvalidHexColor,
 	},
 	configs: {},
 };
