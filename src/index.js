@@ -39,6 +39,7 @@ Object.assign(plugin.configs, {
 		rules: {
 			"css/no-empty-blocks": "error",
 			"css/no-duplicate-imports": "error",
+			"css/no-invalid-hex-color": "error",
 		},
 	},
 });
