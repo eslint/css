@@ -24,7 +24,7 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow empty blocks.",
+			description: "Disallow unknown properties.",
 			recommended: true,
 		},
 
