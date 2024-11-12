@@ -49,7 +49,7 @@ ruleTester.run("no-unknown-at-rules", rule, {
 			code: "@foobaz { }",
 			errors: [
 				{
-					message: "Unknown @ rule 'foobaz' found.",
+					message: "Unknown at-rule 'foobaz' found.",
 					line: 1,
 					column: 1,
 					endLine: 1,
