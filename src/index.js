@@ -12,6 +12,7 @@ import { CSSSourceCode } from "./languages/css-source-code.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noUnknownProperties from "./rules/no-unknown-properties.js";
+import noUnknownAtRules from "./rules/no-unknown-at-rules.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -28,6 +29,7 @@ const plugin = {
 	rules: {
 		"no-empty-blocks": noEmptyBlocks,
 		"no-duplicate-imports": noDuplicateImports,
+		"no-unknown-at-rules": noUnknownAtRules,
 		"no-unknown-properties": noUnknownProperties,
 	},
 	configs: {},
@@ -39,6 +41,7 @@ Object.assign(plugin.configs, {
 		rules: {
 			"css/no-empty-blocks": "error",
 			"css/no-duplicate-imports": "error",
+			"css/no-unknown-at-rules": "error",
 			"css/no-unknown-properties": "error",
 		},
 	},

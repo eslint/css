@@ -60,6 +60,7 @@ export default [
 | :--------------------------------------------------------------- | :-------------------------------- | :-------------: |
 | [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)   | Disallow duplicate @import rules. |       yes       |
 | [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)             | Disallow empty blocks.            |       yes       |
+| [`no-unknown-at-rules`](./docs/rules/no-unknown-at-rules.md)     | Disallow unknown at-rules.        |       yes       |
 | [`no-unknown-properties`](./docs/rules/no-unknown-properties.md) | Disallow unknown properties.      |       yes       |
 
 <!-- Rule Table End -->
