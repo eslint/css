@@ -18,6 +18,25 @@ import assert from "node:assert";
 //-----------------------------------------------------------------------------
 
 describe("Plugin", () => {
+	describe("Plugin configs", () => {
+		Object.keys(css.configs).forEach(configName => {
+			it(`Using "${configName}" config should not throw`, async () => {
+				const config = {
+					files: ["**/*.css"],
+					language: "css/css",
+					...css.configs[configName],
+				};
+
+				const eslint = new ESLint({
+					overrideConfigFile: true,
+					overrideConfig: config,
+				});
+
+				await eslint.lintText("div {}", { filePath: "test.css" });
+			});
+		});
+	});
+
 	describe("Configuration Comments", () => {
 		const config = {
 			files: ["*.css"],
