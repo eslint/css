@@ -16,7 +16,7 @@ Here, `ccolor` is a syntactically valid identifier even though it will be ignore
 
 ## Rule Details
 
-This rule warns when it finds a CSS property that isn't part of the CSS specification and aren't custom properties (beginning with `--` and in `--my-color`). The property data is provided via the [CSSTree](https://github.com/csstree/csstree) project.
+This rule warns when it finds a CSS property that isn't part of the CSS specification and aren't custom properties (beginning with `--` as in `--my-color`). The property data is provided via the [CSSTree](https://github.com/csstree/csstree) project.
 
 Examples of incorrect code:
 
