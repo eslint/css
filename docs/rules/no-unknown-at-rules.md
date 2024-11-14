@@ -14,18 +14,12 @@ CSS contains a number of at-rules, each beginning with a `@`, that perform vario
 -   `@namespace`
 -   `@page`
 -   `@charset`
--   `@document`
--   `@viewport`
 
 It's important to use a known at-rule because unknown at-rules cause the browser to ignore the entire block, including any rules contained within. For example:
 
 ```css
 /* typo */
-@support (display: grid) {
-	.grid-container {
-		display: grid;
-	}
-}
+@charse "UTF-8";
 ```
 
 Here, the `@supports` at-rule is incorrectly spelled as `@support`, which means that the rule for `.grid-container` will be ignored even if the browser supports `display: grid`.
@@ -37,11 +31,7 @@ This rule warns when it finds a CSS at-rule that isn't part of the CSS specifica
 Examples of incorrect code:
 
 ```css
-@support (display: grid) {
-	.grid-container {
-		display: grid;
-	}
-}
+@charse "UTF-8";
 
 @importx url(foo.css);
 

@@ -46,6 +46,19 @@ ruleTester.run("no-unknown-at-rules", rule, {
 			],
 		},
 		{
+			code: '@charse "test";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "charse" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
 			code: "@foobaz { }",
 			errors: [
 				{
