@@ -15,7 +15,6 @@ CSS contains a number of at-rules, each beginning with a `@`, that perform vario
 -   `@page`
 -   `@charset`
 -   `@document`
--   `@viewport`
 
 It's important to use a known at-rule because unknown at-rules cause the browser to ignore the entire block, including any rules contained within. For example:
 
