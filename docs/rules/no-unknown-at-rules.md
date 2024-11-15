@@ -22,7 +22,7 @@ It's important to use a known at-rule because unknown at-rules cause the browser
 @charse "UTF-8";
 ```
 
-Here, the `@supports` at-rule is incorrectly spelled as `@support`, which means that the rule for `.grid-container` will be ignored even if the browser supports `display: grid`.
+Here, the `@charset` at-rule is incorrectly spelled as `@charse`, which means that it will be ignored.
 
 ## Rule Details
 
