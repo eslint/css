@@ -13,6 +13,7 @@ import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noUnknownProperties from "./rules/no-unknown-properties.js";
 import noUnknownAtRules from "./rules/no-unknown-at-rules.js";
+import noInvalidPropertyValues from "./rules/no-invalid-property-values.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -31,6 +32,7 @@ const plugin = {
 		"no-duplicate-imports": noDuplicateImports,
 		"no-unknown-at-rules": noUnknownAtRules,
 		"no-unknown-properties": noUnknownProperties,
+		"no-invalid-property-values": noInvalidPropertyValues,
 	},
 	configs: {},
 };
@@ -43,6 +45,7 @@ Object.assign(plugin.configs, {
 			"css/no-duplicate-imports": "error",
 			"css/no-unknown-at-rules": "error",
 			"css/no-unknown-properties": "error",
+			"css/no-invalid-property-values": "error",
 		},
 	},
 });
