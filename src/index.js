@@ -11,9 +11,8 @@ import { CSSLanguage } from "./languages/css-language.js";
 import { CSSSourceCode } from "./languages/css-source-code.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
-import noUnknownProperties from "./rules/no-unknown-properties.js";
 import noUnknownAtRules from "./rules/no-unknown-at-rules.js";
-import noInvalidPropertyValues from "./rules/no-invalid-property-values.js";
+import noInvalidProperties from "./rules/no-invalid-properties.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -31,8 +30,7 @@ const plugin = {
 		"no-empty-blocks": noEmptyBlocks,
 		"no-duplicate-imports": noDuplicateImports,
 		"no-unknown-at-rules": noUnknownAtRules,
-		"no-unknown-properties": noUnknownProperties,
-		"no-invalid-property-values": noInvalidPropertyValues,
+		"no-invalid-properties": noInvalidProperties,
 	},
 	configs: {},
 };
@@ -44,8 +42,7 @@ Object.assign(plugin.configs, {
 			"css/no-empty-blocks": "error",
 			"css/no-duplicate-imports": "error",
 			"css/no-unknown-at-rules": "error",
-			"css/no-unknown-properties": "error",
-			"css/no-invalid-property-values": "error",
+			"css/no-invalid-properties": "error",
 		},
 	},
 });

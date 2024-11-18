@@ -1,5 +1,5 @@
 /**
- * @fileoverview Rule to prevent the use of properties with invalid values in CSS.
+ * @fileoverview Rule to prevent invalid properties in CSS.
  * @author Nicholas C. Zakas
  */
 
@@ -25,7 +25,7 @@ import { lexer } from "css-tree";
  * @returns {error is SyntaxMatchError} True if the error is a syntax match error, false if not.
  */
 function isSyntaxMatchError(error) {
-	return error && typeof error.css === "string";
+	return typeof error.css === "string";
 }
 
 //-----------------------------------------------------------------------------
@@ -37,13 +37,14 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow properties with invalid values.",
+			description: "Disallow invalid properties.",
 			recommended: true,
 		},
 
 		messages: {
 			invalidPropertyValue:
 				"Invalid value '{{value}}' for property '{{property}}'. Expected {{expected}}.",
+			unknownProperty: "Unknown property '{{property}}' found.",
 		},
 	},
 
@@ -57,20 +58,35 @@ export default {
 
 				const { error } = lexer.matchDeclaration(node);
 
-				/*
-				 * If the property is unknown, then `error` does not
-				 * contain a `loc` property. In that case, we don't
-				 * need to report anything because that error is handled
-				 * by the `no-unknown-properties` rule.
-				 */
-				if (isSyntaxMatchError(error)) {
+				if (error) {
+					// validation failure
+					if (isSyntaxMatchError(error)) {
+						context.report({
+							loc: error.loc,
+							messageId: "invalidPropertyValue",
+							data: {
+								property: node.property,
+								value: error.css,
+								expected: error.syntax,
+							},
+						});
+						return;
+					}
+
+					// unknown property
 					context.report({
-						loc: error.loc,
-						messageId: "invalidPropertyValue",
+						loc: {
+							start: node.loc.start,
+							end: {
+								line: node.loc.start.line,
+								column:
+									node.loc.start.column +
+									node.property.length,
+							},
+						},
+						messageId: "unknownProperty",
 						data: {
 							property: node.property,
-							value: error.css,
-							expected: error.syntax,
 						},
 					});
 				}

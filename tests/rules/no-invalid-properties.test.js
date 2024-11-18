@@ -7,7 +7,7 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import rule from "../../src/rules/no-invalid-property-values.js";
+import rule from "../../src/rules/no-invalid-properties.js";
 import css from "../../src/index.js";
 import { RuleTester } from "eslint";
 
@@ -29,7 +29,7 @@ ruleTester.run("no-invalid-property-values", rule, {
 		"a { color: red; transition: none; }",
 		"body { --custom-property: red; }",
 		"body { padding: 0; }",
-		"html { unknown-property: red; }",
+		"a { color: red; -moz-transition: bar }",
 	],
 	invalid: [
 		{
@@ -146,6 +146,32 @@ ruleTester.run("no-invalid-property-values", rule, {
 					column: 14,
 					endLine: 3,
 					endColumn: 21,
+				},
+			],
+		},
+		{
+			code: "a { foo: bar }",
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: { property: "foo" },
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "a { my-color: red; -webkit-transition: bar }",
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: { property: "my-color" },
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 13,
 				},
 			],
 		},
