@@ -7,8 +7,26 @@
 // Imports
 //-----------------------------------------------------------------------------
 
-// @ts-ignore -- types are wrong for css-tree
 import { lexer } from "css-tree";
+
+//-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/** @typedef {import("css-tree").SyntaxMatchError} SyntaxMatchError */
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
+/**
+ * Determines if an error is a syntax match error.
+ * @param {Object} error The error object from the CSS parser.
+ * @returns {error is SyntaxMatchError} True if the error is a syntax match error, false if not.
+ */
+function isSyntaxMatchError(error) {
+	return typeof error.css === "string";
+}
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -45,7 +63,7 @@ export default {
 				 * need to report anything because that error is handled
 				 * by the `no-unknown-properties` rule.
 				 */
-				if (error && error.loc) {
+				if (isSyntaxMatchError(error)) {
 					context.report({
 						loc: error.loc,
 						messageId: "invalidPropertyValue",

@@ -1,5 +1,6 @@
 {
   "files": ["src/index.js"],
+  "include": ["typings"],
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
