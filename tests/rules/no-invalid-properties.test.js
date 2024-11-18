@@ -30,6 +30,8 @@ ruleTester.run("no-invalid-property-values", rule, {
 		"body { --custom-property: red; }",
 		"body { padding: 0; }",
 		"a { color: red; -moz-transition: bar }",
+		"@font-face { font-weight: 100 400 }",
+		'@property --foo { syntax: "*"; inherits: false; }',
 	],
 	invalid: [
 		{

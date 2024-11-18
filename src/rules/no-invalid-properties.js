@@ -50,7 +50,7 @@ export default {
 
 	create(context) {
 		return {
-			Declaration(node) {
+			"Rule > Block > Declaration"(node) {
 				// don't validate custom properties
 				if (node.property.startsWith("--")) {
 					return;
