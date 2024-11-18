@@ -25,7 +25,7 @@ import { lexer } from "css-tree";
  * @returns {error is SyntaxMatchError} True if the error is a syntax match error, false if not.
  */
 function isSyntaxMatchError(error) {
-	return typeof error.css === "string";
+	return error && typeof error.css === "string";
 }
 
 //-----------------------------------------------------------------------------
