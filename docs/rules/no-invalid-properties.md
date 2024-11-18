@@ -45,3 +45,9 @@ body {
 ## When Not to Use It
 
 If you aren't concerned with invalid properties, then you can safely disable this rule.
+
+## Prior Art
+
+\*[`declaration-property-value-no-unknown`](https://stylelint.io/user-guide/rules/declaration-property-value-no-unknown/)
+
+-   [`property-no-unknown`](https://stylelint.io/user-guide/rules/property-no-unknown)
