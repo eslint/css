@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
 	language: "css/css",
 });
 
-ruleTester.run("no-invalid-property-values", rule, {
+ruleTester.run("no-invalid-properties", rule, {
 	valid: [
 		"a { color: red; }",
 		"a { color: red; background-color: blue; }",
