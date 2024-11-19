@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-invalid-property-values rule.
+ * @fileoverview Tests for no-invalid-properties rule.
  * @author Nicholas C. Zakas
  */
 
