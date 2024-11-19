@@ -11,8 +11,8 @@ import { CSSLanguage } from "./languages/css-language.js";
 import { CSSSourceCode } from "./languages/css-source-code.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
-import noUnknownAtRules from "./rules/no-unknown-at-rules.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
+import noUnknownAtRules from "./rules/no-invalid-at-rules.js";
 
 //-----------------------------------------------------------------------------
 // Plugin

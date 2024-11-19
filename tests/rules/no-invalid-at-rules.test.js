@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-unknown-at-rules rule.
+ * @fileoverview Tests for no-invalid-at-rules rule.
  * @author Nicholas C. Zakas
  */
 
@@ -7,7 +7,7 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import rule from "../../src/rules/no-unknown-at-rules.js";
+import rule from "../../src/rules/no-invalid-at-rules.js";
 import css from "../../src/index.js";
 import { RuleTester } from "eslint";
 
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
 	language: "css/css",
 });
 
-ruleTester.run("no-unknown-at-rules", rule, {
+ruleTester.run("no-invalid-at-rules", rule, {
 	valid: [
 		"@import url('styles.css');",
 		"@font-face { font-family: 'MyFont'; src: url('myfont.woff2') format('woff2'); }",
@@ -62,7 +62,7 @@ ruleTester.run("no-unknown-at-rules", rule, {
 			code: "@foobaz { }",
 			errors: [
 				{
-					message: "Unknown at-rule 'foobaz' found.",
+					message: "Unknown at-rule '@foobaz' found.",
 					line: 1,
 					column: 1,
 					endLine: 1,
@@ -88,6 +88,54 @@ ruleTester.run("no-unknown-at-rules", rule, {
 					column: 18,
 					endLine: 1,
 					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: "@property foo {  }",
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "property",
+						prelude: "foo",
+						expected: "<custom-property-name>",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: "@property --foo { baz: red; }",
+			errors: [
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "property", descriptor: "baz" },
+					line: 1,
+					column: 19,
+					endLine: 1,
+					endColumn: 22,
+				},
+			],
+		},
+		{
+			code: "@property --foo { syntax: red; }",
+			errors: [
+				{
+					messageId: "invalidDescriptor",
+					line: 1,
+					data: {
+						name: "property",
+						descriptor: "syntax",
+						value: "red",
+						expected: "<string>",
+					},
+					column: 27,
+					endLine: 1,
+					endColumn: 30,
 				},
 			],
 		},
