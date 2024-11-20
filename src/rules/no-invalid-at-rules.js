@@ -28,8 +28,6 @@ function extractMetaDataFromError(error) {
 		messageId = message.includes("should not")
 			? "invalidExtraPrelude"
 			: "missingPrelude";
-	} else if (message.includes("descriptor")) {
-		messageId = "invalidDescriptor";
 	}
 
 	return {
