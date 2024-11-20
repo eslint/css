@@ -8,6 +8,35 @@
 //-----------------------------------------------------------------------------
 
 import { lexer } from "css-tree";
+import { isSyntaxReferenceError, isSyntaxMatchError } from "../util.js";
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
+/**
+ * Extracts metadata from an error object.
+ * @param {SyntaxError} error The error object to extract metadata from.
+ * @returns {Object} The metadata extracted from the error.
+ */
+function extractMetaDataFromError(error) {
+	const message = error.message;
+	const atRuleName = /`@(.*)`/u.exec(message)[1];
+	let messageId = "unknownAtRule";
+
+	if (message.endsWith("prelude")) {
+		messageId = message.includes("should not")
+			? "invalidExtraPrelude"
+			: "missingPrelude";
+	}
+
+	return {
+		messageId,
+		data: {
+			name: atRuleName,
+		},
+	};
+}
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -30,6 +59,9 @@ export default {
 				"Unknown descriptor '{{descriptor}}' found for at-rule '@{{name}}'.",
 			invalidDescriptor:
 				"Invalid value '{{value}}' for descriptor '{{descriptor}}' found for at-rule '@{{name}}'. Expected {{expected}}.",
+			invalidExtraPrelude:
+				"At-rule '@{{name}}' should not contain a prelude.",
+			missingPrelude: "At-rule '@{{name}}' should contain a prelude.",
 		},
 	},
 
@@ -45,26 +77,7 @@ export default {
 				);
 
 				if (error) {
-					if (error.reference) {
-						const loc = node.loc;
-
-						context.report({
-							loc: {
-								start: loc.start,
-								end: {
-									line: loc.start.line,
-
-									// add 1 to account for the @ symbol
-									column:
-										loc.start.column + node.name.length + 1,
-								},
-							},
-							messageId: "unknownAtRule",
-							data: {
-								name: node.name,
-							},
-						});
-					} else {
+					if (isSyntaxMatchError(error)) {
 						context.report({
 							loc: error.loc,
 							messageId: "invalidPrelude",
@@ -74,7 +87,23 @@ export default {
 								expected: error.syntax,
 							},
 						});
+						return;
 					}
+
+					const loc = node.loc;
+
+					context.report({
+						loc: {
+							start: loc.start,
+							end: {
+								line: loc.start.line,
+
+								// add 1 to account for the @ symbol
+								column: loc.start.column + node.name.length + 1,
+							},
+						},
+						...extractMetaDataFromError(error),
+					});
 				}
 			},
 
@@ -89,25 +118,7 @@ export default {
 				);
 
 				if (error) {
-					if (error.reference) {
-						const loc = node.loc;
-
-						context.report({
-							loc: {
-								start: loc.start,
-								end: {
-									line: loc.start.line,
-									column:
-										loc.start.column + node.property.length,
-								},
-							},
-							messageId: "unknownDescriptor",
-							data: {
-								name: atRule.name,
-								descriptor: error.reference,
-							},
-						});
-					} else {
+					if (isSyntaxMatchError(error)) {
 						context.report({
 							loc: error.loc,
 							messageId: "invalidDescriptor",
@@ -118,7 +129,30 @@ export default {
 								expected: error.syntax,
 							},
 						});
+						return;
 					}
+
+					const loc = node.loc;
+					const metaData = isSyntaxReferenceError(error)
+						? {
+								messageId: "unknownDescriptor",
+								data: {
+									name: atRule.name,
+									descriptor: error.reference,
+								},
+							}
+						: extractMetaDataFromError(error);
+
+					context.report({
+						loc: {
+							start: loc.start,
+							end: {
+								line: loc.start.line,
+								column: loc.start.column + node.property.length,
+							},
+						},
+						...metaData,
+					});
 				}
 			},
 		};

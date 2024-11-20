@@ -139,5 +139,31 @@ ruleTester.run("no-invalid-at-rules", rule, {
 				},
 			],
 		},
+		{
+			code: "@supports { a {} }",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "supports" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 10,
+				},
+			],
+		},
+		{
+			code: "@font-face foo { }",
+			errors: [
+				{
+					messageId: "invalidExtraPrelude",
+					data: { name: "font-face" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
 	],
 });
