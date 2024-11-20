@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 
 import { lexer } from "css-tree";
-import { isSyntaxReferenceError, isSyntaxMatchError } from "../util.js";
+import { isSyntaxMatchError } from "../util.js";
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -28,6 +28,8 @@ function extractMetaDataFromError(error) {
 		messageId = message.includes("should not")
 			? "invalidExtraPrelude"
 			: "missingPrelude";
+	} else if (message.includes("descriptor")) {
+		messageId = "invalidDescriptor";
 	}
 
 	return {
@@ -133,15 +135,6 @@ export default {
 					}
 
 					const loc = node.loc;
-					const metaData = isSyntaxReferenceError(error)
-						? {
-								messageId: "unknownDescriptor",
-								data: {
-									name: atRule.name,
-									descriptor: error.reference,
-								},
-							}
-						: extractMetaDataFromError(error);
 
 					context.report({
 						loc: {
@@ -151,7 +144,11 @@ export default {
 								column: loc.start.column + node.property.length,
 							},
 						},
-						...metaData,
+						messageId: "unknownDescriptor",
+						data: {
+							name: atRule.name,
+							descriptor: node.property,
+						},
 					});
 				}
 			},
