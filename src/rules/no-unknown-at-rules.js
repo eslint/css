@@ -24,7 +24,7 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow unknown at-rules.",
+			description: "Disallow unknown at-rules",
 			recommended: true,
 		},
 

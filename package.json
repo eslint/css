@@ -79,6 +79,7 @@
     "dedent": "^1.5.3",
     "eslint": "^9.11.1",
     "eslint-config-eslint": "^11.0.0",
+    "eslint-plugin-eslint-plugin": "^6.3.2",
     "got": "^14.4.2",
     "lint-staged": "^15.2.7",
     "mdast-util-from-markdown": "^2.0.2",

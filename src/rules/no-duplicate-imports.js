@@ -8,7 +8,7 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow duplicate @import rules.",
+			description: "Disallow duplicate @import rules",
 			recommended: true,
 		},
 

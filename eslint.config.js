@@ -8,6 +8,7 @@
 //-----------------------------------------------------------------------------
 
 import eslintConfigESLint from "eslint-config-eslint";
+import eslintPlugin from "eslint-plugin-eslint-plugin";
 import json from "@eslint/json";
 
 //-----------------------------------------------------------------------------
@@ -17,6 +18,11 @@ import json from "@eslint/json";
 const eslintPluginJSDoc = eslintConfigESLint.find(
 	config => config.plugins?.jsdoc,
 ).plugins.jsdoc;
+
+const eslintPluginRulesRecommendedConfig =
+	eslintPlugin.configs["flat/rules-recommended"];
+const eslintPluginTestsRecommendedConfig =
+	eslintPlugin.configs["flat/tests-recommended"];
 
 //-----------------------------------------------------------------------------
 // Configuration
@@ -66,6 +72,42 @@ export default [
 				before: "readonly",
 				after: "readonly",
 			},
+		},
+	},
+	{
+		files: ["src/rules/*.js"],
+		...eslintPluginRulesRecommendedConfig,
+		rules: {
+			...eslintPluginRulesRecommendedConfig.rules,
+			"eslint-plugin/require-meta-schema": "off", // `schema` defaults to []
+			"eslint-plugin/prefer-placeholders": "error",
+			"eslint-plugin/prefer-replace-text": "error",
+			"eslint-plugin/report-message-format": ["error", "[^a-z].*\\.$"],
+			"eslint-plugin/require-meta-docs-description": [
+				"error",
+				{ pattern: "^(Enforce|Require|Disallow) .+[^. ]$" },
+			],
+		},
+	},
+	{
+		files: ["tests/rules/*.test.js"],
+		...eslintPluginTestsRecommendedConfig,
+		rules: {
+			...eslintPluginTestsRecommendedConfig.rules,
+			"eslint-plugin/test-case-property-ordering": [
+				"error",
+				[
+					"name",
+					"filename",
+					"code",
+					"output",
+					"language",
+					"options",
+					"languageOptions",
+					"errors",
+				],
+			],
+			"eslint-plugin/test-case-shorthand-strings": "error",
 		},
 	},
 ];

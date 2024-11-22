@@ -56,12 +56,12 @@ export default [
 
 <!-- Rule Table Start -->
 
-| **Rule Name**                                                    | **Description**                   | **Recommended** |
-| :--------------------------------------------------------------- | :-------------------------------- | :-------------: |
-| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)   | Disallow duplicate @import rules. |       yes       |
-| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)             | Disallow empty blocks.            |       yes       |
-| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md) | Disallow invalid properties.      |       yes       |
-| [`no-unknown-at-rules`](./docs/rules/no-unknown-at-rules.md)     | Disallow unknown at-rules.        |       yes       |
+| **Rule Name**                                                    | **Description**                  | **Recommended** |
+| :--------------------------------------------------------------- | :------------------------------- | :-------------: |
+| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)   | Disallow duplicate @import rules |       yes       |
+| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)             | Disallow empty blocks            |       yes       |
+| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md) | Disallow invalid properties      |       yes       |
+| [`no-unknown-at-rules`](./docs/rules/no-unknown-at-rules.md)     | Disallow unknown at-rules        |       yes       |
 
 <!-- Rule Table End -->
 

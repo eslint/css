@@ -8,7 +8,7 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow empty blocks.",
+			description: "Disallow empty blocks",
 			recommended: true,
 		},
 

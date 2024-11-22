@@ -37,7 +37,7 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow invalid properties.",
+			description: "Disallow invalid properties",
 			recommended: true,
 		},
 
