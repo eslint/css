@@ -47,7 +47,7 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow invalid at-rules.",
+			description: "Disallow invalid at-rules",
 			recommended: true,
 		},
 
