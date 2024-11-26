@@ -6,14 +6,14 @@ Disallow invalid at-rules.
 
 CSS contains a number of at-rules, each beginning with a `@`, that perform various operations. Some common at-rules include:
 
--   `@import`
--   `@media`
--   `@font-face`
--   `@keyframes`
--   `@supports`
--   `@namespace`
--   `@page`
--   `@charset`
+- `@import`
+- `@media`
+- `@font-face`
+- `@keyframes`
+- `@supports`
+- `@namespace`
+- `@page`
+- `@charset`
 
 It's important to use a known at-rule because unknown at-rules cause the browser to ignore the entire block, including any rules contained within. For example:
 
@@ -40,10 +40,10 @@ Here, `--main-bg-color` is the prelude for `@property` while `syntax`, `inherits
 
 This rule warns when it finds a CSS at-rule that is unknown or invalid according to the CSS specification. As such, the rule warns for the following problems:
 
--   An unknown at-rule
--   An invalid prelude for a known at-rule
--   An unknown descriptor for a known at-rule
--   An invalid descriptor value for a known at-rule
+- An unknown at-rule
+- An invalid prelude for a known at-rule
+- An unknown descriptor for a known at-rule
+- An invalid descriptor value for a known at-rule
 
 The at-rule data is provided via the [CSSTree](https://github.com/csstree/csstree) project.
 
@@ -77,4 +77,4 @@ If you are purposely using at-rules that aren't part of the CSS specification, t
 
 ## Prior Art
 
--   [`at-rule-no-unknown`](https://stylelint.io/user-guide/rules/at-rule-no-unknown)
+- [`at-rule-no-unknown`](https://stylelint.io/user-guide/rules/at-rule-no-unknown)

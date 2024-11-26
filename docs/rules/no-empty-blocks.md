@@ -51,5 +51,5 @@ If you aren't concerned with empty blocks, you can safely disable this rule.
 
 ## Prior Art
 
--   [empty-rules](https://github.com/CSSLint/csslint/wiki/Disallow-empty-rules)
--   [`block-no-empty`](https://stylelint.io/user-guide/rules/block-no-empty)
+- [empty-rules](https://github.com/CSSLint/csslint/wiki/Disallow-empty-rules)
+- [`block-no-empty`](https://stylelint.io/user-guide/rules/block-no-empty)
