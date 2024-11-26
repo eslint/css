@@ -21,7 +21,7 @@ import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
 const plugin = {
 	meta: {
 		name: "@eslint/css",
-		version: "0.0.0", // x-release-please-version
+		version: "0.1.0", // x-release-please-version
 	},
 	languages: {
 		css: new CSSLanguage(),
