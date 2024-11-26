@@ -5,7 +5,7 @@
 
 export default {
 	meta: {
-		type: "problem",
+		type: /** @type {const} */ ("problem"),
 
 		docs: {
 			description: "Disallow empty blocks",

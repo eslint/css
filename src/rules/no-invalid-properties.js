@@ -16,7 +16,7 @@ import { isSyntaxMatchError } from "../util.js";
 
 export default {
 	meta: {
-		type: "problem",
+		type: /** @type {const} */ ("problem"),
 
 		docs: {
 			description: "Disallow invalid properties",

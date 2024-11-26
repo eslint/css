@@ -32,20 +32,23 @@ const plugin = {
 		"no-invalid-at-rules": noInvalidAtRules,
 		"no-invalid-properties": noInvalidProperties,
 	},
-	configs: {},
-};
-
-Object.assign(plugin.configs, {
-	recommended: {
-		plugins: { css: plugin },
-		rules: {
-			"css/no-empty-blocks": "error",
-			"css/no-duplicate-imports": "error",
-			"css/no-invalid-at-rules": "error",
-			"css/no-invalid-properties": "error",
+	configs: {
+		recommended: {
+			plugins: {},
+			rules: /** @type {const} */ ({
+				"css/no-empty-blocks": "error",
+				"css/no-duplicate-imports": "error",
+				"css/no-invalid-at-rules": "error",
+				"css/no-invalid-properties": "error",
+			}),
 		},
 	},
-});
+};
+
+// eslint-disable-next-line no-lone-blocks -- The block syntax { ... } ensures that TypeScript does not get confused about the type of `plugin`.
+{
+	plugin.configs.recommended.plugins.css = plugin;
+}
 
 export default plugin;
 export { CSSLanguage, CSSSourceCode };
