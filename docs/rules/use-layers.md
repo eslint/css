@@ -34,13 +34,20 @@ In general, you don't want to mix rules inside of layers with rules outside of l
 
 ## Rule Details
 
-This rule enforces the use of layers and warns when any rule appears outside of a `@layer` block and if any layer doesn't have a name. Additionally, there are several options available to customize the behavior of this rule.
+This rule enforces the use of layers and warns when:
+
+1. Any rule appears outside of a `@layer` block.
+1. Any `@import` doesn't specify a layer.
+1. If any layer doesn't have a name.
 
 Examples of incorrect code:
 
 ```css
 /* no layer name */
 @import url(foo.css) layer;
+
+/* no layer */
+@import url(bar.css);
 
 /* outside of layer */
 .my-style {
@@ -55,13 +62,15 @@ Examples of incorrect code:
 }
 ```
 
+There are also additional options to customize the behavior of this rule.
+
 ### Options
 
 This rule accepts an options object with the following properties:
 
 - `allowUnnamedLayers` (default: `false`) - Set to `true` to allow layers without names.
 - `layerNamePattern` (default: `""`) - Set to a regular expression string to validate all layer names.
-- `requireImportsLayers` (default: `false`) - Set to `true` to require that all `@import` rules must specify a layer.
+- `requireImportLayers` (default: `true`) - Set to `false` to allow `@import` rules without a layer.
 
 #### `allowUnnamedLayers: true`
 
@@ -99,20 +108,13 @@ Here's an example of **incorrect** code:
 }
 ```
 
-#### `requireImportLayers: true`
+#### `requireImportLayers: false`
 
-When `requireImportLayers` is set to `true`, the following code is **incorrect**:
+When `requireImportLayers` is set to `false`, the following code is **correct**:
 
 ```css
-/* eslint css/use-layers: ["error", { requireImportLayers: true }] */
-/* missing layer */
+/* eslint css/use-layers: ["error", { requireImportLayers: false }] */
 @import url(foo.css);
-```
-
-The following code is **correct**:
-
-```css
-/* eslint css/use-layers: ["error", { requireImportLayers: true }] */
 @import url(foo.css) layer;
 @import url(bar.css) layer(reset);
 ```

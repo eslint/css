@@ -40,7 +40,7 @@ export default {
 		defaultOptions: [
 			{
 				allowUnnamedLayers: false,
-				requireImportLayers: false,
+				requireImportLayers: true,
 				layerNamePattern: "",
 			},
 		],

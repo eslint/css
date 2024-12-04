@@ -27,7 +27,7 @@ ruleTester.run("use-layers", rule, {
 	valid: [
 		"@layer bar { a { color: red; } }",
 		"@layer foo { a { color: red; } }",
-		"@import 'foo.css';",
+		"@import 'foo.css' layer(foo);",
 		dedent`
 			@media (min-width: 600px) {
 				@layer foo {
@@ -48,6 +48,10 @@ ruleTester.run("use-layers", rule, {
 		{
 			code: "@layer { a { color: red; } }",
 			options: [{ allowUnnamedLayers: true }],
+		},
+		{
+			code: "@import 'foo.css';",
+			options: [{ requireImportLayers: false }],
 		},
 	],
 	invalid: [
@@ -148,7 +152,6 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: "@import 'foo.css';",
-			options: [{ requireImportLayers: true }],
 			errors: [
 				{
 					messageId: "missingImportLayer",
@@ -161,7 +164,6 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: "@import 'foo.css' layer;",
-			options: [{ requireImportLayers: true }],
 			errors: [
 				{
 					messageId: "missingLayerName",
@@ -247,7 +249,6 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: "@import 'foo.css'",
-			options: [{ requireImportLayers: true }],
 			errors: [
 				{
 					messageId: "missingImportLayer",
