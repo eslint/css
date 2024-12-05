@@ -16,9 +16,8 @@ export default {
 			recommended: true,
 		},
 
-		schema: {
-			type: "array",
-			items: {
+		schema: [
+			{
 				type: "object",
 				properties: {
 					allowUnnamedLayers: {
@@ -33,9 +32,7 @@ export default {
 				},
 				additionalProperties: false,
 			},
-			minItems: 0,
-			maxItems: 1,
-		},
+		],
 
 		defaultOptions: [
 			{
