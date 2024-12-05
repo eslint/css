@@ -58,7 +58,7 @@
     "fmt:check": "prettier --check .",
     "test": "mocha tests/**/*.js",
     "test:coverage": "c8 npm test",
-    "test:types": "tsc -p tests/types/tsconfig.json"
+    "test:types": "npm run build && tsc -p tests/types/tsconfig.json"
   },
   "keywords": [
     "eslint",
