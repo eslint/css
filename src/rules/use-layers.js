@@ -13,7 +13,6 @@ export default {
 
 		docs: {
 			description: "Require use of layers",
-			recommended: true,
 		},
 
 		schema: [
