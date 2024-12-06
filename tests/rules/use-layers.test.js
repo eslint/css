@@ -50,6 +50,10 @@ ruleTester.run("use-layers", rule, {
 			options: [{ allowUnnamedLayers: true }],
 		},
 		{
+			code: "@import 'foo.css' layer;",
+			options: [{ allowUnnamedLayers: true }],
+		},
+		{
 			code: "@import 'foo.css';",
 			options: [{ requireImportLayers: false }],
 		},
