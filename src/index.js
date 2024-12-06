@@ -13,6 +13,7 @@ import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
+import useLayers from "./rules/use-layers.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -31,6 +32,7 @@ const plugin = {
 		"no-duplicate-imports": noDuplicateImports,
 		"no-invalid-at-rules": noInvalidAtRules,
 		"no-invalid-properties": noInvalidProperties,
+		"use-layers": useLayers,
 	},
 	configs: {
 		recommended: {
