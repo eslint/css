@@ -1,7 +1,6 @@
 import css from "@eslint/css";
 import { ESLint } from "eslint";
 
-// TODO: Uncomment when ESLint.Plugin can accept non-JS rules
 css satisfies ESLint.Plugin;
 css.meta.name satisfies string;
 css.meta.version satisfies string;
