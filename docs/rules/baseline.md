@@ -1,0 +1,39 @@
+# baseline
+
+Enforce the use of baseline features
+
+## Background
+
+[Baseline](https://web.dev/baseline) is an effort by the [W3C WebDX Community Group](https://github.com/web-platform-dx) to document which features are available in four core browsers: Chrome (desktop and Android), Edge, Firefox (desktop and Android), and Safari (macOS and iOS). This data allows developers to choose the technologies that are best supported for their audience. As part of this effort, Baseline tracks which CSS features are available in which browsers.
+
+Features are grouped into three levels:
+
+- **Widely available** features are those supported by all core browsers for at least 30 months.
+- **Newly available** features are those supported by all core browsers for less than 30 months.
+- **Limited availability** features are those supported by some but not all core browsers.
+
+Generally speaking, it's preferable to stick to widely available features to ensure the greatest interoperability across browsers.
+
+## Rule Details
+
+This rule warns when it finds a CSS property or at-rule that isn't widely available or otherwise isn't enclosed in a `@supports` block. The data is provided via the [web-features](https://npmjs.com/package/web-features) package.
+
+Here are some examples:
+
+```css
+/* invalid - accent-color is not widely available */
+a {
+	accent-color: red;
+}
+
+/* valid - @supports indicates you're choosing a limited availability property */
+@supports (accent-color: auto) {
+	a {
+		accent-color: red;
+	}
+}
+```
+
+## When Not to Use It
+
+If your web application targets just one browser then you can safely disable this rule.
