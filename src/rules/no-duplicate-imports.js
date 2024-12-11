@@ -10,6 +10,7 @@ export default {
 		docs: {
 			description: "Disallow duplicate @import rules",
 			recommended: true,
+			url: "https://github.com/eslint/css/blob/main/docs/rules/no-duplicate-imports.md",
 		},
 
 		messages: {

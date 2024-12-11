@@ -21,6 +21,7 @@ export default {
 		docs: {
 			description: "Disallow invalid properties",
 			recommended: true,
+			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-properties.md",
 		},
 
 		messages: {

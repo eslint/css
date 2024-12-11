@@ -10,6 +10,7 @@ export default {
 		docs: {
 			description: "Disallow empty blocks",
 			recommended: true,
+			url: "https://github.com/eslint/css/blob/main/docs/rules/no-empty-blocks.md",
 		},
 
 		messages: {

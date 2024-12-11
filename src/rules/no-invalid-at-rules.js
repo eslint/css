@@ -49,6 +49,7 @@ export default {
 		docs: {
 			description: "Disallow invalid at-rules",
 			recommended: true,
+			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-at-rules.md",
 		},
 
 		messages: {
