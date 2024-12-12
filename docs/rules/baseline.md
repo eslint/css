@@ -34,6 +34,12 @@ a {
 }
 ```
 
+### Options
+
+This rule accepts an option object with the following properties:
+
+- `available` (default: `"widely"`) - change to `"newly"` available to allow a larger number of properties and at-rules.
+
 ## When Not to Use It
 
 If your web application targets just one browser then you can safely disable this rule.
