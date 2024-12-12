@@ -51,7 +51,7 @@
   "scripts": {
     "build:dedupe-types": "node tools/dedupe-types.js dist/cjs/index.cjs dist/esm/index.js",
     "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\"",
-    "build": "npm run build:baseline && rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
+    "build": "rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
     "build:readme": "node tools/update-readme.js",
     "build:update-rules-docs": "node tools/update-rules-docs.js",
     "build:baseline": "node tools/generate-baseline.js",
