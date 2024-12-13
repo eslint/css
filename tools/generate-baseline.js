@@ -9,7 +9,7 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { features } from "web-features";
+import { features as webFeatures } from "web-features";
 import fs from "node:fs";
 
 //------------------------------------------------------------------------------
@@ -26,148 +26,102 @@ const baselineIds = new Map([
 ]);
 
 /**
- * Filters out non-CSS features and minimizes the data.
- * @param {[string, Object]} entry The entry to filter.
- * @returns {boolean} True if the entry is a CSS feature, false otherwise.
+ * Flattens the compat features into an object where the key is the feature
+ * name and the value is the baseline.
+ * @param {Object} entry The entry to flatten.
+ * @returns {Object} The flattened entry.
  */
-function filterCSSFeatures([, value]) {
-	return value.compat_features?.some(feature => feature.startsWith("css."));
-}
-
-/**
- * Minimizes the data for a CSS feature.
- * @param {[string, Object]} entry The entry to minimize.
- * @returns {[string, Object]} The minimized entry.
- */
-function minimizeData([key, value]) {
-	return [
-		key,
-		{
-			baseline: value.status.baseline,
-			properties: [
-				...new Set(
-					value.compat_features
-						.filter(feature =>
-							feature.startsWith("css.properties."),
-						)
-						.map(feature =>
-							feature
-								.replace("css.properties.", "")
-								.replace(/\.[\w\d-]+$/u, ""),
-						),
-				),
-			],
-			atRules: [
-				...new Set(
-					value.compat_features
-						.filter(feature => feature.startsWith("css.at-rules."))
-						.map(feature =>
-							feature
-								.replace("css.at-rules.", "")
-								.replace(/\.[\w\d-]+$/u, ""),
-						),
-				),
-			],
-			types: [
-				...new Set(
-					value.compat_features
-						.filter(feature => feature.startsWith("css.types."))
-						.map(feature =>
-							feature
-								.replace("css.types.", "")
-								.replace(/\.[\w\d-]+$/u, ""),
-						),
-				),
-			],
-			selectors: [
-				...new Set(
-					value.compat_features
-						.filter(feature => feature.startsWith("css.selectors."))
-						.map(feature =>
-							feature
-								.replace("css.selectors.", "")
-								.replace(/\.[\w\d-]+$/u, ""),
-						),
-				),
-			],
-		},
-	];
-}
-
-/**
- * Groups CSS features by baseline.
- * @param {Array<[string, Object]>} entries The entries to group.
- * @returns {Object} The grouped CSS features.
- */
-function groupByBaseline(entries) {
-	const allFeatures = {
-		properties: {},
-		atRules: {},
-		types: {},
-		selectors: {},
-	};
-
-	/*
-	 * We end up with duplicates due to the naive way we are calculating
-	 * which values to include. So we need to remove duplicates and update
-	 * each to the highest possible baseline value.
-	 */
-
-	for (const [, value] of entries) {
-		value.properties.forEach(property => {
-			if (
-				allFeatures.properties[property] === undefined ||
-				allFeatures.properties[property] <
-					baselineIds.get(value.baseline)
-			) {
-				allFeatures.properties[property] = baselineIds.get(
-					value.baseline,
-				);
-			}
-		});
-
-		value.atRules.forEach(atRule => {
-			if (
-				allFeatures.atRules[atRule] === undefined ||
-				allFeatures.atRules[atRule] < baselineIds.get(value.baseline)
-			) {
-				allFeatures.atRules[atRule] = baselineIds.get(value.baseline);
-			}
-		});
-
-		value.types.forEach(type => {
-			if (
-				allFeatures.types[type] === undefined ||
-				allFeatures.types[type] < baselineIds.get(value.baseline)
-			) {
-				allFeatures.types[type] = baselineIds.get(value.baseline);
-			}
-		});
-
-		value.selectors.forEach(selector => {
-			if (
-				allFeatures.selectors[selector] === undefined ||
-				allFeatures.selectors[selector] <
-					baselineIds.get(value.baseline)
-			) {
-				allFeatures.selectors[selector] = baselineIds.get(
-					value.baseline,
-				);
-			}
-		});
+function flattenCompatFeatures(entry) {
+	if (!entry.compat_features) {
+		return {};
 	}
 
-	return allFeatures;
+	return Object.fromEntries(
+		entry.compat_features.map(feature => [feature, entry.status.baseline]),
+	);
+}
+
+/**
+ * Extracts CSS features from the raw data.
+ * @param {Object} features The CSS features to extract.
+ * @returns {Object} The extracted CSS features.
+ */
+function extractCSSFeatures(features) {
+	const cssPropertyPattern = /^css\.properties\.(?<property>[a-zA-Z$\d-]+)$/u;
+	const cssPropertyValuePattern =
+		/^css\.properties\.(?<property>[a-zA-Z$\d-]+)\.(?<value>[a-zA-Z$\d-]+)$/u;
+	const cssAtRulePattern = /^css\.at-rules\.(?<atRule>[a-zA-Z$\d-]+)$/u;
+	const cssTypePattern = /^css\.types\.(?<type>[a-zA-Z$\d-]+)$/u;
+	const cssSelectorPattern = /^css\.selectors\.(?<selector>[a-zA-Z$\d-]+)$/u;
+
+	const properties = {};
+	const propertyValues = {};
+	const atRules = {};
+	const types = {};
+	const selectors = {};
+
+	for (const [key, baseline] of Object.entries(features)) {
+		let match;
+
+		// property names
+		if ((match = cssPropertyPattern.exec(key)) !== null) {
+			properties[match.groups.property] = baselineIds.get(baseline);
+			continue;
+		}
+
+		// property values
+		if ((match = cssPropertyValuePattern.exec(key)) !== null) {
+			if (!propertyValues[match.groups.property]) {
+				propertyValues[match.groups.property] = {};
+			}
+			propertyValues[match.groups.property][match.groups.value] =
+				baselineIds.get(baseline);
+			continue;
+		}
+
+		// at-rules
+		if ((match = cssAtRulePattern.exec(key)) !== null) {
+			atRules[match.groups.atRule] = baselineIds.get(baseline);
+			continue;
+		}
+
+		// types
+		if ((match = cssTypePattern.exec(key)) !== null) {
+			types[match.groups.type] = baselineIds.get(baseline);
+			continue;
+		}
+
+		// selectors
+		if ((match = cssSelectorPattern.exec(key)) !== null) {
+			selectors[match.groups.selector] = baselineIds.get(baseline);
+			continue;
+		}
+	}
+
+	return {
+		properties,
+		propertyValues,
+		atRules,
+		types,
+		selectors,
+	};
 }
 
 //------------------------------------------------------------------------------
 // Main
 //------------------------------------------------------------------------------
 
-const featuresPath = "./src/data/baseline-data.js";
-const cssFeatures = groupByBaseline(
-	Object.entries(features).filter(filterCSSFeatures).map(minimizeData),
+// create one object with all features then filter just on the css ones
+const allFeatures = Object.values(webFeatures).reduce(
+	(acc, entry) => Object.assign(acc, flattenCompatFeatures(entry)),
+	{},
 );
+const cssFeatures = extractCSSFeatures(
+	Object.fromEntries(
+		Object.entries(allFeatures).filter(([key]) => key.startsWith("css.")),
+	),
+);
+const featuresPath = "./src/data/baseline-data.js";
 
 // export each group separately as a Set, such as highProperties, lowProperties, etc.
 const code = `/**
@@ -185,6 +139,12 @@ export const properties = new Map(${JSON.stringify(Object.entries(cssFeatures.pr
 export const atRules = new Map(${JSON.stringify(Object.entries(cssFeatures.atRules), null, "\t")});
 export const types = new Map(${JSON.stringify(Object.entries(cssFeatures.types), null, "\t")});
 export const selectors = new Map(${JSON.stringify(Object.entries(cssFeatures.selectors), null, "\t")});
+export const propertyValues = new Map([${Object.entries(
+	cssFeatures.propertyValues,
+).map(
+	([key, value]) =>
+		`["${key}", new Map(${JSON.stringify(Object.entries(value), null, "\t")})]`,
+)}]);
 `;
 
 fs.writeFileSync(featuresPath, code);

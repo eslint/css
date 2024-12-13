@@ -11,6 +11,7 @@ import {
 	BASELINE_HIGH,
 	BASELINE_LOW,
 	properties,
+	propertyValues,
 	atRules,
 } from "../data/baseline-data.js";
 
@@ -48,6 +49,8 @@ export default {
 		messages: {
 			notBaselineProperty:
 				"Property '{{property}}' is not a {{availability}} available baseline feature.",
+			notBaselinePropertyValue:
+				"Value '{{value}}' of property '{{property}}' is not a {{availability}} available baseline feature.",
 			notBaselineAtRule:
 				"At-rule '@{{atRule}}' is not a {{availability}} available baseline feature.",
 		},
@@ -57,11 +60,20 @@ export default {
 		const availability = context.options[0].available;
 		const baselineLevel =
 			availability === "widely" ? BASELINE_HIGH : BASELINE_LOW;
-		const atSupportedProperties = new Set();
+		const atSupportedProperties = new Map();
 
 		return {
 			"Atrule[name=supports] SupportsDeclaration > Declaration"(node) {
-				atSupportedProperties.add(node.property);
+				if (!atSupportedProperties.has(node.property)) {
+					atSupportedProperties.set(node.property, new Set());
+				}
+
+				// for now we can only check identifiers
+				if (node.value.children[0].type === "Identifier") {
+					atSupportedProperties
+						.get(node.property)
+						.add(node.value.children[0].name);
+				}
 			},
 
 			"Rule > Block > Declaration"(node) {
@@ -72,7 +84,37 @@ export default {
 
 				// if the property has been tested in a @supports rule, ignore it
 				if (atSupportedProperties.has(node.property)) {
-					return;
+					const firstChild = node.value.children[0];
+
+					// make sure the identifier is allowed
+					if (firstChild.type === "Identifier") {
+						if (
+							atSupportedProperties
+								.get(node.property)
+								.has(firstChild.name)
+						) {
+							return;
+						}
+
+						const propertyValueLevel = propertyValues
+							.get(node.property)
+							.get(firstChild.name);
+
+						if (propertyValueLevel < baselineLevel) {
+							context.report({
+								loc: firstChild.loc,
+								messageId: "notBaselinePropertyValue",
+								data: {
+									property: node.property,
+									value: firstChild.name,
+									availability,
+								},
+							});
+						}
+					} else {
+						// we can't check the value so we'll give the user the benefit of the doubt
+						return;
+					}
 				}
 
 				const ruleLevel = properties.get(node.property);

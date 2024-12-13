@@ -33,13 +33,14 @@ ruleTester.run("baseline", rule, {
 		"a { color: red; -moz-transition: bar }",
 		"@font-face { font-weight: 100 400 }",
 		"@media (min-width: 800px) { a { color: red; } }",
-		"@supports (accent-color: auto) { a { accent-color: red; } }",
+		"@supports (accent-color: auto) { a { accent-color: auto; } }",
+		"@supports (clip-path: fill-box) { a { clip-path: fill-box; } }",
 		`@supports (accent-color: auto) and (backdrop-filter: auto) {
-            a { accent-color: red; background-filter: auto }
+            a { accent-color: auto; background-filter: auto }
         }`,
 		`@supports (accent-color: auto) {
             @supports (backdrop-filter: auto) {
-                a { accent-color: red; background-filter: auto }
+                a { accent-color: auto; background-filter: auto }
             }
         }`,
 		{
@@ -167,6 +168,17 @@ ruleTester.run("baseline", rule, {
 				{
 					messageId: "notBaselineProperty",
 					data: {
+						property: "accent-color",
+						availability: "widely",
+					},
+					line: 3,
+					column: 13,
+					endLine: 3,
+					endColumn: 25,
+				},
+				{
+					messageId: "notBaselineProperty",
+					data: {
 						property: "backdrop-filter",
 						availability: "widely",
 					},
@@ -174,6 +186,39 @@ ruleTester.run("baseline", rule, {
 					column: 9,
 					endLine: 6,
 					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: "@supports (clip-path: fill-box) { a { clip-path: stroke-box; } }",
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "clip-path",
+						value: "stroke-box",
+						availability: "widely",
+					},
+					line: 1,
+					column: 50,
+					endLine: 1,
+					endColumn: 60,
+				},
+			],
+		},
+		{
+			code: "@supports (accent-color: auto) { a { accent-color: red; } }",
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "accent-color",
+						availability: "widely",
+					},
+					line: 1,
+					column: 38,
+					endLine: 1,
+					endColumn: 50,
 				},
 			],
 		},
