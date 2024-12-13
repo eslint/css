@@ -16,7 +16,13 @@ Generally speaking, it's preferable to stick to widely available features to ens
 
 ## Rule Details
 
-This rule warns when it finds a CSS property or at-rule that isn't widely available or otherwise isn't enclosed in a `@supports` block. The data is provided via the [web-features](https://npmjs.com/package/web-features) package.
+This rule warns when it finds any of the following:
+
+- A CSS property that isn't widely available or otherwise isn't enclosed in a `@supports` block.
+- An at-rule that isn't widely available.
+- A CSS property value that isn't widely available or otherwise isn't enclosed in a `@supports` block (currently limited to identifiers only).
+
+The data is provided via the [web-features](https://npmjs.com/package/web-features) package.
 
 Here are some examples:
 
@@ -26,10 +32,17 @@ a {
 	accent-color: red;
 }
 
-/* valid - @supports indicates you're choosing a limited availability property */
+/* invalid - property value doesn't match @supports indicator */
 @supports (accent-color: auto) {
 	a {
 		accent-color: red;
+	}
+}
+
+/* valid - @supports indicates you're choosing a limited availability property */
+@supports (accent-color: auto) {
+	a {
+		accent-color: auto;
 	}
 }
 ```
