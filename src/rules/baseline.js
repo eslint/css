@@ -13,6 +13,7 @@ import {
 	properties,
 	propertyValues,
 	atRules,
+	types,
 } from "../data/baseline-data.js";
 
 //-----------------------------------------------------------------------------
@@ -249,6 +250,8 @@ export default {
 				"Value '{{value}}' of property '{{property}}' is not a {{availability}} available baseline feature.",
 			notBaselineAtRule:
 				"At-rule '@{{atRule}}' is not a {{availability}} available baseline feature.",
+			notBaselineType:
+				"Type '{{type}}' is not a {{availability}} available baseline feature.",
 		},
 	},
 
@@ -358,6 +361,24 @@ export default {
 							availability,
 						},
 					});
+				}
+			},
+
+			Function(node) {
+				const type = node.name;
+				if (types.has(type)) {
+					const typeLevel = types.get(type);
+
+					if (typeLevel < baselineLevel) {
+						context.report({
+							loc: node.loc,
+							messageId: "notBaselineType",
+							data: {
+								type,
+								availability,
+							},
+						});
+					}
 				}
 			},
 
