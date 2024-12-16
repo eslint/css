@@ -36,18 +36,24 @@ ruleTester.run("baseline", rule, {
 		"@supports (accent-color: auto) { a { accent-color: auto; } }",
 		"@supports (clip-path: fill-box) { a { clip-path: fill-box; } }",
 		`@supports (accent-color: auto) and (backdrop-filter: auto) {
-            a { accent-color: auto; background-filter: auto }
-        }`,
+			a { accent-color: auto; background-filter: auto }
+		}`,
 		`@supports (accent-color: auto) {
-            @supports (backdrop-filter: auto) {
-                a { accent-color: auto; background-filter: auto }
-            }
-        }`,
+			@supports (backdrop-filter: auto) {
+				a { accent-color: auto; background-filter: auto }
+			}
+		}`,
+		`@supports (accent-color: auto) {
+			@supports (accent-color: auto) {
+				a { accent-color: auto; }
+			}
+			a { accent-color: auto; }
+		}`,
 		{
 			code: `@property --foo {
-                syntax: "*";
-                inherits: false;
-            }`,
+				syntax: "*";
+				inherits: false;
+			}`,
 			options: [{ available: "newly" }],
 		},
 		{
@@ -102,12 +108,12 @@ ruleTester.run("baseline", rule, {
 		},
 		{
 			code: `@property --foo {
-                syntax: "*";
-                inherits: false;
-            }
-            @media (min-width: 800px) {
-                a { color: red; }
-            }`,
+				syntax: "*";
+				inherits: false;
+			}
+			@media (min-width: 800px) {
+				a { color: red; }
+			}`,
 			options: [{ available: "widely" }],
 			errors: [
 				{
@@ -158,12 +164,12 @@ ruleTester.run("baseline", rule, {
 		},
 		{
 			code: dedent`@supports (accent-color: auto) {
-                @supports (backdrop-filter: auto) {
-                    a { accent-color: red; }
-                }
-                
-                a { backdrop-filter: auto; }
-            }`,
+				@supports (backdrop-filter: auto) {
+					a { accent-color: red; }
+				}
+				
+				a { backdrop-filter: auto; }
+			}`,
 			errors: [
 				{
 					messageId: "notBaselineProperty",
@@ -172,9 +178,9 @@ ruleTester.run("baseline", rule, {
 						availability: "widely",
 					},
 					line: 3,
-					column: 13,
+					column: 7,
 					endLine: 3,
-					endColumn: 25,
+					endColumn: 19,
 				},
 				{
 					messageId: "notBaselineProperty",
@@ -183,9 +189,9 @@ ruleTester.run("baseline", rule, {
 						availability: "widely",
 					},
 					line: 6,
-					column: 9,
+					column: 6,
 					endLine: 6,
-					endColumn: 24,
+					endColumn: 21,
 				},
 			],
 		},
