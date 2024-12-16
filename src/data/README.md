@@ -11,7 +11,3 @@ To generate baseline data, run:
 ```shell
 npm run build:baseline
 ```
-
-## csstree-data.js (manual)
-
-Contains data that helps to work with CSSTree.
