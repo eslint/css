@@ -58,7 +58,7 @@ export default [
 
 | **Rule Name**                                                    | **Description**                  | **Recommended** |
 | :--------------------------------------------------------------- | :------------------------------- | :-------------: |
-| [`baseline`](./docs/rules/baseline.md) | Enforce the use of baseline features | yes |
+| [`baseline`](./docs/rules/baseline.md)                           | Enforce the use of baseline features |       yes       |
 | [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)   | Disallow duplicate @import rules |       yes       |
 | [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)             | Disallow empty blocks            |       yes       |
 | [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)     | Disallow invalid at-rules        |       yes       |
