@@ -56,12 +56,13 @@ export default [
 
 <!-- Rule Table Start -->
 
-| **Rule Name**                                                    | **Description**                  | **Recommended** |
-| :--------------------------------------------------------------- | :------------------------------- | :-------------: |
-| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)   | Disallow duplicate @import rules |       yes       |
-| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)             | Disallow empty blocks            |       yes       |
-| [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)     | Disallow invalid at-rules        |       yes       |
-| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md) | Disallow invalid properties      |       yes       |
+| **Rule Name**                                                    | **Description**                                  | **Recommended** |
+| :--------------------------------------------------------------- | :----------------------------------------------- | :-------------: |
+| [`max-specificity`](./docs/rules/max-specificity.md)             | Enforce the maximum specificity of CSS selectors |       no        |
+| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)   | Disallow duplicate @import rules                 |       yes       |
+| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)             | Disallow empty blocks                            |       yes       |
+| [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)     | Disallow invalid at-rules                        |       yes       |
+| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md) | Disallow invalid properties                      |       yes       |
 
 <!-- Rule Table End -->
 
