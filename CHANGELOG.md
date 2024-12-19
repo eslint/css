@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/eslint/css/compare/css-v0.1.0...css-v0.1.1) (2024-12-19)
+
+
+### Bug Fixes
+
+* add type tests ([#16](https://github.com/eslint/css/issues/16)) ([f21e090](https://github.com/eslint/css/commit/f21e090cca76a85bf6b6c89c8797c79f28d5a163))
+
 ## 0.1.0 (2024-11-26)
 
 
