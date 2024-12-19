@@ -35,7 +35,10 @@
       "prettier --write"
     ],
     "!(*.js)": "prettier --write --ignore-unknown",
-    "{src/rules/*.js,tools/update-rules-docs.js}": "npm run build:update-rules-docs"
+    "{src/rules/*.js,tools/update-rules-docs.js}": [
+      "node tools/update-rules-docs.js",
+      "git add README.md "
+    ]
   },
   "repository": {
     "type": "git",
@@ -51,6 +54,7 @@
     "build": "rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
     "build:readme": "node tools/update-readme.js",
     "build:update-rules-docs": "node tools/update-rules-docs.js",
+    "build:baseline": "node tools/generate-baseline.js",
     "test:jsr": "npx jsr@latest publish --dry-run",
     "pretest": "npm run build",
     "lint": "eslint",
@@ -89,6 +93,7 @@
     "rollup": "^4.16.2",
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.4.5",
+    "web-features": "^2.11.0",
     "yorkie": "^2.0.0"
   },
   "engines": {
