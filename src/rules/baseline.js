@@ -15,12 +15,15 @@ import {
 	atRules,
 	types,
 } from "../data/baseline-data.js";
+import { namedColors } from "../data/colors.js";
 
 //-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
 /** @typedef {import("css-tree").AtrulePlain} AtrulePlain */
+/** @typedef {import("css-tree").Identifier} Identifier */
+/** @typedef {import("css-tree").FunctionNodePlain} FunctionNodePlain */
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -41,6 +44,12 @@ class SupportedProperty {
 	 * @type {Set<string>}
 	 */
 	#identifiers = new Set();
+
+	/**
+	 * Supported function types.
+	 * @type {Set<string>}
+	 */
+	#functions = new Set();
 
 	/**
 	 * Creates a new instance.
@@ -74,6 +83,32 @@ class SupportedProperty {
 	 */
 	hasIdentifiers() {
 		return this.#identifiers.size > 0;
+	}
+
+	/**
+	 * Adds a function to the list of supported functions.
+	 * @param {string} func The function to add.
+	 * @returns {void}
+	 */
+	addFunction(func) {
+		this.#functions.add(func);
+	}
+
+	/**
+	 * Determines if a function is supported.
+	 * @param {string} func The function to check.
+	 * @returns {boolean} `true` if the function is supported, `false` if not.
+	 */
+	hasFunction(func) {
+		return this.#functions.has(func);
+	}
+
+	/**
+	 * Determines if any functions are supported.
+	 * @returns {boolean} `true` if any functions are supported, `false` if not.
+	 */
+	hasFunctions() {
+		return this.#functions.size > 0;
 	}
 }
 
@@ -144,6 +179,37 @@ class SupportsRule {
 
 		return supportedProperty.hasIdentifiers();
 	}
+
+	/**
+	 * Determines if the rule supports a function.
+	 * @param {string} property The name of the property.
+	 * @param {string} func The function to check.
+	 * @returns {boolean} `true` if the function is supported, `false` if not.
+	 */
+	hasFunction(property, func) {
+		const supportedProperty = this.#properties.get(property);
+
+		if (!supportedProperty) {
+			return false;
+		}
+
+		return supportedProperty.hasFunction(func);
+	}
+
+	/**
+	 * Determines if the rule supports any functions.
+	 * @param {string} property The name of the property.
+	 * @returns {boolean} `true` if any functions are supported, `false` if not.
+	 */
+	hasFunctions(property) {
+		const supportedProperty = this.#properties.get(property);
+
+		if (!supportedProperty) {
+			return false;
+		}
+
+		return supportedProperty.hasFunctions();
+	}
 }
 
 /**
@@ -210,6 +276,25 @@ class SupportsRules {
 	hasPropertyIdentifiers(property) {
 		return this.#rules.some(rule => rule.hasPropertyIdentifiers(property));
 	}
+
+	/**
+	 * Determines if any rule supports a function.
+	 * @param {string} property The name of the property.
+	 * @param {string} func The function to check.
+	 * @returns {boolean} `true` if any rule supports the function, `false` if not.
+	 */
+	hasPropertyFunction(property, func) {
+		return this.#rules.some(rule => rule.hasFunction(property, func));
+	}
+
+	/**
+	 * Determines if any rule supports any functions.
+	 * @param {string} property The name of the property.
+	 * @returns {boolean} `true` if any rule supports the functions, `false` if not.
+	 */
+	hasPropertyFunctions(property) {
+		return this.#rules.some(rule => rule.hasFunctions(property));
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -261,6 +346,59 @@ export default {
 			availability === "widely" ? BASELINE_HIGH : BASELINE_LOW;
 		const supportsRules = new SupportsRules();
 
+		/**
+		 * Checks a property value identifier to see if it's a baseline feature.
+		 * @param {string} property The name of the property.
+		 * @param {import("css-tree").Identifier} child The node to check.
+		 * @returns {void}
+		 */
+		function checkPropertyValueIdentifier(property, child) {
+			// named colors are always valid
+			if (namedColors.has(child.name)) {
+				return;
+			}
+			const possiblePropertyValues = propertyValues.get(property);
+
+			// if we don't know of any possible property values, just skip it
+			if (!possiblePropertyValues) {
+				return;
+			}
+
+			const propertyValueLevel = possiblePropertyValues.get(child.name);
+
+			if (propertyValueLevel < baselineLevel) {
+				context.report({
+					loc: child.loc,
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property,
+						value: child.name,
+						availability,
+					},
+				});
+			}
+		}
+
+		/**
+		 * Checks a property value function to see if it's a baseline feature.
+		 * @param {import("css-tree").FunctionNodePlain} child The node to check.
+		 * @returns {void}
+		 **/
+		function checkPropertyValueFunction(child) {
+			const propertyValueLevel = types.get(child.name);
+
+			if (propertyValueLevel < baselineLevel) {
+				context.report({
+					loc: child.loc,
+					messageId: "notBaselineType",
+					data: {
+						type: child.name,
+						availability,
+					},
+				});
+			}
+		}
+
 		return {
 			"Atrule[name=supports]"() {
 				supportsRules.push(new SupportsRule());
@@ -279,105 +417,81 @@ export default {
 						supportsRule
 							.getProperty(node.property)
 							.addIdentifier(child.name);
+						return;
+					}
+
+					if (child.type === "Function") {
+						supportsRule
+							.getProperty(node.property)
+							.addFunction(child.name);
 					}
 				});
 			},
 
 			"Rule > Block > Declaration"(node) {
+				const property = node.property;
+
 				// ignore unknown properties - no-invalid-properties already catches this
-				if (!properties.has(node.property)) {
+				if (!properties.has(property)) {
 					return;
 				}
 
-				// if the property has been tested in a @supports rule, ignore it
-				if (supportsRules.hasProperty(node.property)) {
-					let valueIsValid = false;
+				/*
+				 * Step 1: Check that the property is in the baseline.
+				 *
+				 * If the property has been tested in a @supports rule, we don't need to
+				 * check it because it won't be applied if the browser doesn't support it.
+				 */
+				if (!supportsRules.hasProperty(property)) {
+					const ruleLevel = properties.get(property);
 
-					if (supportsRules.hasPropertyIdentifiers(node.property)) {
-						for (const child of node.value.children) {
-							if (child.type === "Identifier") {
-								if (
-									supportsRules.hasPropertyIdentifier(
-										node.property,
-										child.name,
-									)
-								) {
-									valueIsValid = true;
-									continue;
-								}
-
-								const propertyValueLevel = propertyValues
-									.get(node.property)
-									.get(child.name);
-
-								if (propertyValueLevel < baselineLevel) {
-									context.report({
-										loc: child.loc,
-										messageId: "notBaselinePropertyValue",
-										data: {
-											property: node.property,
-											value: child.name,
-											availability,
-										},
-									});
-								}
-							}
-						}
-					}
-
-					/*
-					 * When we make it here, that means we've checked all the
-					 * property values we can check. If we can confirm that the
-					 * value is valid, then we can exit early. Otherwise, we
-					 * must continue on to check the baseline status of the
-					 * property itself.
-					 */
-					if (valueIsValid) {
-						return;
+					if (ruleLevel < baselineLevel) {
+						context.report({
+							loc: {
+								start: node.loc.start,
+								end: {
+									line: node.loc.start.line,
+									column:
+										node.loc.start.column +
+										node.property.length,
+								},
+							},
+							messageId: "notBaselineProperty",
+							data: {
+								property,
+								availability,
+							},
+						});
 					}
 				}
 
 				/*
-				 * If we made it here, that means the property isn't referenced
-				 * in an `@supports` rule, so we need to check it directly.
+				 * Step 2: Check that the property values are in the baseline.
 				 */
+				for (const child of node.value.children) {
+					if (child.type === "Identifier") {
+						// if the property value has been tested in a @supports rule, don't check it
+						if (
+							!supportsRules.hasPropertyIdentifier(
+								property,
+								child.name,
+							)
+						) {
+							checkPropertyValueIdentifier(property, child);
+						}
 
-				const ruleLevel = properties.get(node.property);
+						continue;
+					}
 
-				if (ruleLevel < baselineLevel) {
-					context.report({
-						loc: {
-							start: node.loc.start,
-							end: {
-								line: node.loc.start.line,
-								column:
-									node.loc.start.column +
-									node.property.length,
-							},
-						},
-						messageId: "notBaselineProperty",
-						data: {
-							property: node.property,
-							availability,
-						},
-					});
-				}
-			},
-
-			Function(node) {
-				const type = node.name;
-				if (types.has(type)) {
-					const typeLevel = types.get(type);
-
-					if (typeLevel < baselineLevel) {
-						context.report({
-							loc: node.loc,
-							messageId: "notBaselineType",
-							data: {
-								type,
-								availability,
-							},
-						});
+					if (child.type === "Function") {
+						if (
+							!supportsRules.hasPropertyFunction(
+								property,
+								child.name,
+							)
+						) {
+							checkPropertyValueFunction(child);
+						}
 					}
 				}
 			},

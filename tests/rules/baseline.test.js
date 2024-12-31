@@ -35,6 +35,8 @@ ruleTester.run("baseline", rule, {
 		"@font-face { font-weight: 100 400 }",
 		"@media (min-width: 800px) { a { color: red; } }",
 		"@supports (accent-color: auto) { a { accent-color: auto; } }",
+		"@supports (accent-color: red) { a { accent-color: red; } }",
+		"@supports (accent-color: auto) { a { accent-color: red; } }",
 		"@supports (clip-path: fill-box) { a { clip-path: fill-box; } }",
 		`@supports (accent-color: auto) and (backdrop-filter: auto) {
 			a { accent-color: auto; background-filter: auto }
@@ -49,6 +51,9 @@ ruleTester.run("baseline", rule, {
 				a { accent-color: auto; }
 			}
 			a { accent-color: auto; }
+		}`,
+		`@supports (width: abs(20% - 100px)) {
+			a { width: abs(20% - 100px); }
 		}`,
 		{
 			code: `@property --foo {
@@ -175,17 +180,6 @@ ruleTester.run("baseline", rule, {
 				{
 					messageId: "notBaselineProperty",
 					data: {
-						property: "accent-color",
-						availability: "widely",
-					},
-					line: 3,
-					column: 7,
-					endLine: 3,
-					endColumn: 19,
-				},
-				{
-					messageId: "notBaselineProperty",
-					data: {
 						property: "backdrop-filter",
 						availability: "widely",
 					},
@@ -214,18 +208,18 @@ ruleTester.run("baseline", rule, {
 			],
 		},
 		{
-			code: "@supports (accent-color: auto) { a { accent-color: red; } }",
+			code: "@supports (accent-color: auto) { a { accent-color: abs(20% - 10px); } }",
 			errors: [
 				{
-					messageId: "notBaselineProperty",
+					messageId: "notBaselineType",
 					data: {
-						property: "accent-color",
+						type: "abs",
 						availability: "widely",
 					},
 					line: 1,
-					column: 38,
+					column: 52,
 					endLine: 1,
-					endColumn: 50,
+					endColumn: 67,
 				},
 			],
 		},
@@ -235,7 +229,6 @@ ruleTester.run("baseline", rule, {
 				{
 					messageId: "notBaselineType",
 					data: {
-						property: "width",
 						type: "abs",
 						availability: "widely",
 					},
