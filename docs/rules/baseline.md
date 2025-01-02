@@ -41,12 +41,19 @@ a {
 /* invalid - property value doesn't match @supports indicator */
 @supports (accent-color: auto) {
 	a {
-		accent-color: red;
+		accent-color: abs(20% - 10px);
 	}
 }
 
 /* valid - @supports indicates you're choosing a limited availability property */
 @supports (accent-color: auto) {
+	a {
+		accent-color: auto;
+	}
+}
+
+/* invalid - @supports says that this property isn't available */
+@supports not (accent-color: auto) {
 	a {
 		accent-color: auto;
 	}

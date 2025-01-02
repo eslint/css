@@ -125,10 +125,17 @@ class SupportsRule {
 	/**
 	 * Adds a property to the rule.
 	 * @param {string} property The name of the property.
-	 * @returns {void}
+	 * @returns {SupportedProperty} The supported property object.
 	 */
 	addProperty(property) {
-		this.#properties.set(property, new SupportedProperty(property));
+		if (this.#properties.has(property)) {
+			return this.#properties.get(property);
+		}
+
+		const supportedProperty = new SupportedProperty(property);
+		this.#properties.set(property, supportedProperty);
+
+		return supportedProperty;
 	}
 
 	/**
@@ -404,28 +411,42 @@ export default {
 				supportsRules.push(new SupportsRule());
 			},
 
-			"Atrule[name=supports] SupportsDeclaration > Declaration"(node) {
+			"Atrule[name=supports] > AtrulePrelude > Condition"(node) {
 				const supportsRule = supportsRules.last();
 
-				if (!supportsRule.hasProperty(node.property)) {
-					supportsRule.addProperty(node.property);
+				for (let i = 0; i < node.children.length; i++) {
+					const conditionChild = node.children[i];
+
+					// if a SupportsDeclaration is preceded by "not" then we don't consider it
+					if (
+						conditionChild.type === "Identifier" &&
+						conditionChild.name === "not"
+					) {
+						i++;
+						continue;
+					}
+
+					// save the supported properties and values for this at-rule
+					if (conditionChild.type === "SupportsDeclaration") {
+						const { declaration } = conditionChild;
+						const property = declaration.property;
+						const supportedProperty =
+							supportsRule.addProperty(property);
+
+						declaration.value.children.forEach(child => {
+							if (child.type === "Identifier") {
+								supportedProperty.addIdentifier(child.name);
+								return;
+							}
+
+							if (child.type === "Function") {
+								supportedProperty.addFunction(child.name);
+							}
+						});
+
+						continue;
+					}
 				}
-
-				// for now we can only check identifiers
-				node.value.children.forEach(child => {
-					if (child.type === "Identifier") {
-						supportsRule
-							.getProperty(node.property)
-							.addIdentifier(child.name);
-						return;
-					}
-
-					if (child.type === "Function") {
-						supportsRule
-							.getProperty(node.property)
-							.addFunction(child.name);
-					}
-				});
 			},
 
 			"Rule > Block > Declaration"(node) {
@@ -462,6 +483,15 @@ export default {
 								availability,
 							},
 						});
+
+						/*
+						 * If the property isn't in baseline, then we don't go
+						 * on to check the values. If the property itself isn't
+						 * in baseline then chances are the values aren't too,
+						 * and there's no need to report multiple errors for the
+						 * same property.
+						 */
+						return;
 					}
 				}
 
