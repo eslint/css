@@ -38,7 +38,7 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.ast.children[0].type, "Rule");
 		});
 
-		it("should return an error when parsing invalid CSS", () => {
+		it("should return an error when CSS has a recoverable error", () => {
 			const language = new CSSLanguage();
 			const result = language.parse({
 				body: "a { foo; bar: 1! }",
@@ -59,6 +59,19 @@ describe("CSSLanguage", () => {
 			);
 			assert.strictEqual(result.errors[1].line, 1);
 			assert.strictEqual(result.errors[1].column, 18);
+		});
+
+		it("should not return an error when CSS has a recoverable error and tolerant: true is used", () => {
+			const language = new CSSLanguage();
+			const result = language.parse(
+				{
+					body: "a { foo; bar: 1! }",
+					path: "test.css",
+				},
+				{ languageOptions: { tolerant: true } },
+			);
+
+			assert.strictEqual(result.ok, true);
 		});
 
 		// https://github.com/csstree/csstree/issues/301

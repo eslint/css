@@ -132,6 +132,31 @@ export default [
 ];
 ```
 
+By default, the CSS parser runs in strict mode, which reports all parsing errors. If you'd like to allow recoverable parsing errors (those that the browser automatically fixes on its own), you can set the `tolerant` option to `true`:
+
+```js
+// eslint.config.js
+import css from "@eslint/css";
+
+export default [
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		languageOptions: {
+			tolerant: true,
+		},
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
+];
+```
+
+Setting `tolerant` to `true` is necessary if you are using custom syntax, such as [PostCSS](https://postcss.org/) plugins, that aren't part of the standard CSS syntax.
+
 ## License
 
 Apache 2.0
