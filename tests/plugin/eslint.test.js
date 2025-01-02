@@ -37,6 +37,72 @@ describe("Plugin", () => {
 		});
 	});
 
+	describe("languageOptions", () => {
+		const config = {
+			files: ["*.css"],
+			plugins: {
+				css,
+			},
+			language: "css/css",
+			rules: {
+				"css/no-empty-blocks": "error",
+			},
+		};
+
+		describe("tolerant", () => {
+			it("should not report a parsing error when CSS has a recoverable error and tolerant: true is used", async () => {
+				const code = "a { foo; bar: 1! }";
+
+				const eslint = new ESLint({
+					overrideConfigFile: true,
+					overrideConfig: {
+						...config,
+						languageOptions: {
+							tolerant: true,
+						},
+					},
+				});
+
+				const results = await eslint.lintText(code, {
+					filePath: "test.css",
+				});
+
+				assert.strictEqual(results.length, 1);
+				assert.strictEqual(results[0].messages.length, 0);
+			});
+
+			it("should report a parsing error when CSS has a recoverable error and tolerant is undefined", async () => {
+				const code = "a { foo; bar: 1! }";
+
+				const eslint = new ESLint({
+					overrideConfigFile: true,
+					overrideConfig: config,
+				});
+
+				const results = await eslint.lintText(code, {
+					filePath: "test.css",
+				});
+
+				assert.strictEqual(results.length, 1);
+				assert.strictEqual(results[0].messages.length, 2);
+
+				assert.strictEqual(
+					results[0].messages[0].message,
+					"Parsing error: Colon is expected",
+				);
+				assert.strictEqual(results[0].messages[0].line, 1);
+				assert.strictEqual(results[0].messages[0].column, 8);
+
+				assert.strictEqual(
+					results[0].messages[1].message,
+					"Parsing error: Identifier is expected",
+				);
+				assert.strictEqual(results[0].messages[1].line, 1);
+				assert.strictEqual(results[0].messages[1].column, 18);
+			});
+		});
+	});
+
 	describe("Configuration Comments", () => {
 		const config = {
 			files: ["*.css"],

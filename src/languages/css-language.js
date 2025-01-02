@@ -25,6 +25,11 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /** @typedef {import("@eslint/core").File} File */
 /** @typedef {import("@eslint/core").FileError} FileError */
 
+/**
+ * @typedef {Object} CSSLanguageOptions
+ * @property {boolean} [tolerant] Whether to be tolerant of recoverable parsing errors.
+ */
+
 //-----------------------------------------------------------------------------
 // Exports
 //-----------------------------------------------------------------------------
@@ -65,20 +70,37 @@ export class CSSLanguage {
 	visitorKeys = visitorKeys;
 
 	/**
+	 * The default language options.
+	 * @type {CSSLanguageOptions}
+	 */
+	defaultLanguageOptions = {
+		tolerant: false,
+	};
+
+	/**
 	 * Validates the language options.
-	 * @returns {void}
+	 * @param {CSSLanguageOptions} languageOptions The language options to validate.
 	 * @throws {Error} When the language options are invalid.
 	 */
-	validateLanguageOptions() {
-		// noop
+	validateLanguageOptions(languageOptions) {
+		if (
+			"tolerant" in languageOptions &&
+			typeof languageOptions.tolerant !== "boolean"
+		) {
+			throw new TypeError(
+				"Expected a boolean value for 'tolerant' option.",
+			);
+		}
 	}
 
 	/**
 	 * Parses the given file into an AST.
 	 * @param {File} file The virtual file to parse.
+	 * @param {Object} [context] The parsing context.
+	 * @param {CSSLanguageOptions} [context.languageOptions] The language options to use for parsing.
 	 * @returns {ParseResult} The result of parsing.
 	 */
-	parse(file) {
+	parse(file, { languageOptions = {} } = {}) {
 		// Note: BOM already removed
 		const text = /** @type {string} */ (file.body);
 
@@ -87,6 +109,8 @@ export class CSSLanguage {
 
 		/** @type {FileError[]} */
 		const errors = [];
+
+		const { tolerant } = languageOptions;
 
 		/*
 		 * Check for parsing errors first. If there's a parsing error, nothing
@@ -107,8 +131,10 @@ export class CSSLanguage {
 						});
 					},
 					onParseError(error) {
-						// @ts-ignore -- types are incorrect
-						errors.push(error);
+						if (!tolerant) {
+							// @ts-ignore -- types are incorrect
+							errors.push(error);
+						}
 					},
 				}),
 			);
