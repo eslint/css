@@ -224,6 +224,22 @@ ruleTester.run("baseline", rule, {
 			],
 		},
 		{
+			code: "@supports not (accent-color: auto) { a { accent-color: auto } }",
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "accent-color",
+						availability: "widely",
+					},
+					line: 1,
+					column: 42,
+					endLine: 1,
+					endColumn: 54,
+				},
+			],
+		},
+		{
 			code: "a { width: abs(20% - 100px); }",
 			errors: [
 				{
