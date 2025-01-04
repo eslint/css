@@ -9,6 +9,7 @@
 
 import rule from "../../src/rules/no-invalid-at-rules.js";
 import css from "../../src/index.js";
+import tailwindSyntax from "../../src/syntax/tailwind-syntax.js";
 import { RuleTester } from "eslint";
 
 //------------------------------------------------------------------------------
@@ -30,6 +31,42 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		"@supports (display: grid) { .grid-container { display: grid; } }",
 		"@namespace url(http://www.w3.org/1999/xhtml);",
 		"@media screen and (max-width: 600px) { body { font-size: 12px; } }",
+		{
+			code: "@foobar url(foo.css) { body { font-size: 12px } }",
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						foobar: {
+							prelude: "<url>",
+						},
+					},
+				},
+			},
+		},
+		{
+			code: "@tailwind base; @tailwind components; @tailwind utilities;",
+			languageOptions: {
+				customSyntax: tailwindSyntax,
+			},
+		},
+		{
+			code: "a { @apply text-red-500; }",
+			languageOptions: {
+				customSyntax: tailwindSyntax,
+			},
+		},
+		{
+			code: "a { @apply text-red-500 bg-blue-500; }",
+			languageOptions: {
+				customSyntax: tailwindSyntax,
+			},
+		},
+		{
+			code: "@config 'tailwind.config.js';",
+			languageOptions: {
+				customSyntax: tailwindSyntax,
+			},
+		},
 	],
 	invalid: [
 		{
@@ -162,6 +199,68 @@ ruleTester.run("no-invalid-at-rules", rule, {
 					column: 1,
 					endLine: 1,
 					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "@foobar { body { font-size: 12px } }",
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						foobar: {
+							prelude: "<url>",
+						},
+					},
+				},
+			},
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "foobar" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "a { @apply; }",
+			languageOptions: {
+				customSyntax: tailwindSyntax,
+			},
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: {
+						name: "apply",
+						prelude: "",
+						expected: "<ident>+",
+					},
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "@config;",
+			languageOptions: {
+				customSyntax: tailwindSyntax,
+			},
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: {
+						name: "config",
+						prelude: "",
+						expected: "<string>",
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 8,
 				},
 			],
 		},

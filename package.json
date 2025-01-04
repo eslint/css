@@ -7,13 +7,25 @@
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "exports": {
-    "require": {
-      "types": "./dist/cjs/index.d.cts",
-      "default": "./dist/cjs/index.cjs"
+    ".": {
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      },
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      }
     },
-    "import": {
-      "types": "./dist/esm/index.d.ts",
-      "default": "./dist/esm/index.js"
+    "./syntax": {
+      "require": {
+        "types": "./dist/cjs/syntax/index.d.cts",
+        "default": "./dist/cjs/syntax/index.cjs"
+      },
+      "import": {
+        "types": "./dist/esm/syntax/index.d.ts",
+        "default": "./dist/esm/syntax/index.js"
+      }
     }
   },
   "files": [

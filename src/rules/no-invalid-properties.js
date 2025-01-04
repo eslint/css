@@ -7,7 +7,6 @@
 // Imports
 //-----------------------------------------------------------------------------
 
-import { lexer } from "css-tree";
 import { isSyntaxMatchError } from "../util.js";
 
 //-----------------------------------------------------------------------------
@@ -32,6 +31,8 @@ export default {
 	},
 
 	create(context) {
+		const lexer = context.sourceCode.lexer;
+
 		return {
 			"Rule > Block > Declaration"(node) {
 				// don't validate custom properties

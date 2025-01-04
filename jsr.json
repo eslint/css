@@ -1,11 +1,15 @@
 {
   "name": "@eslint/css",
   "version": "0.2.0",
-  "exports": "./dist/esm/index.js",
+  "exports": {
+    ".": "./dist/esm/index.js",
+    "./syntax": "./dist/esm/syntax/index.js"
+  },
   "publish": {
     "include": [
       "dist/esm/index.js",
       "dist/esm/index.d.ts",
+      "dist/esm/syntax/index.js",
       "README.md",
       "jsr.json",
       "LICENSE",

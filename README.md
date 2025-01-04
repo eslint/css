@@ -134,6 +134,8 @@ export default [
 ];
 ```
 
+#### Tolerant Mode
+
 By default, the CSS parser runs in strict mode, which reports all parsing errors. If you'd like to allow recoverable parsing errors (those that the browser automatically fixes on its own), you can set the `tolerant` option to `true`:
 
 ```js
@@ -158,6 +160,73 @@ export default [
 ```
 
 Setting `tolerant` to `true` is necessary if you are using custom syntax, such as [PostCSS](https://postcss.org/) plugins, that aren't part of the standard CSS syntax.
+
+#### Configuring Custom Syntax
+
+The CSS lexer comes prebuilt with a set of known syntax for CSS that is used in rules like `no-invalid-properties` to validate CSS code. While this works for most cases, there may be cases when you want to define your own extensions to CSS, and this can be done using the `customSyntax` language option.
+
+The `customSyntax` option is an object that uses the [CSSTree format](https://github.com/csstree/csstree/blob/master/data/patch.json) for defining custom syntax, which allows you to specify at-rules, properties, and some types. For example, suppose you'd like to define a custom at-rule that looks like this:
+
+```css
+@my-at-rule "hello world!";
+```
+
+You can configure that syntax as follows:
+
+```js
+// eslint.config.js
+import css from "@eslint/css";
+
+export default [
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		languageOptions: {
+			customSyntax: {
+				atrules: {
+					"my-at-rule": {
+						prelude: "<string>",
+					},
+				},
+			},
+		},
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
+];
+```
+
+#### Configuring Tailwind Syntax
+
+[Tailwind](https://tailwindcss.com) specifies some extensions to CSS that will otherwise be flagged as invalid by the rules in this plugin. You can configure most of the custom syntax for Tailwind using the builtin `tailwindSyntax` object, like this:
+
+```js
+// eslint.config.js
+import css from "@eslint/css";
+import { tailwindSyntax } from "@eslint/css/syntax";
+
+export default [
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		languageOptions: {
+			customSyntax: tailwindSyntax,
+		},
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
+];
+```
+
+**Note:** The Tailwind syntax doesn't currently provide for the `theme()` function. This is a [limitation of CSSTree](https://github.com/csstree/csstree/issues/292) that we hope will be resolved soon.
 
 ## License
 

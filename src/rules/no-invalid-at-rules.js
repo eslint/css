@@ -7,7 +7,6 @@
 // Imports
 //-----------------------------------------------------------------------------
 
-import { lexer } from "css-tree";
 import { isSyntaxMatchError } from "../util.js";
 
 //-----------------------------------------------------------------------------
@@ -68,6 +67,7 @@ export default {
 
 	create(context) {
 		const { sourceCode } = context;
+		const lexer = sourceCode.lexer;
 
 		return {
 			Atrule(node) {

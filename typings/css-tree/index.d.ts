@@ -217,6 +217,18 @@ declare module "css-tree" {
 		name: string;
 	}
 
+	export interface Condition extends CssNodeCommon {
+		type: "Condition";
+		kind: string;
+		children: List<CssNode>;
+	}
+
+	export interface ConditionPlain extends CssNodeCommon {
+		type: "Condition";
+		kind: string;
+		children: CssNodePlain[];
+	}
+
 	export interface Comment extends CssNodeCommon {
 		type: "Comment";
 		value: string;
@@ -470,6 +482,7 @@ declare module "css-tree" {
 		| ClassSelector
 		| Combinator
 		| Comment
+		| Condition
 		| Declaration
 		| DeclarationList
 		| Dimension
@@ -513,6 +526,7 @@ declare module "css-tree" {
 		| ClassSelector
 		| Combinator
 		| Comment
+		| ConditionPlain
 		| DeclarationPlain
 		| DeclarationListPlain
 		| Dimension
@@ -569,6 +583,10 @@ declare module "css-tree" {
 	}
 
 	export function parse(text: string, options?: ParseOptions): CssNode;
+	export function tokenize(
+		source: string,
+		onToken: (type: number, start: number, offset?: number) => void,
+	): void;
 
 	export interface GenerateHandlers {
 		children: (node: CssNode, delimiter?: (node: CssNode) => void) => void;
@@ -989,9 +1007,86 @@ declare module "css-tree" {
 
 	export const lexer: Lexer;
 
-	export function fork(extension: {
-		atrules?: Record<string, string> | undefined;
-		properties?: Record<string, string> | undefined;
-		types?: Record<string, string> | undefined;
-	}): { lexer: Lexer };
+	export function fork(extension: Partial<SyntaxConfig>): CSSTreeSyntax;
+
+	export interface ParseContext {
+		default: string;
+		stylesheet: string;
+		atrule: string;
+		atrulePrelude: (options: { atrule?: string }) => AtrulePrelude;
+		mediaQueryList: string;
+		mediaQuery: string;
+		condition: (options: { kind: string }) => Condition;
+		rule: string;
+		selectorList: string;
+		selector: string;
+		block: () => Block;
+		declarationList: string;
+		declaration: string;
+		value: string;
+	}
+
+	export interface NodeDefinition {
+		name: string;
+		walkContext?: string;
+		structure: Record<string, unknown>;
+		parse(...args: unknown[]): CssNode;
+		generate(node: CssNode): void;
+	}
+
+	export interface ScopeDefinition {
+		getNode(context: unknown): CssNode;
+		onWhitespace?(next: CssNode, children: NodeList): void;
+	}
+
+	export interface MDNSyntaxDefinition {
+		comment?: string;
+		references?: string[];
+		syntax: string;
+	}
+
+	export interface MDNAtruleDefinition {
+		prelude?: string;
+		descriptors?: Record<string, string | MDNSyntaxDefinition>;
+		comment?: string;
+	}
+
+	export interface SyntaxConfig {
+		atrules: Record<string, MDNAtruleDefinition>;
+		cssWideKeywords: string[];
+		features: Record<
+			string,
+			{
+				selector?(): Selector;
+				style?(): Declaration;
+			}
+		>;
+		generic: boolean;
+		node: Record<string, NodeDefinition>;
+		parseContext: ParseContext;
+		properties: Record<string, string>;
+		scope: Record<string, ScopeDefinition>;
+		types: Record<string, string>;
+		units: Record<string, string[]>;
+	}
+
+	export interface CSSTreeSyntax {
+		lexer: Lexer | null;
+		createLexer(config: SyntaxConfig): Lexer;
+
+		tokenize: typeof tokenize;
+		parse: typeof parse;
+		generate: typeof generate;
+
+		walk: typeof walk;
+		find: typeof find;
+		findLast: typeof findLast;
+		findAll: typeof findAll;
+
+		fromPlainObject: typeof fromPlainObject;
+		toPlainObject: typeof toPlainObject;
+		fork: typeof fork;
+	}
+
+	export function createSyntax(config: SyntaxConfig): CSSTreeSyntax;
 }
