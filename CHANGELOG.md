@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/eslint/css/compare/css-v0.1.0...css-v0.2.0) (2025-01-07)
+
+
+### Features
+
+* Add tolerant parsing mode ([#38](https://github.com/eslint/css/issues/38)) ([9e4b2dd](https://github.com/eslint/css/commit/9e4b2dd5ae44715ad98677b3c44ccb54a3a4fe1f)), closes [#29](https://github.com/eslint/css/issues/29)
+
+
+### Bug Fixes
+
+* add type tests ([#16](https://github.com/eslint/css/issues/16)) ([f21e090](https://github.com/eslint/css/commit/f21e090cca76a85bf6b6c89c8797c79f28d5a163))
+
 ## 0.1.0 (2024-11-26)
 
 
