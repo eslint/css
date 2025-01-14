@@ -89,10 +89,6 @@ export default {
 					return;
 				}
 
-				/*
-				 * Layer node location is incorrect.
-				 * https://github.com/csstree/csstree/issues/309
-				 */
 				if (!layerNameRegex.test(node.name)) {
 					context.report({
 						loc: node.loc,
