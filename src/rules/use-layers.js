@@ -13,6 +13,7 @@ export default {
 
 		docs: {
 			description: "Require use of layers",
+			url: "https://github.com/eslint/css/blob/main/docs/rules/use-layers.md",
 		},
 
 		schema: [
