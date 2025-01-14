@@ -96,7 +96,7 @@ The `layerNamePattern` is a regular expression string that allows you to validat
 Here's an example of **incorrect** code:
 
 ```css
-/* eslint css/use-layers: ["error", { layerNamePattern: "reset|theme|base" }] */
+/* eslint css/use-layers: ["error", { layerNamePattern: "^(reset|theme|base)$" }] */
 /* possible typo */
 @import url(foo.css) layer(resett);
 
