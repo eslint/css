@@ -56,6 +56,18 @@ export default {
 						return;
 					}
 
+					/*
+					 * There's no current way to get lexing to work when a
+					 * `var()` is present in a value. Rather than blowing up,
+					 * we'll just ignore it.
+					 *
+					 * https://github.com/csstree/csstree/issues/317
+					 */
+
+					if (error.message.endsWith("var() is not supported")) {
+						return;
+					}
+
 					// unknown property
 					context.report({
 						loc: {
