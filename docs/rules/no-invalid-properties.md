@@ -42,6 +42,10 @@ body {
 }
 ```
 
+### Limitations
+
+This rule uses the lexer from [CSSTree](https://github.com/csstree/csstree), which does not support validation of property values that contain variable references (i.e., `var(--bg-color)`). The lexer throws an error when it comes across a variable reference, and rather than displaying that error, this rule ignores it. This unfortunately means that this rule cannot properly validate properties values that contain variable references. We'll continue to work towards a solution for this.
+
 ## When Not to Use It
 
 If you aren't concerned with invalid properties, then you can safely disable this rule.
