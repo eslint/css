@@ -33,6 +33,33 @@ ruleTester.run("no-invalid-properties", rule, {
 		"@font-face { font-weight: 100 400 }",
 		'@property --foo { syntax: "*"; inherits: false; }',
 		"a { --my-color: red; color: var(--my-color) }",
+		{
+			code: "a { my-custom-color: red; }",
+			languageOptions: {
+				customSyntax: {
+					properties: {
+						"my-custom-color": "<color>",
+					},
+				},
+			},
+		},
+
+		/*
+		 * CSSTree doesn't currently support custom functions properly, so leaving
+		 * these out for now.
+		 * https://github.com/csstree/csstree/issues/292
+		 */
+		// {
+		// 	code: "a { my-custom-color: theme(colors.red); }",
+		// 	languageOptions: {
+		// 		customSyntax: {
+		// 			properties: {
+		// 				"my-custom-color": "<color> | <tailwind-theme()>",
+		// 			},
+		// 			types: tailwindSyntax.types,
+		// 		},
+		// 	},
+		// },
 	],
 	invalid: [
 		{
@@ -175,6 +202,30 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 5,
 					endLine: 1,
 					endColumn: 13,
+				},
+			],
+		},
+		{
+			code: "a { my-custom-color: solid; }",
+			languageOptions: {
+				customSyntax: {
+					properties: {
+						"my-custom-color": "<color>",
+					},
+				},
+			},
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "my-custom-color",
+						value: "solid",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 27,
 				},
 			],
 		},

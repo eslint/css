@@ -23,6 +23,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /** @typedef {import("css-tree").CssNodePlain} CssNodePlain */
 /** @typedef {import("css-tree").BlockPlain} BlockPlain */
 /** @typedef {import("css-tree").Comment} Comment */
+/** @typedef {import("css-tree").Lexer} Lexer */
 /** @typedef {import("@eslint/core").SourceRange} SourceRange */
 /** @typedef {import("@eslint/core").SourceLocation} SourceLocation */
 /** @typedef {import("@eslint/core").SourceLocationWithOffset} SourceLocationWithOffset */
@@ -106,16 +107,24 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	comments;
 
 	/**
+	 * The lexer for this instance.
+	 * @type {Lexer}
+	 */
+	lexer;
+
+	/**
 	 * Creates a new instance.
 	 * @param {Object} options The options for the instance.
 	 * @param {string} options.text The source code text.
 	 * @param {CssNodePlain} options.ast The root AST node.
 	 * @param {Array<Comment>} options.comments The comment nodes in the source code.
+	 * @param {Lexer} options.lexer The lexer used to parse the source code.
 	 */
-	constructor({ text, ast, comments }) {
+	constructor({ text, ast, comments, lexer }) {
 		super({ text, ast });
 		this.ast = ast;
 		this.comments = comments;
+		this.lexer = lexer;
 	}
 
 	/**

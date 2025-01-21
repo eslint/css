@@ -7,7 +7,12 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { parse, toPlainObject } from "css-tree";
+import {
+	parse as originalParse,
+	lexer as originalLexer,
+	fork,
+	toPlainObject,
+} from "css-tree";
 import { CSSSourceCode } from "./css-source-code.js";
 import { visitorKeys } from "./css-visitor-keys.js";
 
@@ -19,8 +24,10 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /** @typedef {import("css-tree").CssNodePlain} CssNodePlain */
 /** @typedef {import("css-tree").StyleSheet} StyleSheet */
 /** @typedef {import("css-tree").Comment} Comment */
+/** @typedef {import("css-tree").Lexer} Lexer */
+/** @typedef {import("css-tree").SyntaxConfig} SyntaxConfig */
 /** @typedef {import("@eslint/core").Language} Language */
-/** @typedef {import("@eslint/core").OkParseResult<CssNodePlain> & { comments: Comment[] }} OkParseResult */
+/** @typedef {import("@eslint/core").OkParseResult<CssNodePlain> & { comments: Comment[], lexer: Lexer }} OkParseResult */
 /** @typedef {import("@eslint/core").ParseResult<CssNodePlain>} ParseResult */
 /** @typedef {import("@eslint/core").File} File */
 /** @typedef {import("@eslint/core").FileError} FileError */
@@ -28,6 +35,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /**
  * @typedef {Object} CSSLanguageOptions
  * @property {boolean} [tolerant] Whether to be tolerant of recoverable parsing errors.
+ * @property {SyntaxConfig} [customSyntax] Custom syntax to use for parsing.
  */
 
 //-----------------------------------------------------------------------------
@@ -91,6 +99,17 @@ export class CSSLanguage {
 				"Expected a boolean value for 'tolerant' option.",
 			);
 		}
+
+		if ("customSyntax" in languageOptions) {
+			if (
+				typeof languageOptions.customSyntax !== "object" ||
+				languageOptions.customSyntax === null
+			) {
+				throw new TypeError(
+					"Expected an object value for 'customSyntax' option.",
+				);
+			}
+		}
 	}
 
 	/**
@@ -111,6 +130,9 @@ export class CSSLanguage {
 		const errors = [];
 
 		const { tolerant } = languageOptions;
+		const { parse, lexer } = languageOptions.customSyntax
+			? fork(languageOptions.customSyntax)
+			: { parse: originalParse, lexer: originalLexer };
 
 		/*
 		 * Check for parsing errors first. If there's a parsing error, nothing
@@ -150,6 +172,7 @@ export class CSSLanguage {
 				ok: true,
 				ast: root,
 				comments,
+				lexer,
 			};
 		} catch (ex) {
 			return {
@@ -170,6 +193,7 @@ export class CSSLanguage {
 			text: /** @type {string} */ (file.body),
 			ast: parseResult.ast,
 			comments: parseResult.comments,
+			lexer: parseResult.lexer,
 		});
 	}
 }
