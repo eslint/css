@@ -37,7 +37,7 @@
     "!(*.js)": "prettier --write --ignore-unknown",
     "{src/rules/*.js,tools/update-rules-docs.js}": [
       "node tools/update-rules-docs.js",
-      "git add README.md "
+      "git add README.md"
     ]
   },
   "repository": {
