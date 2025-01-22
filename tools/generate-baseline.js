@@ -47,6 +47,19 @@ function flattenCompatFeatures(entry) {
  * @returns {Object} The extracted CSS features.
  */
 function extractCSSFeatures(features) {
+	/*
+	 * The following regular expressions are used to match the keys in the
+	 * features object. The regular expressions are used to extract the
+	 * property name, value, at-rule, type, or selector from the key.
+	 *
+	 * For example, the key "css.properties.color" would match the
+	 * cssPropertyPattern regular expression and the "color" property would be
+	 * extracted.
+	 *
+	 * Note that these values cannot contain underscores as underscores are
+	 * only used in feature names to provide descriptions rather than syntax.
+	 * Example: css.properties.align-self.position_absolute_context
+	 */
 	const cssPropertyPattern = /^css\.properties\.(?<property>[a-zA-Z$\d-]+)$/u;
 	const cssPropertyValuePattern =
 		/^css\.properties\.(?<property>[a-zA-Z$\d-]+)\.(?<value>[a-zA-Z$\d-]+)$/u;
