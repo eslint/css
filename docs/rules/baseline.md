@@ -73,3 +73,4 @@ If your web application targets just one browser then you can safely disable thi
 ## Further Reading
 
 - [How do things become baseline?](https://web.dev/baseline#how-do-things-become-baseline)
+  If your web application doesn't target all Baseline browsers then you can safely disable this rule.

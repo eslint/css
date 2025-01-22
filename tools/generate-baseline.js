@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 
 import { features as webFeatures } from "web-features";
+import prettier from "prettier";
 import fs from "node:fs";
 
 //------------------------------------------------------------------------------
@@ -160,4 +161,7 @@ export const propertyValues = new Map([${Object.entries(
 )}]);
 `;
 
-fs.writeFileSync(featuresPath, code);
+fs.writeFileSync(
+	featuresPath,
+	await prettier.format(code, { filepath: featuresPath }),
+);
