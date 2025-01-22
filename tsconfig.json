@@ -1,6 +1,5 @@
 {
   "files": ["src/index.js"],
-  "include": ["typings"],
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
@@ -9,7 +8,6 @@
     "outDir": "dist/esm",
     "target": "ES2022",
     "moduleResolution": "NodeNext",
-    "module": "NodeNext",
-    "types": []
+    "module": "NodeNext"
   }
 }
