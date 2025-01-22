@@ -147,4 +147,7 @@ export const propertyValues = new Map([${Object.entries(
 )}]);
 `;
 
-fs.writeFileSync(featuresPath, code);
+fs.writeFileSync(
+	featuresPath,
+	await prettier.format(code, { filepath: featuresPath }),
+);
