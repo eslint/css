@@ -14,6 +14,7 @@ import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
 import useLayers from "./rules/use-layers.js";
+import baseline from "./rules/baseline.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -33,6 +34,7 @@ const plugin = {
 		"no-invalid-at-rules": noInvalidAtRules,
 		"no-invalid-properties": noInvalidProperties,
 		"use-layers": useLayers,
+		baseline,
 	},
 	configs: {
 		recommended: {
@@ -42,6 +44,7 @@ const plugin = {
 				"css/no-duplicate-imports": "error",
 				"css/no-invalid-at-rules": "error",
 				"css/no-invalid-properties": "error",
+				"css/baseline": "error",
 			}),
 		},
 	},
