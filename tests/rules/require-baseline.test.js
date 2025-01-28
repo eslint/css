@@ -7,7 +7,7 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import rule from "../../src/rules/baseline.js";
+import rule from "../../src/rules/require-baseline.js";
 import css from "../../src/index.js";
 import { RuleTester } from "eslint";
 import dedent from "dedent";
@@ -23,7 +23,7 @@ const ruleTester = new RuleTester({
 	language: "css/css",
 });
 
-ruleTester.run("baseline", rule, {
+ruleTester.run("require-baseline", rule, {
 	valid: [
 		"a { color: red; }",
 		"a { color: red; background-color: blue; }",

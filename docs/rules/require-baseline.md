@@ -1,4 +1,4 @@
-# baseline
+# require-baseline
 
 Enforce the use of baseline features
 

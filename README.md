@@ -39,14 +39,14 @@ In your `eslint.config.js` file, import `@eslint/css` and include the recommende
 import css from "@eslint/css";
 
 export default [
-	// lint CSS files
-	{
-		files: ["**/*.css"],
-		language: "css/css",
-		...css.configs.recommended,
-	},
+  // lint CSS files
+  {
+    files: ["**/*.css"],
+    language: "css/css",
+    ...css.configs.recommended,
+  },
 
-	// your other configs here
+  // your other configs here
 ];
 ```
 
@@ -58,11 +58,11 @@ export default [
 
 | **Rule Name**                                                    | **Description**                      | **Recommended** |
 | :--------------------------------------------------------------- | :----------------------------------- | :-------------: |
-| [`baseline`](./docs/rules/baseline.md)                           | Enforce the use of baseline features |       yes       |
 | [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)   | Disallow duplicate @import rules     |       yes       |
 | [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)             | Disallow empty blocks                |       yes       |
 | [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)     | Disallow invalid at-rules            |       yes       |
 | [`no-invalid-properties`](./docs/rules/no-invalid-properties.md) | Disallow invalid properties          |       yes       |
+| [`require-baseline`](./docs/rules/require-baseline.md)           | Enforce the use of baseline features |       yes       |
 | [`use-layers`](./docs/rules/use-layers.md)                       | Require use of layers                |       no        |
 
 <!-- Rule Table End -->
@@ -76,16 +76,16 @@ In order to individually configure a rule in your `eslint.config.js` file, impor
 import css from "@eslint/css";
 
 export default [
-	{
-		files: ["**/*.css"],
-		plugins: {
-			css,
-		},
-		language: "css/css",
-		rules: {
-			"css/no-empty-blocks": "error",
-		},
-	},
+  {
+    files: ["**/*.css"],
+    plugins: {
+      css,
+    },
+    language: "css/css",
+    rules: {
+      "css/no-empty-blocks": "error",
+    },
+  },
 ];
 ```
 
@@ -121,16 +121,16 @@ In order to individually configure a language in your `eslint.config.js` file, i
 import css from "@eslint/css";
 
 export default [
-	{
-		files: ["**/*.css"],
-		plugins: {
-			css,
-		},
-		language: "css/css",
-		rules: {
-			"css/no-empty-blocks": "error",
-		},
-	},
+  {
+    files: ["**/*.css"],
+    plugins: {
+      css,
+    },
+    language: "css/css",
+    rules: {
+      "css/no-empty-blocks": "error",
+    },
+  },
 ];
 ```
 
@@ -141,19 +141,19 @@ By default, the CSS parser runs in strict mode, which reports all parsing errors
 import css from "@eslint/css";
 
 export default [
-	{
-		files: ["**/*.css"],
-		plugins: {
-			css,
-		},
-		language: "css/css",
-		languageOptions: {
-			tolerant: true,
-		},
-		rules: {
-			"css/no-empty-blocks": "error",
-		},
-	},
+  {
+    files: ["**/*.css"],
+    plugins: {
+      css,
+    },
+    language: "css/css",
+    languageOptions: {
+      tolerant: true,
+    },
+    rules: {
+      "css/no-empty-blocks": "error",
+    },
+  },
 ];
 ```
 
