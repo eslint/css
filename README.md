@@ -39,14 +39,14 @@ In your `eslint.config.js` file, import `@eslint/css` and include the recommende
 import css from "@eslint/css";
 
 export default [
-  // lint CSS files
-  {
-    files: ["**/*.css"],
-    language: "css/css",
-    ...css.configs.recommended,
-  },
+	// lint CSS files
+	{
+		files: ["**/*.css"],
+		language: "css/css",
+		...css.configs.recommended,
+	},
 
-  // your other configs here
+	// your other configs here
 ];
 ```
 
@@ -76,16 +76,16 @@ In order to individually configure a rule in your `eslint.config.js` file, impor
 import css from "@eslint/css";
 
 export default [
-  {
-    files: ["**/*.css"],
-    plugins: {
-      css,
-    },
-    language: "css/css",
-    rules: {
-      "css/no-empty-blocks": "error",
-    },
-  },
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
 ];
 ```
 
@@ -121,16 +121,16 @@ In order to individually configure a language in your `eslint.config.js` file, i
 import css from "@eslint/css";
 
 export default [
-  {
-    files: ["**/*.css"],
-    plugins: {
-      css,
-    },
-    language: "css/css",
-    rules: {
-      "css/no-empty-blocks": "error",
-    },
-  },
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
 ];
 ```
 
@@ -141,19 +141,19 @@ By default, the CSS parser runs in strict mode, which reports all parsing errors
 import css from "@eslint/css";
 
 export default [
-  {
-    files: ["**/*.css"],
-    plugins: {
-      css,
-    },
-    language: "css/css",
-    languageOptions: {
-      tolerant: true,
-    },
-    rules: {
-      "css/no-empty-blocks": "error",
-    },
-  },
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		languageOptions: {
+			tolerant: true,
+		},
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
 ];
 ```
 

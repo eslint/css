@@ -100,7 +100,14 @@ const tableText = await createRulesTableText();
 
 docsText = `${docsText.slice(0, rulesTableRange[0])}\n${tableText}\n${docsText.slice(rulesTableRange[1])}`;
 
+// load prettier config
+const prettierConfig = await prettier.resolveConfig(docsFileURL);
+
+// format and write the file
 await fs.writeFile(
 	docsFileURL,
-	await prettier.format(docsText, { filepath: docsFileURL.pathname }),
+	await prettier.format(docsText, {
+		filepath: docsFileURL.pathname,
+		...prettierConfig,
+	}),
 );
