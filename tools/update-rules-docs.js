@@ -15,6 +15,7 @@
 import { fromMarkdown } from "mdast-util-from-markdown";
 import fs from "node:fs/promises";
 import path from "node:path";
+import prettier from "prettier";
 
 //-----------------------------------------------------------------------------
 // Type Definitions
@@ -99,4 +100,7 @@ const tableText = await createRulesTableText();
 
 docsText = `${docsText.slice(0, rulesTableRange[0])}\n${tableText}\n${docsText.slice(rulesTableRange[1])}`;
 
-await fs.writeFile(docsFileURL, docsText);
+await fs.writeFile(
+	docsFileURL,
+	await prettier.format(docsText, { filepath: docsFileURL.pathname }),
+);

@@ -31,8 +31,7 @@
       "prettier --write"
     ],
     "README.md": [
-      "npm run build:update-rules-docs",
-      "prettier --write"
+      "npm run build:update-rules-docs"
     ],
     "!(*.js)": "prettier --write --ignore-unknown",
     "{src/rules/*.js,tools/update-rules-docs.js}": [
