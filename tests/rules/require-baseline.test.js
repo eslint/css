@@ -66,6 +66,12 @@ ruleTester.run("require-baseline", rule, {
 			code: "a { backdrop-filter: auto }",
 			options: [{ available: "newly" }],
 		},
+		{
+			code: "p { margin: .; }",
+			languageOptions: {
+				tolerant: true,
+			},
+		},
 	],
 	invalid: [
 		{

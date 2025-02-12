@@ -356,7 +356,7 @@ export default {
 		/**
 		 * Checks a property value identifier to see if it's a baseline feature.
 		 * @param {string} property The name of the property.
-		 * @param {import("css-tree").Identifier} child The node to check.
+		 * @param {Identifier} child The node to check.
 		 * @returns {void}
 		 */
 		function checkPropertyValueIdentifier(property, child) {
@@ -372,6 +372,11 @@ export default {
 			}
 
 			const propertyValueLevel = possiblePropertyValues.get(child.name);
+
+			// if we don't know of any possible property values, just skip it
+			if (propertyValueLevel === undefined) {
+				return;
+			}
 
 			if (propertyValueLevel < baselineLevel) {
 				context.report({
@@ -393,6 +398,11 @@ export default {
 		 **/
 		function checkPropertyValueFunction(child) {
 			const propertyValueLevel = types.get(child.name);
+
+			// if we don't know of any possible property values, just skip it
+			if (propertyValueLevel === undefined) {
+				return;
+			}
 
 			if (propertyValueLevel < baselineLevel) {
 				context.report({
@@ -493,6 +503,15 @@ export default {
 						 */
 						return;
 					}
+				}
+
+				/*
+				 * With tolerant parsing, it's possible that the value is `Raw`
+				 * and therefore doesn't have children. If that's the case then
+				 * we just exit.
+				 */
+				if (!node.value?.children) {
+					return;
 				}
 
 				/*
