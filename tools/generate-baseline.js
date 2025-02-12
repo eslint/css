@@ -161,7 +161,10 @@ export const propertyValues = new Map([${Object.entries(
 )}]);
 `;
 
+// load prettier config
+const prettierConfig = await prettier.resolveConfig(featuresPath);
+
 fs.writeFileSync(
 	featuresPath,
-	await prettier.format(code, { filepath: featuresPath }),
+	await prettier.format(code, { filepath: featuresPath, ...prettierConfig }),
 );
