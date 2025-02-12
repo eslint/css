@@ -68,9 +68,8 @@ This rule accepts an option object with the following properties:
 
 ## When Not to Use It
 
-If your web application targets just one browser then you can safely disable this rule.
+If your web application doesn't target all Baseline browsers then you can safely disable this rule.
 
 ## Further Reading
 
 - [How do things become baseline?](https://web.dev/baseline#how-do-things-become-baseline)
-  If your web application doesn't target all Baseline browsers then you can safely disable this rule.
