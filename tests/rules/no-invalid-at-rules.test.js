@@ -234,8 +234,6 @@ ruleTester.run("no-invalid-at-rules", rule, {
 					messageId: "missingPrelude",
 					data: {
 						name: "apply",
-						prelude: "",
-						expected: "<ident>+",
 					},
 					line: 1,
 					column: 5,
@@ -254,13 +252,31 @@ ruleTester.run("no-invalid-at-rules", rule, {
 					messageId: "missingPrelude",
 					data: {
 						name: "config",
-						prelude: "",
-						expected: "<string>",
 					},
 					line: 1,
 					column: 1,
 					endLine: 1,
 					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "@config foo;",
+			languageOptions: {
+				customSyntax: tailwindSyntax,
+			},
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "config",
+						prelude: "foo",
+						expected: "<string>",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 12,
 				},
 			],
 		},
