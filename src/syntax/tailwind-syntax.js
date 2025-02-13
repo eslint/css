@@ -2,12 +2,6 @@
  * @fileoverview CSSTree syntax for Tailwind CSS extensions.
  * @author Nicholas C. Zakas
  */
-
-/*
- * NOTE: This file intentionally not (yet) distributed as part
- * of the package. It's only used for testing purposes.
- */
-
 export default {
 	atrules: {
 		apply: {
