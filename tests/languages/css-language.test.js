@@ -74,6 +74,35 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.ok, true);
 		});
 
+		it("should use custom syntax when provided", () => {
+			const language = new CSSLanguage();
+			const customSyntax = {
+				properties: {
+					"-custom-prop": "<length>",
+				},
+			};
+
+			const result = language.parse(
+				{
+					body: "a { -custom-prop: 5px; }",
+					path: "test.css",
+				},
+				{ languageOptions: { customSyntax } },
+			);
+
+			assert.strictEqual(result.ok, true);
+			assert.strictEqual(result.ast.type, "StyleSheet");
+			assert.strictEqual(result.ast.children[0].type, "Rule");
+		});
+
+		it("should error when invalid custom syntax is provided", () => {
+			const language = new CSSLanguage();
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ customSyntax: null });
+			}, /Expected an object value for 'customSyntax' option/u);
+		});
+
 		// https://github.com/csstree/csstree/issues/301
 		it.skip("should return an error when EOF is discovered before block close", () => {
 			const language = new CSSLanguage();
