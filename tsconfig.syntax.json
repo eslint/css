@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "files": ["dist/esm/syntax/index.js"],
+  "compilerOptions": {
+    "outDir": "./dist/esm/syntax"
+  }
+}
