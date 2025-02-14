@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.3.0](https://github.com/eslint/css/compare/css-v0.2.0...css-v0.3.0) (2025-02-14)
+
+
+### Features
+
+* Add use-layers rule ([#27](https://github.com/eslint/css/issues/27)) ([6ebf57e](https://github.com/eslint/css/commit/6ebf57e6153f5bdc57b362e86942fee5184c2d73))
+* Allow custom syntax ([#47](https://github.com/eslint/css/issues/47)) ([397888b](https://github.com/eslint/css/commit/397888b4749d56ca5937d87b0161fecc7acfc734))
+* require-baseline rule ([#33](https://github.com/eslint/css/issues/33)) ([c5f66fa](https://github.com/eslint/css/commit/c5f66fa16d754860f579884a1b50686094fe28b1))
+
+
+### Bug Fixes
+
+* make types usable in CommonJS ([#44](https://github.com/eslint/css/issues/44)) ([0540006](https://github.com/eslint/css/commit/05400062cb593d3a0cf941bdd4abd4e705f96e01))
+* Suppress var() validation errors ([#45](https://github.com/eslint/css/issues/45)) ([f526b1d](https://github.com/eslint/css/commit/f526b1dcdbfb451ad9783e0cca3c58621138bad1)), closes [#40](https://github.com/eslint/css/issues/40)
+
 ## [0.2.0](https://github.com/eslint/css/compare/css-v0.1.0...css-v0.2.0) (2025-01-07)
 
 
