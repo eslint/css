@@ -65,12 +65,15 @@ function extractCSSFeatures(features) {
 	const cssPropertyValuePattern =
 		/^css\.properties\.(?<property>[a-zA-Z$\d-]+)\.(?<value>[a-zA-Z$\d-]+)$/u;
 	const cssAtRulePattern = /^css\.at-rules\.(?<atRule>[a-zA-Z$\d-]+)$/u;
+	const cssMediaConditionPattern =
+		/^css\.at-rules\.media\.(?<condition>[a-zA-Z$\d-]+)$/u;
 	const cssTypePattern = /^css\.types\.(?<type>[a-zA-Z$\d-]+)$/u;
 	const cssSelectorPattern = /^css\.selectors\.(?<selector>[a-zA-Z$\d-]+)$/u;
 
 	const properties = {};
 	const propertyValues = {};
 	const atRules = {};
+	const mediaConditions = {};
 	const types = {};
 	const selectors = {};
 
@@ -99,6 +102,12 @@ function extractCSSFeatures(features) {
 			continue;
 		}
 
+		// Media conditions (@media features)
+		if ((match = cssMediaConditionPattern.exec(key)) !== null) {
+			mediaConditions[match.groups.condition] = baselineIds.get(baseline);
+			continue;
+		}
+
 		// types
 		if ((match = cssTypePattern.exec(key)) !== null) {
 			types[match.groups.type] = baselineIds.get(baseline);
@@ -116,6 +125,7 @@ function extractCSSFeatures(features) {
 		properties,
 		propertyValues,
 		atRules,
+		mediaConditions,
 		types,
 		selectors,
 	};
@@ -151,6 +161,7 @@ export const BASELINE_FALSE = ${BASELINE_FALSE};
 
 export const properties = new Map(${JSON.stringify(Object.entries(cssFeatures.properties), null, "\t")});
 export const atRules = new Map(${JSON.stringify(Object.entries(cssFeatures.atRules), null, "\t")});
+export const mediaConditions = new Map(${JSON.stringify(Object.entries(cssFeatures.mediaConditions), null, "\t")});
 export const types = new Map(${JSON.stringify(Object.entries(cssFeatures.types), null, "\t")});
 export const selectors = new Map(${JSON.stringify(Object.entries(cssFeatures.selectors), null, "\t")});
 export const propertyValues = new Map([${Object.entries(

@@ -20,6 +20,7 @@ This rule warns when it finds any of the following:
 
 - A CSS property that isn't widely available or otherwise isn't enclosed in a `@supports` block.
 - An at-rule that isn't widely available.
+- A media condition inside `@media` that isn't widely available.
 - A CSS property value that isn't widely available or otherwise isn't enclosed in a `@supports` block (currently limited to identifiers only).
 - A CSS property function that isn't widely available.
 
@@ -36,6 +37,13 @@ a {
 /* invalid - abs is not widely available */
 .box {
 	width: abs(20% - 100px);
+}
+
+/* invalid - device-posture is not widely available */
+@media (device-posture: folded) {
+	a {
+		color: red;
+	}
 }
 
 /* invalid - property value doesn't match @supports indicator */

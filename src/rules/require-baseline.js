@@ -13,6 +13,7 @@ import {
 	properties,
 	propertyValues,
 	atRules,
+	mediaConditions,
 	types,
 } from "../data/baseline-data.js";
 import { namedColors } from "../data/colors.js";
@@ -344,6 +345,8 @@ export default {
 				"At-rule '@{{atRule}}' is not a {{availability}} available baseline feature.",
 			notBaselineType:
 				"Type '{{type}}' is not a {{availability}} available baseline feature.",
+			notBaselineMediaCondition:
+				"Media condition '{{condition}}' is not a {{availability}} available baseline feature.",
 		},
 	},
 
@@ -547,6 +550,45 @@ export default {
 
 			"Atrule[name=supports]:exit"() {
 				supportsRules.pop();
+			},
+
+			"Atrule[name=media] > AtrulePrelude > MediaQueryList > MediaQuery > Condition"(
+				node,
+			) {
+				for (const child of node.children) {
+					if (child.type !== "Feature") {
+						continue;
+					}
+
+					const conditionLevel = mediaConditions.get(child.name);
+
+					if (conditionLevel < baselineLevel) {
+						const loc = child.loc;
+
+						context.report({
+							loc: {
+								start: {
+									line: loc.start.line,
+									// add 1 to account for the @ symbol
+									column: loc.start.column + 1,
+								},
+								end: {
+									line: loc.start.line,
+									column:
+										// add 1 to account for the @ symbol
+										loc.start.column +
+										child.name.length +
+										1,
+								},
+							},
+							messageId: "notBaselineMediaCondition",
+							data: {
+								condition: child.name,
+								availability,
+							},
+						});
+					}
+				}
 			},
 
 			Atrule(node) {
