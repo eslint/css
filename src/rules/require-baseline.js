@@ -556,6 +556,11 @@ export default {
 				node,
 			) {
 				for (const child of node.children) {
+					// ignore unknown media conditions - no-invalid-at-rules already catches this
+					if (!mediaConditions.has(child.name)) {
+						continue;
+					}
+
 					if (child.type !== "Feature") {
 						continue;
 					}
