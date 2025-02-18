@@ -17,6 +17,13 @@ import fs from "node:fs";
 // Helpers
 //------------------------------------------------------------------------------
 
+/*
+ * Properties that aren't considered baseline but have wide support.
+ * https://github.com/web-platform-dx/web-features/issues/1038#issuecomment-2627370691
+ */
+
+const WIDE_SUPPORT_PROPERTIES = new Set(["cursor"]);
+
 const BASELINE_HIGH = 10;
 const BASELINE_LOW = 5;
 const BASELINE_FALSE = 0;
@@ -78,13 +85,21 @@ function extractCSSFeatures(features) {
 		let match;
 
 		// property names
-		if ((match = cssPropertyPattern.exec(key)) !== null) {
+		if (
+			(match = cssPropertyPattern.exec(key)) !== null &&
+			!WIDE_SUPPORT_PROPERTIES.has(match.groups.property)
+		) {
 			properties[match.groups.property] = baselineIds.get(baseline);
 			continue;
 		}
 
 		// property values
 		if ((match = cssPropertyValuePattern.exec(key)) !== null) {
+			// don't include values for these properties
+			if (WIDE_SUPPORT_PROPERTIES.has(match.groups.property)) {
+				continue;
+			}
+
 			if (!propertyValues[match.groups.property]) {
 				propertyValues[match.groups.property] = {};
 			}

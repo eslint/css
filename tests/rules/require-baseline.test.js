@@ -55,6 +55,7 @@ ruleTester.run("require-baseline", rule, {
 		`@supports (width: abs(20% - 100px)) {
 			a { width: abs(20% - 100px); }
 		}`,
+		"div { cursor: pointer; }",
 		{
 			code: `@property --foo {
 				syntax: "*";

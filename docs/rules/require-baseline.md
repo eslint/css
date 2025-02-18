@@ -60,6 +60,8 @@ a {
 }
 ```
 
+**Important:** While the `cursor` property is not considered baseline, it has wide support and will likely be considered baseline once the WebDX Community Group adds [an editorial step](https://github.com/web-platform-dx/web-features/issues/1038). In the meantime, this rule does not warn when `cursor` is used.
+
 ### Options
 
 This rule accepts an option object with the following properties:
