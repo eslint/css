@@ -34,6 +34,7 @@ ruleTester.run("require-baseline", rule, {
 		"a { color: red; -moz-transition: bar }",
 		"@font-face { font-weight: 100 400 }",
 		"@media (min-width: 800px) { a { color: red; } }",
+		"@media (foo) { a { color: red; } }",
 		"@media (prefers-color-scheme: dark) { a { color: red; } }",
 		"@supports (accent-color: auto) { a { accent-color: auto; } }",
 		"@supports (accent-color: red) { a { accent-color: red; } }",
@@ -319,6 +320,22 @@ ruleTester.run("require-baseline", rule, {
 					column: 53,
 					endLine: 1,
 					endColumn: 67,
+				},
+			],
+		},
+		{
+			code: "@media (foo) and (color-gamut: srgb) { a { color: red; } }",
+			errors: [
+				{
+					messageId: "notBaselineMediaCondition",
+					data: {
+						condition: "color-gamut",
+						availability: "widely",
+					},
+					line: 1,
+					column: 19,
+					endLine: 1,
+					endColumn: 30,
 				},
 			],
 		},
