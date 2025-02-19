@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0](https://github.com/eslint/css/compare/css-v0.3.0...css-v0.4.0) (2025-02-19)
+
+
+### Features
+
+* Add support for media conditions in require-baseline rule ([#49](https://github.com/eslint/css/issues/49)) ([ad9ddd7](https://github.com/eslint/css/commit/ad9ddd769b38ba26f09c1a76c0da80d5144dff53))
+
+
+### Bug Fixes
+
+* require-baseline should not warn for cursor property ([#52](https://github.com/eslint/css/issues/52)) ([21b5aad](https://github.com/eslint/css/commit/21b5aadb11e1426baa8bc6325f65c34345ee40f5)), closes [#51](https://github.com/eslint/css/issues/51)
+
 ## [0.3.0](https://github.com/eslint/css/compare/css-v0.2.0...css-v0.3.0) (2025-02-14)
 
 
