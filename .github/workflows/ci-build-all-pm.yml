@@ -25,7 +25,7 @@ jobs:
             - run: npm pack
             - uses: actions/upload-artifact@v4
               with:
-                  name: build.zip
+                  name: build
                   path: eslint-css-*.tgz
                   retention-days: 1
             - name: Get version
@@ -38,7 +38,7 @@ jobs:
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: build.zip
+                  name: build
             - name: npm install
               run: |
                   npm install ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
@@ -50,7 +50,7 @@ jobs:
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: build.zip
+                  name: build
             - name: yarn add
               run: |
                   yarn add ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
@@ -61,7 +61,7 @@ jobs:
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: build.zip
+                  name: build
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
@@ -82,7 +82,7 @@ jobs:
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: build.zip
+                  name: build
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
@@ -103,7 +103,7 @@ jobs:
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: build.zip
+                  name: build
             - name: setup bun
               uses: oven-sh/setup-bun@v2
             - name: bun install
