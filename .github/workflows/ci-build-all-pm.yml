@@ -1,0 +1,111 @@
+name: CI Build install
+# This workflow creates a tarball from repo sources
+# It then checks that each of the following package managers is able to install:
+# - npm
+# - Yarn v1 Classic
+# - Yarn (Modern)
+# - pnpm
+# - bun
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+jobs:
+    npm-build:
+        name: Build tarball
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.get_version.outputs.version }}
+        steps:
+            - uses: actions/checkout@v4
+            - run: npm pack
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: build.zip
+                  path: eslint-css-*.tgz
+                  retention-days: 1
+            - name: Get version
+              id: get_version
+              run: echo "version=$(jq -r '.version' package.json)" >> "$GITHUB_OUTPUT"
+    npm-install:
+        name: Install with npm
+        needs: npm-build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: build.zip
+            - name: npm install
+              run: |
+                  npm install ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
+    yarn-v1-install:
+        name: Install with Yarn v1
+        if: false # disable due to https://github.com/eslint/css/issues/58
+        needs: npm-build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: build.zip
+            - name: yarn add
+              run: |
+                  yarn add ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
+    yarn-install:
+        name: Install with Yarn
+        needs: npm-build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: build.zip
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22.14.0 # minimum for Corepack
+            - name: yarn add
+              run: |
+                  corepack enable yarn
+                  corepack use yarn@latest
+                  yarn init -p
+                  yarn add ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
+              env:
+                  YARN_ENABLE_IMMUTABLE_INSTALLS: 0 # Allow installs to modify lockfile
+    pnpm-install:
+        name: Install with pnpm
+        if: false # disable due to https://github.com/eslint/css/issues/56
+        needs: npm-build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: build.zip
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22.14.0 # minimum for Corepack
+            - name: pnpm add
+              run: |
+                  corepack enable pnpm
+                  corepack use pnpm@latest
+                  cat > .npmrc <<EOT
+                  auto-install-peers=true
+                  node-linker=hoisted
+                  EOT
+                  pnpm add ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
+    bun-install:
+        name: Install with bun
+        needs: npm-build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: build.zip
+            - name: setup bun
+              uses: oven-sh/setup-bun@v2
+            - name: bun install
+              run: |
+                  bun install ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
