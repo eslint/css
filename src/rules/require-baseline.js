@@ -15,6 +15,7 @@ import {
 	atRules,
 	mediaConditions,
 	types,
+	selectors,
 } from "../data/baseline-data.js";
 import { namedColors } from "../data/colors.js";
 
@@ -347,6 +348,8 @@ export default {
 				"Type '{{type}}' is not a {{availability}} available baseline feature.",
 			notBaselineMediaCondition:
 				"Media condition '{{condition}}' is not a {{availability}} available baseline feature.",
+			notBaselineSelector:
+				"Selector '{{selector}}' is not a {{availability}} available baseline feature.",
 		},
 	},
 
@@ -623,6 +626,48 @@ export default {
 							availability,
 						},
 					});
+				}
+			},
+
+			Selector(node) {
+				for (const child of node.children) {
+					const selector = child.name;
+
+					if (!selectors.has(selector)) {
+						continue;
+					}
+
+					const ruleLevel = selectors.get(selector);
+
+					if (ruleLevel < baselineLevel) {
+						const loc = child.loc;
+
+						// some selectors are prefixed with the : or :: symbols
+						let prefixSymbolLength = 0;
+						if (child.type === "PseudoClassSelector") {
+							prefixSymbolLength = 1;
+						} else if (child.type === "PseudoElementSelector") {
+							prefixSymbolLength = 2;
+						}
+
+						context.report({
+							loc: {
+								start: loc.start,
+								end: {
+									line: loc.start.line,
+									column:
+										loc.start.column +
+										selector.length +
+										prefixSymbolLength,
+								},
+							},
+							messageId: "notBaselineSelector",
+							data: {
+								selector,
+								availability,
+							},
+						});
+					}
 				}
 			},
 		};

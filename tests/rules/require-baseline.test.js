@@ -340,5 +340,37 @@ ruleTester.run("require-baseline", rule, {
 				},
 			],
 		},
+		{
+			code: "h1:has(+ h2) { margin: 0 0 0.25rem 0; }",
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "has",
+						availability: "widely",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: "details::details-content { background-color: #a29bfe; }",
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "details-content",
+						availability: "widely",
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 25,
+				},
+			],
+		},
 	],
 });
