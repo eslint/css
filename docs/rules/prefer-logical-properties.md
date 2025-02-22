@@ -1,0 +1,28 @@
+# prefer-logical-properties
+
+Prefer logical properties over physical properties.
+
+## Background
+
+Logical properties are a set of CSS properties that map to their physical counterparts. They are designed to make it easier to create styles that work in both left-to-right and right-to-left languages. Logical properties are useful for creating styles that are more flexible and easier to maintain.
+
+## Rule Details
+
+This rule checks for the use of physical properties and suggests using their logical counterparts instead.
+
+Examples of **incorrect** code for this rule:
+
+```css
+/* incorrect use of physical properties */
+a {
+	margin-left: 10px;
+}
+```
+
+Examples of **correct** code for this rule:
+
+```css
+a {
+	margin-inline-start: 10px;
+}
+```
