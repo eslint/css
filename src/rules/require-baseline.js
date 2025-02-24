@@ -637,9 +637,9 @@ export default {
 						continue;
 					}
 
-					const ruleLevel = selectors.get(selector);
+					const selectorLevel = selectors.get(selector);
 
-					if (ruleLevel < baselineLevel) {
+					if (selectorLevel < baselineLevel) {
 						const loc = child.loc;
 
 						// some selectors are prefixed with the : or :: symbols
