@@ -125,6 +125,12 @@ class SupportsRule {
 	#properties = new Map();
 
 	/**
+	 * The selectors supported by this rule.
+	 * @type {Set<string>}
+	 */
+	#selectors = new Set();
+
+	/**
 	 * Adds a property to the rule.
 	 * @param {string} property The name of the property.
 	 * @returns {SupportedProperty} The supported property object.
@@ -219,6 +225,24 @@ class SupportsRule {
 
 		return supportedProperty.hasFunctions();
 	}
+
+	/**
+	 * Adds a selector to the rule.
+	 * @param {string} selector The name of the selector.
+	 * @returns {void}
+	 */
+	addSelector(selector) {
+		this.#selectors.add(selector);
+	}
+
+	/**
+	 * Determines if the rule supports a selector.
+	 * @param {string} selector The name of the selector.
+	 * @returns {boolean} `true` if the selector is supported, `false` if not.
+	 */
+	hasSelector(selector) {
+		return this.#selectors.has(selector);
+	}
 }
 
 /**
@@ -303,6 +327,15 @@ class SupportsRules {
 	 */
 	hasPropertyFunctions(property) {
 		return this.#rules.some(rule => rule.hasFunctions(property));
+	}
+
+	/**
+	 * Determines if any rule supports a selector.
+	 * @param {string} selector The name of the selector.
+	 * @returns {boolean} `true` if any rule supports the selector, `false` if not.
+	 */
+	hasSelector(selector) {
+		return this.#rules.some(rule => rule.hasSelector(selector));
 	}
 }
 
@@ -461,6 +494,16 @@ export default {
 						});
 
 						continue;
+					}
+
+					if (
+						conditionChild.type === "FeatureFunction" &&
+						conditionChild.feature === "selector"
+					) {
+						for (const selectorChild of conditionChild.value
+							.children) {
+							supportsRule.addSelector(selectorChild.name);
+						}
 					}
 				}
 			},
@@ -634,6 +677,11 @@ export default {
 					const selector = child.name;
 
 					if (!selectors.has(selector)) {
+						continue;
+					}
+
+					// if the selector has been tested in a @supports rule, don't check it
+					if (supportsRules.hasSelector(selector)) {
 						continue;
 					}
 

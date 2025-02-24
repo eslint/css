@@ -57,6 +57,9 @@ ruleTester.run("require-baseline", rule, {
 		`@supports (width: abs(20% - 100px)) {
 			a { width: abs(20% - 100px); }
 		}`,
+		`@supports selector(:has()) {
+				h1:has(+ h2) { color: red; }
+		}`,
 		"div { cursor: pointer; }",
 		{
 			code: `@property --foo {
@@ -353,6 +356,28 @@ ruleTester.run("require-baseline", rule, {
 					column: 3,
 					endLine: 1,
 					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: `@supports selector(:has()) {}
+
+			@supports (color: red) {
+				h1:has(+ h2) {
+					color: red;
+				}
+			}`,
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "has",
+						availability: "widely",
+					},
+					line: 4,
+					column: 7,
+					endLine: 4,
+					endColumn: 11,
 				},
 			],
 		},
