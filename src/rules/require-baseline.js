@@ -15,6 +15,7 @@ import {
 	atRules,
 	mediaConditions,
 	types,
+	selectors,
 } from "../data/baseline-data.js";
 import { namedColors } from "../data/colors.js";
 
@@ -124,6 +125,12 @@ class SupportsRule {
 	#properties = new Map();
 
 	/**
+	 * The selectors supported by this rule.
+	 * @type {Set<string>}
+	 */
+	#selectors = new Set();
+
+	/**
 	 * Adds a property to the rule.
 	 * @param {string} property The name of the property.
 	 * @returns {SupportedProperty} The supported property object.
@@ -218,6 +225,24 @@ class SupportsRule {
 
 		return supportedProperty.hasFunctions();
 	}
+
+	/**
+	 * Adds a selector to the rule.
+	 * @param {string} selector The name of the selector.
+	 * @returns {void}
+	 */
+	addSelector(selector) {
+		this.#selectors.add(selector);
+	}
+
+	/**
+	 * Determines if the rule supports a selector.
+	 * @param {string} selector The name of the selector.
+	 * @returns {boolean} `true` if the selector is supported, `false` if not.
+	 */
+	hasSelector(selector) {
+		return this.#selectors.has(selector);
+	}
 }
 
 /**
@@ -303,6 +328,15 @@ class SupportsRules {
 	hasPropertyFunctions(property) {
 		return this.#rules.some(rule => rule.hasFunctions(property));
 	}
+
+	/**
+	 * Determines if any rule supports a selector.
+	 * @param {string} selector The name of the selector.
+	 * @returns {boolean} `true` if any rule supports the selector, `false` if not.
+	 */
+	hasSelector(selector) {
+		return this.#rules.some(rule => rule.hasSelector(selector));
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -347,6 +381,8 @@ export default {
 				"Type '{{type}}' is not a {{availability}} available baseline feature.",
 			notBaselineMediaCondition:
 				"Media condition '{{condition}}' is not a {{availability}} available baseline feature.",
+			notBaselineSelector:
+				"Selector '{{selector}}' is not a {{availability}} available baseline feature.",
 		},
 	},
 
@@ -458,6 +494,16 @@ export default {
 						});
 
 						continue;
+					}
+
+					if (
+						conditionChild.type === "FeatureFunction" &&
+						conditionChild.feature === "selector"
+					) {
+						for (const selectorChild of conditionChild.value
+							.children) {
+							supportsRule.addSelector(selectorChild.name);
+						}
 					}
 				}
 			},
@@ -623,6 +669,53 @@ export default {
 							availability,
 						},
 					});
+				}
+			},
+
+			Selector(node) {
+				for (const child of node.children) {
+					const selector = child.name;
+
+					if (!selectors.has(selector)) {
+						continue;
+					}
+
+					// if the selector has been tested in a @supports rule, don't check it
+					if (supportsRules.hasSelector(selector)) {
+						continue;
+					}
+
+					const selectorLevel = selectors.get(selector);
+
+					if (selectorLevel < baselineLevel) {
+						const loc = child.loc;
+
+						// some selectors are prefixed with the : or :: symbols
+						let prefixSymbolLength = 0;
+						if (child.type === "PseudoClassSelector") {
+							prefixSymbolLength = 1;
+						} else if (child.type === "PseudoElementSelector") {
+							prefixSymbolLength = 2;
+						}
+
+						context.report({
+							loc: {
+								start: loc.start,
+								end: {
+									line: loc.start.line,
+									column:
+										loc.start.column +
+										selector.length +
+										prefixSymbolLength,
+								},
+							},
+							messageId: "notBaselineSelector",
+							data: {
+								selector,
+								availability,
+							},
+						});
+					}
 				}
 			},
 		};

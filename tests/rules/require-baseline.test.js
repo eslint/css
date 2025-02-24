@@ -57,6 +57,9 @@ ruleTester.run("require-baseline", rule, {
 		`@supports (width: abs(20% - 100px)) {
 			a { width: abs(20% - 100px); }
 		}`,
+		`@supports selector(:has()) {
+				h1:has(+ h2) { color: red; }
+		}`,
 		"div { cursor: pointer; }",
 		{
 			code: `@property --foo {
@@ -337,6 +340,60 @@ ruleTester.run("require-baseline", rule, {
 					column: 19,
 					endLine: 1,
 					endColumn: 30,
+				},
+			],
+		},
+		{
+			code: "h1:has(+ h2) { margin: 0 0 0.25rem 0; }",
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "has",
+						availability: "widely",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: `@supports selector(:has()) {}
+
+			@supports (color: red) {
+				h1:has(+ h2) {
+					color: red;
+				}
+			}`,
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "has",
+						availability: "widely",
+					},
+					line: 4,
+					column: 7,
+					endLine: 4,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "details::details-content { background-color: #a29bfe; }",
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "details-content",
+						availability: "widely",
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 25,
 				},
 			],
 		},

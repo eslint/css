@@ -23,6 +23,7 @@ This rule warns when it finds any of the following:
 - A media condition inside `@media` that isn't widely available.
 - A CSS property value that isn't widely available or otherwise isn't enclosed in a `@supports` block (currently limited to identifiers only).
 - A CSS property function that isn't widely available.
+- A CSS pseudo-element or pseudo-class selector that isn't widely available.
 
 The data is provided via the [web-features](https://npmjs.com/package/web-features) package.
 
@@ -37,6 +38,11 @@ a {
 /* invalid - abs is not widely available */
 .box {
 	width: abs(20% - 100px);
+}
+
+/* invalid - :has() is not widely available */
+h1:has(+ h2) {
+	margin: 0 0 0.25rem 0;
 }
 
 /* invalid - device-posture is not widely available */
