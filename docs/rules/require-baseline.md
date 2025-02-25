@@ -45,6 +45,13 @@ h1:has(+ h2) {
 	margin: 0 0 0.25rem 0;
 }
 
+/* valid - @supports indicates you're choosing a limited availability selector */
+@supports selector(:has()) {
+	h1:has(+ h2) {
+		margin: 0 0 0.25rem 0;
+	}
+}
+
 /* invalid - device-posture is not widely available */
 @media (device-posture: folded) {
 	a {
