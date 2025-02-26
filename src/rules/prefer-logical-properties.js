@@ -122,7 +122,7 @@ export default {
 	meta: {
 		type: /** @type {const} */ ("problem"),
 
-		fixable: "code",
+		fixable: /** @type {const} */ ("code"),
 
 		docs: {
 			description: "Enforce the use of logical properties",
