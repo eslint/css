@@ -133,13 +133,13 @@ export default {
 			{
 				type: "object",
 				properties: {
-					allowedProperties: {
+					allowProperties: {
 						type: "array",
 						items: {
 							type: "string",
 						},
 					},
-					allowedUnits: {
+					allowUnits: {
 						type: "array",
 						items: {
 							type: "string",
@@ -152,8 +152,8 @@ export default {
 
 		defaultOptions: [
 			{
-				allowedProperties: [],
-				allowedUnits: [],
+				allowProperties: [],
+				allowUnits: [],
 			},
 		],
 
@@ -170,10 +170,10 @@ export default {
 	create(context) {
 		return {
 			Declaration(node) {
-				const allowedProperties = context.options[0].allowedProperties;
+				const allowProperties = context.options[0].allowProperties;
 				if (
 					propertiesReplacements.get(node.property) &&
-					!allowedProperties.includes(node.property)
+					!allowProperties.includes(node.property)
 				) {
 					context.report({
 						loc: node.loc,
@@ -212,10 +212,10 @@ export default {
 				}
 			},
 			Dimension(node) {
-				const allowedUnits = context.options[0].allowedUnits;
+				const allowUnits = context.options[0].allowUnits;
 				if (
 					unitReplacements.get(node.unit) &&
-					!allowedUnits.includes(node.unit)
+					!allowUnits.includes(node.unit)
 				) {
 					context.report({
 						loc: node.loc,

@@ -28,7 +28,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 			code: "a { padding-left: 20px; }",
 			options: [
 				{
-					allowedProperties: ["padding-left"],
+					allowProperties: ["padding-left"],
 				},
 			],
 		},
@@ -36,7 +36,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 			code: "a { inline-size: 100vw; }",
 			options: [
 				{
-					allowedUnits: ["vw"],
+					allowUnits: ["vw"],
 				},
 			],
 		},
