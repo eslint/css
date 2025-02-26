@@ -24,6 +24,22 @@ ruleTester.run("prefer-logical-properties", rule, {
 		"a { margin: 10px; }",
 		"a { padding: 20px; }",
 		"a { text-align: start }",
+		{
+			code: "a { padding-left: 20px; }",
+			options: [
+				{
+					allowedProperties: ["padding-left"],
+				},
+			],
+		},
+		{
+			code: "a { inline-size: 100vw; }",
+			options: [
+				{
+					allowedUnits: ["vw"],
+				},
+			],
+		},
 	],
 	invalid: [
 		{

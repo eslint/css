@@ -129,6 +129,34 @@ export default {
 			url: "https://github.com/eslint/css/blob/main/docs/rules/prefer-logical-properties.md",
 		},
 
+		schema: [
+			{
+				type: "object",
+				properties: {
+					allowedProperties: {
+						type: "array",
+						items: {
+							type: "string",
+						},
+					},
+					allowedUnits: {
+						type: "array",
+						items: {
+							type: "string",
+						},
+					},
+				},
+				additionalProperties: false,
+			},
+		],
+
+		defaultOptions: [
+			{
+				allowedProperties: [],
+				allowedUnits: [],
+			},
+		],
+
 		messages: {
 			notLogicalProperty:
 				"Expected logical property '{{replacement}}' instead of '{{property}}'.",
@@ -142,7 +170,11 @@ export default {
 	create(context) {
 		return {
 			Declaration(node) {
-				if (propertiesReplacements.get(node.property)) {
+				const allowedProperties = context.options[0].allowedProperties;
+				if (
+					propertiesReplacements.get(node.property) &&
+					!allowedProperties.includes(node.property)
+				) {
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalProperty",
@@ -180,7 +212,11 @@ export default {
 				}
 			},
 			Dimension(node) {
-				if (unitReplacements.get(node.unit)) {
+				const allowedUnits = context.options[0].allowedUnits;
+				if (
+					unitReplacements.get(node.unit) &&
+					!allowedUnits.includes(node.unit)
+				) {
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalUnit",
