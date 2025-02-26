@@ -33,3 +33,11 @@ This rule accepts an option object with the following properties:
 
 - `allowProperties` (default: `[]`) - Specify an array of physical properties that are allowed to be used.
 - `allowUnits` (default: `[]`) - Specify an array of physical units that are allowed to be used.
+
+## When Not to Use It
+
+If you aren't concerned with the use of logical properties, then you can safely disable this rule.
+
+## Prior Art
+
+- [stylelint-use-logical](https://github.com/csstools/stylelint-use-logical)
