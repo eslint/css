@@ -20,10 +20,10 @@ pnpm install @eslint/css -D
 bun install @eslint/css -D
 ```
 
-For Deno:
+For Deno (experimental):
 
 ```shell
-deno add @eslint/css
+deno add jsr:@eslint/css
 ```
 
 ### Configurations
