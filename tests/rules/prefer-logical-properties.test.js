@@ -24,6 +24,8 @@ ruleTester.run("prefer-logical-properties", rule, {
 		"a { margin: 10px; }",
 		"a { padding: 20px; }",
 		"a { text-align: start }",
+		"@supports (text-align: left) {}",
+		"@supports (padding-left: 10px) {}",
 		{
 			code: "a { padding-left: 20px; }",
 			options: [

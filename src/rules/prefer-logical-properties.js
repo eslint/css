@@ -170,6 +170,11 @@ export default {
 	create(context) {
 		return {
 			Declaration(node) {
+				const parent = context.sourceCode.getParent(node);
+				if (parent.type === "SupportsDeclaration") {
+					return;
+				}
+
 				const allowProperties = context.options[0].allowProperties;
 				if (
 					propertiesReplacements.get(node.property) &&
