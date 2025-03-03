@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 
 import { features as webFeatures } from "web-features";
+import mdnData from "mdn-data";
 import prettier from "prettier";
 import fs from "node:fs";
 
@@ -126,7 +127,11 @@ function extractCSSFeatures(features) {
 
 		// types
 		if ((match = cssTypePattern.exec(key)) !== null) {
-			types[match.groups.type] = baselineIds.get(baseline);
+			const type = match.groups.type;
+			if (!(`${type}()` in mdnData.css.functions)) {
+				continue;
+			}
+			types[type] = baselineIds.get(baseline);
 			continue;
 		}
 

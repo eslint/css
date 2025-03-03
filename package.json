@@ -101,6 +101,7 @@
     "got": "^14.4.2",
     "lint-staged": "^15.2.7",
     "mdast-util-from-markdown": "^2.0.2",
+    "mdn-data": "^2.17.0",
     "mocha": "^10.4.0",
     "prettier": "^3.4.1",
     "rollup": "^4.16.2",
