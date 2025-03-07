@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 
 import { features as webFeatures } from "web-features";
+import mdnData from "mdn-data";
 import prettier from "prettier";
 import fs from "node:fs";
 
@@ -74,7 +75,8 @@ function extractCSSFeatures(features) {
 	const cssAtRulePattern = /^css\.at-rules\.(?<atRule>[a-zA-Z$\d-]+)$/u;
 	const cssMediaConditionPattern =
 		/^css\.at-rules\.media\.(?<condition>[a-zA-Z$\d-]+)$/u;
-	const cssTypePattern = /^css\.types\.(?<type>[a-zA-Z$\d-]+)$/u;
+	const cssTypePattern =
+		/^css\.types\.(?:.*?\.)?(?<type>[a-zA-Z\d-]+)(?:\.[^.]*$|[^.]*$)/u;
 	const cssSelectorPattern = /^css\.selectors\.(?<selector>[a-zA-Z$\d-]+)$/u;
 
 	const properties = {};
@@ -125,7 +127,11 @@ function extractCSSFeatures(features) {
 
 		// types
 		if ((match = cssTypePattern.exec(key)) !== null) {
-			types[match.groups.type] = baselineIds.get(baseline);
+			const type = match.groups.type;
+			if (!(`${type}()` in mdnData.css.functions)) {
+				continue;
+			}
+			types[type] = baselineIds.get(baseline);
 			continue;
 		}
 

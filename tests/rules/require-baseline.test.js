@@ -268,6 +268,22 @@ ruleTester.run("require-baseline", rule, {
 			],
 		},
 		{
+			code: "a { color: color-mix(in hsl, hsl(200 50 80), coral 80%); }",
+			errors: [
+				{
+					messageId: "notBaselineType",
+					data: {
+						type: "color-mix",
+						availability: "widely",
+					},
+					line: 1,
+					column: 12,
+					endLine: 1,
+					endColumn: 56,
+				},
+			],
+		},
+		{
 			code: "@media (color-gamut: srgb) { a { color: red; } }",
 			errors: [
 				{
