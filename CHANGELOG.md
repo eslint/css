@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/eslint/css/compare/css-v0.4.0...css-v0.5.0) (2025-03-07)
+
+
+### Features
+
+* add prefer-logical-properties rule ([#63](https://github.com/eslint/css/issues/63)) ([2a440ce](https://github.com/eslint/css/commit/2a440ce617cc6754563bc8c41ae16dfd445a0b95))
+* add selector support to require-baseline ([#61](https://github.com/eslint/css/issues/61)) ([9c7fd6a](https://github.com/eslint/css/commit/9c7fd6aa06b62c70d979ff5f7b9c06a95fdeed56))
+
 ## [0.4.0](https://github.com/eslint/css/compare/css-v0.3.0...css-v0.4.0) (2025-02-19)
 
 
