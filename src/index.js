@@ -24,7 +24,7 @@ import requireBaseline from "./rules/require-baseline.js";
 const plugin = {
 	meta: {
 		name: "@eslint/css",
-		version: "0.4.0", // x-release-please-version
+		version: "0.5.0", // x-release-please-version
 	},
 	languages: {
 		css: new CSSLanguage(),
