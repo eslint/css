@@ -339,6 +339,35 @@ class SupportsRules {
 	}
 }
 
+class BaselineAvailability {
+	/**
+	 * @param {string | number} availability The required level of feature availability.
+	 */
+	constructor(availability) {
+		this.availability = availability;
+
+		if (Number.isInteger(availability)) {
+			this.baselineYear = availability;
+		} else {
+			this.baselineStatus =
+				availability === "widely" ? BASELINE_HIGH : BASELINE_LOW;
+		}
+	}
+
+	/**
+	 * Determines whether a feature meets the required availability.
+	 * @param {Object} feature A feature's baseline status and year.
+	 * @returns {boolean} `true` if the feature is supported, `false` if not.
+	 */
+	isSupported(feature) {
+		if (this.baselineYear) {
+			return feature.year <= this.baselineYear;
+		}
+
+		return feature.status >= this.baselineStatus;
+	}
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -357,7 +386,16 @@ export default {
 				type: "object",
 				properties: {
 					available: {
-						enum: ["widely", "newly"],
+						anyOf: [
+							{
+								enum: ["widely", "newly"],
+							},
+							{
+								// baseline year
+								type: "integer",
+								minimum: 2000,
+							},
+						],
 					},
 				},
 				additionalProperties: false,
@@ -387,9 +425,9 @@ export default {
 	},
 
 	create(context) {
-		const availability = context.options[0].available;
-		const baselineLevel =
-			availability === "widely" ? BASELINE_HIGH : BASELINE_LOW;
+		const baselineAvailability = new BaselineAvailability(
+			context.options[0].available,
+		);
 		const supportsRules = new SupportsRules();
 
 		/**
@@ -410,21 +448,21 @@ export default {
 				return;
 			}
 
-			const propertyValueLevel = possiblePropertyValues.get(child.name);
+			const featureStatus = possiblePropertyValues.get(child.name);
 
 			// if we don't know of any possible property values, just skip it
-			if (propertyValueLevel === undefined) {
+			if (featureStatus === undefined) {
 				return;
 			}
 
-			if (propertyValueLevel < baselineLevel) {
+			if (!baselineAvailability.isSupported(featureStatus)) {
 				context.report({
 					loc: child.loc,
 					messageId: "notBaselinePropertyValue",
 					data: {
 						property,
 						value: child.name,
-						availability,
+						availability: baselineAvailability.availability,
 					},
 				});
 			}
@@ -436,20 +474,20 @@ export default {
 		 * @returns {void}
 		 **/
 		function checkPropertyValueFunction(child) {
-			const propertyValueLevel = types.get(child.name);
+			const featureStatus = types.get(child.name);
 
 			// if we don't know of any possible property values, just skip it
-			if (propertyValueLevel === undefined) {
+			if (featureStatus === undefined) {
 				return;
 			}
 
-			if (propertyValueLevel < baselineLevel) {
+			if (!baselineAvailability.isSupported(featureStatus)) {
 				context.report({
 					loc: child.loc,
 					messageId: "notBaselineType",
 					data: {
 						type: child.name,
-						availability,
+						availability: baselineAvailability.availability,
 					},
 				});
 			}
@@ -523,9 +561,9 @@ export default {
 				 * check it because it won't be applied if the browser doesn't support it.
 				 */
 				if (!supportsRules.hasProperty(property)) {
-					const ruleLevel = properties.get(property);
+					const featureStatus = properties.get(property);
 
-					if (ruleLevel < baselineLevel) {
+					if (!baselineAvailability.isSupported(featureStatus)) {
 						context.report({
 							loc: {
 								start: node.loc.start,
@@ -539,7 +577,7 @@ export default {
 							messageId: "notBaselineProperty",
 							data: {
 								property,
-								availability,
+								availability: baselineAvailability.availability,
 							},
 						});
 
@@ -611,9 +649,9 @@ export default {
 						continue;
 					}
 
-					const conditionLevel = mediaConditions.get(child.name);
+					const featureStatus = mediaConditions.get(child.name);
 
-					if (conditionLevel < baselineLevel) {
+					if (!baselineAvailability.isSupported(featureStatus)) {
 						const loc = child.loc;
 
 						context.report({
@@ -635,7 +673,7 @@ export default {
 							messageId: "notBaselineMediaCondition",
 							data: {
 								condition: child.name,
-								availability,
+								availability: baselineAvailability.availability,
 							},
 						});
 					}
@@ -648,9 +686,9 @@ export default {
 					return;
 				}
 
-				const ruleLevel = atRules.get(node.name);
+				const featureStatus = atRules.get(node.name);
 
-				if (ruleLevel < baselineLevel) {
+				if (!baselineAvailability.isSupported(featureStatus)) {
 					const loc = node.loc;
 
 					context.report({
@@ -666,7 +704,7 @@ export default {
 						messageId: "notBaselineAtRule",
 						data: {
 							atRule: node.name,
-							availability,
+							availability: baselineAvailability.availability,
 						},
 					});
 				}
@@ -685,9 +723,9 @@ export default {
 						continue;
 					}
 
-					const selectorLevel = selectors.get(selector);
+					const featureStatus = selectors.get(selector);
 
-					if (selectorLevel < baselineLevel) {
+					if (!baselineAvailability.isSupported(featureStatus)) {
 						const loc = child.loc;
 
 						// some selectors are prefixed with the : or :: symbols
@@ -712,7 +750,7 @@ export default {
 							messageId: "notBaselineSelector",
 							data: {
 								selector,
-								availability,
+								availability: baselineAvailability.availability,
 							},
 						});
 					}

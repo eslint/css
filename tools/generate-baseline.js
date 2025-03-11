@@ -34,6 +34,19 @@ const baselineIds = new Map([
 ]);
 
 /**
+ * Maps the raw feature status object to a baseline status ID and year.
+ * @param {Object} status The raw feature status object.
+ * @returns {Object} An object containing the baseline status and year.
+ */
+function mapFeatureStatus(status) {
+	return {
+		status: baselineIds.get(status.baseline),
+		// extract the year part YYYY from the date formatted YYYY-MM-DD
+		year: Number(status.baseline_low_date?.slice(0, 4)),
+	};
+}
+
+/**
  * Flattens the compat features into an object where the key is the feature
  * name and the value is the baseline.
  * @param {Object} entry The entry to flatten.
@@ -45,7 +58,7 @@ function flattenCompatFeatures(entry) {
 	}
 
 	return Object.fromEntries(
-		entry.compat_features.map(feature => [feature, entry.status.baseline]),
+		entry.compat_features.map(feature => [feature, entry.status]),
 	);
 }
 
@@ -84,7 +97,7 @@ function extractCSSFeatures(features) {
 	const types = {};
 	const selectors = {};
 
-	for (const [key, baseline] of Object.entries(features)) {
+	for (const [key, status] of Object.entries(features)) {
 		let match;
 
 		// property names
@@ -92,7 +105,7 @@ function extractCSSFeatures(features) {
 			(match = cssPropertyPattern.exec(key)) !== null &&
 			!WIDE_SUPPORT_PROPERTIES.has(match.groups.property)
 		) {
-			properties[match.groups.property] = baselineIds.get(baseline);
+			properties[match.groups.property] = mapFeatureStatus(status);
 			continue;
 		}
 
@@ -107,31 +120,31 @@ function extractCSSFeatures(features) {
 				propertyValues[match.groups.property] = {};
 			}
 			propertyValues[match.groups.property][match.groups.value] =
-				baselineIds.get(baseline);
+				mapFeatureStatus(status);
 			continue;
 		}
 
 		// at-rules
 		if ((match = cssAtRulePattern.exec(key)) !== null) {
-			atRules[match.groups.atRule] = baselineIds.get(baseline);
+			atRules[match.groups.atRule] = mapFeatureStatus(status);
 			continue;
 		}
 
 		// Media conditions (@media features)
 		if ((match = cssMediaConditionPattern.exec(key)) !== null) {
-			mediaConditions[match.groups.condition] = baselineIds.get(baseline);
+			mediaConditions[match.groups.condition] = mapFeatureStatus(status);
 			continue;
 		}
 
 		// types
 		if ((match = cssTypePattern.exec(key)) !== null) {
-			types[match.groups.type] = baselineIds.get(baseline);
+			types[match.groups.type] = mapFeatureStatus(status);
 			continue;
 		}
 
 		// selectors
 		if ((match = cssSelectorPattern.exec(key)) !== null) {
-			selectors[match.groups.selector] = baselineIds.get(baseline);
+			selectors[match.groups.selector] = mapFeatureStatus(status);
 			continue;
 		}
 	}

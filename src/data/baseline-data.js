@@ -10,2728 +10,13464 @@ export const BASELINE_LOW = 5;
 export const BASELINE_FALSE = 0;
 
 export const properties = new Map([
-	["accent-color", 0],
-	["alignment-baseline", 0],
-	["all", 10],
-	["anchor-name", 0],
-	["anchor-scope", 0],
-	["position-anchor", 0],
-	["position-area", 0],
-	["position-try", 0],
-	["position-try-fallbacks", 0],
-	["position-try-order", 0],
-	["position-visibility", 0],
-	["animation-composition", 5],
-	["animation", 10],
-	["animation-delay", 10],
-	["animation-direction", 10],
-	["animation-duration", 10],
-	["animation-fill-mode", 10],
-	["animation-iteration-count", 10],
-	["animation-name", 10],
-	["animation-play-state", 10],
-	["animation-timing-function", 10],
-	["appearance", 10],
-	["aspect-ratio", 10],
-	["backdrop-filter", 5],
-	["background", 10],
-	["background-attachment", 10],
-	["background-blend-mode", 10],
-	["background-clip", 10],
-	["background-color", 10],
-	["background-image", 10],
-	["background-origin", 10],
-	["background-position", 10],
-	["background-position-x", 10],
-	["background-position-y", 10],
-	["background-repeat", 10],
-	["background-size", 10],
-	["baseline-shift", 0],
-	["baseline-source", 0],
-	["border-image", 10],
-	["border-image-outset", 10],
-	["border-image-repeat", 10],
-	["border-image-slice", 10],
-	["border-image-source", 10],
-	["border-image-width", 10],
-	["border-bottom-left-radius", 10],
-	["border-bottom-right-radius", 10],
-	["border-radius", 10],
-	["border-top-left-radius", 10],
-	["border-top-right-radius", 10],
-	["border", 10],
-	["border-bottom", 10],
-	["border-bottom-color", 10],
-	["border-bottom-style", 10],
-	["border-bottom-width", 10],
-	["border-color", 10],
-	["border-left", 10],
-	["border-left-color", 10],
-	["border-left-style", 10],
-	["border-left-width", 10],
-	["border-right", 10],
-	["border-right-color", 10],
-	["border-right-style", 10],
-	["border-right-width", 10],
-	["border-style", 10],
-	["border-top", 10],
-	["border-top-color", 10],
-	["border-top-style", 10],
-	["border-top-width", 10],
-	["border-width", 10],
-	["box-decoration-break", 0],
-	["box-shadow", 10],
-	["box-sizing", 10],
-	["caret-color", 10],
-	["clip", 0],
-	["clip-path", 10],
-	["color", 10],
-	["color-adjust", 0],
-	["color-scheme", 10],
-	["column-fill", 10],
-	["column-span", 10],
-	["contain", 10],
-	["contain-intrinsic-block-size", 5],
-	["contain-intrinsic-height", 5],
-	["contain-intrinsic-inline-size", 5],
-	["contain-intrinsic-size", 5],
-	["contain-intrinsic-width", 5],
-	["container", 5],
-	["container-name", 5],
-	["container-type", 5],
-	["content", 10],
-	["content-visibility", 0],
-	["counter-set", 5],
-	["counter-increment", 10],
-	["counter-reset", 10],
-	["custom-property", 10],
-	["display", 10],
-	["dominant-baseline", 10],
-	["field-sizing", 0],
-	["filter", 10],
-	["align-content", 10],
-	["align-items", 10],
-	["align-self", 10],
-	["flex", 10],
-	["flex-basis", 10],
-	["flex-direction", 10],
-	["flex-flow", 10],
-	["flex-grow", 10],
-	["flex-shrink", 10],
-	["flex-wrap", 10],
-	["justify-content", 10],
-	["justify-items", 10],
-	["order", 10],
-	["place-content", 10],
-	["place-items", 10],
-	["place-self", 10],
-	["clear", 10],
-	["float", 10],
-	["font-family", 10],
-	["font-feature-settings", 10],
-	["font-kerning", 10],
-	["font-language-override", 0],
-	["font-optical-sizing", 10],
-	["font-palette", 5],
-	["font", 10],
-	["font-size", 10],
-	["font-size-adjust", 5],
-	["font-stretch", 10],
-	["font-style", 10],
-	["font-synthesis", 10],
-	["font-synthesis-position", 0],
-	["font-synthesis-small-caps", 5],
-	["font-synthesis-style", 5],
-	["font-synthesis-weight", 5],
-	["font-variant", 10],
-	["font-variant-alternates", 5],
-	["font-variant-caps", 10],
-	["font-variant-east-asian", 10],
-	["font-variant-emoji", 0],
-	["font-variant-ligatures", 10],
-	["font-variant-numeric", 10],
-	["font-variant-position", 0],
-	["font-variation-settings", 10],
-	["font-weight", 10],
-	["forced-color-adjust", 5],
-	["glyph-orientation-vertical", 0],
-	["gap", 10],
-	["grid", 10],
-	["grid-area", 10],
-	["grid-auto-columns", 10],
-	["grid-auto-flow", 10],
-	["grid-auto-rows", 10],
-	["grid-column", 10],
-	["grid-column-end", 10],
-	["grid-column-start", 10],
-	["grid-row", 10],
-	["grid-row-end", 10],
-	["grid-row-start", 10],
-	["grid-template", 10],
-	["grid-template-areas", 10],
-	["grid-template-columns", 10],
-	["grid-template-rows", 10],
-	["justify-self", 10],
-	["row-gap", 10],
-	["hanging-punctuation", 0],
-	["hyphenate-character", 5],
-	["hyphenate-limit-chars", 0],
-	["hyphens", 5],
-	["image-orientation", 10],
-	["image-rendering", 10],
-	["ime-mode", 0],
-	["rotate", 10],
-	["scale", 10],
-	["translate", 10],
-	["initial-letter", 0],
-	["interpolate-size", 0],
-	["isolation", 10],
-	["direction", 10],
-	["unicode-bidi", 10],
-	["letter-spacing", 10],
-	["line-break", 10],
-	["line-clamp", 0],
-	["line-height", 10],
-	["list-style", 10],
-	["list-style-image", 10],
-	["list-style-position", 10],
-	["list-style-type", 10],
-	["block-size", 10],
-	["border-block", 10],
-	["border-block-color", 10],
-	["border-block-end", 10],
-	["border-block-end-color", 10],
-	["border-block-end-style", 10],
-	["border-block-end-width", 10],
-	["border-block-start", 10],
-	["border-block-start-color", 10],
-	["border-block-start-style", 10],
-	["border-block-start-width", 10],
-	["border-block-style", 10],
-	["border-block-width", 10],
-	["border-end-end-radius", 10],
-	["border-end-start-radius", 10],
-	["border-inline", 10],
-	["border-inline-color", 10],
-	["border-inline-end", 10],
-	["border-inline-end-color", 10],
-	["border-inline-end-style", 10],
-	["border-inline-end-width", 10],
-	["border-inline-start", 10],
-	["border-inline-start-color", 10],
-	["border-inline-start-style", 10],
-	["border-inline-start-width", 10],
-	["border-inline-style", 10],
-	["border-inline-width", 10],
-	["border-start-end-radius", 10],
-	["border-start-start-radius", 10],
-	["inline-size", 10],
-	["inset", 10],
-	["inset-block", 10],
-	["inset-block-end", 10],
-	["inset-block-start", 10],
-	["inset-inline", 10],
-	["inset-inline-end", 10],
-	["inset-inline-start", 10],
-	["margin-block", 10],
-	["margin-block-end", 10],
-	["margin-block-start", 10],
-	["margin-inline", 10],
-	["margin-inline-end", 10],
-	["margin-inline-start", 10],
-	["max-block-size", 10],
-	["max-inline-size", 10],
-	["min-block-size", 10],
-	["min-inline-size", 10],
-	["overflow-block", 10],
-	["overflow-inline", 10],
-	["padding-block", 10],
-	["padding-block-end", 10],
-	["padding-block-start", 10],
-	["padding-inline", 10],
-	["padding-inline-end", 10],
-	["padding-inline-start", 10],
-	["margin", 10],
-	["margin-bottom", 10],
-	["margin-left", 10],
-	["margin-right", 10],
-	["margin-top", 10],
-	["margin-trim", 0],
-	["mask-border", 0],
-	["mask-border-outset", 0],
-	["mask-border-repeat", 0],
-	["mask-border-slice", 0],
-	["mask-border-source", 0],
-	["mask-border-width", 0],
-	["mask-type", 10],
-	["mask", 5],
-	["mask-clip", 5],
-	["mask-composite", 5],
-	["mask-image", 5],
-	["mask-mode", 5],
-	["mask-origin", 5],
-	["mask-position", 5],
-	["mask-repeat", 5],
-	["mask-size", 5],
-	["math-depth", 5],
-	["math-shift", 5],
-	["math-style", 5],
-	["max-height", 10],
-	["max-width", 10],
-	["min-height", 10],
-	["min-width", 10],
-	["mix-blend-mode", 10],
-	["offset", 5],
-	["offset-anchor", 5],
-	["offset-distance", 5],
-	["offset-path", 5],
-	["offset-position", 5],
-	["offset-rotate", 5],
-	["column-count", 10],
-	["column-gap", 10],
-	["column-rule", 10],
-	["column-rule-color", 10],
-	["column-rule-style", 10],
-	["column-rule-width", 10],
-	["column-width", 10],
-	["columns", 10],
-	["object-fit", 10],
-	["object-position", 10],
-	["object-view-box", 0],
-	["opacity", 10],
-	["fill-opacity", 10],
-	["stroke-opacity", 10],
-	["outline", 5],
-	["outline-color", 10],
-	["outline-offset", 10],
-	["outline-style", 10],
-	["outline-width", 10],
-	["overflow-anchor", 0],
-	["overflow-clip-margin", 0],
-	["overflow", 5],
-	["overflow-x", 5],
-	["overflow-y", 5],
-	["overflow-wrap", 10],
-	["overlay", 0],
-	["overscroll-behavior", 5],
-	["overscroll-behavior-block", 5],
-	["overscroll-behavior-inline", 5],
-	["overscroll-behavior-x", 5],
-	["overscroll-behavior-y", 5],
-	["padding", 10],
-	["padding-bottom", 10],
-	["padding-left", 10],
-	["padding-right", 10],
-	["padding-top", 10],
-	["page-break-after", 0],
-	["page-break-before", 0],
-	["page-break-inside", 0],
-	["break-after", 10],
-	["break-before", 10],
-	["break-inside", 10],
-	["page", 0],
-	["paint-order", 0],
-	["bottom", 10],
-	["left", 10],
-	["right", 10],
-	["top", 10],
-	["pointer-events", 10],
-	["position", 10],
-	["print-color-adjust", 0],
-	["quotes", 10],
-	["reading-flow", 0],
-	["resize", 0],
-	["line-height-step", 0],
-	["ruby-align", 5],
-	["ruby-overhang", 0],
-	["ruby-position", 5],
-	["scroll-behavior", 10],
-	["animation-range", 0],
-	["animation-range-end", 0],
-	["animation-range-start", 0],
-	["animation-timeline", 0],
-	["scroll-timeline", 0],
-	["scroll-timeline-axis", 0],
-	["scroll-timeline-name", 0],
-	["timeline-scope", 0],
-	["view-timeline", 0],
-	["view-timeline-axis", 0],
-	["view-timeline-inset", 0],
-	["view-timeline-name", 0],
-	["scroll-margin", 10],
-	["scroll-margin-block", 10],
-	["scroll-margin-block-end", 10],
-	["scroll-margin-block-start", 10],
-	["scroll-margin-bottom", 10],
-	["scroll-margin-inline", 10],
-	["scroll-margin-inline-end", 10],
-	["scroll-margin-inline-start", 10],
-	["scroll-margin-left", 10],
-	["scroll-margin-right", 10],
-	["scroll-margin-top", 10],
-	["scroll-padding", 10],
-	["scroll-padding-block", 10],
-	["scroll-padding-block-end", 10],
-	["scroll-padding-block-start", 10],
-	["scroll-padding-bottom", 10],
-	["scroll-padding-inline", 10],
-	["scroll-padding-inline-end", 10],
-	["scroll-padding-inline-start", 10],
-	["scroll-padding-left", 10],
-	["scroll-padding-right", 10],
-	["scroll-padding-top", 10],
-	["scroll-snap-align", 10],
-	["scroll-snap-stop", 10],
-	["scroll-snap-type", 10],
-	["scrollbar-color", 0],
-	["scrollbar-gutter", 5],
-	["scrollbar-width", 5],
-	["shape-image-threshold", 10],
-	["shape-margin", 10],
-	["shape-outside", 10],
-	["speak", 0],
-	["speak-as", 0],
-	["clip-rule", 10],
-	["color-interpolation", 10],
-	["cx", 10],
-	["cy", 10],
-	["d", 10],
-	["fill", 10],
-	["fill-rule", 10],
-	["marker", 10],
-	["marker-end", 10],
-	["marker-mid", 10],
-	["marker-start", 10],
-	["r", 10],
-	["rx", 10],
-	["ry", 10],
-	["shape-rendering", 10],
-	["stop-color", 10],
-	["stop-opacity", 10],
-	["stroke", 10],
-	["stroke-color", 10],
-	["stroke-dasharray", 10],
-	["stroke-dashoffset", 10],
-	["stroke-linecap", 10],
-	["stroke-linejoin", 10],
-	["stroke-miterlimit", 10],
-	["stroke-width", 10],
-	["text-anchor", 10],
-	["text-rendering", 10],
-	["vector-effect", 10],
-	["x", 10],
-	["y", 10],
-	["color-interpolation-filters", 10],
-	["flood-color", 10],
-	["flood-opacity", 10],
-	["lighting-color", 10],
-	["tab-size", 10],
-	["border-collapse", 10],
-	["border-spacing", 10],
-	["caption-side", 10],
-	["empty-cells", 10],
-	["table-layout", 10],
-	["text-align", 10],
-	["text-align-last", 5],
-	["text-box", 0],
-	["text-box-edge", 0],
-	["text-box-trim", 0],
-	["text-combine-upright", 10],
-	["text-decoration", 10],
-	["text-decoration-color", 10],
-	["text-decoration-line", 10],
-	["text-decoration-skip", 10],
-	["text-decoration-skip-ink", 10],
-	["text-decoration-style", 10],
-	["text-decoration-thickness", 10],
-	["text-emphasis", 10],
-	["text-emphasis-color", 10],
-	["text-emphasis-position", 10],
-	["text-emphasis-style", 10],
-	["text-indent", 10],
-	["text-justify", 0],
-	["text-orientation", 10],
-	["text-overflow", 10],
-	["text-shadow", 10],
-	["text-size-adjust", 0],
-	["text-spacing-trim", 0],
-	["-webkit-text-fill-color", 10],
-	["-webkit-text-stroke", 10],
-	["-webkit-text-stroke-color", 10],
-	["-webkit-text-stroke-width", 10],
-	["text-transform", 10],
-	["text-underline-offset", 10],
-	["text-underline-position", 10],
-	["text-wrap", 5],
-	["text-wrap-mode", 5],
-	["text-wrap-style", 0],
-	["touch-action", 10],
-	["transform-box", 5],
-	["transform", 10],
-	["transform-origin", 10],
-	["backface-visibility", 10],
-	["perspective", 10],
-	["perspective-origin", 10],
-	["transform-style", 10],
-	["transition-behavior", 5],
-	["transition", 10],
-	["transition-delay", 10],
-	["transition-duration", 10],
-	["transition-property", 10],
-	["transition-timing-function", 10],
-	["user-select", 0],
-	["vertical-align", 10],
-	["view-transition-class", 0],
-	["view-transition-name", 0],
-	["visibility", 10],
-	["white-space", 10],
-	["white-space-collapse", 5],
-	["orphans", 0],
-	["widows", 0],
-	["height", 10],
-	["width", 10],
-	["will-change", 10],
-	["word-break", 10],
-	["word-spacing", 10],
-	["writing-mode", 10],
-	["z-index", 10],
-	["zoom", 5],
+	[
+		"accent-color",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"alignment-baseline",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"all",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"anchor-name",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"anchor-scope",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"position-anchor",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"position-area",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"position-try",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"position-try-fallbacks",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"position-try-order",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"position-visibility",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"animation-composition",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"animation",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-delay",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-direction",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-duration",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-fill-mode",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-iteration-count",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-name",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-play-state",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"animation-timing-function",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"appearance",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"aspect-ratio",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"backdrop-filter",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"background",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-attachment",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"background-blend-mode",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"background-clip",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-image",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-origin",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-position",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-position-x",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-position-y",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"background-repeat",
+		{
+			status: 10,
+			year: 2016,
+		},
+	],
+	[
+		"background-size",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"baseline-shift",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"baseline-source",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"border-image",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"border-image-outset",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"border-image-repeat",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"border-image-slice",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"border-image-source",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"border-image-width",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"border-bottom-left-radius",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-bottom-right-radius",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-radius",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-top-left-radius",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-top-right-radius",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-bottom",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-bottom-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-bottom-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-bottom-width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-left",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-left-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-left-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-left-width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-right",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-right-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-right-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-right-width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-top",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-top-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-top-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-top-width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"box-decoration-break",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"box-shadow",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"box-sizing",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"caret-color",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"clip",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"clip-path",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"color-adjust",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"color-scheme",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"column-fill",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"column-span",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"contain",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"contain-intrinsic-block-size",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"contain-intrinsic-height",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"contain-intrinsic-inline-size",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"contain-intrinsic-size",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"contain-intrinsic-width",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"container",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"container-name",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"container-type",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"content",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"content-visibility",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"counter-set",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"counter-increment",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"counter-reset",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"custom-property",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"display",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"dominant-baseline",
+		{
+			status: 10,
+			year: null,
+		},
+	],
+	[
+		"field-sizing",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"filter",
+		{
+			status: 10,
+			year: 2016,
+		},
+	],
+	[
+		"align-content",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"align-items",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"align-self",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex-basis",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex-direction",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex-flow",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex-grow",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex-shrink",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex-wrap",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"justify-content",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"justify-items",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"order",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"place-content",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"place-items",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"place-self",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"clear",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"float",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"font-family",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"font-feature-settings",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"font-kerning",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"font-language-override",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"font-optical-sizing",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"font-palette",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"font",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"font-size",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"font-size-adjust",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"font-stretch",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"font-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"font-synthesis",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"font-synthesis-position",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"font-synthesis-small-caps",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"font-synthesis-style",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"font-synthesis-weight",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"font-variant",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"font-variant-alternates",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"font-variant-caps",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"font-variant-east-asian",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"font-variant-emoji",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"font-variant-ligatures",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"font-variant-numeric",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"font-variant-position",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"font-variation-settings",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"font-weight",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"forced-color-adjust",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"glyph-orientation-vertical",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"gap",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-area",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-auto-columns",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-auto-flow",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-auto-rows",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-column",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-column-end",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-column-start",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-row",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-row-end",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-row-start",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-template",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-template-areas",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-template-columns",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"grid-template-rows",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"justify-self",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"row-gap",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"hanging-punctuation",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"hyphenate-character",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"hyphenate-limit-chars",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"hyphens",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"image-orientation",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"image-rendering",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"ime-mode",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"rotate",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"scale",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"translate",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"initial-letter",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"interpolate-size",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"isolation",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"direction",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"unicode-bidi",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"letter-spacing",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"line-break",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"line-clamp",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"line-height",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"list-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"list-style-image",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"list-style-position",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"list-style-type",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"block-size",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-color",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-end-color",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-end-style",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-end-width",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-start-color",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-start-style",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-start-width",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-style",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-block-width",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-end-end-radius",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-end-start-radius",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-color",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-end-color",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-end-style",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-end-width",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-start-color",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-start-style",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-start-width",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-style",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-inline-width",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-start-end-radius",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-start-start-radius",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inline-size",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inset",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inset-block",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inset-block-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inset-block-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inset-inline",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inset-inline-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"inset-inline-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"margin-block",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"margin-block-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"margin-block-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"margin-inline",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"margin-inline-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"margin-inline-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"max-block-size",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"max-inline-size",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"min-block-size",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"min-inline-size",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"overflow-block",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"overflow-inline",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"padding-block",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"padding-block-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"padding-block-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"padding-inline",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"padding-inline-end",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"padding-inline-start",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"margin",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"margin-bottom",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"margin-left",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"margin-right",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"margin-top",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"margin-trim",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"mask-border",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"mask-border-outset",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"mask-border-repeat",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"mask-border-slice",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"mask-border-source",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"mask-border-width",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"mask-type",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"mask",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-clip",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-composite",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-image",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-mode",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-origin",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-position",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-repeat",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"mask-size",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"math-depth",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"math-shift",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"math-style",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"max-height",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"max-width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"min-height",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"min-width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"mix-blend-mode",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"offset",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"offset-anchor",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"offset-distance",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"offset-path",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"offset-position",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"offset-rotate",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"column-count",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"column-gap",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"column-rule",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"column-rule-color",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"column-rule-style",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"column-rule-width",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"column-width",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"columns",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"object-fit",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"object-position",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"object-view-box",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"opacity",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"fill-opacity",
+		{
+			status: 10,
+			year: null,
+		},
+	],
+	[
+		"stroke-opacity",
+		{
+			status: 10,
+			year: null,
+		},
+	],
+	[
+		"outline",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"outline-color",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"outline-offset",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"outline-style",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"outline-width",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"overflow-anchor",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"overflow-clip-margin",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"overflow",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"overflow-x",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"overflow-y",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"overflow-wrap",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"overlay",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"overscroll-behavior",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"overscroll-behavior-block",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"overscroll-behavior-inline",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"overscroll-behavior-x",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"overscroll-behavior-y",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"padding",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"padding-bottom",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"padding-left",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"padding-right",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"padding-top",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"page-break-after",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"page-break-before",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"page-break-inside",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"break-after",
+		{
+			status: 10,
+			year: 2019,
+		},
+	],
+	[
+		"break-before",
+		{
+			status: 10,
+			year: 2019,
+		},
+	],
+	[
+		"break-inside",
+		{
+			status: 10,
+			year: 2019,
+		},
+	],
+	[
+		"page",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"paint-order",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"bottom",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"left",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"right",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"top",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"pointer-events",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"position",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"print-color-adjust",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"quotes",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"reading-flow",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"resize",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"line-height-step",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"ruby-align",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"ruby-overhang",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"ruby-position",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"scroll-behavior",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"animation-range",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"animation-range-end",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"animation-range-start",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"animation-timeline",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"scroll-timeline",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"scroll-timeline-axis",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"scroll-timeline-name",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"timeline-scope",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-timeline",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-timeline-axis",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-timeline-inset",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-timeline-name",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"scroll-margin",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-block",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-block-end",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-block-start",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-bottom",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-inline",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-inline-end",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-inline-start",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-left",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-right",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-margin-top",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-block",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-block-end",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-block-start",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-bottom",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-inline",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-inline-end",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-inline-start",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-left",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-right",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-padding-top",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-snap-align",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-snap-stop",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scroll-snap-type",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"scrollbar-color",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"scrollbar-gutter",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"scrollbar-width",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"shape-image-threshold",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"shape-margin",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"shape-outside",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"speak",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"speak-as",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"clip-rule",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"color-interpolation",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"cx",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"cy",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"d",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"fill",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"fill-rule",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"marker",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"marker-end",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"marker-mid",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"marker-start",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"r",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"rx",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"ry",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"shape-rendering",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stop-color",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stop-opacity",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke-color",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke-dasharray",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke-dashoffset",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke-linecap",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke-linejoin",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke-miterlimit",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"stroke-width",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"text-anchor",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"text-rendering",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"vector-effect",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"x",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"y",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"color-interpolation-filters",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flood-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flood-opacity",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"lighting-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"tab-size",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"border-collapse",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"border-spacing",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"caption-side",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"empty-cells",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"table-layout",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-align",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-align-last",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"text-box",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"text-box-edge",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"text-box-trim",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"text-combine-upright",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"text-decoration",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-decoration-color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-decoration-line",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-decoration-skip",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-decoration-skip-ink",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-decoration-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-decoration-thickness",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-emphasis",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"text-emphasis-color",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"text-emphasis-position",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"text-emphasis-style",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"text-indent",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-justify",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"text-orientation",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"text-overflow",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-shadow",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-size-adjust",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"text-spacing-trim",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"-webkit-text-fill-color",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"-webkit-text-stroke",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"-webkit-text-stroke-color",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"-webkit-text-stroke-width",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"text-transform",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"text-underline-offset",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"text-underline-position",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"text-wrap",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"text-wrap-mode",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"text-wrap-style",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"touch-action",
+		{
+			status: 10,
+			year: 2019,
+		},
+	],
+	[
+		"transform-box",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"transform",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"transform-origin",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"backface-visibility",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"perspective",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"perspective-origin",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"transform-style",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"transition-behavior",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"transition",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"transition-delay",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"transition-duration",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"transition-property",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"transition-timing-function",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"user-select",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"vertical-align",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"view-transition-class",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-transition-name",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"visibility",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"white-space",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"white-space-collapse",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"orphans",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"widows",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"height",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"will-change",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"word-break",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"word-spacing",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"writing-mode",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"z-index",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"zoom",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
 ]);
 export const atRules = new Map([
-	["position-try", 0],
-	["keyframes", 10],
-	["layer", 10],
-	["charset", 10],
-	["container", 5],
-	["counter-style", 5],
-	["view-transition", 0],
-	["font-face", 10],
-	["font-palette-values", 5],
-	["font-feature-values", 5],
-	["import", 10],
-	["media", 10],
-	["namespace", 10],
-	["page", 5],
-	["property", 5],
-	["scope", 0],
-	["starting-style", 0],
-	["supports", 10],
+	[
+		"position-try",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"keyframes",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"layer",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"charset",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"container",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"counter-style",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"view-transition",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"font-face",
+		{
+			status: 10,
+			year: 2016,
+		},
+	],
+	[
+		"font-palette-values",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"font-feature-values",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"import",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"media",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"namespace",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"page",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"property",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"scope",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"starting-style",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"supports",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
 ]);
 export const mediaConditions = new Map([
-	["color-gamut", 5],
-	["device-posture", 0],
-	["device-aspect-ratio", 0],
-	["device-height", 0],
-	["device-width", 0],
-	["display-mode", 0],
-	["dynamic-range", 10],
-	["forced-colors", 5],
-	["any-hover", 10],
-	["any-pointer", 10],
-	["hover", 10],
-	["pointer", 10],
-	["inverted-colors", 0],
-	["aspect-ratio", 10],
-	["calc", 10],
-	["color", 10],
-	["color-index", 10],
-	["grid", 10],
-	["height", 10],
-	["monochrome", 10],
-	["nested-queries", 10],
-	["orientation", 10],
-	["width", 10],
-	["overflow-block", 5],
-	["overflow-inline", 5],
-	["prefers-color-scheme", 10],
-	["prefers-contrast", 10],
-	["prefers-reduced-data", 0],
-	["prefers-reduced-motion", 10],
-	["prefers-reduced-transparency", 0],
-	["resolution", 5],
-	["-webkit-device-pixel-ratio", 10],
-	["-webkit-max-device-pixel-ratio", 10],
-	["-webkit-min-device-pixel-ratio", 10],
-	["scripting", 5],
-	["-webkit-transform-3d", 10],
-	["update", 5],
-	["video-dynamic-range", 0],
+	[
+		"color-gamut",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"device-posture",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"device-aspect-ratio",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"device-height",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"device-width",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"display-mode",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"dynamic-range",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"forced-colors",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"any-hover",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"any-pointer",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"hover",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"pointer",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"inverted-colors",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"aspect-ratio",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"calc",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"color-index",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"grid",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"height",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"monochrome",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"nested-queries",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"orientation",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"width",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"overflow-block",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"overflow-inline",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"prefers-color-scheme",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"prefers-contrast",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"prefers-reduced-data",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"prefers-reduced-motion",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"prefers-reduced-transparency",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"resolution",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"-webkit-device-pixel-ratio",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"-webkit-max-device-pixel-ratio",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"-webkit-min-device-pixel-ratio",
+		{
+			status: 10,
+			year: 2018,
+		},
+	],
+	[
+		"scripting",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"-webkit-transform-3d",
+		{
+			status: 10,
+			year: 2016,
+		},
+	],
+	[
+		"update",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"video-dynamic-range",
+		{
+			status: 0,
+			year: null,
+		},
+	],
 ]);
 export const types = new Map([
-	["abs", 0],
-	["sign", 0],
-	["anchor", 0],
-	["anchor-size", 0],
-	["time", 10],
-	["attr", 10],
-	["blend-mode", 10],
-	["line-style", 10],
-	["calc", 10],
-	["calc-keyword", 5],
-	["calc-size", 0],
-	["shape", 0],
-	["color", 10],
-	["string", 10],
-	["counter", 10],
-	["counters", 10],
-	["easing-function", 10],
-	["exp", 5],
-	["hypot", 5],
-	["log", 5],
-	["pow", 5],
-	["sqrt", 5],
-	["filter-function", 10],
-	["url", 10],
-	["gradient", 10],
-	["image", 10],
-	["flex", 10],
-	["ratio", 10],
-	["clamp", 10],
-	["max", 10],
-	["min", 10],
-	["ray", 5],
-	["number", 10],
-	["overflow", 5],
-	["resolution", 5],
-	["mod", 5],
-	["rem", 5],
-	["round", 5],
-	["basic-shape", 10],
-	["angle", 10],
-	["angle-percentage", 10],
-	["position", 10],
-	["transform-function", 10],
-	["acos", 5],
-	["asin", 5],
-	["atan", 5],
-	["atan2", 5],
-	["cos", 5],
-	["sin", 5],
-	["tan", 5],
-	["dimension", 10],
-	["length", 10],
-	["length-percentage", 10],
-	["percentage", 10],
-	["integer", 10],
+	[
+		"abs",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"sign",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"anchor",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"anchor-size",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"time",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"attr",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"blend-mode",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"line-style",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"calc",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"calc-keyword",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"calc-size",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"shape",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"color",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"string",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"counter",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"counters",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"easing-function",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"exp",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"hypot",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"log",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"pow",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"sqrt",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"filter-function",
+		{
+			status: 10,
+			year: 2016,
+		},
+	],
+	[
+		"url",
+		{
+			status: 10,
+			year: 2016,
+		},
+	],
+	[
+		"gradient",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"image",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"flex",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
+		"ratio",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"clamp",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"max",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"min",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"ray",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"number",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"overflow",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"resolution",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"mod",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"rem",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"round",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"basic-shape",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"text-edge",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"angle",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"angle-percentage",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"position",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"transform-function",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"acos",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"asin",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"atan",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"atan2",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"cos",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"sin",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"tan",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"dimension",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"length",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"length-percentage",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"percentage",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"integer",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
 ]);
 export const selectors = new Map([
-	["active-view-transition", 0],
-	["active-view-transition-type", 0],
-	["autofill", 5],
-	["defined", 10],
-	["backdrop", 10],
-	["after", 10],
-	["before", 10],
-	["default", 10],
-	["details-content", 0],
-	["dir", 5],
-	["empty", 10],
-	["file-selector-button", 10],
-	["first-letter", 10],
-	["first-line", 10],
-	["focus-visible", 10],
-	["focus-within", 10],
-	["in-range", 10],
-	["invalid", 10],
-	["optional", 10],
-	["out-of-range", 10],
-	["required", 10],
-	["valid", 10],
-	["fullscreen", 0],
-	["has", 5],
-	["has-slotted", 0],
-	["highlight", 0],
-	["host", 10],
-	["hostfunction", 10],
-	["host-context", 0],
-	["indeterminate", 10],
-	["checked", 10],
-	["disabled", 10],
-	["enabled", 10],
-	["is", 10],
-	["lang", 10],
-	["any-link", 10],
-	["link", 10],
-	["visited", 10],
-	["marker", 0],
-	["buffering", 0],
-	["muted", 0],
-	["paused", 0],
-	["playing", 0],
-	["seeking", 0],
-	["stalled", 0],
-	["volume-locked", 0],
-	["modal", 5],
-	["namespace", 10],
-	["nesting", 5],
-	["not", 10],
-	["first-child", 10],
-	["last-child", 10],
-	["nth-child", 10],
-	["nth-last-child", 10],
-	["only-child", 10],
-	["first-of-type", 10],
-	["last-of-type", 10],
-	["nth-last-of-type", 10],
-	["nth-of-type", 10],
-	["only-of-type", 10],
-	["closed", 0],
-	["open", 0],
-	["first", 0],
-	["left", 0],
-	["right", 0],
-	["picture-in-picture", 0],
-	["placeholder", 10],
-	["placeholder-shown", 10],
-	["popover-open", 5],
-	["read-only", 10],
-	["read-write", 10],
-	["root", 10],
-	["scope", 10],
-	["selection", 0],
-	["attribute", 10],
-	["child", 10],
-	["class", 10],
-	["descendant", 10],
-	["id", 10],
-	["list", 10],
-	["next-sibling", 10],
-	["subsequent-sibling", 10],
-	["type", 10],
-	["universal", 10],
-	["part", 10],
-	["slotted", 10],
-	["grammar-error", 0],
-	["spelling-error", 0],
-	["state", 5],
-	["target", 10],
-	["target-text", 5],
-	["future", 0],
-	["past", 0],
-	["active", 10],
-	["focus", 10],
-	["hover", 10],
-	["user-invalid", 5],
-	["user-valid", 5],
-	["view-transition", 0],
-	["view-transition-group", 0],
-	["view-transition-image-pair", 0],
-	["view-transition-new", 0],
-	["view-transition-old", 0],
-	["cue", 10],
-	["xr-overlay", 0],
-	["where", 10],
+	[
+		"active-view-transition",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"active-view-transition-type",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"autofill",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"defined",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"backdrop",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"after",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"before",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"default",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"details-content",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"dir",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"empty",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"file-selector-button",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"first-letter",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"first-line",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"focus-visible",
+		{
+			status: 10,
+			year: 2022,
+		},
+	],
+	[
+		"focus-within",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"in-range",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"invalid",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"optional",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"out-of-range",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"required",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"valid",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"fullscreen",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"has",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"has-slotted",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"highlight",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"host",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"hostfunction",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"host-context",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"indeterminate",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"checked",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"disabled",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"enabled",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"is",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"lang",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"any-link",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"link",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"visited",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"marker",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"buffering",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"muted",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"paused",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"playing",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"seeking",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"stalled",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"volume-locked",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"modal",
+		{
+			status: 5,
+			year: 2022,
+		},
+	],
+	[
+		"namespace",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"nesting",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"not",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
+	[
+		"first-child",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"last-child",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"nth-child",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"nth-last-child",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"only-child",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"first-of-type",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"last-of-type",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"nth-last-of-type",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"nth-of-type",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"only-of-type",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"closed",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"open",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"first",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"left",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"right",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"picture-in-picture",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"placeholder",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"placeholder-shown",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"popover-open",
+		{
+			status: 5,
+			year: 2025,
+		},
+	],
+	[
+		"read-only",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"read-write",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"root",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"scope",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"selection",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"attribute",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"child",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"class",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"descendant",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"id",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"list",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"next-sibling",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"subsequent-sibling",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"type",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"universal",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"part",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"slotted",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"grammar-error",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"spelling-error",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"state",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"target",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"target-text",
+		{
+			status: 5,
+			year: 2024,
+		},
+	],
+	[
+		"future",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"past",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"active",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"focus",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"hover",
+		{
+			status: 10,
+			year: 2015,
+		},
+	],
+	[
+		"user-invalid",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"user-valid",
+		{
+			status: 5,
+			year: 2023,
+		},
+	],
+	[
+		"view-transition",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-transition-group",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-transition-image-pair",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-transition-new",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"view-transition-old",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"cue",
+		{
+			status: 10,
+			year: 2020,
+		},
+	],
+	[
+		"xr-overlay",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
+		"where",
+		{
+			status: 10,
+			year: 2021,
+		},
+	],
 ]);
 export const propertyValues = new Map([
 	[
 		"position",
 		new Map([
-			["absolute", 10],
-			["fixed", 10],
-			["relative", 10],
-			["static", 10],
-			["sticky", 10],
+			[
+				"absolute",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"fixed",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"relative",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"static",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"sticky",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
 		]),
 	],
-	["accent-color", new Map([["auto", 0]])],
+	[
+		"accent-color",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"alignment-baseline",
 		new Map([
-			["alphabetic", 0],
-			["baseline", 0],
-			["central", 0],
-			["ideographic", 0],
-			["mathematical", 0],
-			["middle", 0],
+			[
+				"alphabetic",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"baseline",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"central",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ideographic",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"mathematical",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"middle",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["align-items", new Map([["anchor-center", 0]])],
-	["align-self", new Map([["anchor-center", 0]])],
-	["anchor-name", new Map([["none", 0]])],
+	[
+		"align-items",
+		new Map([
+			[
+				"anchor-center",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"align-self",
+		new Map([
+			[
+				"anchor-center",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"anchor-name",
+		new Map([
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"anchor-scope",
 		new Map([
-			["all", 0],
-			["none", 0],
+			[
+				"all",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"block-size",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"bottom",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"height",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["stretch", 0],
-			["auto", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"stretch",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"inline-size",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"inset-block-end",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"inset-block-start",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"inset-block",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"inset-inline-end",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"inset-inline-start",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"inset-inline",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"inset",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
-	["justify-items", new Map([["anchor-center", 0]])],
-	["justify-self", new Map([["anchor-center", 0]])],
+	[
+		"justify-items",
+		new Map([
+			[
+				"anchor-center",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"justify-self",
+		new Map([
+			[
+				"anchor-center",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"left",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["margin-block-end", new Map([["anchor-size", 0]])],
-	["margin-block-start", new Map([["anchor-size", 0]])],
-	["margin-block", new Map([["anchor-size", 0]])],
+	[
+		"margin-block-end",
+		new Map([
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"margin-block-start",
+		new Map([
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"margin-block",
+		new Map([
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"margin-bottom",
 		new Map([
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["margin-inline-end", new Map([["anchor-size", 0]])],
-	["margin-inline-start", new Map([["anchor-size", 0]])],
-	["margin-inline", new Map([["anchor-size", 0]])],
+	[
+		"margin-inline-end",
+		new Map([
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"margin-inline-start",
+		new Map([
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"margin-inline",
+		new Map([
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"margin-left",
 		new Map([
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"margin-right",
 		new Map([
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"margin-top",
 		new Map([
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"margin",
 		new Map([
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"max-block-size",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"max-height",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["none", 10],
-			["stretch", 0],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"stretch",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"max-inline-size",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"max-width",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["none", 10],
-			["stretch", 0],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"stretch",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"min-block-size",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"min-height",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["auto", 10],
-			["stretch", 0],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"stretch",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"min-inline-size",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"min-width",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["auto", 10],
-			["stretch", 0],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"stretch",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["place-items", new Map([["anchor-center", 0]])],
-	["place-self", new Map([["anchor-center", 0]])],
-	["position-anchor", new Map([["auto", 0]])],
+	[
+		"place-items",
+		new Map([
+			[
+				"anchor-center",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"place-self",
+		new Map([
+			[
+				"anchor-center",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"position-anchor",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"position-area",
 		new Map([
-			["block-end", 0],
-			["block-start", 0],
-			["bottom", 0],
-			["center", 0],
-			["end", 0],
-			["inline-end", 0],
-			["inline-start", 0],
-			["left", 0],
-			["none", 0],
-			["right", 0],
-			["self-end", 0],
-			["self-start", 0],
-			["span-all", 0],
-			["span-block-end", 0],
-			["span-block-start", 0],
-			["span-bottom", 0],
-			["span-end", 0],
-			["span-inline-end", 0],
-			["span-inline-start", 0],
-			["span-start", 0],
-			["span-top", 0],
-			["span-x-end", 0],
-			["span-x-start", 0],
-			["span-y-end", 0],
-			["span-y-start", 0],
-			["start", 0],
-			["top", 0],
-			["x-end", 0],
-			["x-self-end", 0],
-			["x-self-start", 0],
-			["x-start", 0],
-			["y-end", 0],
-			["y-self-end", 0],
-			["y-self-start", 0],
-			["y-start", 0],
+			[
+				"block-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"block-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"bottom",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"center",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"left",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"right",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"self-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"self-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-all",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-block-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-block-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-bottom",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-inline-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-inline-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-top",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-x-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-x-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-y-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"span-y-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"top",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"x-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"x-self-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"x-self-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"x-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"y-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"y-self-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"y-self-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"y-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"position-try-fallbacks",
 		new Map([
-			["flip-block", 0],
-			["flip-inline", 0],
-			["flip-start", 0],
-			["none", 0],
-			["position-area", 0],
+			[
+				"flip-block",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"flip-inline",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"flip-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"position-area",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"position-try-order",
 		new Map([
-			["most-block-size", 0],
-			["most-height", 0],
-			["most-inline-size", 0],
-			["most-width", 0],
-			["normal", 0],
+			[
+				"most-block-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"most-height",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"most-inline-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"most-width",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"position-visibility",
 		new Map([
-			["always", 0],
-			["anchors-visible", 0],
-			["no-overflow", 0],
+			[
+				"always",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchors-visible",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"no-overflow",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"right",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"top",
 		new Map([
-			["anchor", 0],
-			["anchor-size", 0],
-			["auto", 10],
+			[
+				"anchor",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"width",
 		new Map([
-			["anchor-size", 0],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["stretch", 0],
-			["auto", 10],
+			[
+				"anchor-size",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"stretch",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"animation-direction",
 		new Map([
-			["alternate", 10],
-			["alternate-reverse", 10],
-			["normal", 10],
-			["reverse", 10],
+			[
+				"alternate",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"alternate-reverse",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"reverse",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["animation-duration", new Map([["auto", 10]])],
+	[
+		"animation-duration",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"animation-fill-mode",
 		new Map([
-			["backwards", 10],
-			["both", 10],
-			["forwards", 10],
-			["none", 10],
+			[
+				"backwards",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"both",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"forwards",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["animation-iteration-count", new Map([["infinite", 10]])],
-	["animation-name", new Map([["none", 10]])],
+	[
+		"animation-iteration-count",
+		new Map([
+			[
+				"infinite",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"animation-name",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"animation-play-state",
 		new Map([
-			["paused", 10],
-			["running", 10],
+			[
+				"paused",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"running",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["animation-timing-function", new Map([["jump", 10]])],
+	[
+		"animation-timing-function",
+		new Map([
+			[
+				"jump",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"appearance",
 		new Map([
-			["auto", 10],
-			["button", 10],
-			["checkbox", 10],
-			["listbox", 10],
-			["menulist", 10],
-			["menulist-button", 10],
-			["meter", 10],
-			["none", 10],
-			["progress-bar", 10],
-			["radio", 10],
-			["searchfield", 10],
-			["textarea", 10],
-			["textfield", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"button",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"checkbox",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"listbox",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"menulist",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"menulist-button",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"meter",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"progress-bar",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"radio",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"searchfield",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"textarea",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"textfield",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
-	["aspect-ratio", new Map([["auto", 10]])],
+	[
+		"aspect-ratio",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+		]),
+	],
 	[
 		"background-attachment",
 		new Map([
-			["fixed", 10],
-			["local", 10],
-			["scroll", 10],
+			[
+				"fixed",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"local",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"scroll",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"background-clip",
 		new Map([
-			["border-box", 10],
-			["content-box", 10],
-			["padding-box", 10],
-			["border-area", 0],
-			["text", 0],
+			[
+				"border-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"content-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"padding-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"border-area",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"text",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"background",
 		new Map([
-			["background-clip", 10],
-			["background-origin", 10],
-			["background-size", 10],
+			[
+				"background-clip",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"background-origin",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"background-size",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"background-image",
 		new Map([
-			["none", 10],
-			["element", 0],
-			["gradients", 10],
-			["image-set", 5],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"element",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"gradients",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"image-set",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"background-origin",
 		new Map([
-			["border-box", 10],
-			["content-box", 10],
-			["padding-box", 10],
+			[
+				"border-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"content-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"padding-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"background-position",
 		new Map([
-			["bottom", 10],
-			["center", 10],
-			["left", 10],
-			["right", 10],
-			["top", 10],
+			[
+				"bottom",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"center",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"top",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"background-repeat",
 		new Map([
-			["2-value", 10],
-			["no-repeat", 10],
-			["repeat", 10],
-			["repeat-x", 10],
-			["repeat-y", 10],
-			["round", 10],
-			["space", 10],
+			[
+				"2-value",
+				{
+					status: 10,
+					year: 2016,
+				},
+			],
+			[
+				"no-repeat",
+				{
+					status: 10,
+					year: 2016,
+				},
+			],
+			[
+				"repeat",
+				{
+					status: 10,
+					year: 2016,
+				},
+			],
+			[
+				"repeat-x",
+				{
+					status: 10,
+					year: 2016,
+				},
+			],
+			[
+				"repeat-y",
+				{
+					status: 10,
+					year: 2016,
+				},
+			],
+			[
+				"round",
+				{
+					status: 10,
+					year: 2016,
+				},
+			],
+			[
+				"space",
+				{
+					status: 10,
+					year: 2016,
+				},
+			],
 		]),
 	],
 	[
 		"background-size",
 		new Map([
-			["auto", 10],
-			["contain", 10],
-			["cover", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"contain",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"cover",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"baseline-shift",
 		new Map([
-			["baseline", 0],
-			["sub", 0],
-			["super", 0],
+			[
+				"baseline",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"sub",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"super",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"baseline-source",
 		new Map([
-			["auto", 0],
-			["first", 0],
-			["last", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"first",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"last",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"border-image-repeat",
 		new Map([
-			["repeat", 10],
-			["round", 10],
-			["space", 10],
-			["stretch", 10],
+			[
+				"repeat",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"round",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"space",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"stretch",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
 		]),
 	],
-	["border-image-width", new Map([["auto", 10]])],
+	[
+		"border-image-width",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+		]),
+	],
 	[
 		"border-image",
 		new Map([
-			["fill", 10],
-			["gradient", 10],
+			[
+				"fill",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"gradient",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
 		]),
 	],
-	["border-bottom-left-radius", new Map([["percentages", 10]])],
-	["border-bottom-right-radius", new Map([["percentages", 10]])],
-	["border-radius", new Map([["percentages", 10]])],
-	["border-top-left-radius", new Map([["percentages", 10]])],
-	["border-top-right-radius", new Map([["percentages", 10]])],
+	[
+		"border-bottom-left-radius",
+		new Map([
+			[
+				"percentages",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"border-bottom-right-radius",
+		new Map([
+			[
+				"percentages",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"border-radius",
+		new Map([
+			[
+				"percentages",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"border-top-left-radius",
+		new Map([
+			[
+				"percentages",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"border-top-right-radius",
+		new Map([
+			[
+				"percentages",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"border-style",
 		new Map([
-			["dashed", 10],
-			["dotted", 10],
-			["double", 10],
-			["groove", 10],
-			["hidden", 10],
-			["inset", 10],
-			["none", 10],
-			["outset", 10],
-			["ridge", 10],
-			["solid", 10],
+			[
+				"dashed",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"dotted",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"double",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"groove",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"hidden",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"inset",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"outset",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"ridge",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"solid",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"box-decoration-break",
 		new Map([
-			["clone", 0],
-			["slice", 0],
+			[
+				"clone",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"slice",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["box-shadow", new Map([["inset", 10]])],
+	[
+		"box-shadow",
+		new Map([
+			[
+				"inset",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"box-sizing",
 		new Map([
-			["border-box", 10],
-			["content-box", 10],
+			[
+				"border-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"content-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["clip", new Map([["auto", 0]])],
+	[
+		"clip",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"clip-path",
 		new Map([
-			["path", 10],
-			["fill-box", 5],
-			["stroke-box", 5],
-			["view-box", 5],
+			[
+				"path",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"fill-box",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"stroke-box",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"view-box",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"color-scheme",
 		new Map([
-			["dark", 10],
-			["light", 10],
-			["normal", 10],
+			[
+				"dark",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"light",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"break-after",
 		new Map([
-			["avoid-column", 0],
-			["column", 0],
-			["always", 10],
-			["auto", 10],
-			["avoid", 10],
-			["avoid-page", 10],
-			["left", 10],
-			["page", 10],
-			["recto", 10],
-			["right", 10],
-			["verso", 10],
+			[
+				"avoid-column",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"column",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"always",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"avoid",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"avoid-page",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"page",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"recto",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"verso",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
 		]),
 	],
 	[
 		"break-before",
 		new Map([
-			["avoid-column", 0],
-			["column", 0],
-			["always", 10],
-			["auto", 10],
-			["avoid", 10],
-			["avoid-page", 10],
-			["left", 10],
-			["page", 10],
-			["recto", 10],
-			["right", 10],
-			["verso", 10],
+			[
+				"avoid-column",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"column",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"always",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"avoid",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"avoid-page",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"page",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"recto",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"verso",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
 		]),
 	],
 	[
 		"break-inside",
 		new Map([
-			["avoid-column", 0],
-			["auto", 10],
-			["avoid", 10],
-			["avoid-page", 10],
+			[
+				"avoid-column",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"avoid",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"avoid-page",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
 		]),
 	],
 	[
 		"column-fill",
 		new Map([
-			["auto", 10],
-			["balance", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"balance",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
 		]),
 	],
 	[
 		"column-span",
 		new Map([
-			["all", 10],
-			["none", 10],
+			[
+				"all",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"contain",
 		new Map([
-			["content", 10],
-			["none", 10],
-			["strict", 10],
-			["inline-size", 5],
-			["layout", 10],
-			["paint", 10],
-			["size", 10],
-			["style", 10],
+			[
+				"content",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"strict",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"inline-size",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"layout",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"paint",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"size",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"style",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
-	["contain-intrinsic-block-size", new Map([["none", 5]])],
-	["contain-intrinsic-height", new Map([["none", 5]])],
-	["contain-intrinsic-inline-size", new Map([["none", 5]])],
-	["contain-intrinsic-size", new Map([["none", 5]])],
-	["contain-intrinsic-width", new Map([["none", 5]])],
-	["container-name", new Map([["none", 5]])],
+	[
+		"contain-intrinsic-block-size",
+		new Map([
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
+	[
+		"contain-intrinsic-height",
+		new Map([
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
+	[
+		"contain-intrinsic-inline-size",
+		new Map([
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
+	[
+		"contain-intrinsic-size",
+		new Map([
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
+	[
+		"contain-intrinsic-width",
+		new Map([
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
+	[
+		"container-name",
+		new Map([
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
 	[
 		"container-type",
 		new Map([
-			["inline-size", 5],
-			["normal", 5],
-			["size", 5],
-			["scroll-state", 0],
+			[
+				"inline-size",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"size",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"scroll-state",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"content",
 		new Map([
-			["gradient", 10],
-			["none", 10],
-			["normal", 10],
-			["url", 10],
-			["image-set", 5],
+			[
+				"gradient",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"url",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"image-set",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"content-visibility",
 		new Map([
-			["auto", 0],
-			["hidden", 0],
-			["visible", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"hidden",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"visible",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"counter-reset",
 		new Map([
-			["reversed", 0],
-			["list-item", 10],
-			["none", 10],
+			[
+				"reversed",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"list-item",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"counter-set",
 		new Map([
-			["list-item", 5],
-			["none", 5],
+			[
+				"list-item",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"counter-increment",
 		new Map([
-			["list-item", 10],
-			["none", 10],
+			[
+				"list-item",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"image-rendering",
 		new Map([
-			["crisp-edges", 0],
-			["auto", 10],
-			["pixelated", 10],
-			["smooth", 0],
+			[
+				"crisp-edges",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"pixelated",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"smooth",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"text-overflow",
 		new Map([
-			["string", 0],
-			["clip", 10],
-			["ellipsis", 10],
+			[
+				"string",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"clip",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"ellipsis",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"custom-property",
 		new Map([
-			["var", 10],
-			["env", 10],
+			[
+				"var",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"env",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"display",
 		new Map([
-			["block", 10],
-			["inline", 10],
-			["inline-block", 10],
-			["none", 10],
-			["contents", 0],
-			["flow-root", 10],
-			["list-item", 10],
-			["ruby", 0],
-			["ruby-base", 0],
-			["ruby-base-container", 0],
-			["ruby-text", 0],
-			["ruby-text-container", 0],
-			["inline-table", 10],
-			["table", 10],
-			["table-caption", 10],
-			["table-cell", 10],
-			["table-column", 10],
-			["table-column-group", 10],
-			["table-footer-group", 10],
-			["table-header-group", 10],
-			["table-row", 10],
-			["table-row-group", 10],
-			["flex", 10],
-			["inline-flex", 10],
-			["grid", 10],
-			["inline-grid", 10],
-			["math", 5],
+			[
+				"block",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"inline",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"inline-block",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"contents",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"flow-root",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"list-item",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"ruby",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ruby-base",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ruby-base-container",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ruby-text",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ruby-text-container",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline-table",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-caption",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-cell",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-column",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-column-group",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-footer-group",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-header-group",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-row",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"table-row-group",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"flex",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"inline-flex",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"grid",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"inline-grid",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"math",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"dominant-baseline",
 		new Map([
-			["alphabetic", 10],
-			["auto", 10],
-			["central", 10],
-			["hanging", 10],
-			["ideographic", 10],
-			["mathematical", 10],
-			["middle", 10],
+			[
+				"alphabetic",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"central",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"hanging",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"ideographic",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"mathematical",
+				{
+					status: 10,
+					year: null,
+				},
+			],
+			[
+				"middle",
+				{
+					status: 10,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"field-sizing",
 		new Map([
-			["content", 0],
-			["fixed", 0],
+			[
+				"content",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"fixed",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"flex-basis",
 		new Map([
-			["auto", 10],
-			["content", 10],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"content",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"flex-direction",
 		new Map([
-			["column", 10],
-			["column-reverse", 10],
-			["row", 10],
-			["row-reverse", 10],
+			[
+				"column",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"column-reverse",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"row",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"row-reverse",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"flex-wrap",
 		new Map([
-			["nowrap", 10],
-			["wrap", 10],
-			["wrap-reverse", 10],
+			[
+				"nowrap",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"wrap",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"wrap-reverse",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["flex", new Map([["none", 10]])],
+	[
+		"flex",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"clear",
 		new Map([
-			["both", 10],
-			["left", 10],
-			["right", 10],
-			["inline-end", 10],
-			["inline-start", 10],
+			[
+				"both",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"inline-end",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"inline-start",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"float",
 		new Map([
-			["left", 10],
-			["none", 10],
-			["right", 10],
-			["inline-end", 10],
-			["inline-start", 10],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"inline-end",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"inline-start",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"font-family",
 		new Map([
-			["math", 0],
-			["system-ui", 10],
-			["ui-monospace", 0],
-			["ui-rounded", 0],
-			["ui-sans-serif", 0],
-			["ui-serif", 0],
+			[
+				"math",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"system-ui",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"ui-monospace",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ui-rounded",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ui-sans-serif",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ui-serif",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["font-feature-settings", new Map([["normal", 10]])],
+	[
+		"font-feature-settings",
+		new Map([
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+		]),
+	],
 	[
 		"font-optical-sizing",
 		new Map([
-			["auto", 10],
-			["none", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"font-palette",
 		new Map([
-			["dark", 5],
-			["light", 5],
-			["normal", 5],
+			[
+				"dark",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"light",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"font",
 		new Map([
-			["caption", 10],
-			["icon", 10],
-			["menu", 10],
-			["message-box", 10],
-			["small-caption", 10],
-			["status-bar", 10],
+			[
+				"caption",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"icon",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"menu",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"message-box",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"small-caption",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"status-bar",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"font-size",
 		new Map([
-			["xxx-large", 10],
-			["math", 5],
+			[
+				"xxx-large",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"math",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"font-size-adjust",
 		new Map([
-			["from-font", 5],
-			["none", 5],
-			["two-values", 5],
+			[
+				"from-font",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"two-values",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
-	["font-stretch", new Map([["percentage", 10]])],
+	[
+		"font-stretch",
+		new Map([
+			[
+				"percentage",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+		]),
+	],
 	[
 		"font-style",
 		new Map([
-			["italic", 10],
-			["normal", 10],
-			["oblique-angle", 10],
+			[
+				"italic",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"oblique-angle",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"font-synthesis",
 		new Map([
-			["position", 10],
-			["small-caps", 10],
-			["style", 10],
-			["weight", 10],
+			[
+				"position",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"small-caps",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"style",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"weight",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"font-synthesis-position",
 		new Map([
-			["auto", 0],
-			["none", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"font-synthesis-small-caps",
 		new Map([
-			["auto", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"font-synthesis-style",
 		new Map([
-			["auto", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"font-synthesis-weight",
 		new Map([
-			["auto", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant",
 		new Map([
-			["historical-forms", 10],
-			["none", 10],
-			["normal", 10],
-			["sub", 10],
-			["super", 10],
+			[
+				"historical-forms",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"sub",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"super",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant-alternates",
 		new Map([
-			["annotation", 5],
-			["historical-forms", 5],
-			["normal", 5],
-			["ornaments", 5],
-			["styleset", 5],
-			["stylistic", 5],
-			["swash", 5],
+			[
+				"annotation",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"historical-forms",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"ornaments",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"styleset",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"stylistic",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"swash",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant-caps",
 		new Map([
-			["all-petite-caps", 10],
-			["all-small-caps", 10],
-			["normal", 10],
-			["petite-caps", 10],
-			["small-caps", 10],
-			["titling-caps", 10],
-			["unicase", 10],
+			[
+				"all-petite-caps",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"all-small-caps",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"petite-caps",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"small-caps",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"titling-caps",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"unicase",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant-east-asian",
 		new Map([
-			["full-width", 10],
-			["jis04", 10],
-			["jis78", 10],
-			["jis83", 10],
-			["jis90", 10],
-			["normal", 10],
-			["proportional-width", 10],
-			["ruby", 10],
-			["simplified", 10],
-			["traditional", 10],
+			[
+				"full-width",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"jis04",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"jis78",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"jis83",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"jis90",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"proportional-width",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"ruby",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"simplified",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"traditional",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant-emoji",
 		new Map([
-			["emoji", 0],
-			["normal", 0],
-			["text", 0],
-			["unicode", 0],
+			[
+				"emoji",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"text",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"unicode",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant-ligatures",
 		new Map([
-			["common-ligatures", 10],
-			["contextual", 10],
-			["discretionary-ligatures", 10],
-			["historical-ligatures", 10],
-			["no-common-ligatures", 10],
-			["no-contextual", 10],
-			["no-discretionary-ligatures", 10],
-			["no-historical-ligatures", 10],
-			["none", 10],
-			["normal", 10],
+			[
+				"common-ligatures",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"contextual",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"discretionary-ligatures",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"historical-ligatures",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"no-common-ligatures",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"no-contextual",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"no-discretionary-ligatures",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"no-historical-ligatures",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant-numeric",
 		new Map([
-			["diagonal-fractions", 10],
-			["lining-nums", 10],
-			["normal", 10],
-			["oldstyle-nums", 10],
-			["ordinal", 10],
-			["proportional-nums", 10],
-			["slashed-zero", 10],
-			["stacked-fractions", 10],
-			["tabular-nums", 10],
+			[
+				"diagonal-fractions",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"lining-nums",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"oldstyle-nums",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"ordinal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"proportional-nums",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"slashed-zero",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"stacked-fractions",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"tabular-nums",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"font-variant-position",
 		new Map([
-			["normal", 0],
-			["sub", 0],
-			["super", 0],
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"sub",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"super",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"font-weight",
 		new Map([
-			["bold", 10],
-			["bolder", 10],
-			["lighter", 10],
-			["normal", 10],
-			["number", 10],
+			[
+				"bold",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"bolder",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lighter",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"number",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"forced-color-adjust",
 		new Map([
-			["auto", 5],
-			["none", 5],
-			["preserve-parent-color", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"preserve-parent-color",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"grid-auto-flow",
 		new Map([
-			["column", 10],
-			["dense", 10],
-			["row", 10],
+			[
+				"column",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"dense",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"row",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
 		]),
 	],
-	["grid-template-areas", new Map([["none", 10]])],
+	[
+		"grid-template-areas",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+		]),
+	],
 	[
 		"grid-template-columns",
 		new Map([
-			["auto", 10],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["minmax", 10],
-			["none", 10],
-			["repeat", 10],
-			["animation", 5],
-			["masonry", 0],
-			["subgrid", 5],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"minmax",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"repeat",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"animation",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"masonry",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"subgrid",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"grid-template-rows",
 		new Map([
-			["auto", 10],
-			["fit-content", 10],
-			["max-content", 10],
-			["min-content", 10],
-			["minmax", 10],
-			["none", 10],
-			["repeat", 10],
-			["animation", 5],
-			["masonry", 0],
-			["subgrid", 5],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"fit-content",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"max-content",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"min-content",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"minmax",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"repeat",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"animation",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"masonry",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"subgrid",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
-	["grid-template", new Map([["none", 10]])],
+	[
+		"grid-template",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+		]),
+	],
 	[
 		"hanging-punctuation",
 		new Map([
-			["allow-end", 0],
-			["first", 0],
-			["last", 0],
-			["none", 0],
+			[
+				"allow-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"first",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"last",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["hyphenate-character", new Map([["auto", 5]])],
-	["hyphenate-limit-chars", new Map([["auto", 0]])],
-	["hyphens", new Map([["auto", 5]])],
+	[
+		"hyphenate-character",
+		new Map([
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
+	[
+		"hyphenate-limit-chars",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"hyphens",
+		new Map([
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+		]),
+	],
 	[
 		"image-orientation",
 		new Map([
-			["from-image", 10],
-			["none", 10],
+			[
+				"from-image",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
-	["rotate", new Map([["none", 10]])],
-	["scale", new Map([["none", 10]])],
-	["translate", new Map([["none", 10]])],
-	["initial-letter", new Map([["normal", 0]])],
+	[
+		"rotate",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+		]),
+	],
+	[
+		"scale",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+		]),
+	],
+	[
+		"translate",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+		]),
+	],
+	[
+		"initial-letter",
+		new Map([
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"interpolate-size",
 		new Map([
-			["allow-keywords", 0],
-			["numeric-only", 0],
+			[
+				"allow-keywords",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"numeric-only",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"direction",
 		new Map([
-			["ltr", 10],
-			["rtl", 10],
+			[
+				"ltr",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"rtl",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"unicode-bidi",
 		new Map([
-			["bidi-override", 10],
-			["embed", 10],
-			["isolate", 10],
-			["isolate-override", 10],
-			["normal", 10],
-			["plaintext", 10],
+			[
+				"bidi-override",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"embed",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"isolate",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"isolate-override",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"plaintext",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
-	["letter-spacing", new Map([["normal", 10]])],
+	[
+		"letter-spacing",
+		new Map([
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"line-break",
 		new Map([
-			["anywhere", 10],
-			["auto", 10],
-			["loose", 10],
-			["normal", 10],
-			["strict", 10],
+			[
+				"anywhere",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"loose",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"strict",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
-	["line-clamp", new Map([["none", 0]])],
-	["line-height", new Map([["normal", 10]])],
-	["list-style-image", new Map([["none", 10]])],
+	[
+		"line-clamp",
+		new Map([
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"line-height",
+		new Map([
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"list-style-image",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"list-style-position",
 		new Map([
-			["inside", 10],
-			["outside", 10],
+			[
+				"inside",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"outside",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"list-style-type",
 		new Map([
-			["arabic-indic", 10],
-			["armenian", 10],
-			["bengali", 10],
-			["cambodian", 10],
-			["circle", 10],
-			["cjk-decimal", 10],
-			["cjk-earthly-branch", 10],
-			["cjk-heavenly-stem", 10],
-			["cjk-ideographic", 10],
-			["decimal", 10],
-			["decimal-leading-zero", 10],
-			["devanagari", 10],
-			["disc", 10],
-			["disclosure-closed", 10],
-			["disclosure-open", 10],
-			["ethiopic-numeric", 10],
-			["georgian", 10],
-			["gujarati", 10],
-			["gurmukhi", 10],
-			["hebrew", 10],
-			["hiragana", 10],
-			["hiragana-iroha", 10],
-			["japanese-formal", 10],
-			["japanese-informal", 10],
-			["kannada", 10],
-			["katakana", 10],
-			["katakana-iroha", 10],
-			["khmer", 10],
-			["korean-hangul-formal", 10],
-			["korean-hanja-formal", 10],
-			["korean-hanja-informal", 10],
-			["lao", 10],
-			["lower-alpha", 10],
-			["lower-armenian", 10],
-			["lower-greek", 10],
-			["lower-latin", 10],
-			["lower-roman", 10],
-			["malayalam", 10],
-			["mongolian", 10],
-			["myanmar", 10],
-			["none", 10],
-			["oriya", 10],
-			["persian", 10],
-			["simp-chinese-formal", 10],
-			["simp-chinese-informal", 10],
-			["square", 10],
-			["string", 10],
-			["symbols", 10],
-			["tamil", 10],
-			["telugu", 10],
-			["thai", 10],
-			["tibetan", 10],
-			["trad-chinese-formal", 10],
-			["trad-chinese-informal", 10],
-			["upper-alpha", 10],
-			["upper-armenian", 10],
-			["upper-latin", 10],
-			["upper-roman", 10],
+			[
+				"arabic-indic",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"armenian",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"bengali",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"cambodian",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"circle",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"cjk-decimal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"cjk-earthly-branch",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"cjk-heavenly-stem",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"cjk-ideographic",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"decimal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"decimal-leading-zero",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"devanagari",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"disc",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"disclosure-closed",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"disclosure-open",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"ethiopic-numeric",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"georgian",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"gujarati",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"gurmukhi",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"hebrew",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"hiragana",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"hiragana-iroha",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"japanese-formal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"japanese-informal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"kannada",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"katakana",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"katakana-iroha",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"khmer",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"korean-hangul-formal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"korean-hanja-formal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"korean-hanja-informal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lao",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lower-alpha",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lower-armenian",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lower-greek",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lower-latin",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lower-roman",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"malayalam",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"mongolian",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"myanmar",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"oriya",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"persian",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"simp-chinese-formal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"simp-chinese-informal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"square",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"string",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"symbols",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"tamil",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"telugu",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"thai",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"tibetan",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"trad-chinese-formal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"trad-chinese-informal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"upper-alpha",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"upper-armenian",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"upper-latin",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"upper-roman",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["list-style", new Map([["symbols", 10]])],
-	["overflow-block", new Map([["overlay", 10]])],
-	["overflow-inline", new Map([["overlay", 10]])],
+	[
+		"list-style",
+		new Map([
+			[
+				"symbols",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"overflow-block",
+		new Map([
+			[
+				"overlay",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+		]),
+	],
+	[
+		"overflow-inline",
+		new Map([
+			[
+				"overlay",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+		]),
+	],
 	[
 		"margin-trim",
 		new Map([
-			["block", 0],
-			["block-end", 0],
-			["block-start", 0],
-			["inline", 0],
-			["inline-end", 0],
-			["inline-start", 0],
-			["none", 0],
+			[
+				"block",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"block-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"block-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"mask-type",
 		new Map([
-			["alpha", 10],
-			["luminance", 10],
+			[
+				"alpha",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"luminance",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"mask-clip",
 		new Map([
-			["border", 5],
-			["content", 5],
-			["padding", 5],
-			["text", 5],
+			[
+				"border",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"content",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"padding",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"text",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"mask-composite",
 		new Map([
-			["add", 5],
-			["exclude", 5],
-			["intersect", 5],
-			["subtract", 5],
+			[
+				"add",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"exclude",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"intersect",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"subtract",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"mask-mode",
 		new Map([
-			["alpha", 5],
-			["luminance", 5],
-			["match-source", 5],
+			[
+				"alpha",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"luminance",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"match-source",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"mask-origin",
 		new Map([
-			["border", 5],
-			["content", 5],
-			["fill-box", 5],
-			["padding", 5],
-			["stroke-box", 5],
-			["view-box", 5],
+			[
+				"border",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"content",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"fill-box",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"padding",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"stroke-box",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"view-box",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
 		]),
 	],
 	[
 		"text-transform",
 		new Map([
-			["math-auto", 5],
-			["capitalize", 10],
-			["full-size-kana", 10],
-			["full-width", 10],
-			["lowercase", 10],
-			["none", 10],
-			["uppercase", 10],
+			[
+				"math-auto",
+				{
+					status: 5,
+					year: 2023,
+				},
+			],
+			[
+				"capitalize",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"full-size-kana",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"full-width",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"lowercase",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"uppercase",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"mix-blend-mode",
 		new Map([
-			["plus-darker", 10],
-			["plus-lighter", 10],
+			[
+				"plus-darker",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"plus-lighter",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"offset-anchor",
 		new Map([
-			["auto", 5],
-			["bottom", 5],
-			["center", 5],
-			["left", 5],
-			["right", 5],
-			["top", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"bottom",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"center",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"left",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"right",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"top",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"offset-path",
 		new Map([
-			["border-box", 5],
-			["content-box", 5],
-			["fill-box", 5],
-			["margin-box", 5],
-			["none", 5],
-			["padding-box", 5],
-			["path", 5],
-			["ray", 5],
-			["stroke-box", 5],
-			["url", 5],
-			["view-box", 5],
+			[
+				"border-box",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"content-box",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"fill-box",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"margin-box",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"padding-box",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"path",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"ray",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"stroke-box",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"url",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"view-box",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"offset-position",
 		new Map([
-			["auto", 5],
-			["bottom", 5],
-			["center", 5],
-			["left", 5],
-			["normal", 5],
-			["right", 5],
-			["top", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"bottom",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"center",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"left",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"right",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"top",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"offset-rotate",
 		new Map([
-			["auto", 5],
-			["reverse", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"reverse",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
-	["column-count", new Map([["auto", 10]])],
-	["column-width", new Map([["auto", 10]])],
+	[
+		"column-count",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+		]),
+	],
+	[
+		"column-width",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+		]),
+	],
 	[
 		"object-fit",
 		new Map([
-			["contain", 10],
-			["cover", 10],
-			["fill", 10],
-			["none", 10],
-			["scale-down", 10],
+			[
+				"contain",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"cover",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"fill",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"scale-down",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
-	["object-view-box", new Map([["none", 0]])],
-	["opacity", new Map([["percentages", 10]])],
+	[
+		"object-view-box",
+		new Map([
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"opacity",
+		new Map([
+			[
+				"percentages",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"outline-style",
 		new Map([
-			["auto", 10],
-			["dashed", 10],
-			["dotted", 10],
-			["double", 10],
-			["groove", 10],
-			["inset", 10],
-			["none", 10],
-			["outset", 10],
-			["ridge", 10],
-			["solid", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"dashed",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"dotted",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"double",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"groove",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"inset",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"outset",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"ridge",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"solid",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
 		]),
 	],
 	[
 		"overflow-anchor",
 		new Map([
-			["auto", 0],
-			["none", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"overflow-clip-margin",
 		new Map([
-			["border-box", 0],
-			["content-box", 0],
-			["padding-box", 0],
+			[
+				"border-box",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"content-box",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"padding-box",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"overflow-x",
 		new Map([
-			["auto", 5],
-			["clip", 5],
-			["hidden", 5],
-			["scroll", 5],
-			["visible", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"clip",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"hidden",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"scroll",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"visible",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"overflow-y",
 		new Map([
-			["auto", 5],
-			["clip", 5],
-			["hidden", 5],
-			["scroll", 5],
-			["visible", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"clip",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"hidden",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"scroll",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"visible",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"overflow",
 		new Map([
-			["auto", 5],
-			["clip", 5],
-			["hidden", 5],
-			["scroll", 5],
-			["visible", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"clip",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"hidden",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"scroll",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"visible",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"overflow-wrap",
 		new Map([
-			["anywhere", 10],
-			["break-word", 10],
-			["normal", 10],
+			[
+				"anywhere",
+				{
+					status: 10,
+					year: 2018,
+				},
+			],
+			[
+				"break-word",
+				{
+					status: 10,
+					year: 2018,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2018,
+				},
+			],
 		]),
 	],
 	[
 		"overlay",
 		new Map([
-			["auto", 0],
-			["none", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"overscroll-behavior-block",
 		new Map([
-			["auto", 5],
-			["contain", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"contain",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"overscroll-behavior-inline",
 		new Map([
-			["auto", 5],
-			["contain", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"contain",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"overscroll-behavior-x",
 		new Map([
-			["auto", 5],
-			["contain", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"contain",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"overscroll-behavior-y",
 		new Map([
-			["auto", 5],
-			["contain", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"contain",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"overscroll-behavior",
 		new Map([
-			["auto", 5],
-			["contain", 5],
-			["none", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"contain",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"page-break-after",
 		new Map([
-			["always", 0],
-			["auto", 0],
-			["avoid", 0],
-			["left", 0],
-			["right", 0],
+			[
+				"always",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"avoid",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"left",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"right",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"page-break-before",
 		new Map([
-			["always", 0],
-			["auto", 0],
-			["avoid", 0],
-			["left", 0],
-			["right", 0],
+			[
+				"always",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"avoid",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"left",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"right",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"page-break-inside",
 		new Map([
-			["auto", 0],
-			["avoid", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"avoid",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"print-color-adjust",
 		new Map([
-			["economy", 0],
-			["exact", 0],
+			[
+				"economy",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"exact",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"quotes",
 		new Map([
-			["auto", 10],
-			["none", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
 		]),
 	],
 	[
 		"resize",
 		new Map([
-			["block", 0],
-			["inline", 0],
+			[
+				"block",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"ruby-align",
 		new Map([
-			["center", 5],
-			["space-around", 5],
-			["space-between", 5],
-			["start", 5],
+			[
+				"center",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"space-around",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"space-between",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"start",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
 	[
 		"ruby-overhang",
 		new Map([
-			["auto", 0],
-			["none", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"ruby-position",
 		new Map([
-			["alternate", 5],
-			["inter-character", 5],
-			["over", 5],
-			["under", 5],
+			[
+				"alternate",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"inter-character",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"over",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"under",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
 	[
 		"scroll-behavior",
 		new Map([
-			["auto", 10],
-			["smooth", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"smooth",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
-	["animation-range-end", new Map([["normal", 0]])],
-	["animation-range-start", new Map([["normal", 0]])],
+	[
+		"animation-range-end",
+		new Map([
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"animation-range-start",
+		new Map([
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"animation-timeline",
 		new Map([
-			["scroll", 0],
-			["view", 0],
+			[
+				"scroll",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"view",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"scroll-timeline-axis",
 		new Map([
-			["block", 0],
-			["inline", 0],
-			["x", 0],
-			["y", 0],
+			[
+				"block",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"x",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"y",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"timeline-scope",
 		new Map([
-			["all", 0],
-			["none", 0],
+			[
+				"all",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"view-timeline-axis",
 		new Map([
-			["block", 0],
-			["inline", 0],
-			["x", 0],
-			["y", 0],
+			[
+				"block",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inline",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"x",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"y",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["view-timeline-inset", new Map([["auto", 0]])],
-	["scroll-padding-block-end", new Map([["auto", 10]])],
-	["scroll-padding-block-start", new Map([["auto", 10]])],
-	["scroll-padding-block", new Map([["auto", 10]])],
-	["scroll-padding-inline-end", new Map([["auto", 10]])],
-	["scroll-padding-inline-start", new Map([["auto", 10]])],
-	["scroll-padding-inline", new Map([["auto", 10]])],
-	["scroll-padding", new Map([["auto", 10]])],
+	[
+		"view-timeline-inset",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"scroll-padding-block-end",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
+	[
+		"scroll-padding-block-start",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
+	[
+		"scroll-padding-block",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
+	[
+		"scroll-padding-inline-end",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
+	[
+		"scroll-padding-inline-start",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
+	[
+		"scroll-padding-inline",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
+	[
+		"scroll-padding",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
 	[
 		"scroll-snap-align",
 		new Map([
-			["center", 10],
-			["end", 10],
-			["none", 10],
-			["start", 10],
+			[
+				"center",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"end",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"start",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"scroll-snap-stop",
 		new Map([
-			["always", 10],
-			["normal", 10],
+			[
+				"always",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"scroll-snap-type",
 		new Map([
-			["block", 10],
-			["both", 10],
-			["inline", 10],
-			["none", 10],
-			["x", 10],
-			["y", 10],
+			[
+				"block",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"both",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"inline",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"x",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"y",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
-	["scrollbar-color", new Map([["auto", 0]])],
+	[
+		"scrollbar-color",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"scrollbar-gutter",
 		new Map([
-			["auto", 5],
-			["stable", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"stable",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
 	[
 		"scrollbar-width",
 		new Map([
-			["auto", 5],
-			["none", 5],
-			["thin", 5],
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"none",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"thin",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
-	["shape-image-threshold", new Map([["percentages", 10]])],
+	[
+		"shape-image-threshold",
+		new Map([
+			[
+				"percentages",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
 	[
 		"shape-outside",
 		new Map([
-			["circle", 10],
-			["gradient", 10],
-			["image", 10],
-			["inset", 10],
-			["none", 10],
-			["path", 10],
-			["polygon", 10],
+			[
+				"circle",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"gradient",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"image",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"inset",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"path",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"polygon",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"speak-as",
 		new Map([
-			["digits", 0],
-			["literal-punctuation", 0],
-			["no-punctuation", 0],
-			["normal", 0],
-			["spell-out", 0],
+			[
+				"digits",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"literal-punctuation",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"no-punctuation",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"spell-out",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"clip-rule",
 		new Map([
-			["evenodd", 10],
-			["nonzero", 10],
+			[
+				"evenodd",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"nonzero",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"color-interpolation",
 		new Map([
-			["linearGradient", 10],
-			["sRGB", 10],
+			[
+				"linearGradient",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"sRGB",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"fill-rule",
 		new Map([
-			["evenodd", 10],
-			["nonzero", 10],
+			[
+				"evenodd",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"nonzero",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
-	["stroke-dasharray", new Map([["none", 10]])],
+	[
+		"stroke-dasharray",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+		]),
+	],
 	[
 		"stroke-linecap",
 		new Map([
-			["butt", 10],
-			["round", 10],
-			["square", 10],
+			[
+				"butt",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"round",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"square",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"stroke-linejoin",
 		new Map([
-			["bevel", 10],
-			["miter", 10],
-			["round", 10],
+			[
+				"bevel",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"miter",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"round",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"text-rendering",
 		new Map([
-			["auto", 10],
-			["geometricPrecision", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"geometricPrecision",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"color-interpolation-filters",
 		new Map([
-			["auto", 10],
-			["linearRGB", 10],
-			["sRGB", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"linearRGB",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"sRGB",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["tab-size", new Map([["length", 10]])],
+	[
+		"tab-size",
+		new Map([
+			[
+				"length",
+				{
+					status: 10,
+					year: 2021,
+				},
+			],
+		]),
+	],
 	[
 		"border-collapse",
 		new Map([
-			["collapse", 10],
-			["separate", 10],
+			[
+				"collapse",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"separate",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"caption-side",
 		new Map([
-			["bottom", 10],
-			["bottom-outside", 10],
-			["top", 10],
-			["top-outside", 10],
+			[
+				"bottom",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"bottom-outside",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"top",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"top-outside",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"text-align",
 		new Map([
-			["center", 10],
-			["end", 10],
-			["justify", 10],
-			["left", 10],
-			["match-parent", 10],
-			["right", 10],
-			["start", 10],
+			[
+				"center",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"end",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"justify",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"match-parent",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"start",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["text-align-last", new Map([["auto", 5]])],
-	["text-box-edge", new Map([["auto", 0]])],
+	[
+		"text-align-last",
+		new Map([
+			[
+				"auto",
+				{
+					status: 5,
+					year: 2022,
+				},
+			],
+		]),
+	],
+	[
+		"text-box-edge",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"text-box-trim",
 		new Map([
-			["none", 0],
-			["trim-both", 0],
-			["trim-end", 0],
-			["trim-start", 0],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"trim-both",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"trim-end",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"trim-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["text-box", new Map([["normal", 0]])],
+	[
+		"text-box",
+		new Map([
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"text-decoration-line",
 		new Map([
-			["grammar-error", 10],
-			["line-through", 10],
-			["none", 10],
-			["overline", 10],
-			["spelling-error", 10],
-			["underline", 10],
-			["blink", 0],
+			[
+				"grammar-error",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"line-through",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"overline",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"spelling-error",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"underline",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"blink",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"text-decoration-skip-ink",
 		new Map([
-			["all", 10],
-			["auto", 10],
-			["none", 10],
+			[
+				"all",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"text-decoration-skip",
 		new Map([
-			["auto", 10],
-			["none", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["text-decoration-style", new Map([["wavy", 10]])],
+	[
+		"text-decoration-style",
+		new Map([
+			[
+				"wavy",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"text-decoration-thickness",
 		new Map([
-			["auto", 10],
-			["from-font", 10],
-			["percentage", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"from-font",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"percentage",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"text-emphasis-position",
 		new Map([
-			["auto", 10],
-			["left", 10],
-			["over", 10],
-			["right", 10],
-			["under", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"over",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"under",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"text-emphasis-style",
 		new Map([
-			["circle", 10],
-			["dot", 10],
-			["double-circle", 10],
-			["filled", 10],
-			["none", 10],
-			["sesame", 10],
-			["triangle", 10],
+			[
+				"circle",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"dot",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"double-circle",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"filled",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"sesame",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"triangle",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
 	[
 		"text-indent",
 		new Map([
-			["each-line", 0],
-			["hanging", 0],
+			[
+				"each-line",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"hanging",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"text-justify",
 		new Map([
-			["auto", 0],
-			["inter-character", 0],
-			["inter-word", 0],
-			["none", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inter-character",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"inter-word",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"text-orientation",
 		new Map([
-			["mixed", 10],
-			["sideways", 10],
-			["upright", 10],
+			[
+				"mixed",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"sideways",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"upright",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"text-size-adjust",
 		new Map([
-			["auto", 0],
-			["none", 0],
-			["percentages", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"percentages",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"text-spacing-trim",
 		new Map([
-			["normal", 0],
-			["space-all", 0],
-			["space-first", 0],
-			["trim-start", 0],
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"space-all",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"space-first",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"trim-start",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"text-underline-offset",
 		new Map([
-			["auto", 10],
-			["percentage", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"percentage",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"text-underline-position",
 		new Map([
-			["from-font", 10],
-			["left", 10],
-			["right", 10],
-			["under", 10],
+			[
+				"from-font",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"under",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"text-wrap",
 		new Map([
-			["wrap", 5],
-			["balance", 5],
-			["nowrap", 5],
-			["pretty", 0],
-			["stable", 5],
+			[
+				"wrap",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"balance",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"nowrap",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"pretty",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"stable",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
 	[
 		"text-wrap-mode",
 		new Map([
-			["nowrap", 5],
-			["wrap", 5],
+			[
+				"nowrap",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"wrap",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
 	[
 		"text-wrap-style",
 		new Map([
-			["auto", 0],
-			["balance", 0],
-			["pretty", 0],
-			["stable", 0],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"balance",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"pretty",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"stable",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"touch-action",
 		new Map([
-			["manipulation", 10],
-			["none", 10],
-			["pan-down", 10],
-			["pan-left", 10],
-			["pan-right", 10],
-			["pan-up", 10],
-			["pan-x", 10],
-			["pan-y", 10],
-			["pinch-zoom", 10],
+			[
+				"manipulation",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"pan-down",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"pan-left",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"pan-right",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"pan-up",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"pan-x",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"pan-y",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
+			[
+				"pinch-zoom",
+				{
+					status: 10,
+					year: 2019,
+				},
+			],
 		]),
 	],
 	[
 		"transform-box",
 		new Map([
-			["border-box", 5],
-			["content-box", 5],
-			["fill-box", 5],
-			["stroke-box", 5],
-			["view-box", 5],
+			[
+				"border-box",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"content-box",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"fill-box",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"stroke-box",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"view-box",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
 	[
 		"transform-origin",
 		new Map([
-			["bottom", 10],
-			["center", 10],
-			["left", 10],
-			["right", 10],
-			["top", 10],
+			[
+				"bottom",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"center",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"top",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"perspective-origin",
 		new Map([
-			["bottom", 10],
-			["center", 10],
-			["left", 10],
-			["right", 10],
-			["top", 10],
+			[
+				"bottom",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"center",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"left",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"right",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+			[
+				"top",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
 		]),
 	],
-	["perspective", new Map([["none", 10]])],
-	["transform", new Map([["3d", 10]])],
-	["transition", new Map([["transition-behavior", 5]])],
+	[
+		"perspective",
+		new Map([
+			[
+				"none",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+		]),
+	],
+	[
+		"transform",
+		new Map([
+			[
+				"3d",
+				{
+					status: 10,
+					year: 2022,
+				},
+			],
+		]),
+	],
+	[
+		"transition",
+		new Map([
+			[
+				"transition-behavior",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+		]),
+	],
 	[
 		"transition-property",
 		new Map([
-			["all", 10],
-			["none", 10],
+			[
+				"all",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"none",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["transition-timing-function", new Map([["jump", 10]])],
+	[
+		"transition-timing-function",
+		new Map([
+			[
+				"jump",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"user-select",
 		new Map([
-			["all", 0],
-			["auto", 0],
-			["none", 0],
-			["text", 0],
+			[
+				"all",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"text",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
 	[
 		"vertical-align",
 		new Map([
-			["baseline", 10],
-			["bottom", 10],
-			["middle", 10],
-			["sub", 10],
-			["super", 10],
-			["text-bottom", 10],
-			["text-top", 10],
-			["top", 10],
+			[
+				"baseline",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"bottom",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"middle",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"sub",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"super",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"text-bottom",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"text-top",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"top",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
-	["view-transition-class", new Map([["none", 0]])],
-	["view-transition-name", new Map([["none", 0]])],
+	[
+		"view-transition-class",
+		new Map([
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
+		"view-transition-name",
+		new Map([
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
 	[
 		"visibility",
 		new Map([
-			["collapse", 10],
-			["hidden", 10],
-			["visible", 10],
+			[
+				"collapse",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"hidden",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"visible",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"white-space",
 		new Map([
-			["break-spaces", 10],
-			["normal", 10],
-			["nowrap", 10],
-			["pre", 10],
-			["pre-line", 10],
-			["pre-wrap", 10],
+			[
+				"break-spaces",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"nowrap",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"pre",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"pre-line",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"pre-wrap",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
 		]),
 	],
 	[
 		"white-space-collapse",
 		new Map([
-			["break-spaces", 5],
-			["collapse", 5],
-			["preserve", 5],
-			["preserve-breaks", 5],
-			["preserve-spaces", 5],
+			[
+				"break-spaces",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"collapse",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"preserve",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"preserve-breaks",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
+			[
+				"preserve-spaces",
+				{
+					status: 5,
+					year: 2024,
+				},
+			],
 		]),
 	],
 	[
 		"will-change",
 		new Map([
-			["auto", 10],
-			["contents", 10],
-			["scroll-position", 10],
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"contents",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
+			[
+				"scroll-position",
+				{
+					status: 10,
+					year: 2020,
+				},
+			],
 		]),
 	],
 	[
 		"word-break",
 		new Map([
-			["break-all", 10],
-			["keep-all", 10],
-			["normal", 10],
-			["auto-phrase", 0],
-			["break-word", 0],
+			[
+				"break-all",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"keep-all",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+			[
+				"auto-phrase",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"break-word",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["word-spacing", new Map([["normal", 10]])],
+	[
+		"word-spacing",
+		new Map([
+			[
+				"normal",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 	[
 		"writing-mode",
 		new Map([
-			["horizontal-tb", 10],
-			["sideways-lr", 10],
-			["sideways-rl", 10],
-			["vertical-lr", 10],
-			["vertical-rl", 10],
-			["lr", 0],
-			["lr-tb", 0],
-			["rl", 0],
-			["rl-tb", 0],
-			["tb", 0],
-			["tb-rl", 0],
+			[
+				"horizontal-tb",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"sideways-lr",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"sideways-rl",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"vertical-lr",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"vertical-rl",
+				{
+					status: 10,
+					year: 2017,
+				},
+			],
+			[
+				"lr",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"lr-tb",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"rl",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"rl-tb",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"tb",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"tb-rl",
+				{
+					status: 0,
+					year: null,
+				},
+			],
 		]),
 	],
-	["z-index", new Map([["auto", 10]])],
+	[
+		"z-index",
+		new Map([
+			[
+				"auto",
+				{
+					status: 10,
+					year: 2015,
+				},
+			],
+		]),
+	],
 ]);
