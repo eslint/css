@@ -12,7 +12,7 @@ import {
 	lexer as originalLexer,
 	fork,
 	toPlainObject,
-} from "css-tree";
+} from "@eslint/css-tree";
 import { CSSSourceCode } from "./css-source-code.js";
 import { visitorKeys } from "./css-visitor-keys.js";
 
@@ -20,12 +20,12 @@ import { visitorKeys } from "./css-visitor-keys.js";
 // Types
 //-----------------------------------------------------------------------------
 
-/** @typedef {import("css-tree").CssNode} CssNode */
-/** @typedef {import("css-tree").CssNodePlain} CssNodePlain */
-/** @typedef {import("css-tree").StyleSheet} StyleSheet */
-/** @typedef {import("css-tree").Comment} Comment */
-/** @typedef {import("css-tree").Lexer} Lexer */
-/** @typedef {import("css-tree").SyntaxConfig} SyntaxConfig */
+/** @typedef {import("@eslint/css-tree").CssNode} CssNode */
+/** @typedef {import("@eslint/css-tree").CssNodePlain} CssNodePlain */
+/** @typedef {import("@eslint/css-tree").StyleSheet} StyleSheet */
+/** @typedef {import("@eslint/css-tree").Comment} Comment */
+/** @typedef {import("@eslint/css-tree").Lexer} Lexer */
+/** @typedef {import("@eslint/css-tree").SyntaxConfig} SyntaxConfig */
 /** @typedef {import("@eslint/core").Language} Language */
 /** @typedef {import("@eslint/core").OkParseResult<CssNodePlain> & { comments: Comment[], lexer: Lexer }} OkParseResult */
 /** @typedef {import("@eslint/core").ParseResult<CssNodePlain>} ParseResult */

@@ -7,7 +7,7 @@
 // Type Definitions
 //-----------------------------------------------------------------------------
 
-/** @typedef {import("css-tree").SyntaxMatchError} SyntaxMatchError */
+/** @typedef {import("@eslint/css-tree").SyntaxMatchError} SyntaxMatchError */
 
 //-----------------------------------------------------------------------------
 // Helpers

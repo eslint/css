@@ -23,9 +23,9 @@ import { namedColors } from "../data/colors.js";
 // Type Definitions
 //-----------------------------------------------------------------------------
 
-/** @typedef {import("css-tree").AtrulePlain} AtrulePlain */
-/** @typedef {import("css-tree").Identifier} Identifier */
-/** @typedef {import("css-tree").FunctionNodePlain} FunctionNodePlain */
+/** @typedef {import("@eslint/css-tree").AtrulePlain} AtrulePlain */
+/** @typedef {import("@eslint/css-tree").Identifier} Identifier */
+/** @typedef {import("@eslint/css-tree").FunctionNodePlain} FunctionNodePlain */
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -432,7 +432,7 @@ export default {
 
 		/**
 		 * Checks a property value function to see if it's a baseline feature.
-		 * @param {import("css-tree").FunctionNodePlain} child The node to check.
+		 * @param {import("@eslint/css-tree").FunctionNodePlain} child The node to check.
 		 * @returns {void}
 		 **/
 		function checkPropertyValueFunction(child) {
