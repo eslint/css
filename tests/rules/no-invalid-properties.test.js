@@ -88,7 +88,7 @@ ruleTester.run("no-invalid-properties", rule, {
 						property: "width",
 						value: "red",
 						expected:
-							"auto | <length> | <percentage> | min-content | max-content | fit-content | fit-content( <length-percentage> ) | stretch | <-non-standard-size>",
+							"auto | <length-percentage [0,∞]> | min-content | max-content | fit-content | fit-content( <length-percentage [0,∞]> ) | <calc-size()> | <anchor-size()> | stretch | <-non-standard-size>",
 					},
 					line: 1,
 					column: 12,
@@ -105,7 +105,7 @@ ruleTester.run("no-invalid-properties", rule, {
 					data: {
 						property: "margin",
 						value: "10px 20px 30px 40px 50px",
-						expected: "[ <length> | <percentage> | auto ]{1,4}",
+						expected: "<'margin-top'>{1,4}",
 					},
 					line: 1,
 					column: 33,

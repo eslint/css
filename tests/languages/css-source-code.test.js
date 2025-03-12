@@ -9,7 +9,7 @@
 
 import { CSSSourceCode } from "../../src/languages/css-source-code.js";
 import { CSSLanguage } from "../../src/languages/css-language.js";
-import { parse, toPlainObject } from "css-tree";
+import { parse, toPlainObject } from "@eslint/css-tree";
 import assert from "node:assert";
 import dedent from "dedent";
 
