@@ -739,7 +739,7 @@ export const propertyValues = new Map([
 			["sticky", 10],
 		]),
 	],
-	["accent-color", new Map([["auto", 10]])],
+	["accent-color", new Map([["auto", 0]])],
 	[
 		"alignment-baseline",
 		new Map([
@@ -1260,8 +1260,8 @@ export const propertyValues = new Map([
 	[
 		"box-decoration-break",
 		new Map([
-			["clone", 5],
-			["slice", 5],
+			["clone", 0],
+			["slice", 0],
 		]),
 	],
 	["box-shadow", new Map([["inset", 10]])],
@@ -1804,9 +1804,9 @@ export const propertyValues = new Map([
 			["none", 0],
 		]),
 	],
-	["hyphenate-character", new Map([["auto", 10]])],
+	["hyphenate-character", new Map([["auto", 5]])],
 	["hyphenate-limit-chars", new Map([["auto", 0]])],
-	["hyphens", new Map([["auto", 10]])],
+	["hyphens", new Map([["auto", 5]])],
 	[
 		"image-orientation",
 		new Map([
@@ -2386,7 +2386,7 @@ export const propertyValues = new Map([
 		"color-interpolation",
 		new Map([
 			["linearGradient", 0],
-			["sRGB", 10],
+			["sRGB", 0],
 		]),
 	],
 	[
@@ -2678,10 +2678,10 @@ export const propertyValues = new Map([
 	[
 		"user-select",
 		new Map([
-			["all", 5],
-			["auto", 10],
-			["none", 10],
-			["text", 10],
+			["all", 0],
+			["auto", 0],
+			["none", 0],
+			["text", 0],
 		]),
 	],
 	[

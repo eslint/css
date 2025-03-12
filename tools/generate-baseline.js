@@ -9,7 +9,7 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { computeBaseline as getBaselineStatus } from "compute-baseline";
+import { getStatus as getBaselineStatus } from "compute-baseline";
 import { features as webFeatures } from "web-features";
 import prettier from "prettier";
 import fs from "node:fs";
@@ -40,13 +40,13 @@ const baselineIds = new Map([
  * @param {Object} entry The entry to flatten.
  * @returns {Object} The flattened entry.
  */
-function flattenCompatFeatures(entry) {
+function flattenCompatFeatures([featureId, entry]) {
 	if (!entry.compat_features) {
 		return {};
 	}
 
 	return Object.fromEntries(
-		entry.compat_features.map(feature => [feature, entry.status.baseline]),
+		entry.compat_features.map(feature => [feature, featureId]),
 	);
 }
 
@@ -85,8 +85,8 @@ function extractCSSFeatures(features) {
 	const types = {};
 	const selectors = {};
 
-	for (const key of Object.keys(features)) {
-		const baseline = getBaselineStatus({ compatKeys: [key] })?.baseline;
+	for (const [key, featureId] of Object.entries(features)) {
+		const { baseline } = getBaselineStatus(featureId, key);
 		let match;
 
 		// property names
@@ -153,7 +153,7 @@ function extractCSSFeatures(features) {
 //------------------------------------------------------------------------------
 
 // create one object with all features then filter just on the css ones
-const allFeatures = Object.values(webFeatures).reduce(
+const allFeatures = Object.entries(webFeatures).reduce(
 	(acc, entry) => Object.assign(acc, flattenCompatFeatures(entry)),
 	{},
 );
