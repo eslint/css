@@ -9,6 +9,7 @@
 // Imports
 //------------------------------------------------------------------------------
 
+import { computeBaseline as getBaselineStatus } from "compute-baseline";
 import { features as webFeatures } from "web-features";
 import prettier from "prettier";
 import fs from "node:fs";
@@ -84,7 +85,8 @@ function extractCSSFeatures(features) {
 	const types = {};
 	const selectors = {};
 
-	for (const [key, baseline] of Object.entries(features)) {
+	for (const key of Object.keys(features)) {
+		const baseline = getBaselineStatus({ compatKeys: [key] })?.baseline;
 		let match;
 
 		// property names
