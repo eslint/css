@@ -13,9 +13,7 @@
       "dist/esm/syntax/index.d.ts",
       "README.md",
       "jsr.json",
-      "LICENSE",
-      "typings/css-tree/index.d.ts",
-      "typings/css-tree/LICENSE"
+      "LICENSE"
     ]
   }
 }
