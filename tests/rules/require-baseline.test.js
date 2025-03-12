@@ -61,6 +61,7 @@ ruleTester.run("require-baseline", rule, {
 				h1:has(+ h2) { color: red; }
 		}`,
 		"div { cursor: pointer; }",
+		"pre { overflow: auto; }",
 		{
 			code: `@property --foo {
 				syntax: "*";
