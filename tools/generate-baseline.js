@@ -37,7 +37,7 @@ const baselineIds = new Map([
 /**
  * Flattens the compat features into an object where the key is the feature
  * name and the value is the baseline.
- * @param {Object} entry The entry to flatten.
+ * @param {[string, {compat_features?: string[]}]} featureEntry The entry to flatten.
  * @returns {Object} The flattened entry.
  */
 function flattenCompatFeatures([featureId, entry]) {
