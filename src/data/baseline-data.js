@@ -895,8 +895,8 @@ export const properties = new Map([
 	[
 		"font-stretch",
 		{
-			status: 10,
-			year: 2017,
+			status: 0,
+			year: null,
 		},
 	],
 	[
@@ -1009,6 +1009,13 @@ export const properties = new Map([
 		{
 			status: 10,
 			year: 2015,
+		},
+	],
+	[
+		"font-width",
+		{
+			status: 0,
+			year: null,
 		},
 	],
 	[
@@ -2447,6 +2454,13 @@ export const properties = new Map([
 		},
 	],
 	[
+		"scroll-initial-target",
+		{
+			status: 0,
+			year: null,
+		},
+	],
+	[
 		"scroll-margin",
 		{
 			status: 10,
@@ -2969,6 +2983,13 @@ export const properties = new Map([
 		{
 			status: 5,
 			year: 2022,
+		},
+	],
+	[
+		"text-autospace",
+		{
+			status: 0,
+			year: null,
 		},
 	],
 	[
@@ -3930,6 +3951,13 @@ export const types = new Map([
 		},
 	],
 	[
+		"var",
+		{
+			status: 10,
+			year: 2017,
+		},
+	],
+	[
 		"exp",
 		{
 			status: 5,
@@ -4074,6 +4102,13 @@ export const types = new Map([
 		{
 			status: 5,
 			year: 2024,
+		},
+	],
+	[
+		"env",
+		{
+			status: 10,
+			year: 2020,
 		},
 	],
 	[
@@ -4529,7 +4564,7 @@ export const selectors = new Map([
 	[
 		"modal",
 		{
-			status: 5,
+			status: 10,
 			year: 2022,
 		},
 	],
@@ -7926,25 +7961,6 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
-		"custom-property",
-		new Map([
-			[
-				"var",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"env",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
-	[
 		"display",
 		new Map([
 			[
@@ -8604,8 +8620,8 @@ export const propertyValues = new Map([
 			[
 				"percentage",
 				{
-					status: 10,
-					year: 2017,
+					status: 0,
+					year: null,
 				},
 			],
 		]),
@@ -9206,6 +9222,74 @@ export const propertyValues = new Map([
 				{
 					status: 10,
 					year: 2015,
+				},
+			],
+		]),
+	],
+	[
+		"font-width",
+		new Map([
+			[
+				"condensed",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"expanded",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"extra-condensed",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"extra-expanded",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"semi-condensed",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"semi-expanded",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ultra-condensed",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ultra-expanded",
+				{
+					status: 0,
+					year: null,
 				},
 			],
 		]),
@@ -11602,6 +11686,25 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
+		"scroll-initial-target",
+		new Map([
+			[
+				"nearest",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"none",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+		]),
+	],
+	[
 		"scroll-padding-block-end",
 		new Map([
 			[
@@ -12239,6 +12342,46 @@ export const propertyValues = new Map([
 				{
 					status: 5,
 					year: 2022,
+				},
+			],
+		]),
+	],
+	[
+		"text-autospace",
+		new Map([
+			[
+				"auto",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ideograph-alpha",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"ideograph-numeric",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"no-autospace",
+				{
+					status: 0,
+					year: null,
+				},
+			],
+			[
+				"normal",
+				{
+					status: 0,
+					year: null,
 				},
 			],
 		]),

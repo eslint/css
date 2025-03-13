@@ -339,17 +339,32 @@ class SupportsRules {
 	}
 }
 
+/**
+ * Represents the required availability of a feature.
+ */
 class BaselineAvailability {
+	/**
+	 * The preferred Baseline year.
+	 * @type {number}
+	 */
+	#baselineYear = undefined;
+
+	/**
+	 * The preferred Baseline status.
+	 * @type {number}
+	 */
+	#baselineStatus = undefined;
+
 	/**
 	 * @param {string | number} availability The required level of feature availability.
 	 */
 	constructor(availability) {
 		this.availability = availability;
 
-		if (Number.isInteger(availability)) {
-			this.baselineYear = availability;
+		if (typeof availability === "number") {
+			this.#baselineYear = availability;
 		} else {
-			this.baselineStatus =
+			this.#baselineStatus =
 				availability === "widely" ? BASELINE_HIGH : BASELINE_LOW;
 		}
 	}
@@ -360,11 +375,11 @@ class BaselineAvailability {
 	 * @returns {boolean} `true` if the feature is supported, `false` if not.
 	 */
 	isSupported(feature) {
-		if (this.baselineYear) {
-			return feature.year <= this.baselineYear;
+		if (this.#baselineYear) {
+			return feature.year <= this.#baselineYear;
 		}
 
-		return feature.status >= this.baselineStatus;
+		return feature.status >= this.#baselineStatus;
 	}
 }
 
@@ -394,6 +409,7 @@ export default {
 								// baseline year
 								type: "integer",
 								minimum: 2000,
+								maximum: new Date().getFullYear() + 1,
 							},
 						],
 					},
