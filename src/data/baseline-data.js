@@ -10,13607 +10,2758 @@ export const BASELINE_LOW = 5;
 export const BASELINE_FALSE = 0;
 
 export const properties = new Map([
-	[
-		"accent-color",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"alignment-baseline",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"all",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"anchor-name",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"anchor-scope",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"position-anchor",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"position-area",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"position-try",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"position-try-fallbacks",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"position-try-order",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"position-visibility",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"animation-composition",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"animation",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-delay",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-direction",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-duration",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-fill-mode",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-iteration-count",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-name",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-play-state",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"animation-timing-function",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"appearance",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"aspect-ratio",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"backdrop-filter",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"background",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-attachment",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"background-blend-mode",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"background-clip",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-image",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-origin",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-position",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-position-x",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-position-y",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"background-repeat",
-		{
-			status: 10,
-			year: 2016,
-		},
-	],
-	[
-		"background-size",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"baseline-shift",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"baseline-source",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"border-image",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"border-image-outset",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"border-image-repeat",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"border-image-slice",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"border-image-source",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"border-image-width",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"border-bottom-left-radius",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-bottom-right-radius",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-radius",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-top-left-radius",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-top-right-radius",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-bottom",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-bottom-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-bottom-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-bottom-width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-left",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-left-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-left-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-left-width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-right",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-right-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-right-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-right-width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-top",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-top-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-top-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-top-width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"box-decoration-break",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"box-shadow",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"box-sizing",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"caret-color",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"clip",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"clip-path",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"color-adjust",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"color-scheme",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"column-fill",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"column-span",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"contain",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"contain-intrinsic-block-size",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"contain-intrinsic-height",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"contain-intrinsic-inline-size",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"contain-intrinsic-size",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"contain-intrinsic-width",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"container",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"container-name",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"container-type",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"content",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"content-visibility",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"counter-set",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"counter-increment",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"counter-reset",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"custom-property",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"display",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"dominant-baseline",
-		{
-			status: 10,
-			year: null,
-		},
-	],
-	[
-		"field-sizing",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"filter",
-		{
-			status: 10,
-			year: 2016,
-		},
-	],
-	[
-		"align-content",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"align-items",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"align-self",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex-basis",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex-direction",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex-flow",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex-grow",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex-shrink",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex-wrap",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"justify-content",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"justify-items",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"order",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"place-content",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"place-items",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"place-self",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"clear",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"float",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"font-family",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"font-feature-settings",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"font-kerning",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"font-language-override",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"font-optical-sizing",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"font-palette",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"font",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"font-size",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"font-size-adjust",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"font-stretch",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"font-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"font-synthesis",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"font-synthesis-position",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"font-synthesis-small-caps",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"font-synthesis-style",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"font-synthesis-weight",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"font-variant",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"font-variant-alternates",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"font-variant-caps",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"font-variant-east-asian",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"font-variant-emoji",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"font-variant-ligatures",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"font-variant-numeric",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"font-variant-position",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"font-variation-settings",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"font-weight",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"font-width",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"forced-color-adjust",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"glyph-orientation-vertical",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"gap",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-area",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-auto-columns",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-auto-flow",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-auto-rows",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-column",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-column-end",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-column-start",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-row",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-row-end",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-row-start",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-template",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-template-areas",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-template-columns",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"grid-template-rows",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"justify-self",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"row-gap",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"hanging-punctuation",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"hyphenate-character",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"hyphenate-limit-chars",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"hyphens",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"image-orientation",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"image-rendering",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"ime-mode",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"rotate",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"scale",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"translate",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"initial-letter",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"interpolate-size",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"isolation",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"direction",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"unicode-bidi",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"letter-spacing",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"line-break",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"line-clamp",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"line-height",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"list-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"list-style-image",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"list-style-position",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"list-style-type",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"block-size",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-color",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-end-color",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-end-style",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-end-width",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-start-color",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-start-style",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-start-width",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-style",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-block-width",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-end-end-radius",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-end-start-radius",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-color",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-end-color",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-end-style",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-end-width",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-start-color",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-start-style",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-start-width",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-style",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-inline-width",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-start-end-radius",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-start-start-radius",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inline-size",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inset",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inset-block",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inset-block-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inset-block-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inset-inline",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inset-inline-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"inset-inline-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"margin-block",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"margin-block-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"margin-block-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"margin-inline",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"margin-inline-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"margin-inline-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"max-block-size",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"max-inline-size",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"min-block-size",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"min-inline-size",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"overflow-block",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"overflow-inline",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"padding-block",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"padding-block-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"padding-block-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"padding-inline",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"padding-inline-end",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"padding-inline-start",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"margin",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"margin-bottom",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"margin-left",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"margin-right",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"margin-top",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"margin-trim",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"mask-border",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"mask-border-outset",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"mask-border-repeat",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"mask-border-slice",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"mask-border-source",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"mask-border-width",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"mask-type",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"mask",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-clip",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-composite",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-image",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-mode",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-origin",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-position",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-repeat",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"mask-size",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"math-depth",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"math-shift",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"math-style",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"max-height",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"max-width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"min-height",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"min-width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"mix-blend-mode",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"offset",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"offset-anchor",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"offset-distance",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"offset-path",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"offset-position",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"offset-rotate",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"column-count",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"column-gap",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"column-rule",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"column-rule-color",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"column-rule-style",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"column-rule-width",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"column-width",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"columns",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"object-fit",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"object-position",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"object-view-box",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"opacity",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"fill-opacity",
-		{
-			status: 10,
-			year: null,
-		},
-	],
-	[
-		"stroke-opacity",
-		{
-			status: 10,
-			year: null,
-		},
-	],
-	[
-		"outline",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"outline-color",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"outline-offset",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"outline-style",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"outline-width",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"overflow-anchor",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"overflow-clip-margin",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"overflow",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"overflow-x",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"overflow-y",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"overflow-wrap",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"overlay",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"overscroll-behavior",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"overscroll-behavior-block",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"overscroll-behavior-inline",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"overscroll-behavior-x",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"overscroll-behavior-y",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"padding",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"padding-bottom",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"padding-left",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"padding-right",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"padding-top",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"page-break-after",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"page-break-before",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"page-break-inside",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"break-after",
-		{
-			status: 10,
-			year: 2019,
-		},
-	],
-	[
-		"break-before",
-		{
-			status: 10,
-			year: 2019,
-		},
-	],
-	[
-		"break-inside",
-		{
-			status: 10,
-			year: 2019,
-		},
-	],
-	[
-		"page",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"paint-order",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"bottom",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"left",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"right",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"top",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"pointer-events",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"position",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"print-color-adjust",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"quotes",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"reading-flow",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"resize",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"line-height-step",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"ruby-align",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"ruby-overhang",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"ruby-position",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"scroll-behavior",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"animation-range",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"animation-range-end",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"animation-range-start",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"animation-timeline",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"scroll-timeline",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"scroll-timeline-axis",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"scroll-timeline-name",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"timeline-scope",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-timeline",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-timeline-axis",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-timeline-inset",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-timeline-name",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"scroll-initial-target",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"scroll-margin",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-block",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-block-end",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-block-start",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-bottom",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-inline",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-inline-end",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-inline-start",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-left",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-right",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-margin-top",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-block",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-block-end",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-block-start",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-bottom",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-inline",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-inline-end",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-inline-start",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-left",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-right",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-padding-top",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-snap-align",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-snap-stop",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scroll-snap-type",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"scrollbar-color",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"scrollbar-gutter",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"scrollbar-width",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"shape-image-threshold",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"shape-margin",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"shape-outside",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"speak",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"speak-as",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"clip-rule",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"color-interpolation",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"cx",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"cy",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"d",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"fill",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"fill-rule",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"marker",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"marker-end",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"marker-mid",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"marker-start",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"r",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"rx",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"ry",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"shape-rendering",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stop-color",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stop-opacity",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke-color",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke-dasharray",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke-dashoffset",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke-linecap",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke-linejoin",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke-miterlimit",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"stroke-width",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"text-anchor",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"text-rendering",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"vector-effect",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"x",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"y",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"color-interpolation-filters",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flood-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flood-opacity",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"lighting-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"tab-size",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"border-collapse",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"border-spacing",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"caption-side",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"empty-cells",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"table-layout",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-align",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-align-last",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"text-autospace",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"text-box",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"text-box-edge",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"text-box-trim",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"text-combine-upright",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"text-decoration",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-decoration-color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-decoration-line",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-decoration-skip",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-decoration-skip-ink",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-decoration-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-decoration-thickness",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-emphasis",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"text-emphasis-color",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"text-emphasis-position",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"text-emphasis-style",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"text-indent",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-justify",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"text-orientation",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"text-overflow",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-shadow",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-size-adjust",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"text-spacing-trim",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"-webkit-text-fill-color",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"-webkit-text-stroke",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"-webkit-text-stroke-color",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"-webkit-text-stroke-width",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"text-transform",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"text-underline-offset",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"text-underline-position",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"text-wrap",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"text-wrap-mode",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"text-wrap-style",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"touch-action",
-		{
-			status: 10,
-			year: 2019,
-		},
-	],
-	[
-		"transform-box",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"transform",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"transform-origin",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"backface-visibility",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"perspective",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"perspective-origin",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"transform-style",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"transition-behavior",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"transition",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"transition-delay",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"transition-duration",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"transition-property",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"transition-timing-function",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"user-select",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"vertical-align",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"view-transition-class",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-transition-name",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"visibility",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"white-space",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"white-space-collapse",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"orphans",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"widows",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"height",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"will-change",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"word-break",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"word-spacing",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"writing-mode",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"z-index",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"zoom",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
+	["accent-color", "0"],
+	["alignment-baseline", "0"],
+	["all", "10 (2020)"],
+	["anchor-name", "0"],
+	["anchor-scope", "0"],
+	["position-anchor", "0"],
+	["position-area", "0"],
+	["position-try", "0"],
+	["position-try-fallbacks", "0"],
+	["position-try-order", "0"],
+	["position-visibility", "0"],
+	["animation-composition", "5 (2023)"],
+	["animation", "10 (2015)"],
+	["animation-delay", "10 (2015)"],
+	["animation-direction", "10 (2015)"],
+	["animation-duration", "10 (2015)"],
+	["animation-fill-mode", "10 (2015)"],
+	["animation-iteration-count", "10 (2015)"],
+	["animation-name", "10 (2015)"],
+	["animation-play-state", "10 (2015)"],
+	["animation-timing-function", "10 (2015)"],
+	["appearance", "10 (2022)"],
+	["aspect-ratio", "10 (2021)"],
+	["backdrop-filter", "5 (2024)"],
+	["background", "10 (2015)"],
+	["background-attachment", "10 (2022)"],
+	["background-blend-mode", "10 (2020)"],
+	["background-clip", "10 (2015)"],
+	["background-color", "10 (2015)"],
+	["background-image", "10 (2015)"],
+	["background-origin", "10 (2015)"],
+	["background-position", "10 (2015)"],
+	["background-position-x", "10 (2015)"],
+	["background-position-y", "10 (2015)"],
+	["background-repeat", "10 (2016)"],
+	["background-size", "10 (2015)"],
+	["baseline-shift", "0"],
+	["baseline-source", "0"],
+	["border-image", "10 (2017)"],
+	["border-image-outset", "10 (2017)"],
+	["border-image-repeat", "10 (2017)"],
+	["border-image-slice", "10 (2017)"],
+	["border-image-source", "10 (2017)"],
+	["border-image-width", "10 (2017)"],
+	["border-bottom-left-radius", "10 (2015)"],
+	["border-bottom-right-radius", "10 (2015)"],
+	["border-radius", "10 (2015)"],
+	["border-top-left-radius", "10 (2015)"],
+	["border-top-right-radius", "10 (2015)"],
+	["border", "10 (2015)"],
+	["border-bottom", "10 (2015)"],
+	["border-bottom-color", "10 (2015)"],
+	["border-bottom-style", "10 (2015)"],
+	["border-bottom-width", "10 (2015)"],
+	["border-color", "10 (2015)"],
+	["border-left", "10 (2015)"],
+	["border-left-color", "10 (2015)"],
+	["border-left-style", "10 (2015)"],
+	["border-left-width", "10 (2015)"],
+	["border-right", "10 (2015)"],
+	["border-right-color", "10 (2015)"],
+	["border-right-style", "10 (2015)"],
+	["border-right-width", "10 (2015)"],
+	["border-style", "10 (2015)"],
+	["border-top", "10 (2015)"],
+	["border-top-color", "10 (2015)"],
+	["border-top-style", "10 (2015)"],
+	["border-top-width", "10 (2015)"],
+	["border-width", "10 (2015)"],
+	["box-decoration-break", "0"],
+	["box-shadow", "10 (2015)"],
+	["box-sizing", "10 (2015)"],
+	["caret-color", "10 (2020)"],
+	["clip", "0"],
+	["clip-path", "10 (2021)"],
+	["color", "10 (2015)"],
+	["color-adjust", "0"],
+	["color-scheme", "10 (2022)"],
+	["column-fill", "10 (2017)"],
+	["column-span", "10 (2020)"],
+	["contain", "10 (2022)"],
+	["contain-intrinsic-block-size", "5 (2023)"],
+	["contain-intrinsic-height", "5 (2023)"],
+	["contain-intrinsic-inline-size", "5 (2023)"],
+	["contain-intrinsic-size", "5 (2023)"],
+	["contain-intrinsic-width", "5 (2023)"],
+	["container", "5 (2023)"],
+	["container-name", "5 (2023)"],
+	["container-type", "5 (2023)"],
+	["content", "10 (2015)"],
+	["content-visibility", "0"],
+	["counter-set", "5 (2023)"],
+	["counter-increment", "10 (2015)"],
+	["counter-reset", "10 (2015)"],
+	["custom-property", "10 (2017)"],
+	["display", "10 (2015)"],
+	["dominant-baseline", "10 (NaN)"],
+	["field-sizing", "0"],
+	["filter", "10 (2016)"],
+	["align-content", "10 (2015)"],
+	["align-items", "10 (2015)"],
+	["align-self", "10 (2015)"],
+	["flex", "10 (2015)"],
+	["flex-basis", "10 (2015)"],
+	["flex-direction", "10 (2015)"],
+	["flex-flow", "10 (2015)"],
+	["flex-grow", "10 (2015)"],
+	["flex-shrink", "10 (2015)"],
+	["flex-wrap", "10 (2015)"],
+	["justify-content", "10 (2015)"],
+	["justify-items", "10 (2015)"],
+	["order", "10 (2015)"],
+	["place-content", "10 (2015)"],
+	["place-items", "10 (2015)"],
+	["place-self", "10 (2015)"],
+	["clear", "10 (2015)"],
+	["float", "10 (2015)"],
+	["font-family", "10 (2015)"],
+	["font-feature-settings", "10 (2017)"],
+	["font-kerning", "10 (2020)"],
+	["font-language-override", "0"],
+	["font-optical-sizing", "10 (2020)"],
+	["font-palette", "5 (2022)"],
+	["font", "10 (2015)"],
+	["font-size", "10 (2015)"],
+	["font-size-adjust", "5 (2024)"],
+	["font-stretch", "0"],
+	["font-style", "10 (2015)"],
+	["font-synthesis", "10 (2022)"],
+	["font-synthesis-position", "0"],
+	["font-synthesis-small-caps", "5 (2023)"],
+	["font-synthesis-style", "5 (2023)"],
+	["font-synthesis-weight", "5 (2023)"],
+	["font-variant", "10 (2015)"],
+	["font-variant-alternates", "5 (2023)"],
+	["font-variant-caps", "10 (2020)"],
+	["font-variant-east-asian", "10 (2020)"],
+	["font-variant-emoji", "0"],
+	["font-variant-ligatures", "10 (2020)"],
+	["font-variant-numeric", "10 (2020)"],
+	["font-variant-position", "0"],
+	["font-variation-settings", "10 (2018)"],
+	["font-weight", "10 (2015)"],
+	["font-width", "0"],
+	["forced-color-adjust", "5 (2022)"],
+	["glyph-orientation-vertical", "0"],
+	["gap", "10 (2017)"],
+	["grid", "10 (2017)"],
+	["grid-area", "10 (2017)"],
+	["grid-auto-columns", "10 (2017)"],
+	["grid-auto-flow", "10 (2017)"],
+	["grid-auto-rows", "10 (2017)"],
+	["grid-column", "10 (2017)"],
+	["grid-column-end", "10 (2017)"],
+	["grid-column-start", "10 (2017)"],
+	["grid-row", "10 (2017)"],
+	["grid-row-end", "10 (2017)"],
+	["grid-row-start", "10 (2017)"],
+	["grid-template", "10 (2017)"],
+	["grid-template-areas", "10 (2017)"],
+	["grid-template-columns", "10 (2017)"],
+	["grid-template-rows", "10 (2017)"],
+	["justify-self", "10 (2017)"],
+	["row-gap", "10 (2017)"],
+	["hanging-punctuation", "0"],
+	["hyphenate-character", "5 (2023)"],
+	["hyphenate-limit-chars", "0"],
+	["hyphens", "5 (2023)"],
+	["image-orientation", "10 (2020)"],
+	["image-rendering", "10 (2021)"],
+	["ime-mode", "0"],
+	["rotate", "10 (2022)"],
+	["scale", "10 (2022)"],
+	["translate", "10 (2022)"],
+	["initial-letter", "0"],
+	["interpolate-size", "0"],
+	["isolation", "10 (2020)"],
+	["direction", "10 (2020)"],
+	["unicode-bidi", "10 (2020)"],
+	["letter-spacing", "10 (2015)"],
+	["line-break", "10 (2020)"],
+	["line-clamp", "0"],
+	["line-height", "10 (2015)"],
+	["list-style", "10 (2015)"],
+	["list-style-image", "10 (2015)"],
+	["list-style-position", "10 (2015)"],
+	["list-style-type", "10 (2015)"],
+	["block-size", "10 (2021)"],
+	["border-block", "10 (2021)"],
+	["border-block-color", "10 (2021)"],
+	["border-block-end", "10 (2021)"],
+	["border-block-end-color", "10 (2021)"],
+	["border-block-end-style", "10 (2021)"],
+	["border-block-end-width", "10 (2021)"],
+	["border-block-start", "10 (2021)"],
+	["border-block-start-color", "10 (2021)"],
+	["border-block-start-style", "10 (2021)"],
+	["border-block-start-width", "10 (2021)"],
+	["border-block-style", "10 (2021)"],
+	["border-block-width", "10 (2021)"],
+	["border-end-end-radius", "10 (2021)"],
+	["border-end-start-radius", "10 (2021)"],
+	["border-inline", "10 (2021)"],
+	["border-inline-color", "10 (2021)"],
+	["border-inline-end", "10 (2021)"],
+	["border-inline-end-color", "10 (2021)"],
+	["border-inline-end-style", "10 (2021)"],
+	["border-inline-end-width", "10 (2021)"],
+	["border-inline-start", "10 (2021)"],
+	["border-inline-start-color", "10 (2021)"],
+	["border-inline-start-style", "10 (2021)"],
+	["border-inline-start-width", "10 (2021)"],
+	["border-inline-style", "10 (2021)"],
+	["border-inline-width", "10 (2021)"],
+	["border-start-end-radius", "10 (2021)"],
+	["border-start-start-radius", "10 (2021)"],
+	["inline-size", "10 (2021)"],
+	["inset", "10 (2021)"],
+	["inset-block", "10 (2021)"],
+	["inset-block-end", "10 (2021)"],
+	["inset-block-start", "10 (2021)"],
+	["inset-inline", "10 (2021)"],
+	["inset-inline-end", "10 (2021)"],
+	["inset-inline-start", "10 (2021)"],
+	["margin-block", "10 (2021)"],
+	["margin-block-end", "10 (2021)"],
+	["margin-block-start", "10 (2021)"],
+	["margin-inline", "10 (2021)"],
+	["margin-inline-end", "10 (2021)"],
+	["margin-inline-start", "10 (2021)"],
+	["max-block-size", "10 (2021)"],
+	["max-inline-size", "10 (2021)"],
+	["min-block-size", "10 (2021)"],
+	["min-inline-size", "10 (2021)"],
+	["overflow-block", "10 (2021)"],
+	["overflow-inline", "10 (2021)"],
+	["padding-block", "10 (2021)"],
+	["padding-block-end", "10 (2021)"],
+	["padding-block-start", "10 (2021)"],
+	["padding-inline", "10 (2021)"],
+	["padding-inline-end", "10 (2021)"],
+	["padding-inline-start", "10 (2021)"],
+	["margin", "10 (2015)"],
+	["margin-bottom", "10 (2015)"],
+	["margin-left", "10 (2015)"],
+	["margin-right", "10 (2015)"],
+	["margin-top", "10 (2015)"],
+	["margin-trim", "0"],
+	["mask-border", "0"],
+	["mask-border-outset", "0"],
+	["mask-border-repeat", "0"],
+	["mask-border-slice", "0"],
+	["mask-border-source", "0"],
+	["mask-border-width", "0"],
+	["mask-type", "10 (2020)"],
+	["mask", "5 (2023)"],
+	["mask-clip", "5 (2023)"],
+	["mask-composite", "5 (2023)"],
+	["mask-image", "5 (2023)"],
+	["mask-mode", "5 (2023)"],
+	["mask-origin", "5 (2023)"],
+	["mask-position", "5 (2023)"],
+	["mask-repeat", "5 (2023)"],
+	["mask-size", "5 (2023)"],
+	["math-depth", "5 (2023)"],
+	["math-shift", "5 (2023)"],
+	["math-style", "5 (2023)"],
+	["max-height", "10 (2015)"],
+	["max-width", "10 (2015)"],
+	["min-height", "10 (2015)"],
+	["min-width", "10 (2015)"],
+	["mix-blend-mode", "10 (2020)"],
+	["offset", "5 (2022)"],
+	["offset-anchor", "5 (2022)"],
+	["offset-distance", "5 (2022)"],
+	["offset-path", "5 (2022)"],
+	["offset-position", "5 (2022)"],
+	["offset-rotate", "5 (2022)"],
+	["column-count", "10 (2017)"],
+	["column-gap", "10 (2017)"],
+	["column-rule", "10 (2017)"],
+	["column-rule-color", "10 (2017)"],
+	["column-rule-style", "10 (2017)"],
+	["column-rule-width", "10 (2017)"],
+	["column-width", "10 (2017)"],
+	["columns", "10 (2017)"],
+	["object-fit", "10 (2020)"],
+	["object-position", "10 (2020)"],
+	["object-view-box", "0"],
+	["opacity", "10 (2015)"],
+	["fill-opacity", "10 (NaN)"],
+	["stroke-opacity", "10 (NaN)"],
+	["outline", "5 (2023)"],
+	["outline-color", "10 (2017)"],
+	["outline-offset", "10 (2017)"],
+	["outline-style", "10 (2017)"],
+	["outline-width", "10 (2017)"],
+	["overflow-anchor", "0"],
+	["overflow-clip-margin", "0"],
+	["overflow", "5 (2022)"],
+	["overflow-x", "5 (2022)"],
+	["overflow-y", "5 (2022)"],
+	["overflow-wrap", "10 (2018)"],
+	["overlay", "0"],
+	["overscroll-behavior", "5 (2022)"],
+	["overscroll-behavior-block", "5 (2022)"],
+	["overscroll-behavior-inline", "5 (2022)"],
+	["overscroll-behavior-x", "5 (2022)"],
+	["overscroll-behavior-y", "5 (2022)"],
+	["padding", "10 (2015)"],
+	["padding-bottom", "10 (2015)"],
+	["padding-left", "10 (2015)"],
+	["padding-right", "10 (2015)"],
+	["padding-top", "10 (2015)"],
+	["page-break-after", "0"],
+	["page-break-before", "0"],
+	["page-break-inside", "0"],
+	["break-after", "10 (2019)"],
+	["break-before", "10 (2019)"],
+	["break-inside", "10 (2019)"],
+	["page", "0"],
+	["paint-order", "0"],
+	["bottom", "10 (2015)"],
+	["left", "10 (2015)"],
+	["right", "10 (2015)"],
+	["top", "10 (2015)"],
+	["pointer-events", "10 (2015)"],
+	["position", "10 (2015)"],
+	["print-color-adjust", "0"],
+	["quotes", "10 (2021)"],
+	["reading-flow", "0"],
+	["resize", "0"],
+	["line-height-step", "0"],
+	["ruby-align", "5 (2024)"],
+	["ruby-overhang", "0"],
+	["ruby-position", "5 (2024)"],
+	["scroll-behavior", "10 (2022)"],
+	["animation-range", "0"],
+	["animation-range-end", "0"],
+	["animation-range-start", "0"],
+	["animation-timeline", "0"],
+	["scroll-timeline", "0"],
+	["scroll-timeline-axis", "0"],
+	["scroll-timeline-name", "0"],
+	["timeline-scope", "0"],
+	["view-timeline", "0"],
+	["view-timeline-axis", "0"],
+	["view-timeline-inset", "0"],
+	["view-timeline-name", "0"],
+	["scroll-initial-target", "0"],
+	["scroll-margin", "10 (2020)"],
+	["scroll-margin-block", "10 (2020)"],
+	["scroll-margin-block-end", "10 (2020)"],
+	["scroll-margin-block-start", "10 (2020)"],
+	["scroll-margin-bottom", "10 (2020)"],
+	["scroll-margin-inline", "10 (2020)"],
+	["scroll-margin-inline-end", "10 (2020)"],
+	["scroll-margin-inline-start", "10 (2020)"],
+	["scroll-margin-left", "10 (2020)"],
+	["scroll-margin-right", "10 (2020)"],
+	["scroll-margin-top", "10 (2020)"],
+	["scroll-padding", "10 (2020)"],
+	["scroll-padding-block", "10 (2020)"],
+	["scroll-padding-block-end", "10 (2020)"],
+	["scroll-padding-block-start", "10 (2020)"],
+	["scroll-padding-bottom", "10 (2020)"],
+	["scroll-padding-inline", "10 (2020)"],
+	["scroll-padding-inline-end", "10 (2020)"],
+	["scroll-padding-inline-start", "10 (2020)"],
+	["scroll-padding-left", "10 (2020)"],
+	["scroll-padding-right", "10 (2020)"],
+	["scroll-padding-top", "10 (2020)"],
+	["scroll-snap-align", "10 (2020)"],
+	["scroll-snap-stop", "10 (2020)"],
+	["scroll-snap-type", "10 (2020)"],
+	["scrollbar-color", "0"],
+	["scrollbar-gutter", "5 (2024)"],
+	["scrollbar-width", "5 (2024)"],
+	["shape-image-threshold", "10 (2020)"],
+	["shape-margin", "10 (2020)"],
+	["shape-outside", "10 (2020)"],
+	["speak", "0"],
+	["speak-as", "0"],
+	["clip-rule", "10 (2020)"],
+	["color-interpolation", "10 (2020)"],
+	["cx", "10 (2020)"],
+	["cy", "10 (2020)"],
+	["d", "10 (2020)"],
+	["fill", "10 (2020)"],
+	["fill-rule", "10 (2020)"],
+	["marker", "10 (2020)"],
+	["marker-end", "10 (2020)"],
+	["marker-mid", "10 (2020)"],
+	["marker-start", "10 (2020)"],
+	["r", "10 (2020)"],
+	["rx", "10 (2020)"],
+	["ry", "10 (2020)"],
+	["shape-rendering", "10 (2020)"],
+	["stop-color", "10 (2020)"],
+	["stop-opacity", "10 (2020)"],
+	["stroke", "10 (2020)"],
+	["stroke-color", "10 (2020)"],
+	["stroke-dasharray", "10 (2020)"],
+	["stroke-dashoffset", "10 (2020)"],
+	["stroke-linecap", "10 (2020)"],
+	["stroke-linejoin", "10 (2020)"],
+	["stroke-miterlimit", "10 (2020)"],
+	["stroke-width", "10 (2020)"],
+	["text-anchor", "10 (2020)"],
+	["text-rendering", "10 (2020)"],
+	["vector-effect", "10 (2020)"],
+	["x", "10 (2020)"],
+	["y", "10 (2020)"],
+	["color-interpolation-filters", "10 (2015)"],
+	["flood-color", "10 (2015)"],
+	["flood-opacity", "10 (2015)"],
+	["lighting-color", "10 (2015)"],
+	["tab-size", "10 (2021)"],
+	["border-collapse", "10 (2015)"],
+	["border-spacing", "10 (2015)"],
+	["caption-side", "10 (2015)"],
+	["empty-cells", "10 (2015)"],
+	["table-layout", "10 (2015)"],
+	["text-align", "10 (2015)"],
+	["text-align-last", "5 (2022)"],
+	["text-autospace", "0"],
+	["text-box", "0"],
+	["text-box-edge", "0"],
+	["text-box-trim", "0"],
+	["text-combine-upright", "10 (2022)"],
+	["text-decoration", "10 (2015)"],
+	["text-decoration-color", "10 (2015)"],
+	["text-decoration-line", "10 (2015)"],
+	["text-decoration-skip", "10 (2015)"],
+	["text-decoration-skip-ink", "10 (2015)"],
+	["text-decoration-style", "10 (2015)"],
+	["text-decoration-thickness", "10 (2015)"],
+	["text-emphasis", "10 (2022)"],
+	["text-emphasis-color", "10 (2022)"],
+	["text-emphasis-position", "10 (2022)"],
+	["text-emphasis-style", "10 (2022)"],
+	["text-indent", "10 (2015)"],
+	["text-justify", "0"],
+	["text-orientation", "10 (2020)"],
+	["text-overflow", "10 (2015)"],
+	["text-shadow", "10 (2015)"],
+	["text-size-adjust", "0"],
+	["text-spacing-trim", "0"],
+	["-webkit-text-fill-color", "10 (2017)"],
+	["-webkit-text-stroke", "10 (2017)"],
+	["-webkit-text-stroke-color", "10 (2017)"],
+	["-webkit-text-stroke-width", "10 (2017)"],
+	["text-transform", "10 (2015)"],
+	["text-underline-offset", "10 (2020)"],
+	["text-underline-position", "10 (2020)"],
+	["text-wrap", "5 (2024)"],
+	["text-wrap-mode", "5 (2024)"],
+	["text-wrap-style", "0"],
+	["touch-action", "10 (2019)"],
+	["transform-box", "5 (2024)"],
+	["transform", "10 (2015)"],
+	["transform-origin", "10 (2015)"],
+	["backface-visibility", "10 (2022)"],
+	["perspective", "10 (2022)"],
+	["perspective-origin", "10 (2022)"],
+	["transform-style", "10 (2022)"],
+	["transition-behavior", "5 (2024)"],
+	["transition", "10 (2015)"],
+	["transition-delay", "10 (2015)"],
+	["transition-duration", "10 (2015)"],
+	["transition-property", "10 (2015)"],
+	["transition-timing-function", "10 (2015)"],
+	["user-select", "0"],
+	["vertical-align", "10 (2015)"],
+	["view-transition-class", "0"],
+	["view-transition-name", "0"],
+	["visibility", "10 (2015)"],
+	["white-space", "10 (2015)"],
+	["white-space-collapse", "5 (2024)"],
+	["orphans", "0"],
+	["widows", "0"],
+	["height", "10 (2015)"],
+	["width", "10 (2015)"],
+	["will-change", "10 (2020)"],
+	["word-break", "10 (2015)"],
+	["word-spacing", "10 (2015)"],
+	["writing-mode", "10 (2017)"],
+	["z-index", "10 (2015)"],
+	["zoom", "5 (2024)"],
 ]);
 export const atRules = new Map([
-	[
-		"position-try",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"keyframes",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"layer",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"charset",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"container",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"counter-style",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"view-transition",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"font-face",
-		{
-			status: 10,
-			year: 2016,
-		},
-	],
-	[
-		"font-palette-values",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"font-feature-values",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"import",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"media",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"namespace",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"page",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"property",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"scope",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"starting-style",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"supports",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
+	["position-try", "0"],
+	["keyframes", "10 (2015)"],
+	["layer", "10 (2022)"],
+	["charset", "10 (2015)"],
+	["container", "5 (2023)"],
+	["counter-style", "5 (2023)"],
+	["view-transition", "0"],
+	["font-face", "10 (2016)"],
+	["font-palette-values", "5 (2022)"],
+	["font-feature-values", "5 (2023)"],
+	["import", "10 (2015)"],
+	["media", "10 (2015)"],
+	["namespace", "10 (2015)"],
+	["page", "5 (2024)"],
+	["property", "5 (2024)"],
+	["scope", "0"],
+	["starting-style", "0"],
+	["supports", "10 (2015)"],
 ]);
 export const mediaConditions = new Map([
-	[
-		"color-gamut",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"device-posture",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"device-aspect-ratio",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"device-height",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"device-width",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"display-mode",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"dynamic-range",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"forced-colors",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"any-hover",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"any-pointer",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"hover",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"pointer",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"inverted-colors",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"aspect-ratio",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"calc",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"color-index",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"grid",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"height",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"monochrome",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"nested-queries",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"orientation",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"width",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"overflow-block",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"overflow-inline",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"prefers-color-scheme",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"prefers-contrast",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"prefers-reduced-data",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"prefers-reduced-motion",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"prefers-reduced-transparency",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"resolution",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"-webkit-device-pixel-ratio",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"-webkit-max-device-pixel-ratio",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"-webkit-min-device-pixel-ratio",
-		{
-			status: 10,
-			year: 2018,
-		},
-	],
-	[
-		"scripting",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"-webkit-transform-3d",
-		{
-			status: 10,
-			year: 2016,
-		},
-	],
-	[
-		"update",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"video-dynamic-range",
-		{
-			status: 0,
-			year: null,
-		},
-	],
+	["color-gamut", "5 (2023)"],
+	["device-posture", "0"],
+	["device-aspect-ratio", "0"],
+	["device-height", "0"],
+	["device-width", "0"],
+	["display-mode", "0"],
+	["dynamic-range", "10 (2022)"],
+	["forced-colors", "5 (2022)"],
+	["any-hover", "10 (2018)"],
+	["any-pointer", "10 (2018)"],
+	["hover", "10 (2018)"],
+	["pointer", "10 (2018)"],
+	["inverted-colors", "0"],
+	["aspect-ratio", "10 (2015)"],
+	["calc", "10 (2015)"],
+	["color", "10 (2015)"],
+	["color-index", "10 (2015)"],
+	["grid", "10 (2015)"],
+	["height", "10 (2015)"],
+	["monochrome", "10 (2015)"],
+	["nested-queries", "10 (2015)"],
+	["orientation", "10 (2015)"],
+	["width", "10 (2015)"],
+	["overflow-block", "5 (2023)"],
+	["overflow-inline", "5 (2023)"],
+	["prefers-color-scheme", "10 (2020)"],
+	["prefers-contrast", "10 (2022)"],
+	["prefers-reduced-data", "0"],
+	["prefers-reduced-motion", "10 (2020)"],
+	["prefers-reduced-transparency", "0"],
+	["resolution", "5 (2022)"],
+	["-webkit-device-pixel-ratio", "10 (2018)"],
+	["-webkit-max-device-pixel-ratio", "10 (2018)"],
+	["-webkit-min-device-pixel-ratio", "10 (2018)"],
+	["scripting", "5 (2023)"],
+	["-webkit-transform-3d", "10 (2016)"],
+	["update", "5 (2023)"],
+	["video-dynamic-range", "0"],
 ]);
 export const types = new Map([
-	[
-		"abs",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"sign",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"anchor",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"anchor-size",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"time",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"attr",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"blend-mode",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"line-style",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"calc",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"calc-keyword",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"calc-size",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"shape",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"color",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"string",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"counter",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"counters",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"easing-function",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"var",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"exp",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"hypot",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"log",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"pow",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"sqrt",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"filter-function",
-		{
-			status: 10,
-			year: 2016,
-		},
-	],
-	[
-		"url",
-		{
-			status: 10,
-			year: 2016,
-		},
-	],
-	[
-		"gradient",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"image",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"flex",
-		{
-			status: 10,
-			year: 2017,
-		},
-	],
-	[
-		"ratio",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"clamp",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"max",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"min",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"ray",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"number",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"overflow",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"resolution",
-		{
-			status: 5,
-			year: 2022,
-		},
-	],
-	[
-		"mod",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"rem",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"round",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"env",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"basic-shape",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"text-edge",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"angle",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"angle-percentage",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"position",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"transform-function",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"acos",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"asin",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"atan",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"atan2",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"cos",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"sin",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"tan",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"dimension",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"length",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"length-percentage",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"percentage",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"integer",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
+	["abs", "0"],
+	["sign", "0"],
+	["anchor", "0"],
+	["anchor-size", "0"],
+	["time", "10 (2015)"],
+	["attr", "10 (2015)"],
+	["blend-mode", "10 (2020)"],
+	["line-style", "10 (2015)"],
+	["calc", "10 (2015)"],
+	["calc-keyword", "5 (2023)"],
+	["calc-size", "0"],
+	["shape", "0"],
+	["color", "10 (2015)"],
+	["string", "10 (2015)"],
+	["counter", "10 (2015)"],
+	["counters", "10 (2015)"],
+	["easing-function", "10 (2015)"],
+	["var", "10 (2017)"],
+	["exp", "5 (2023)"],
+	["hypot", "5 (2023)"],
+	["log", "5 (2023)"],
+	["pow", "5 (2023)"],
+	["sqrt", "5 (2023)"],
+	["filter-function", "10 (2016)"],
+	["url", "10 (2016)"],
+	["gradient", "10 (2015)"],
+	["image", "10 (2015)"],
+	["flex", "10 (2017)"],
+	["ratio", "10 (2015)"],
+	["clamp", "10 (2020)"],
+	["max", "10 (2020)"],
+	["min", "10 (2020)"],
+	["ray", "5 (2022)"],
+	["number", "10 (2015)"],
+	["overflow", "5 (2022)"],
+	["resolution", "5 (2022)"],
+	["mod", "5 (2024)"],
+	["rem", "5 (2024)"],
+	["round", "5 (2024)"],
+	["env", "10 (2020)"],
+	["basic-shape", "10 (2020)"],
+	["text-edge", "0"],
+	["angle", "10 (2015)"],
+	["angle-percentage", "10 (2015)"],
+	["position", "10 (2015)"],
+	["transform-function", "10 (2015)"],
+	["acos", "5 (2023)"],
+	["asin", "5 (2023)"],
+	["atan", "5 (2023)"],
+	["atan2", "5 (2023)"],
+	["cos", "5 (2023)"],
+	["sin", "5 (2023)"],
+	["tan", "5 (2023)"],
+	["dimension", "10 (2015)"],
+	["length", "10 (2015)"],
+	["length-percentage", "10 (2015)"],
+	["percentage", "10 (2015)"],
+	["integer", "10 (2015)"],
 ]);
 export const selectors = new Map([
-	[
-		"active-view-transition",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"active-view-transition-type",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"autofill",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"defined",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"backdrop",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"after",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"before",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"default",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"details-content",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"dir",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"empty",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"file-selector-button",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"first-letter",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"first-line",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"focus-visible",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"focus-within",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"in-range",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"invalid",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"optional",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"out-of-range",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"required",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"valid",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"fullscreen",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"has",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"has-slotted",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"highlight",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"host",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"hostfunction",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"host-context",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"indeterminate",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"checked",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"disabled",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"enabled",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"is",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"lang",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"any-link",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"link",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"visited",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"marker",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"buffering",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"muted",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"paused",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"playing",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"seeking",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"stalled",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"volume-locked",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"modal",
-		{
-			status: 10,
-			year: 2022,
-		},
-	],
-	[
-		"namespace",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"nesting",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"not",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
-	[
-		"first-child",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"last-child",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"nth-child",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"nth-last-child",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"only-child",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"first-of-type",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"last-of-type",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"nth-last-of-type",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"nth-of-type",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"only-of-type",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"closed",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"open",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"first",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"left",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"right",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"picture-in-picture",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"placeholder",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"placeholder-shown",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"popover-open",
-		{
-			status: 5,
-			year: 2025,
-		},
-	],
-	[
-		"read-only",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"read-write",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"root",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"scope",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"selection",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"attribute",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"child",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"class",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"descendant",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"id",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"list",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"next-sibling",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"subsequent-sibling",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"type",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"universal",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"part",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"slotted",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"grammar-error",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"spelling-error",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"state",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"target",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"target-text",
-		{
-			status: 5,
-			year: 2024,
-		},
-	],
-	[
-		"future",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"past",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"active",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"focus",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"hover",
-		{
-			status: 10,
-			year: 2015,
-		},
-	],
-	[
-		"user-invalid",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"user-valid",
-		{
-			status: 5,
-			year: 2023,
-		},
-	],
-	[
-		"view-transition",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-transition-group",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-transition-image-pair",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-transition-new",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"view-transition-old",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"cue",
-		{
-			status: 10,
-			year: 2020,
-		},
-	],
-	[
-		"xr-overlay",
-		{
-			status: 0,
-			year: null,
-		},
-	],
-	[
-		"where",
-		{
-			status: 10,
-			year: 2021,
-		},
-	],
+	["active-view-transition", "0"],
+	["active-view-transition-type", "0"],
+	["autofill", "5 (2023)"],
+	["defined", "10 (2020)"],
+	["backdrop", "10 (2022)"],
+	["after", "10 (2015)"],
+	["before", "10 (2015)"],
+	["default", "10 (2020)"],
+	["details-content", "0"],
+	["dir", "5 (2023)"],
+	["empty", "10 (2015)"],
+	["file-selector-button", "10 (2021)"],
+	["first-letter", "10 (2015)"],
+	["first-line", "10 (2015)"],
+	["focus-visible", "10 (2022)"],
+	["focus-within", "10 (2020)"],
+	["in-range", "10 (2015)"],
+	["invalid", "10 (2015)"],
+	["optional", "10 (2015)"],
+	["out-of-range", "10 (2015)"],
+	["required", "10 (2015)"],
+	["valid", "10 (2015)"],
+	["fullscreen", "0"],
+	["has", "5 (2023)"],
+	["has-slotted", "0"],
+	["highlight", "0"],
+	["host", "10 (2020)"],
+	["hostfunction", "10 (2020)"],
+	["host-context", "0"],
+	["indeterminate", "10 (2020)"],
+	["checked", "10 (2015)"],
+	["disabled", "10 (2015)"],
+	["enabled", "10 (2015)"],
+	["is", "10 (2021)"],
+	["lang", "10 (2015)"],
+	["any-link", "10 (2020)"],
+	["link", "10 (2020)"],
+	["visited", "10 (2020)"],
+	["marker", "0"],
+	["buffering", "0"],
+	["muted", "0"],
+	["paused", "0"],
+	["playing", "0"],
+	["seeking", "0"],
+	["stalled", "0"],
+	["volume-locked", "0"],
+	["modal", "10 (2022)"],
+	["namespace", "10 (2015)"],
+	["nesting", "5 (2023)"],
+	["not", "10 (2021)"],
+	["first-child", "10 (2015)"],
+	["last-child", "10 (2015)"],
+	["nth-child", "10 (2015)"],
+	["nth-last-child", "10 (2015)"],
+	["only-child", "10 (2015)"],
+	["first-of-type", "10 (2015)"],
+	["last-of-type", "10 (2015)"],
+	["nth-last-of-type", "10 (2015)"],
+	["nth-of-type", "10 (2015)"],
+	["only-of-type", "10 (2015)"],
+	["closed", "0"],
+	["open", "0"],
+	["first", "0"],
+	["left", "0"],
+	["right", "0"],
+	["picture-in-picture", "0"],
+	["placeholder", "10 (2020)"],
+	["placeholder-shown", "10 (2020)"],
+	["popover-open", "5 (2025)"],
+	["read-only", "10 (2020)"],
+	["read-write", "10 (2020)"],
+	["root", "10 (2015)"],
+	["scope", "10 (2020)"],
+	["selection", "0"],
+	["attribute", "10 (2015)"],
+	["child", "10 (2015)"],
+	["class", "10 (2015)"],
+	["descendant", "10 (2015)"],
+	["id", "10 (2015)"],
+	["list", "10 (2015)"],
+	["next-sibling", "10 (2015)"],
+	["subsequent-sibling", "10 (2015)"],
+	["type", "10 (2015)"],
+	["universal", "10 (2015)"],
+	["part", "10 (2020)"],
+	["slotted", "10 (2020)"],
+	["grammar-error", "0"],
+	["spelling-error", "0"],
+	["state", "5 (2024)"],
+	["target", "10 (2015)"],
+	["target-text", "5 (2024)"],
+	["future", "0"],
+	["past", "0"],
+	["active", "10 (2015)"],
+	["focus", "10 (2015)"],
+	["hover", "10 (2015)"],
+	["user-invalid", "5 (2023)"],
+	["user-valid", "5 (2023)"],
+	["view-transition", "0"],
+	["view-transition-group", "0"],
+	["view-transition-image-pair", "0"],
+	["view-transition-new", "0"],
+	["view-transition-old", "0"],
+	["cue", "10 (2020)"],
+	["xr-overlay", "0"],
+	["where", "10 (2021)"],
 ]);
 export const propertyValues = new Map([
 	[
 		"position",
 		new Map([
-			[
-				"absolute",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"fixed",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"relative",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"static",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"sticky",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
+			["absolute", "10 (2015)"],
+			["fixed", "10 (2015)"],
+			["relative", "10 (2015)"],
+			["static", "10 (2015)"],
+			["sticky", "10 (2019)"],
 		]),
 	],
-	[
-		"accent-color",
-		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["accent-color", new Map([["auto", "0"]])],
 	[
 		"alignment-baseline",
 		new Map([
-			[
-				"alphabetic",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"baseline",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"central",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ideographic",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"mathematical",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"middle",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["alphabetic", "0"],
+			["baseline", "0"],
+			["central", "0"],
+			["ideographic", "0"],
+			["mathematical", "0"],
+			["middle", "0"],
 		]),
 	],
-	[
-		"align-items",
-		new Map([
-			[
-				"anchor-center",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"align-self",
-		new Map([
-			[
-				"anchor-center",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"anchor-name",
-		new Map([
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["align-items", new Map([["anchor-center", "0"]])],
+	["align-self", new Map([["anchor-center", "0"]])],
+	["anchor-name", new Map([["none", "0"]])],
 	[
 		"anchor-scope",
 		new Map([
-			[
-				"all",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["all", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"block-size",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2021)"],
+			["min-content", "10 (2021)"],
 		]),
 	],
 	[
 		"bottom",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"height",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"stretch",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2020)"],
+			["min-content", "10 (2020)"],
+			["stretch", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"inline-size",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2021)"],
+			["min-content", "10 (2021)"],
 		]),
 	],
 	[
 		"inset-block-end",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2021)"],
 		]),
 	],
 	[
 		"inset-block-start",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2021)"],
 		]),
 	],
 	[
 		"inset-block",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2021)"],
 		]),
 	],
 	[
 		"inset-inline-end",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2021)"],
 		]),
 	],
 	[
 		"inset-inline-start",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2021)"],
 		]),
 	],
 	[
 		"inset-inline",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2021)"],
 		]),
 	],
 	[
 		"inset",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2021)"],
 		]),
 	],
-	[
-		"justify-items",
-		new Map([
-			[
-				"anchor-center",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"justify-self",
-		new Map([
-			[
-				"anchor-center",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["justify-items", new Map([["anchor-center", "0"]])],
+	["justify-self", new Map([["anchor-center", "0"]])],
 	[
 		"left",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
-	[
-		"margin-block-end",
-		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"margin-block-start",
-		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"margin-block",
-		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["margin-block-end", new Map([["anchor-size", "0"]])],
+	["margin-block-start", new Map([["anchor-size", "0"]])],
+	["margin-block", new Map([["anchor-size", "0"]])],
 	[
 		"margin-bottom",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
-	[
-		"margin-inline-end",
-		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"margin-inline-start",
-		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"margin-inline",
-		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["margin-inline-end", new Map([["anchor-size", "0"]])],
+	["margin-inline-start", new Map([["anchor-size", "0"]])],
+	["margin-inline", new Map([["anchor-size", "0"]])],
 	[
 		"margin-left",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"margin-right",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"margin-top",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"margin",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"max-block-size",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2021)"],
+			["min-content", "10 (2021)"],
 		]),
 	],
 	[
 		"max-height",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"stretch",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2020)"],
+			["min-content", "10 (2020)"],
+			["none", "10 (2015)"],
+			["stretch", "0"],
 		]),
 	],
 	[
 		"max-inline-size",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2021)"],
+			["min-content", "10 (2021)"],
 		]),
 	],
 	[
 		"max-width",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"stretch",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2020)"],
+			["min-content", "10 (2020)"],
+			["none", "10 (2015)"],
+			["stretch", "0"],
 		]),
 	],
 	[
 		"min-block-size",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2021)"],
+			["min-content", "10 (2021)"],
 		]),
 	],
 	[
 		"min-height",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"stretch",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2020)"],
+			["min-content", "10 (2020)"],
+			["auto", "10 (2015)"],
+			["stretch", "0"],
 		]),
 	],
 	[
 		"min-inline-size",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2021)"],
+			["min-content", "10 (2021)"],
 		]),
 	],
 	[
 		"min-width",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"stretch",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2020)"],
+			["min-content", "10 (2020)"],
+			["auto", "10 (2015)"],
+			["stretch", "0"],
 		]),
 	],
-	[
-		"place-items",
-		new Map([
-			[
-				"anchor-center",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"place-self",
-		new Map([
-			[
-				"anchor-center",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"position-anchor",
-		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["place-items", new Map([["anchor-center", "0"]])],
+	["place-self", new Map([["anchor-center", "0"]])],
+	["position-anchor", new Map([["auto", "0"]])],
 	[
 		"position-area",
 		new Map([
-			[
-				"block-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"block-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"bottom",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"center",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"left",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"right",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"self-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"self-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-all",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-block-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-block-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-bottom",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-inline-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-inline-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-top",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-x-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-x-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-y-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"span-y-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"top",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"x-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"x-self-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"x-self-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"x-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"y-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"y-self-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"y-self-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"y-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["block-end", "0"],
+			["block-start", "0"],
+			["bottom", "0"],
+			["center", "0"],
+			["end", "0"],
+			["inline-end", "0"],
+			["inline-start", "0"],
+			["left", "0"],
+			["none", "0"],
+			["right", "0"],
+			["self-end", "0"],
+			["self-start", "0"],
+			["span-all", "0"],
+			["span-block-end", "0"],
+			["span-block-start", "0"],
+			["span-bottom", "0"],
+			["span-end", "0"],
+			["span-inline-end", "0"],
+			["span-inline-start", "0"],
+			["span-start", "0"],
+			["span-top", "0"],
+			["span-x-end", "0"],
+			["span-x-start", "0"],
+			["span-y-end", "0"],
+			["span-y-start", "0"],
+			["start", "0"],
+			["top", "0"],
+			["x-end", "0"],
+			["x-self-end", "0"],
+			["x-self-start", "0"],
+			["x-start", "0"],
+			["y-end", "0"],
+			["y-self-end", "0"],
+			["y-self-start", "0"],
+			["y-start", "0"],
 		]),
 	],
 	[
 		"position-try-fallbacks",
 		new Map([
-			[
-				"flip-block",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"flip-inline",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"flip-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"position-area",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["flip-block", "0"],
+			["flip-inline", "0"],
+			["flip-start", "0"],
+			["none", "0"],
+			["position-area", "0"],
 		]),
 	],
 	[
 		"position-try-order",
 		new Map([
-			[
-				"most-block-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"most-height",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"most-inline-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"most-width",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["most-block-size", "0"],
+			["most-height", "0"],
+			["most-inline-size", "0"],
+			["most-width", "0"],
+			["normal", "0"],
 		]),
 	],
 	[
 		"position-visibility",
 		new Map([
-			[
-				"always",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchors-visible",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"no-overflow",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["always", "0"],
+			["anchors-visible", "0"],
+			["no-overflow", "0"],
 		]),
 	],
 	[
 		"right",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"top",
 		new Map([
-			[
-				"anchor",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor", "0"],
+			["anchor-size", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"width",
 		new Map([
-			[
-				"anchor-size",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"stretch",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["anchor-size", "0"],
+			["fit-content", "10 (2021)"],
+			["max-content", "10 (2020)"],
+			["min-content", "10 (2020)"],
+			["stretch", "0"],
+			["auto", "10 (2015)"],
 		]),
 	],
 	[
 		"animation-direction",
 		new Map([
-			[
-				"alternate",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"alternate-reverse",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"reverse",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["alternate", "10 (2015)"],
+			["alternate-reverse", "10 (2015)"],
+			["normal", "10 (2015)"],
+			["reverse", "10 (2015)"],
 		]),
 	],
-	[
-		"animation-duration",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["animation-duration", new Map([["auto", "10 (2015)"]])],
 	[
 		"animation-fill-mode",
 		new Map([
-			[
-				"backwards",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"both",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"forwards",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["backwards", "10 (2015)"],
+			["both", "10 (2015)"],
+			["forwards", "10 (2015)"],
+			["none", "10 (2015)"],
 		]),
 	],
-	[
-		"animation-iteration-count",
-		new Map([
-			[
-				"infinite",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
-	[
-		"animation-name",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["animation-iteration-count", new Map([["infinite", "10 (2015)"]])],
+	["animation-name", new Map([["none", "10 (2015)"]])],
 	[
 		"animation-play-state",
 		new Map([
-			[
-				"paused",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"running",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["paused", "10 (2015)"],
+			["running", "10 (2015)"],
 		]),
 	],
-	[
-		"animation-timing-function",
-		new Map([
-			[
-				"jump",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["animation-timing-function", new Map([["jump", "10 (2015)"]])],
 	[
 		"appearance",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"button",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"checkbox",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"listbox",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"menulist",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"menulist-button",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"meter",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"progress-bar",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"radio",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"searchfield",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"textarea",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"textfield",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["auto", "10 (2022)"],
+			["button", "10 (2022)"],
+			["checkbox", "10 (2022)"],
+			["listbox", "10 (2022)"],
+			["menulist", "10 (2022)"],
+			["menulist-button", "10 (2022)"],
+			["meter", "10 (2022)"],
+			["none", "10 (2022)"],
+			["progress-bar", "10 (2022)"],
+			["radio", "10 (2022)"],
+			["searchfield", "10 (2022)"],
+			["textarea", "10 (2022)"],
+			["textfield", "10 (2022)"],
 		]),
 	],
-	[
-		"aspect-ratio",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-		]),
-	],
+	["aspect-ratio", new Map([["auto", "10 (2021)"]])],
 	[
 		"background-attachment",
 		new Map([
-			[
-				"fixed",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"local",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"scroll",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["fixed", "10 (2022)"],
+			["local", "10 (2022)"],
+			["scroll", "10 (2022)"],
 		]),
 	],
 	[
 		"background-clip",
 		new Map([
-			[
-				"border-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"content-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"padding-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"border-area",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"text",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["border-box", "10 (2015)"],
+			["content-box", "10 (2015)"],
+			["padding-box", "10 (2015)"],
+			["border-area", "0"],
+			["text", "0"],
 		]),
 	],
 	[
 		"background",
 		new Map([
-			[
-				"background-clip",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"background-origin",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"background-size",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["background-clip", "10 (2015)"],
+			["background-origin", "10 (2015)"],
+			["background-size", "10 (2015)"],
 		]),
 	],
 	[
 		"background-image",
 		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"element",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"gradients",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"image-set",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["none", "10 (2015)"],
+			["element", "0"],
+			["gradients", "10 (2015)"],
+			["image-set", "5 (2023)"],
 		]),
 	],
 	[
 		"background-origin",
 		new Map([
-			[
-				"border-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"content-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"padding-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["border-box", "10 (2015)"],
+			["content-box", "10 (2015)"],
+			["padding-box", "10 (2015)"],
 		]),
 	],
 	[
 		"background-position",
 		new Map([
-			[
-				"bottom",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"center",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"top",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["bottom", "10 (2015)"],
+			["center", "10 (2015)"],
+			["left", "10 (2015)"],
+			["right", "10 (2015)"],
+			["top", "10 (2015)"],
 		]),
 	],
 	[
 		"background-repeat",
 		new Map([
-			[
-				"2-value",
-				{
-					status: 10,
-					year: 2016,
-				},
-			],
-			[
-				"no-repeat",
-				{
-					status: 10,
-					year: 2016,
-				},
-			],
-			[
-				"repeat",
-				{
-					status: 10,
-					year: 2016,
-				},
-			],
-			[
-				"repeat-x",
-				{
-					status: 10,
-					year: 2016,
-				},
-			],
-			[
-				"repeat-y",
-				{
-					status: 10,
-					year: 2016,
-				},
-			],
-			[
-				"round",
-				{
-					status: 10,
-					year: 2016,
-				},
-			],
-			[
-				"space",
-				{
-					status: 10,
-					year: 2016,
-				},
-			],
+			["2-value", "10 (2016)"],
+			["no-repeat", "10 (2016)"],
+			["repeat", "10 (2016)"],
+			["repeat-x", "10 (2016)"],
+			["repeat-y", "10 (2016)"],
+			["round", "10 (2016)"],
+			["space", "10 (2016)"],
 		]),
 	],
 	[
 		"background-size",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"contain",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"cover",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["auto", "10 (2015)"],
+			["contain", "10 (2015)"],
+			["cover", "10 (2015)"],
 		]),
 	],
 	[
 		"baseline-shift",
 		new Map([
-			[
-				"baseline",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"sub",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"super",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["baseline", "0"],
+			["sub", "0"],
+			["super", "0"],
 		]),
 	],
 	[
 		"baseline-source",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"first",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"last",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["first", "0"],
+			["last", "0"],
 		]),
 	],
 	[
 		"border-image-repeat",
 		new Map([
-			[
-				"repeat",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"round",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"space",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"stretch",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
+			["repeat", "10 (2017)"],
+			["round", "10 (2017)"],
+			["space", "10 (2017)"],
+			["stretch", "10 (2017)"],
 		]),
 	],
-	[
-		"border-image-width",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-		]),
-	],
+	["border-image-width", new Map([["auto", "10 (2017)"]])],
 	[
 		"border-image",
 		new Map([
-			[
-				"fill",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"gradient",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
+			["fill", "10 (2017)"],
+			["gradient", "10 (2017)"],
 		]),
 	],
-	[
-		"border-bottom-left-radius",
-		new Map([
-			[
-				"percentages",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
-	[
-		"border-bottom-right-radius",
-		new Map([
-			[
-				"percentages",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
-	[
-		"border-radius",
-		new Map([
-			[
-				"percentages",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
-	[
-		"border-top-left-radius",
-		new Map([
-			[
-				"percentages",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
-	[
-		"border-top-right-radius",
-		new Map([
-			[
-				"percentages",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["border-bottom-left-radius", new Map([["percentages", "10 (2015)"]])],
+	["border-bottom-right-radius", new Map([["percentages", "10 (2015)"]])],
+	["border-radius", new Map([["percentages", "10 (2015)"]])],
+	["border-top-left-radius", new Map([["percentages", "10 (2015)"]])],
+	["border-top-right-radius", new Map([["percentages", "10 (2015)"]])],
 	[
 		"border-style",
 		new Map([
-			[
-				"dashed",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"dotted",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"double",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"groove",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"hidden",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"inset",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"outset",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"ridge",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"solid",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["dashed", "10 (2015)"],
+			["dotted", "10 (2015)"],
+			["double", "10 (2015)"],
+			["groove", "10 (2015)"],
+			["hidden", "10 (2015)"],
+			["inset", "10 (2015)"],
+			["none", "10 (2015)"],
+			["outset", "10 (2015)"],
+			["ridge", "10 (2015)"],
+			["solid", "10 (2015)"],
 		]),
 	],
 	[
 		"box-decoration-break",
 		new Map([
-			[
-				"clone",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"slice",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["clone", "0"],
+			["slice", "0"],
 		]),
 	],
-	[
-		"box-shadow",
-		new Map([
-			[
-				"inset",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["box-shadow", new Map([["inset", "10 (2015)"]])],
 	[
 		"box-sizing",
 		new Map([
-			[
-				"border-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"content-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["border-box", "10 (2015)"],
+			["content-box", "10 (2015)"],
 		]),
 	],
-	[
-		"clip",
-		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["clip", new Map([["auto", "0"]])],
 	[
 		"clip-path",
 		new Map([
-			[
-				"path",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"fill-box",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"stroke-box",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"view-box",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["path", "10 (2021)"],
+			["fill-box", "5 (2023)"],
+			["stroke-box", "5 (2023)"],
+			["view-box", "5 (2023)"],
 		]),
 	],
 	[
 		"color-scheme",
 		new Map([
-			[
-				"dark",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"light",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["dark", "10 (2022)"],
+			["light", "10 (2022)"],
+			["normal", "10 (2022)"],
 		]),
 	],
 	[
 		"break-after",
 		new Map([
-			[
-				"avoid-column",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"column",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"always",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"avoid",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"avoid-page",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"page",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"recto",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"verso",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
+			["avoid-column", "0"],
+			["column", "0"],
+			["always", "10 (2019)"],
+			["auto", "10 (2019)"],
+			["avoid", "10 (2019)"],
+			["avoid-page", "10 (2019)"],
+			["left", "10 (2019)"],
+			["page", "10 (2019)"],
+			["recto", "10 (2019)"],
+			["right", "10 (2019)"],
+			["verso", "10 (2019)"],
 		]),
 	],
 	[
 		"break-before",
 		new Map([
-			[
-				"avoid-column",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"column",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"always",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"avoid",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"avoid-page",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"page",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"recto",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"verso",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
+			["avoid-column", "0"],
+			["column", "0"],
+			["always", "10 (2019)"],
+			["auto", "10 (2019)"],
+			["avoid", "10 (2019)"],
+			["avoid-page", "10 (2019)"],
+			["left", "10 (2019)"],
+			["page", "10 (2019)"],
+			["recto", "10 (2019)"],
+			["right", "10 (2019)"],
+			["verso", "10 (2019)"],
 		]),
 	],
 	[
 		"break-inside",
 		new Map([
-			[
-				"avoid-column",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"avoid",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"avoid-page",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
+			["avoid-column", "0"],
+			["auto", "10 (2019)"],
+			["avoid", "10 (2019)"],
+			["avoid-page", "10 (2019)"],
 		]),
 	],
 	[
 		"column-fill",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"balance",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
+			["auto", "10 (2017)"],
+			["balance", "10 (2017)"],
 		]),
 	],
 	[
 		"column-span",
 		new Map([
-			[
-				"all",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["all", "10 (2020)"],
+			["none", "10 (2020)"],
 		]),
 	],
 	[
 		"contain",
 		new Map([
-			[
-				"content",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"strict",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"inline-size",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"layout",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"paint",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"size",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"style",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["content", "10 (2022)"],
+			["none", "10 (2022)"],
+			["strict", "10 (2022)"],
+			["inline-size", "5 (2022)"],
+			["layout", "10 (2022)"],
+			["paint", "10 (2022)"],
+			["size", "10 (2022)"],
+			["style", "10 (2022)"],
 		]),
 	],
-	[
-		"contain-intrinsic-block-size",
-		new Map([
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
-	[
-		"contain-intrinsic-height",
-		new Map([
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
-	[
-		"contain-intrinsic-inline-size",
-		new Map([
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
-	[
-		"contain-intrinsic-size",
-		new Map([
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
-	[
-		"contain-intrinsic-width",
-		new Map([
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
-	[
-		"container-name",
-		new Map([
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
+	["contain-intrinsic-block-size", new Map([["none", "5 (2023)"]])],
+	["contain-intrinsic-height", new Map([["none", "5 (2023)"]])],
+	["contain-intrinsic-inline-size", new Map([["none", "5 (2023)"]])],
+	["contain-intrinsic-size", new Map([["none", "5 (2023)"]])],
+	["contain-intrinsic-width", new Map([["none", "5 (2023)"]])],
+	["container-name", new Map([["none", "5 (2023)"]])],
 	[
 		"container-type",
 		new Map([
-			[
-				"inline-size",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"size",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"scroll-state",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["inline-size", "5 (2023)"],
+			["normal", "5 (2023)"],
+			["size", "5 (2023)"],
+			["scroll-state", "0"],
 		]),
 	],
 	[
 		"content",
 		new Map([
-			[
-				"gradient",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"url",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"image-set",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["gradient", "10 (2015)"],
+			["none", "10 (2015)"],
+			["normal", "10 (2015)"],
+			["url", "10 (2015)"],
+			["image-set", "5 (2023)"],
 		]),
 	],
 	[
 		"content-visibility",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"hidden",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"visible",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["hidden", "0"],
+			["visible", "0"],
 		]),
 	],
 	[
 		"counter-reset",
 		new Map([
-			[
-				"reversed",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"list-item",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["reversed", "0"],
+			["list-item", "10 (2015)"],
+			["none", "10 (2015)"],
 		]),
 	],
 	[
 		"counter-set",
 		new Map([
-			[
-				"list-item",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["list-item", "5 (2023)"],
+			["none", "5 (2023)"],
 		]),
 	],
 	[
 		"counter-increment",
 		new Map([
-			[
-				"list-item",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["list-item", "10 (2015)"],
+			["none", "10 (2015)"],
 		]),
 	],
 	[
 		"image-rendering",
 		new Map([
-			[
-				"crisp-edges",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"pixelated",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"smooth",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["crisp-edges", "0"],
+			["auto", "10 (2021)"],
+			["pixelated", "10 (2021)"],
+			["smooth", "0"],
 		]),
 	],
 	[
 		"text-overflow",
 		new Map([
-			[
-				"string",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"clip",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"ellipsis",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["string", "0"],
+			["clip", "10 (2015)"],
+			["ellipsis", "10 (2015)"],
 		]),
 	],
 	[
 		"display",
 		new Map([
-			[
-				"block",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"inline",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"inline-block",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"contents",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"flow-root",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"list-item",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"ruby",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ruby-base",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ruby-base-container",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ruby-text",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ruby-text-container",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline-table",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-caption",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-cell",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-column",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-column-group",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-footer-group",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-header-group",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-row",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"table-row-group",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"flex",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"inline-flex",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"grid",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"inline-grid",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"math",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["block", "10 (2015)"],
+			["inline", "10 (2015)"],
+			["inline-block", "10 (2015)"],
+			["none", "10 (2015)"],
+			["contents", "0"],
+			["flow-root", "10 (2020)"],
+			["list-item", "10 (2015)"],
+			["ruby", "0"],
+			["ruby-base", "0"],
+			["ruby-base-container", "0"],
+			["ruby-text", "0"],
+			["ruby-text-container", "0"],
+			["inline-table", "10 (NaN)"],
+			["table", "10 (NaN)"],
+			["table-caption", "10 (NaN)"],
+			["table-cell", "10 (NaN)"],
+			["table-column", "10 (NaN)"],
+			["table-column-group", "10 (NaN)"],
+			["table-footer-group", "10 (NaN)"],
+			["table-header-group", "10 (NaN)"],
+			["table-row", "10 (NaN)"],
+			["table-row-group", "10 (NaN)"],
+			["flex", "10 (2015)"],
+			["inline-flex", "10 (2015)"],
+			["grid", "10 (2017)"],
+			["inline-grid", "10 (2017)"],
+			["math", "5 (2023)"],
 		]),
 	],
 	[
 		"dominant-baseline",
 		new Map([
-			[
-				"alphabetic",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"central",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"hanging",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"ideographic",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"mathematical",
-				{
-					status: 10,
-					year: null,
-				},
-			],
-			[
-				"middle",
-				{
-					status: 10,
-					year: null,
-				},
-			],
+			["alphabetic", "10 (NaN)"],
+			["auto", "10 (NaN)"],
+			["central", "10 (NaN)"],
+			["hanging", "10 (NaN)"],
+			["ideographic", "10 (NaN)"],
+			["mathematical", "10 (NaN)"],
+			["middle", "10 (NaN)"],
 		]),
 	],
 	[
 		"field-sizing",
 		new Map([
-			[
-				"content",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"fixed",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["content", "0"],
+			["fixed", "0"],
 		]),
 	],
 	[
 		"flex-basis",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"content",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["auto", "10 (2015)"],
+			["content", "10 (2015)"],
+			["fit-content", "10 (2015)"],
+			["max-content", "10 (2015)"],
+			["min-content", "10 (2015)"],
 		]),
 	],
 	[
 		"flex-direction",
 		new Map([
-			[
-				"column",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"column-reverse",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"row",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"row-reverse",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["column", "10 (2015)"],
+			["column-reverse", "10 (2015)"],
+			["row", "10 (2015)"],
+			["row-reverse", "10 (2015)"],
 		]),
 	],
 	[
 		"flex-wrap",
 		new Map([
-			[
-				"nowrap",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"wrap",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"wrap-reverse",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["nowrap", "10 (2015)"],
+			["wrap", "10 (2015)"],
+			["wrap-reverse", "10 (2015)"],
 		]),
 	],
-	[
-		"flex",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["flex", new Map([["none", "10 (2015)"]])],
 	[
 		"clear",
 		new Map([
-			[
-				"both",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"inline-end",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"inline-start",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["both", "10 (2015)"],
+			["left", "10 (2015)"],
+			["right", "10 (2015)"],
+			["inline-end", "10 (2021)"],
+			["inline-start", "10 (2021)"],
 		]),
 	],
 	[
 		"float",
 		new Map([
-			[
-				"left",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"inline-end",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"inline-start",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["left", "10 (2015)"],
+			["none", "10 (2015)"],
+			["right", "10 (2015)"],
+			["inline-end", "10 (2021)"],
+			["inline-start", "10 (2021)"],
 		]),
 	],
 	[
 		"font-family",
 		new Map([
-			[
-				"math",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"system-ui",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"ui-monospace",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ui-rounded",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ui-sans-serif",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ui-serif",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["math", "0"],
+			["system-ui", "10 (2021)"],
+			["ui-monospace", "0"],
+			["ui-rounded", "0"],
+			["ui-sans-serif", "0"],
+			["ui-serif", "0"],
 		]),
 	],
-	[
-		"font-feature-settings",
-		new Map([
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-		]),
-	],
+	["font-feature-settings", new Map([["normal", "10 (2017)"]])],
 	[
 		"font-optical-sizing",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["auto", "10 (2020)"],
+			["none", "10 (2020)"],
 		]),
 	],
 	[
 		"font-palette",
 		new Map([
-			[
-				"dark",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"light",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["dark", "5 (2022)"],
+			["light", "5 (2022)"],
+			["normal", "5 (2022)"],
 		]),
 	],
 	[
 		"font",
 		new Map([
-			[
-				"caption",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"icon",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"menu",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"message-box",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"small-caption",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"status-bar",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["caption", "10 (2015)"],
+			["icon", "10 (2015)"],
+			["menu", "10 (2015)"],
+			["message-box", "10 (2015)"],
+			["small-caption", "10 (2015)"],
+			["status-bar", "10 (2015)"],
 		]),
 	],
 	[
 		"font-size",
 		new Map([
-			[
-				"xxx-large",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"math",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["xxx-large", "10 (2015)"],
+			["math", "5 (2023)"],
 		]),
 	],
 	[
 		"font-size-adjust",
 		new Map([
-			[
-				"from-font",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"two-values",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["from-font", "5 (2024)"],
+			["none", "5 (2024)"],
+			["two-values", "5 (2024)"],
 		]),
 	],
-	[
-		"font-stretch",
-		new Map([
-			[
-				"percentage",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["font-stretch", new Map([["percentage", "0"]])],
 	[
 		"font-style",
 		new Map([
-			[
-				"italic",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"oblique-angle",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["italic", "10 (2015)"],
+			["normal", "10 (2015)"],
+			["oblique-angle", "10 (2015)"],
 		]),
 	],
 	[
 		"font-synthesis",
 		new Map([
-			[
-				"position",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"small-caps",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"style",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"weight",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["position", "10 (2022)"],
+			["small-caps", "10 (2022)"],
+			["style", "10 (2022)"],
+			["weight", "10 (2022)"],
 		]),
 	],
 	[
 		"font-synthesis-position",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"font-synthesis-small-caps",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["auto", "5 (2023)"],
+			["none", "5 (2023)"],
 		]),
 	],
 	[
 		"font-synthesis-style",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["auto", "5 (2023)"],
+			["none", "5 (2023)"],
 		]),
 	],
 	[
 		"font-synthesis-weight",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["auto", "5 (2023)"],
+			["none", "5 (2023)"],
 		]),
 	],
 	[
 		"font-variant",
 		new Map([
-			[
-				"historical-forms",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"sub",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"super",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["historical-forms", "10 (2015)"],
+			["none", "10 (2015)"],
+			["normal", "10 (2015)"],
+			["sub", "10 (2015)"],
+			["super", "10 (2015)"],
 		]),
 	],
 	[
 		"font-variant-alternates",
 		new Map([
-			[
-				"annotation",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"historical-forms",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"ornaments",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"styleset",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"stylistic",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"swash",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["annotation", "5 (2023)"],
+			["historical-forms", "5 (2023)"],
+			["normal", "5 (2023)"],
+			["ornaments", "5 (2023)"],
+			["styleset", "5 (2023)"],
+			["stylistic", "5 (2023)"],
+			["swash", "5 (2023)"],
 		]),
 	],
 	[
 		"font-variant-caps",
 		new Map([
-			[
-				"all-petite-caps",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"all-small-caps",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"petite-caps",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"small-caps",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"titling-caps",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"unicase",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["all-petite-caps", "10 (2020)"],
+			["all-small-caps", "10 (2020)"],
+			["normal", "10 (2020)"],
+			["petite-caps", "10 (2020)"],
+			["small-caps", "10 (2020)"],
+			["titling-caps", "10 (2020)"],
+			["unicase", "10 (2020)"],
 		]),
 	],
 	[
 		"font-variant-east-asian",
 		new Map([
-			[
-				"full-width",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"jis04",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"jis78",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"jis83",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"jis90",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"proportional-width",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"ruby",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"simplified",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"traditional",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["full-width", "10 (2020)"],
+			["jis04", "10 (2020)"],
+			["jis78", "10 (2020)"],
+			["jis83", "10 (2020)"],
+			["jis90", "10 (2020)"],
+			["normal", "10 (2020)"],
+			["proportional-width", "10 (2020)"],
+			["ruby", "10 (2020)"],
+			["simplified", "10 (2020)"],
+			["traditional", "10 (2020)"],
 		]),
 	],
 	[
 		"font-variant-emoji",
 		new Map([
-			[
-				"emoji",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"text",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"unicode",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["emoji", "0"],
+			["normal", "0"],
+			["text", "0"],
+			["unicode", "0"],
 		]),
 	],
 	[
 		"font-variant-ligatures",
 		new Map([
-			[
-				"common-ligatures",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"contextual",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"discretionary-ligatures",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"historical-ligatures",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"no-common-ligatures",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"no-contextual",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"no-discretionary-ligatures",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"no-historical-ligatures",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["common-ligatures", "10 (2020)"],
+			["contextual", "10 (2020)"],
+			["discretionary-ligatures", "10 (2020)"],
+			["historical-ligatures", "10 (2020)"],
+			["no-common-ligatures", "10 (2020)"],
+			["no-contextual", "10 (2020)"],
+			["no-discretionary-ligatures", "10 (2020)"],
+			["no-historical-ligatures", "10 (2020)"],
+			["none", "10 (2020)"],
+			["normal", "10 (2020)"],
 		]),
 	],
 	[
 		"font-variant-numeric",
 		new Map([
-			[
-				"diagonal-fractions",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"lining-nums",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"oldstyle-nums",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"ordinal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"proportional-nums",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"slashed-zero",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"stacked-fractions",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"tabular-nums",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["diagonal-fractions", "10 (2020)"],
+			["lining-nums", "10 (2020)"],
+			["normal", "10 (2020)"],
+			["oldstyle-nums", "10 (2020)"],
+			["ordinal", "10 (2020)"],
+			["proportional-nums", "10 (2020)"],
+			["slashed-zero", "10 (2020)"],
+			["stacked-fractions", "10 (2020)"],
+			["tabular-nums", "10 (2020)"],
 		]),
 	],
 	[
 		"font-variant-position",
 		new Map([
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"sub",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"super",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["normal", "0"],
+			["sub", "0"],
+			["super", "0"],
 		]),
 	],
 	[
 		"font-weight",
 		new Map([
-			[
-				"bold",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"bolder",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lighter",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"number",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["bold", "10 (2015)"],
+			["bolder", "10 (2015)"],
+			["lighter", "10 (2015)"],
+			["normal", "10 (2015)"],
+			["number", "10 (2015)"],
 		]),
 	],
 	[
 		"font-width",
 		new Map([
-			[
-				"condensed",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"expanded",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"extra-condensed",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"extra-expanded",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"semi-condensed",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"semi-expanded",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ultra-condensed",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ultra-expanded",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["condensed", "0"],
+			["expanded", "0"],
+			["extra-condensed", "0"],
+			["extra-expanded", "0"],
+			["normal", "0"],
+			["semi-condensed", "0"],
+			["semi-expanded", "0"],
+			["ultra-condensed", "0"],
+			["ultra-expanded", "0"],
 		]),
 	],
 	[
 		"forced-color-adjust",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"preserve-parent-color",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["none", "5 (2022)"],
+			["preserve-parent-color", "5 (2022)"],
 		]),
 	],
 	[
 		"grid-auto-flow",
 		new Map([
-			[
-				"column",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"dense",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"row",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
+			["column", "10 (2017)"],
+			["dense", "10 (2017)"],
+			["row", "10 (2017)"],
 		]),
 	],
-	[
-		"grid-template-areas",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-		]),
-	],
+	["grid-template-areas", new Map([["none", "10 (2017)"]])],
 	[
 		"grid-template-columns",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"minmax",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"repeat",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"animation",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"masonry",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"subgrid",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["auto", "10 (2017)"],
+			["fit-content", "10 (2017)"],
+			["max-content", "10 (2017)"],
+			["min-content", "10 (2017)"],
+			["minmax", "10 (2017)"],
+			["none", "10 (2017)"],
+			["repeat", "10 (2017)"],
+			["animation", "5 (2022)"],
+			["masonry", "0"],
+			["subgrid", "5 (2023)"],
 		]),
 	],
 	[
 		"grid-template-rows",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"fit-content",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"max-content",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"min-content",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"minmax",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"repeat",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"animation",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"masonry",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"subgrid",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["auto", "10 (2017)"],
+			["fit-content", "10 (2017)"],
+			["max-content", "10 (2017)"],
+			["min-content", "10 (2017)"],
+			["minmax", "10 (2017)"],
+			["none", "10 (2017)"],
+			["repeat", "10 (2017)"],
+			["animation", "5 (2022)"],
+			["masonry", "0"],
+			["subgrid", "5 (2023)"],
 		]),
 	],
-	[
-		"grid-template",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-		]),
-	],
+	["grid-template", new Map([["none", "10 (2017)"]])],
 	[
 		"hanging-punctuation",
 		new Map([
-			[
-				"allow-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"first",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"last",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["allow-end", "0"],
+			["first", "0"],
+			["last", "0"],
+			["none", "0"],
 		]),
 	],
-	[
-		"hyphenate-character",
-		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
-	[
-		"hyphenate-limit-chars",
-		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"hyphens",
-		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-		]),
-	],
+	["hyphenate-character", new Map([["auto", "5 (2023)"]])],
+	["hyphenate-limit-chars", new Map([["auto", "0"]])],
+	["hyphens", new Map([["auto", "5 (2023)"]])],
 	[
 		"image-orientation",
 		new Map([
-			[
-				"from-image",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["from-image", "10 (2020)"],
+			["none", "10 (2020)"],
 		]),
 	],
-	[
-		"rotate",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-		]),
-	],
-	[
-		"scale",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-		]),
-	],
-	[
-		"translate",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-		]),
-	],
-	[
-		"initial-letter",
-		new Map([
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["rotate", new Map([["none", "10 (2022)"]])],
+	["scale", new Map([["none", "10 (2022)"]])],
+	["translate", new Map([["none", "10 (2022)"]])],
+	["initial-letter", new Map([["normal", "0"]])],
 	[
 		"interpolate-size",
 		new Map([
-			[
-				"allow-keywords",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"numeric-only",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["allow-keywords", "0"],
+			["numeric-only", "0"],
 		]),
 	],
 	[
 		"direction",
 		new Map([
-			[
-				"ltr",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"rtl",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["ltr", "10 (2020)"],
+			["rtl", "10 (2020)"],
 		]),
 	],
 	[
 		"unicode-bidi",
 		new Map([
-			[
-				"bidi-override",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"embed",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"isolate",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"isolate-override",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"plaintext",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["bidi-override", "10 (2020)"],
+			["embed", "10 (2020)"],
+			["isolate", "10 (2020)"],
+			["isolate-override", "10 (2020)"],
+			["normal", "10 (2020)"],
+			["plaintext", "10 (2020)"],
 		]),
 	],
-	[
-		"letter-spacing",
-		new Map([
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["letter-spacing", new Map([["normal", "10 (2015)"]])],
 	[
 		"line-break",
 		new Map([
-			[
-				"anywhere",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"loose",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"strict",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["anywhere", "10 (2020)"],
+			["auto", "10 (2020)"],
+			["loose", "10 (2020)"],
+			["normal", "10 (2020)"],
+			["strict", "10 (2020)"],
 		]),
 	],
-	[
-		"line-clamp",
-		new Map([
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"line-height",
-		new Map([
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
-	[
-		"list-style-image",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["line-clamp", new Map([["none", "0"]])],
+	["line-height", new Map([["normal", "10 (2015)"]])],
+	["list-style-image", new Map([["none", "10 (2015)"]])],
 	[
 		"list-style-position",
 		new Map([
-			[
-				"inside",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"outside",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["inside", "10 (2015)"],
+			["outside", "10 (2015)"],
 		]),
 	],
 	[
 		"list-style-type",
 		new Map([
-			[
-				"arabic-indic",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"armenian",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"bengali",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"cambodian",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"circle",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"cjk-decimal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"cjk-earthly-branch",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"cjk-heavenly-stem",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"cjk-ideographic",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"decimal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"decimal-leading-zero",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"devanagari",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"disc",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"disclosure-closed",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"disclosure-open",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"ethiopic-numeric",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"georgian",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"gujarati",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"gurmukhi",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"hebrew",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"hiragana",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"hiragana-iroha",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"japanese-formal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"japanese-informal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"kannada",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"katakana",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"katakana-iroha",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"khmer",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"korean-hangul-formal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"korean-hanja-formal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"korean-hanja-informal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lao",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lower-alpha",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lower-armenian",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lower-greek",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lower-latin",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lower-roman",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"malayalam",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"mongolian",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"myanmar",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"oriya",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"persian",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"simp-chinese-formal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"simp-chinese-informal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"square",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"string",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"symbols",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"tamil",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"telugu",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"thai",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"tibetan",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"trad-chinese-formal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"trad-chinese-informal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"upper-alpha",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"upper-armenian",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"upper-latin",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"upper-roman",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["arabic-indic", "10 (2015)"],
+			["armenian", "10 (2015)"],
+			["bengali", "10 (2015)"],
+			["cambodian", "10 (2015)"],
+			["circle", "10 (2015)"],
+			["cjk-decimal", "10 (2015)"],
+			["cjk-earthly-branch", "10 (2015)"],
+			["cjk-heavenly-stem", "10 (2015)"],
+			["cjk-ideographic", "10 (2015)"],
+			["decimal", "10 (2015)"],
+			["decimal-leading-zero", "10 (2015)"],
+			["devanagari", "10 (2015)"],
+			["disc", "10 (2015)"],
+			["disclosure-closed", "10 (2015)"],
+			["disclosure-open", "10 (2015)"],
+			["ethiopic-numeric", "10 (2015)"],
+			["georgian", "10 (2015)"],
+			["gujarati", "10 (2015)"],
+			["gurmukhi", "10 (2015)"],
+			["hebrew", "10 (2015)"],
+			["hiragana", "10 (2015)"],
+			["hiragana-iroha", "10 (2015)"],
+			["japanese-formal", "10 (2015)"],
+			["japanese-informal", "10 (2015)"],
+			["kannada", "10 (2015)"],
+			["katakana", "10 (2015)"],
+			["katakana-iroha", "10 (2015)"],
+			["khmer", "10 (2015)"],
+			["korean-hangul-formal", "10 (2015)"],
+			["korean-hanja-formal", "10 (2015)"],
+			["korean-hanja-informal", "10 (2015)"],
+			["lao", "10 (2015)"],
+			["lower-alpha", "10 (2015)"],
+			["lower-armenian", "10 (2015)"],
+			["lower-greek", "10 (2015)"],
+			["lower-latin", "10 (2015)"],
+			["lower-roman", "10 (2015)"],
+			["malayalam", "10 (2015)"],
+			["mongolian", "10 (2015)"],
+			["myanmar", "10 (2015)"],
+			["none", "10 (2015)"],
+			["oriya", "10 (2015)"],
+			["persian", "10 (2015)"],
+			["simp-chinese-formal", "10 (2015)"],
+			["simp-chinese-informal", "10 (2015)"],
+			["square", "10 (2015)"],
+			["string", "10 (2015)"],
+			["symbols", "10 (2015)"],
+			["tamil", "10 (2015)"],
+			["telugu", "10 (2015)"],
+			["thai", "10 (2015)"],
+			["tibetan", "10 (2015)"],
+			["trad-chinese-formal", "10 (2015)"],
+			["trad-chinese-informal", "10 (2015)"],
+			["upper-alpha", "10 (2015)"],
+			["upper-armenian", "10 (2015)"],
+			["upper-latin", "10 (2015)"],
+			["upper-roman", "10 (2015)"],
 		]),
 	],
-	[
-		"list-style",
-		new Map([
-			[
-				"symbols",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
-	[
-		"overflow-block",
-		new Map([
-			[
-				"overlay",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-		]),
-	],
-	[
-		"overflow-inline",
-		new Map([
-			[
-				"overlay",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-		]),
-	],
+	["list-style", new Map([["symbols", "10 (2015)"]])],
+	["overflow-block", new Map([["overlay", "10 (2021)"]])],
+	["overflow-inline", new Map([["overlay", "10 (2021)"]])],
 	[
 		"margin-trim",
 		new Map([
-			[
-				"block",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"block-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"block-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["block", "0"],
+			["block-end", "0"],
+			["block-start", "0"],
+			["inline", "0"],
+			["inline-end", "0"],
+			["inline-start", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"mask-type",
 		new Map([
-			[
-				"alpha",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"luminance",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["alpha", "10 (2020)"],
+			["luminance", "10 (2020)"],
 		]),
 	],
 	[
 		"mask-clip",
 		new Map([
-			[
-				"border",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"content",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"padding",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"text",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["border", "5 (2023)"],
+			["content", "5 (2023)"],
+			["padding", "5 (2023)"],
+			["text", "5 (2023)"],
 		]),
 	],
 	[
 		"mask-composite",
 		new Map([
-			[
-				"add",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"exclude",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"intersect",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"subtract",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["add", "5 (2023)"],
+			["exclude", "5 (2023)"],
+			["intersect", "5 (2023)"],
+			["subtract", "5 (2023)"],
 		]),
 	],
 	[
 		"mask-mode",
 		new Map([
-			[
-				"alpha",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"luminance",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"match-source",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["alpha", "5 (2023)"],
+			["luminance", "5 (2023)"],
+			["match-source", "5 (2023)"],
 		]),
 	],
 	[
 		"mask-origin",
 		new Map([
-			[
-				"border",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"content",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"fill-box",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"padding",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"stroke-box",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"view-box",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
+			["border", "5 (2023)"],
+			["content", "5 (2023)"],
+			["fill-box", "5 (2023)"],
+			["padding", "5 (2023)"],
+			["stroke-box", "5 (2023)"],
+			["view-box", "5 (2023)"],
 		]),
 	],
 	[
 		"text-transform",
 		new Map([
-			[
-				"math-auto",
-				{
-					status: 5,
-					year: 2023,
-				},
-			],
-			[
-				"capitalize",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"full-size-kana",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"full-width",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"lowercase",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"uppercase",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["math-auto", "5 (2023)"],
+			["capitalize", "10 (2015)"],
+			["full-size-kana", "10 (2015)"],
+			["full-width", "10 (2015)"],
+			["lowercase", "10 (2015)"],
+			["none", "10 (2015)"],
+			["uppercase", "10 (2015)"],
 		]),
 	],
 	[
 		"mix-blend-mode",
 		new Map([
-			[
-				"plus-darker",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"plus-lighter",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["plus-darker", "10 (2020)"],
+			["plus-lighter", "10 (2020)"],
 		]),
 	],
 	[
 		"offset-anchor",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"bottom",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"center",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"left",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"right",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"top",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["bottom", "5 (2022)"],
+			["center", "5 (2022)"],
+			["left", "5 (2022)"],
+			["right", "5 (2022)"],
+			["top", "5 (2022)"],
 		]),
 	],
 	[
 		"offset-path",
 		new Map([
-			[
-				"border-box",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"content-box",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"fill-box",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"margin-box",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"padding-box",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"path",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"ray",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"stroke-box",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"url",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"view-box",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["border-box", "5 (2022)"],
+			["content-box", "5 (2022)"],
+			["fill-box", "5 (2022)"],
+			["margin-box", "5 (2022)"],
+			["none", "5 (2022)"],
+			["padding-box", "5 (2022)"],
+			["path", "5 (2022)"],
+			["ray", "5 (2022)"],
+			["stroke-box", "5 (2022)"],
+			["url", "5 (2022)"],
+			["view-box", "5 (2022)"],
 		]),
 	],
 	[
 		"offset-position",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"bottom",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"center",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"left",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"right",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"top",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["bottom", "5 (2022)"],
+			["center", "5 (2022)"],
+			["left", "5 (2022)"],
+			["normal", "5 (2022)"],
+			["right", "5 (2022)"],
+			["top", "5 (2022)"],
 		]),
 	],
 	[
 		"offset-rotate",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"reverse",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["reverse", "5 (2022)"],
 		]),
 	],
-	[
-		"column-count",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-		]),
-	],
-	[
-		"column-width",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-		]),
-	],
+	["column-count", new Map([["auto", "10 (2017)"]])],
+	["column-width", new Map([["auto", "10 (2017)"]])],
 	[
 		"object-fit",
 		new Map([
-			[
-				"contain",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"cover",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"fill",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"scale-down",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["contain", "10 (2020)"],
+			["cover", "10 (2020)"],
+			["fill", "10 (2020)"],
+			["none", "10 (2020)"],
+			["scale-down", "10 (2020)"],
 		]),
 	],
-	[
-		"object-view-box",
-		new Map([
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"opacity",
-		new Map([
-			[
-				"percentages",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["object-view-box", new Map([["none", "0"]])],
+	["opacity", new Map([["percentages", "10 (2015)"]])],
 	[
 		"outline-style",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"dashed",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"dotted",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"double",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"groove",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"inset",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"outset",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"ridge",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"solid",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
+			["auto", "10 (2017)"],
+			["dashed", "10 (2017)"],
+			["dotted", "10 (2017)"],
+			["double", "10 (2017)"],
+			["groove", "10 (2017)"],
+			["inset", "10 (2017)"],
+			["none", "10 (2017)"],
+			["outset", "10 (2017)"],
+			["ridge", "10 (2017)"],
+			["solid", "10 (2017)"],
 		]),
 	],
 	[
 		"overflow-anchor",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"overflow-clip-margin",
 		new Map([
-			[
-				"border-box",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"content-box",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"padding-box",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["border-box", "0"],
+			["content-box", "0"],
+			["padding-box", "0"],
 		]),
 	],
 	[
 		"overflow-x",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"clip",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"hidden",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"scroll",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"visible",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["clip", "5 (2022)"],
+			["hidden", "5 (2022)"],
+			["scroll", "5 (2022)"],
+			["visible", "5 (2022)"],
 		]),
 	],
 	[
 		"overflow-y",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"clip",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"hidden",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"scroll",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"visible",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["clip", "5 (2022)"],
+			["hidden", "5 (2022)"],
+			["scroll", "5 (2022)"],
+			["visible", "5 (2022)"],
 		]),
 	],
 	[
 		"overflow",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"clip",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"hidden",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"scroll",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"visible",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["clip", "5 (2022)"],
+			["hidden", "5 (2022)"],
+			["scroll", "5 (2022)"],
+			["visible", "5 (2022)"],
 		]),
 	],
 	[
 		"overflow-wrap",
 		new Map([
-			[
-				"anywhere",
-				{
-					status: 10,
-					year: 2018,
-				},
-			],
-			[
-				"break-word",
-				{
-					status: 10,
-					year: 2018,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2018,
-				},
-			],
+			["anywhere", "10 (2018)"],
+			["break-word", "10 (2018)"],
+			["normal", "10 (2018)"],
 		]),
 	],
 	[
 		"overlay",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"overscroll-behavior-block",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"contain",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["contain", "5 (2022)"],
+			["none", "5 (2022)"],
 		]),
 	],
 	[
 		"overscroll-behavior-inline",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"contain",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["contain", "5 (2022)"],
+			["none", "5 (2022)"],
 		]),
 	],
 	[
 		"overscroll-behavior-x",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"contain",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["contain", "5 (2022)"],
+			["none", "5 (2022)"],
 		]),
 	],
 	[
 		"overscroll-behavior-y",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"contain",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["contain", "5 (2022)"],
+			["none", "5 (2022)"],
 		]),
 	],
 	[
 		"overscroll-behavior",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"contain",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
+			["auto", "5 (2022)"],
+			["contain", "5 (2022)"],
+			["none", "5 (2022)"],
 		]),
 	],
 	[
 		"page-break-after",
 		new Map([
-			[
-				"always",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"avoid",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"left",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"right",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["always", "0"],
+			["auto", "0"],
+			["avoid", "0"],
+			["left", "0"],
+			["right", "0"],
 		]),
 	],
 	[
 		"page-break-before",
 		new Map([
-			[
-				"always",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"avoid",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"left",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"right",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["always", "0"],
+			["auto", "0"],
+			["avoid", "0"],
+			["left", "0"],
+			["right", "0"],
 		]),
 	],
 	[
 		"page-break-inside",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"avoid",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["avoid", "0"],
 		]),
 	],
 	[
 		"print-color-adjust",
 		new Map([
-			[
-				"economy",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"exact",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["economy", "0"],
+			["exact", "0"],
 		]),
 	],
 	[
 		"quotes",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
+			["auto", "10 (2021)"],
+			["none", "10 (2021)"],
 		]),
 	],
 	[
 		"resize",
 		new Map([
-			[
-				"block",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["block", "0"],
+			["inline", "0"],
 		]),
 	],
 	[
 		"ruby-align",
 		new Map([
-			[
-				"center",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"space-around",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"space-between",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"start",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["center", "5 (2024)"],
+			["space-around", "5 (2024)"],
+			["space-between", "5 (2024)"],
+			["start", "5 (2024)"],
 		]),
 	],
 	[
 		"ruby-overhang",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"ruby-position",
 		new Map([
-			[
-				"alternate",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"inter-character",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"over",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"under",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["alternate", "5 (2024)"],
+			["inter-character", "5 (2024)"],
+			["over", "5 (2024)"],
+			["under", "5 (2024)"],
 		]),
 	],
 	[
 		"scroll-behavior",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"smooth",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["auto", "10 (2022)"],
+			["smooth", "10 (2022)"],
 		]),
 	],
-	[
-		"animation-range-end",
-		new Map([
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"animation-range-start",
-		new Map([
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["animation-range-end", new Map([["normal", "0"]])],
+	["animation-range-start", new Map([["normal", "0"]])],
 	[
 		"animation-timeline",
 		new Map([
-			[
-				"scroll",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"view",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["scroll", "0"],
+			["view", "0"],
 		]),
 	],
 	[
 		"scroll-timeline-axis",
 		new Map([
-			[
-				"block",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"x",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"y",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["block", "0"],
+			["inline", "0"],
+			["x", "0"],
+			["y", "0"],
 		]),
 	],
 	[
 		"timeline-scope",
 		new Map([
-			[
-				"all",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["all", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"view-timeline-axis",
 		new Map([
-			[
-				"block",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inline",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"x",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"y",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["block", "0"],
+			["inline", "0"],
+			["x", "0"],
+			["y", "0"],
 		]),
 	],
-	[
-		"view-timeline-inset",
-		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["view-timeline-inset", new Map([["auto", "0"]])],
 	[
 		"scroll-initial-target",
 		new Map([
-			[
-				"nearest",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["nearest", "0"],
+			["none", "0"],
 		]),
 	],
-	[
-		"scroll-padding-block-end",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
-	[
-		"scroll-padding-block-start",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
-	[
-		"scroll-padding-block",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
-	[
-		"scroll-padding-inline-end",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
-	[
-		"scroll-padding-inline-start",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
-	[
-		"scroll-padding-inline",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
-	[
-		"scroll-padding",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
+	["scroll-padding-block-end", new Map([["auto", "10 (2020)"]])],
+	["scroll-padding-block-start", new Map([["auto", "10 (2020)"]])],
+	["scroll-padding-block", new Map([["auto", "10 (2020)"]])],
+	["scroll-padding-inline-end", new Map([["auto", "10 (2020)"]])],
+	["scroll-padding-inline-start", new Map([["auto", "10 (2020)"]])],
+	["scroll-padding-inline", new Map([["auto", "10 (2020)"]])],
+	["scroll-padding", new Map([["auto", "10 (2020)"]])],
 	[
 		"scroll-snap-align",
 		new Map([
-			[
-				"center",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"end",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"start",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["center", "10 (2020)"],
+			["end", "10 (2020)"],
+			["none", "10 (2020)"],
+			["start", "10 (2020)"],
 		]),
 	],
 	[
 		"scroll-snap-stop",
 		new Map([
-			[
-				"always",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["always", "10 (2020)"],
+			["normal", "10 (2020)"],
 		]),
 	],
 	[
 		"scroll-snap-type",
 		new Map([
-			[
-				"block",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"both",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"inline",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"x",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"y",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["block", "10 (2020)"],
+			["both", "10 (2020)"],
+			["inline", "10 (2020)"],
+			["none", "10 (2020)"],
+			["x", "10 (2020)"],
+			["y", "10 (2020)"],
 		]),
 	],
-	[
-		"scrollbar-color",
-		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["scrollbar-color", new Map([["auto", "0"]])],
 	[
 		"scrollbar-gutter",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"stable",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["auto", "5 (2024)"],
+			["stable", "5 (2024)"],
 		]),
 	],
 	[
 		"scrollbar-width",
 		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"none",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"thin",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["auto", "5 (2024)"],
+			["none", "5 (2024)"],
+			["thin", "5 (2024)"],
 		]),
 	],
-	[
-		"shape-image-threshold",
-		new Map([
-			[
-				"percentages",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
+	["shape-image-threshold", new Map([["percentages", "10 (2020)"]])],
 	[
 		"shape-outside",
 		new Map([
-			[
-				"circle",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"gradient",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"image",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"inset",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"path",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"polygon",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["circle", "10 (2020)"],
+			["gradient", "10 (2020)"],
+			["image", "10 (2020)"],
+			["inset", "10 (2020)"],
+			["none", "10 (2020)"],
+			["path", "10 (2020)"],
+			["polygon", "10 (2020)"],
 		]),
 	],
 	[
 		"speak-as",
 		new Map([
-			[
-				"digits",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"literal-punctuation",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"no-punctuation",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"spell-out",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["digits", "0"],
+			["literal-punctuation", "0"],
+			["no-punctuation", "0"],
+			["normal", "0"],
+			["spell-out", "0"],
 		]),
 	],
 	[
 		"clip-rule",
 		new Map([
-			[
-				"evenodd",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"nonzero",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["evenodd", "10 (2020)"],
+			["nonzero", "10 (2020)"],
 		]),
 	],
 	[
 		"color-interpolation",
 		new Map([
-			[
-				"linearGradient",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"sRGB",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["linearGradient", "10 (2020)"],
+			["sRGB", "10 (2020)"],
 		]),
 	],
 	[
 		"fill-rule",
 		new Map([
-			[
-				"evenodd",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"nonzero",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["evenodd", "10 (2020)"],
+			["nonzero", "10 (2020)"],
 		]),
 	],
-	[
-		"stroke-dasharray",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-		]),
-	],
+	["stroke-dasharray", new Map([["none", "10 (2020)"]])],
 	[
 		"stroke-linecap",
 		new Map([
-			[
-				"butt",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"round",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"square",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["butt", "10 (2020)"],
+			["round", "10 (2020)"],
+			["square", "10 (2020)"],
 		]),
 	],
 	[
 		"stroke-linejoin",
 		new Map([
-			[
-				"bevel",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"miter",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"round",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["bevel", "10 (2020)"],
+			["miter", "10 (2020)"],
+			["round", "10 (2020)"],
 		]),
 	],
 	[
 		"text-rendering",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"geometricPrecision",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["auto", "10 (2020)"],
+			["geometricPrecision", "10 (2020)"],
 		]),
 	],
 	[
 		"color-interpolation-filters",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"linearRGB",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"sRGB",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["auto", "10 (2015)"],
+			["linearRGB", "10 (2015)"],
+			["sRGB", "10 (2015)"],
 		]),
 	],
-	[
-		"tab-size",
-		new Map([
-			[
-				"length",
-				{
-					status: 10,
-					year: 2021,
-				},
-			],
-		]),
-	],
+	["tab-size", new Map([["length", "10 (2021)"]])],
 	[
 		"border-collapse",
 		new Map([
-			[
-				"collapse",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"separate",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["collapse", "10 (2015)"],
+			["separate", "10 (2015)"],
 		]),
 	],
 	[
 		"caption-side",
 		new Map([
-			[
-				"bottom",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"bottom-outside",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"top",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"top-outside",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["bottom", "10 (2015)"],
+			["bottom-outside", "10 (2015)"],
+			["top", "10 (2015)"],
+			["top-outside", "10 (2015)"],
 		]),
 	],
 	[
 		"text-align",
 		new Map([
-			[
-				"center",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"end",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"justify",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"match-parent",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"start",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["center", "10 (2015)"],
+			["end", "10 (2015)"],
+			["justify", "10 (2015)"],
+			["left", "10 (2015)"],
+			["match-parent", "10 (2015)"],
+			["right", "10 (2015)"],
+			["start", "10 (2015)"],
 		]),
 	],
-	[
-		"text-align-last",
-		new Map([
-			[
-				"auto",
-				{
-					status: 5,
-					year: 2022,
-				},
-			],
-		]),
-	],
+	["text-align-last", new Map([["auto", "5 (2022)"]])],
 	[
 		"text-autospace",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ideograph-alpha",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"ideograph-numeric",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"no-autospace",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["ideograph-alpha", "0"],
+			["ideograph-numeric", "0"],
+			["no-autospace", "0"],
+			["normal", "0"],
 		]),
 	],
-	[
-		"text-box-edge",
-		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["text-box-edge", new Map([["auto", "0"]])],
 	[
 		"text-box-trim",
 		new Map([
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"trim-both",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"trim-end",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"trim-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["none", "0"],
+			["trim-both", "0"],
+			["trim-end", "0"],
+			["trim-start", "0"],
 		]),
 	],
-	[
-		"text-box",
-		new Map([
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["text-box", new Map([["normal", "0"]])],
 	[
 		"text-decoration-line",
 		new Map([
-			[
-				"grammar-error",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"line-through",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"overline",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"spelling-error",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"underline",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"blink",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["grammar-error", "10 (2015)"],
+			["line-through", "10 (2015)"],
+			["none", "10 (2015)"],
+			["overline", "10 (2015)"],
+			["spelling-error", "10 (2015)"],
+			["underline", "10 (2015)"],
+			["blink", "0"],
 		]),
 	],
 	[
 		"text-decoration-skip-ink",
 		new Map([
-			[
-				"all",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["all", "10 (2015)"],
+			["auto", "10 (2015)"],
+			["none", "10 (2015)"],
 		]),
 	],
 	[
 		"text-decoration-skip",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["auto", "10 (2015)"],
+			["none", "10 (2015)"],
 		]),
 	],
-	[
-		"text-decoration-style",
-		new Map([
-			[
-				"wavy",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["text-decoration-style", new Map([["wavy", "10 (2015)"]])],
 	[
 		"text-decoration-thickness",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"from-font",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"percentage",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["auto", "10 (2015)"],
+			["from-font", "10 (2015)"],
+			["percentage", "10 (2015)"],
 		]),
 	],
 	[
 		"text-emphasis-position",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"over",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"under",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["auto", "10 (2022)"],
+			["left", "10 (2022)"],
+			["over", "10 (2022)"],
+			["right", "10 (2022)"],
+			["under", "10 (2022)"],
 		]),
 	],
 	[
 		"text-emphasis-style",
 		new Map([
-			[
-				"circle",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"dot",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"double-circle",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"filled",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"sesame",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"triangle",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["circle", "10 (2022)"],
+			["dot", "10 (2022)"],
+			["double-circle", "10 (2022)"],
+			["filled", "10 (2022)"],
+			["none", "10 (2022)"],
+			["sesame", "10 (2022)"],
+			["triangle", "10 (2022)"],
 		]),
 	],
 	[
 		"text-indent",
 		new Map([
-			[
-				"each-line",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"hanging",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["each-line", "0"],
+			["hanging", "0"],
 		]),
 	],
 	[
 		"text-justify",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inter-character",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"inter-word",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["inter-character", "0"],
+			["inter-word", "0"],
+			["none", "0"],
 		]),
 	],
 	[
 		"text-orientation",
 		new Map([
-			[
-				"mixed",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"sideways",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"upright",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["mixed", "10 (2020)"],
+			["sideways", "10 (2020)"],
+			["upright", "10 (2020)"],
 		]),
 	],
 	[
 		"text-size-adjust",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"percentages",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["none", "0"],
+			["percentages", "0"],
 		]),
 	],
 	[
 		"text-spacing-trim",
 		new Map([
-			[
-				"normal",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"space-all",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"space-first",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"trim-start",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["normal", "0"],
+			["space-all", "0"],
+			["space-first", "0"],
+			["trim-start", "0"],
 		]),
 	],
 	[
 		"text-underline-offset",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"percentage",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["auto", "10 (2020)"],
+			["percentage", "10 (2020)"],
 		]),
 	],
 	[
 		"text-underline-position",
 		new Map([
-			[
-				"from-font",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"under",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["from-font", "10 (2020)"],
+			["left", "10 (2020)"],
+			["right", "10 (2020)"],
+			["under", "10 (2020)"],
 		]),
 	],
 	[
 		"text-wrap",
 		new Map([
-			[
-				"wrap",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"balance",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"nowrap",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"pretty",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"stable",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["wrap", "5 (2024)"],
+			["balance", "5 (2024)"],
+			["nowrap", "5 (2024)"],
+			["pretty", "0"],
+			["stable", "5 (2024)"],
 		]),
 	],
 	[
 		"text-wrap-mode",
 		new Map([
-			[
-				"nowrap",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"wrap",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["nowrap", "5 (2024)"],
+			["wrap", "5 (2024)"],
 		]),
 	],
 	[
 		"text-wrap-style",
 		new Map([
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"balance",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"pretty",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"stable",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["auto", "0"],
+			["balance", "0"],
+			["pretty", "0"],
+			["stable", "0"],
 		]),
 	],
 	[
 		"touch-action",
 		new Map([
-			[
-				"manipulation",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"pan-down",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"pan-left",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"pan-right",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"pan-up",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"pan-x",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"pan-y",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
-			[
-				"pinch-zoom",
-				{
-					status: 10,
-					year: 2019,
-				},
-			],
+			["manipulation", "10 (2019)"],
+			["none", "10 (2019)"],
+			["pan-down", "10 (2019)"],
+			["pan-left", "10 (2019)"],
+			["pan-right", "10 (2019)"],
+			["pan-up", "10 (2019)"],
+			["pan-x", "10 (2019)"],
+			["pan-y", "10 (2019)"],
+			["pinch-zoom", "10 (2019)"],
 		]),
 	],
 	[
 		"transform-box",
 		new Map([
-			[
-				"border-box",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"content-box",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"fill-box",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"stroke-box",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"view-box",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["border-box", "5 (2024)"],
+			["content-box", "5 (2024)"],
+			["fill-box", "5 (2024)"],
+			["stroke-box", "5 (2024)"],
+			["view-box", "5 (2024)"],
 		]),
 	],
 	[
 		"transform-origin",
 		new Map([
-			[
-				"bottom",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"center",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"top",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["bottom", "10 (2015)"],
+			["center", "10 (2015)"],
+			["left", "10 (2015)"],
+			["right", "10 (2015)"],
+			["top", "10 (2015)"],
 		]),
 	],
 	[
 		"perspective-origin",
 		new Map([
-			[
-				"bottom",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"center",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"left",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"right",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-			[
-				"top",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
+			["bottom", "10 (2022)"],
+			["center", "10 (2022)"],
+			["left", "10 (2022)"],
+			["right", "10 (2022)"],
+			["top", "10 (2022)"],
 		]),
 	],
-	[
-		"perspective",
-		new Map([
-			[
-				"none",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-		]),
-	],
-	[
-		"transform",
-		new Map([
-			[
-				"3d",
-				{
-					status: 10,
-					year: 2022,
-				},
-			],
-		]),
-	],
-	[
-		"transition",
-		new Map([
-			[
-				"transition-behavior",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-		]),
-	],
+	["perspective", new Map([["none", "10 (2022)"]])],
+	["transform", new Map([["3d", "10 (2022)"]])],
+	["transition", new Map([["transition-behavior", "5 (2024)"]])],
 	[
 		"transition-property",
 		new Map([
-			[
-				"all",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"none",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["all", "10 (2015)"],
+			["none", "10 (2015)"],
 		]),
 	],
-	[
-		"transition-timing-function",
-		new Map([
-			[
-				"jump",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["transition-timing-function", new Map([["jump", "10 (2015)"]])],
 	[
 		"user-select",
 		new Map([
-			[
-				"all",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"auto",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"text",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["all", "0"],
+			["auto", "0"],
+			["none", "0"],
+			["text", "0"],
 		]),
 	],
 	[
 		"vertical-align",
 		new Map([
-			[
-				"baseline",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"bottom",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"middle",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"sub",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"super",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"text-bottom",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"text-top",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"top",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["baseline", "10 (2015)"],
+			["bottom", "10 (2015)"],
+			["middle", "10 (2015)"],
+			["sub", "10 (2015)"],
+			["super", "10 (2015)"],
+			["text-bottom", "10 (2015)"],
+			["text-top", "10 (2015)"],
+			["top", "10 (2015)"],
 		]),
 	],
-	[
-		"view-transition-class",
-		new Map([
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
-	[
-		"view-transition-name",
-		new Map([
-			[
-				"none",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-		]),
-	],
+	["view-transition-class", new Map([["none", "0"]])],
+	["view-transition-name", new Map([["none", "0"]])],
 	[
 		"visibility",
 		new Map([
-			[
-				"collapse",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"hidden",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"visible",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["collapse", "10 (2015)"],
+			["hidden", "10 (2015)"],
+			["visible", "10 (2015)"],
 		]),
 	],
 	[
 		"white-space",
 		new Map([
-			[
-				"break-spaces",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"nowrap",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"pre",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"pre-line",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"pre-wrap",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
+			["break-spaces", "10 (2015)"],
+			["normal", "10 (2015)"],
+			["nowrap", "10 (2015)"],
+			["pre", "10 (2015)"],
+			["pre-line", "10 (2015)"],
+			["pre-wrap", "10 (2015)"],
 		]),
 	],
 	[
 		"white-space-collapse",
 		new Map([
-			[
-				"break-spaces",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"collapse",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"preserve",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"preserve-breaks",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
-			[
-				"preserve-spaces",
-				{
-					status: 5,
-					year: 2024,
-				},
-			],
+			["break-spaces", "5 (2024)"],
+			["collapse", "5 (2024)"],
+			["preserve", "5 (2024)"],
+			["preserve-breaks", "5 (2024)"],
+			["preserve-spaces", "5 (2024)"],
 		]),
 	],
 	[
 		"will-change",
 		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"contents",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
-			[
-				"scroll-position",
-				{
-					status: 10,
-					year: 2020,
-				},
-			],
+			["auto", "10 (2020)"],
+			["contents", "10 (2020)"],
+			["scroll-position", "10 (2020)"],
 		]),
 	],
 	[
 		"word-break",
 		new Map([
-			[
-				"break-all",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"keep-all",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-			[
-				"auto-phrase",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"break-word",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["break-all", "10 (2015)"],
+			["keep-all", "10 (2015)"],
+			["normal", "10 (2015)"],
+			["auto-phrase", "0"],
+			["break-word", "0"],
 		]),
 	],
-	[
-		"word-spacing",
-		new Map([
-			[
-				"normal",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["word-spacing", new Map([["normal", "10 (2015)"]])],
 	[
 		"writing-mode",
 		new Map([
-			[
-				"horizontal-tb",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"sideways-lr",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"sideways-rl",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"vertical-lr",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"vertical-rl",
-				{
-					status: 10,
-					year: 2017,
-				},
-			],
-			[
-				"lr",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"lr-tb",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"rl",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"rl-tb",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"tb",
-				{
-					status: 0,
-					year: null,
-				},
-			],
-			[
-				"tb-rl",
-				{
-					status: 0,
-					year: null,
-				},
-			],
+			["horizontal-tb", "10 (2017)"],
+			["sideways-lr", "10 (2017)"],
+			["sideways-rl", "10 (2017)"],
+			["vertical-lr", "10 (2017)"],
+			["vertical-rl", "10 (2017)"],
+			["lr", "0"],
+			["lr-tb", "0"],
+			["rl", "0"],
+			["rl-tb", "0"],
+			["tb", "0"],
+			["tb-rl", "0"],
 		]),
 	],
-	[
-		"z-index",
-		new Map([
-			[
-				"auto",
-				{
-					status: 10,
-					year: 2015,
-				},
-			],
-		]),
-	],
+	["z-index", new Map([["auto", "10 (2015)"]])],
 ]);
