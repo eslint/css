@@ -340,19 +340,6 @@ class SupportsRules {
 }
 
 /**
- * Decodes and extracts the status and year from an encoded feature status.
- * @param {string} encodedStatus The encoded feature status and year.
- * @returns {Object} An object containing the feature status and year.
- */
-function decodeBaselineStatus(encodedStatus) {
-	const parts = encodedStatus.split(":");
-	const status = Number(parts[0]);
-	const year = Number(parts[1]);
-
-	return { status, year };
-}
-
-/**
  * Represents the required availability of a feature.
  */
 class BaselineAvailability {
@@ -384,16 +371,18 @@ class BaselineAvailability {
 
 	/**
 	 * Determines whether a feature meets the required availability.
-	 * @param {Object} feature A feature's baseline status and year.
+	 * @param {Object} encodedStatus A feature's encoded baseline status and year.
 	 * @returns {boolean} `true` if the feature is supported, `false` if not.
 	 */
-	isSupported(feature) {
+	isSupported(encodedStatus) {
+		const parts = encodedStatus.split(":");
+		const status = Number(parts[0]);
+		const year = Number(parts[1] || NaN);
+
 		if (this.#baselineYear) {
-			const { year } = decodeBaselineStatus(feature);
 			return year <= this.#baselineYear;
 		}
 
-		const { status } = decodeBaselineStatus(feature);
 		return status >= this.#baselineStatus;
 	}
 }

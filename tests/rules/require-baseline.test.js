@@ -422,5 +422,22 @@ ruleTester.run("require-baseline", rule, {
 				},
 			],
 		},
+		{
+			code: ".p { font-stretch: condensed; }",
+			options: [{ available: 2015 }],
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "font-stretch",
+						availability: 2015,
+					},
+					line: 1,
+					column: 6,
+					endLine: 1,
+					endColumn: 18,
+				},
+			],
+		},
 	],
 });
