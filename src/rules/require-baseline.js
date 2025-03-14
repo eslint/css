@@ -345,11 +345,9 @@ class SupportsRules {
  * @returns {Object} An object containing the feature status and year.
  */
 function decodeBaselineStatus(encodedStatus) {
-	const match = encodedStatus.match(
-		/^(?<status>\d+)(?: \((?<year>\d{4})\))?$/u,
-	);
-	const status = Number(match.groups.status);
-	const year = Number(match.groups.year);
+	const parts = encodedStatus.split(":");
+	const status = Number(parts[0]);
+	const year = Number(parts[1]);
 
 	return { status, year };
 }
