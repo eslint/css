@@ -88,7 +88,7 @@ h1:has(+ h2) {
 This rule accepts an option object with the following properties:
 
 - `available` (default: `"widely"`)
-    - change to `"newly"` available to allow features that have had cross-browser support for less than 30 months
+    - change to `"newly"` available to allow features that have had cross-browser support for fewer than 30 months
     - set to a numeric baseline year, for which all features that became baseline that year or earlier should be allowed (example: `2023`)
 
 ## When Not to Use It
