@@ -413,7 +413,7 @@ export default {
 								// baseline year
 								type: "integer",
 								minimum: 2000,
-								maximum: new Date().getFullYear() + 1,
+								maximum: new Date().getFullYear(),
 							},
 						],
 					},
