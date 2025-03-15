@@ -78,6 +78,14 @@ ruleTester.run("require-baseline", rule, {
 				tolerant: true,
 			},
 		},
+		{
+			code: ".messages { overscroll-behavior: contain; }",
+			options: [{ available: 2022 }],
+		},
+		{
+			code: ".box { backdrop-filter: blur(10px); }",
+			options: [{ available: 2024 }],
+		},
 	],
 	invalid: [
 		{
@@ -410,6 +418,40 @@ ruleTester.run("require-baseline", rule, {
 					column: 8,
 					endLine: 1,
 					endColumn: 25,
+				},
+			],
+		},
+		{
+			code: ".box { backdrop-filter: blur(10px); }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "backdrop-filter",
+						availability: 2021,
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 23,
+				},
+			],
+		},
+		{
+			code: ".p { font-stretch: condensed; }",
+			options: [{ available: 2015 }],
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "font-stretch",
+						availability: 2015,
+					},
+					line: 1,
+					column: 6,
+					endLine: 1,
+					endColumn: 18,
 				},
 			],
 		},

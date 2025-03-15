@@ -1,6 +1,6 @@
 {
   "name": "@eslint/css",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "exports": {
     ".": "./dist/esm/index.js",
     "./syntax": "./dist/esm/syntax/index.js"
@@ -13,9 +13,7 @@
       "dist/esm/syntax/index.d.ts",
       "README.md",
       "jsr.json",
-      "LICENSE",
-      "typings/css-tree/index.d.ts",
-      "typings/css-tree/LICENSE"
+      "LICENSE"
     ]
   }
 }
