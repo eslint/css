@@ -19,11 +19,11 @@ import { visitorKeys } from "./css-visitor-keys.js";
 // Types
 //-----------------------------------------------------------------------------
 
-/** @typedef {import("css-tree").CssNode} CssNode */
-/** @typedef {import("css-tree").CssNodePlain} CssNodePlain */
-/** @typedef {import("css-tree").BlockPlain} BlockPlain */
-/** @typedef {import("css-tree").Comment} Comment */
-/** @typedef {import("css-tree").Lexer} Lexer */
+/** @typedef {import("@eslint/css-tree").CssNode} CssNode */
+/** @typedef {import("@eslint/css-tree").CssNodePlain} CssNodePlain */
+/** @typedef {import("@eslint/css-tree").BlockPlain} BlockPlain */
+/** @typedef {import("@eslint/css-tree").Comment} Comment */
+/** @typedef {import("@eslint/css-tree").Lexer} Lexer */
 /** @typedef {import("@eslint/core").SourceRange} SourceRange */
 /** @typedef {import("@eslint/core").SourceLocation} SourceLocation */
 /** @typedef {import("@eslint/core").SourceLocationWithOffset} SourceLocationWithOffset */

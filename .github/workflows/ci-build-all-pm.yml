@@ -44,7 +44,6 @@ jobs:
                   npm install ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
     yarn-v1-install:
         name: Install with Yarn v1
-        if: false # disable due to https://github.com/eslint/css/issues/58
         needs: npm-build
         runs-on: ubuntu-latest
         steps:
@@ -76,7 +75,6 @@ jobs:
                   YARN_ENABLE_IMMUTABLE_INSTALLS: 0 # Allow installs to modify lockfile
     pnpm-install:
         name: Install with pnpm
-        if: false # disable due to https://github.com/eslint/css/issues/56
         needs: npm-build
         runs-on: ubuntu-latest
         steps:
