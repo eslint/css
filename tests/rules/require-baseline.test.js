@@ -439,5 +439,26 @@ ruleTester.run("require-baseline", rule, {
 				},
 			],
 		},
+		{
+			code: `label {
+				& input {
+					border: blue 2px dashed;
+				}
+			}`,
+			options: [{ available: 2022 }],
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "nesting",
+						availability: 2022,
+					},
+					line: 2,
+					column: 5,
+					endLine: 2,
+					endColumn: 6,
+				},
+			],
+		},
 	],
 });

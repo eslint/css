@@ -375,6 +375,11 @@ class BaselineAvailability {
 	 * @returns {boolean} `true` if the feature is supported, `false` if not.
 	 */
 	isSupported(encodedStatus) {
+		if (!encodedStatus) {
+			// if we don't know the status, assume it's supported
+			return true;
+		}
+
 		const parts = encodedStatus.split(":");
 		const status = Number(parts[0]);
 		const year = Number(parts[1] || NaN);
@@ -775,6 +780,24 @@ export default {
 						});
 					}
 				}
+			},
+
+			NestingSelector(node) {
+				// NestingSelector implies CSS nesting
+				const selector = "nesting";
+				const featureStatus = selectors.get(selector);
+				if (baselineAvailability.isSupported(featureStatus)) {
+					return;
+				}
+
+				context.report({
+					loc: node.loc,
+					messageId: "notBaselineSelector",
+					data: {
+						selector,
+						availability: baselineAvailability.availability,
+					},
+				});
 			},
 		};
 	},
