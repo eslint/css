@@ -50,11 +50,14 @@ function encodeBaselineStatus(status, year) {
  * @returns {Object} An object containing the baseline status and year.
  */
 function mapFeatureStatus(status) {
-	return encodeBaselineStatus(
-		baselineIds.get(status.baseline),
-		// extract the year part YYYY from the date formatted YYYY-MM-DD
-		Number(status.baseline_low_date?.slice(0, 4)),
-	);
+	let baselineYear;
+	// extract the year part YYYY from the date formatted YYYY-MM-DD
+	if (status.baseline_low_date?.startsWith("≤")) {
+		baselineYear = Number(status.baseline_low_date.slice(1, 5));
+	} else {
+		baselineYear = Number(status.baseline_low_date?.slice(0, 4));
+	}
+	return encodeBaselineStatus(baselineIds.get(status.baseline), baselineYear);
 }
 
 /**
