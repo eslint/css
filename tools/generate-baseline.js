@@ -9,6 +9,7 @@
 // Imports
 //------------------------------------------------------------------------------
 
+import { getStatus as getBaselineStatus } from "compute-baseline";
 import { features as webFeatures } from "web-features";
 import mdnData from "mdn-data";
 import prettier from "prettier";
@@ -50,26 +51,29 @@ function encodeBaselineStatus(status, year) {
  * @returns {Object} An object containing the baseline status and year.
  */
 function mapFeatureStatus(status) {
-	return encodeBaselineStatus(
-		baselineIds.get(status.baseline),
-		// extract the year part YYYY from the date formatted YYYY-MM-DD
-		Number(status.baseline_low_date?.slice(0, 4)),
-	);
+	let baselineYear;
+	// extract the year part YYYY from the date formatted YYYY-MM-DD
+	if (status.baseline_low_date?.startsWith("≤")) {
+		baselineYear = Number(status.baseline_low_date.slice(1, 5));
+	} else {
+		baselineYear = Number(status.baseline_low_date?.slice(0, 4));
+	}
+	return encodeBaselineStatus(baselineIds.get(status.baseline), baselineYear);
 }
 
 /**
  * Flattens the compat features into an object where the key is the feature
  * name and the value is the baseline.
- * @param {Object} entry The entry to flatten.
+ * @param {[string, {compat_features?: string[]}]} featureEntry The entry to flatten.
  * @returns {Object} The flattened entry.
  */
-function flattenCompatFeatures(entry) {
+function flattenCompatFeatures([featureId, entry]) {
 	if (!entry.compat_features) {
 		return {};
 	}
 
 	return Object.fromEntries(
-		entry.compat_features.map(feature => [feature, entry.status]),
+		entry.compat_features.map(feature => [feature, featureId]),
 	);
 }
 
@@ -109,7 +113,8 @@ function extractCSSFeatures(features) {
 	const types = {};
 	const selectors = {};
 
-	for (const [key, status] of Object.entries(features)) {
+	for (const [key, featureId] of Object.entries(features)) {
+		const status = getBaselineStatus(featureId, key);
 		let match;
 
 		// property names
@@ -180,7 +185,7 @@ function extractCSSFeatures(features) {
 //------------------------------------------------------------------------------
 
 // create one object with all features then filter just on the css ones
-const allFeatures = Object.values(webFeatures).reduce(
+const allFeatures = Object.entries(webFeatures).reduce(
 	(acc, entry) => Object.assign(acc, flattenCompatFeatures(entry)),
 	{},
 );
