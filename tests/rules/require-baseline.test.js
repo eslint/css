@@ -62,6 +62,7 @@ ruleTester.run("require-baseline", rule, {
 		}`,
 		"div { cursor: pointer; }",
 		"pre { overflow: auto; }",
+		".highlight, #highlight, highlight { color: red }",
 		{
 			code: `@property --foo {
 				syntax: "*";

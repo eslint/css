@@ -31,6 +31,13 @@ import { namedColors } from "../data/colors.js";
 // Helpers
 //-----------------------------------------------------------------------------
 
+const alwaysOkSelectorTypes = new Set([
+	"TypeSelector",
+	"IdSelector",
+	"ClassSelector",
+	"AttributeSelector",
+]);
+
 /**
  * Represents a property that is supported via @supports.
  */
@@ -738,6 +745,10 @@ export default {
 			Selector(node) {
 				for (const child of node.children) {
 					const selector = child.name;
+
+					if (alwaysOkSelectorTypes.has(child.type)) {
+						continue;
+					}
 
 					if (!selectors.has(selector)) {
 						continue;
