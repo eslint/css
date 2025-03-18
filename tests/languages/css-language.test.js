@@ -103,8 +103,7 @@ describe("CSSLanguage", () => {
 			}, /Expected an object value for 'customSyntax' option/u);
 		});
 
-		// https://github.com/csstree/csstree/issues/301
-		it.skip("should return an error when EOF is discovered before block close", () => {
+		it("should return an error when EOF is discovered before block close", () => {
 			const language = new CSSLanguage();
 			const result = language.parse({
 				body: "a {",
@@ -114,7 +113,107 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.ok, false);
 			assert.strictEqual(result.ast, undefined);
 			assert.strictEqual(result.errors.length, 1);
-			assert.strictEqual(result.errors[0].message, "Colon is expected");
+			assert.strictEqual(result.errors[0].message, "Missing closing }");
+			assert.strictEqual(result.errors[0].line, 1);
+			assert.strictEqual(result.errors[0].column, 3);
+			assert.strictEqual(result.errors[0].offset, 2);
+		});
+
+		it("should return an error when a CSS bad string is found", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "a { content: 'this\nstring is not properly closed' }",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 2);
+			assert.strictEqual(result.errors[0].message, "Missing closing }");
+			assert.strictEqual(result.errors[0].line, 1);
+			assert.strictEqual(result.errors[0].column, 3);
+			assert.strictEqual(result.errors[0].offset, 2);
+			assert.strictEqual(result.errors[1].message, "Unexpected input");
+			assert.strictEqual(result.errors[1].line, 1);
+			assert.strictEqual(result.errors[1].column, 14);
+			assert.strictEqual(result.errors[1].offset, 13);
+		});
+
+		it("should return an error when a CSS bad URL is found", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "a { background: url(foo bar.png) }",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 1);
+			assert.strictEqual(result.errors[0].message, "Unexpected input");
+			assert.strictEqual(result.errors[0].line, 1);
+			assert.strictEqual(result.errors[0].column, 17);
+			assert.strictEqual(result.errors[0].offset, 16);
+		});
+
+		it("should return an error when braces are unclosed", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "a { color: red;",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 1);
+			assert.strictEqual(result.errors[0].message, "Missing closing }");
+			assert.strictEqual(result.errors[0].line, 1);
+			assert.strictEqual(result.errors[0].column, 3);
+			assert.strictEqual(result.errors[0].offset, 2);
+		});
+
+		it("should return an error when square brackets are unclosed", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "a[foo { color: red; }",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 3); // other errors caused by the first one
+			assert.strictEqual(result.errors[0].message, "Missing closing ]");
+			assert.strictEqual(result.errors[0].line, 1);
+			assert.strictEqual(result.errors[0].column, 2);
+			assert.strictEqual(result.errors[0].offset, 1);
+		});
+
+		it("should return an error when parentheses are unclosed", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "@supports (color: red {}",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 2); // other errors caused by the first one
+			assert.strictEqual(result.errors[0].message, "Missing closing )");
+			assert.strictEqual(result.errors[0].line, 1);
+			assert.strictEqual(result.errors[0].column, 11);
+			assert.strictEqual(result.errors[0].offset, 10);
+		});
+
+		it("should not return an error when braces are unclosed and tolerant: true is used", () => {
+			const language = new CSSLanguage();
+			const result = language.parse(
+				{
+					body: "a { color: red;",
+					path: "test.css",
+				},
+				{ languageOptions: { tolerant: true } },
+			);
+
+			assert.strictEqual(result.ok, true);
 		});
 	});
 

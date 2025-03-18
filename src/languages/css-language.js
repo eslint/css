@@ -12,6 +12,7 @@ import {
 	lexer as originalLexer,
 	fork,
 	toPlainObject,
+	tokenTypes,
 } from "@eslint/css-tree";
 import { CSSSourceCode } from "./css-source-code.js";
 import { visitorKeys } from "./css-visitor-keys.js";
@@ -37,6 +38,22 @@ import { visitorKeys } from "./css-visitor-keys.js";
  * @property {boolean} [tolerant] Whether to be tolerant of recoverable parsing errors.
  * @property {SyntaxConfig} [customSyntax] Custom syntax to use for parsing.
  */
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
+const blockOpenerTokenTypes = new Map([
+	[tokenTypes.LeftCurlyBracket, "}"],
+	[tokenTypes.LeftParenthesis, ")"],
+	[tokenTypes.LeftSquareBracket, "]"],
+]);
+
+const blockCloserTokenTypes = new Map([
+	[tokenTypes.RightCurlyBracket, "{"],
+	[tokenTypes.RightParenthesis, "("],
+	[tokenTypes.RightSquareBracket, "["],
+]);
 
 //-----------------------------------------------------------------------------
 // Exports
@@ -154,8 +171,62 @@ export class CSSLanguage {
 					},
 					onParseError(error) {
 						if (!tolerant) {
-							// @ts-ignore -- types are incorrect
 							errors.push(error);
+						}
+					},
+					onToken(type, start, end, index) {
+						if (tolerant) {
+							return;
+						}
+
+						switch (type) {
+							// these already generate errors
+							case tokenTypes.BadString:
+							case tokenTypes.BadUrl:
+								break;
+
+							default:
+								/* eslint-disable new-cap -- This is a valid call */
+								if (this.isBlockOpenerTokenType(type)) {
+									if (
+										this.getBlockTokenPairIndex(index) ===
+										-1
+									) {
+										const loc = this.getRangeLocation(
+											start,
+											end,
+										);
+										errors.push(
+											parse.SyntaxError(
+												`Missing closing ${blockOpenerTokenTypes.get(type)}`,
+												text,
+												start,
+												loc.start.line,
+												loc.start.column,
+											),
+										);
+									}
+								} else if (this.isBlockCloserTokenType(type)) {
+									if (
+										this.getBlockTokenPairIndex(index) ===
+										-1
+									) {
+										const loc = this.getRangeLocation(
+											start,
+											end,
+										);
+										errors.push(
+											parse.SyntaxError(
+												`Missing opening ${blockCloserTokenTypes.get(type)}`,
+												text,
+												start,
+												loc.start.line,
+												loc.start.column,
+											),
+										);
+									}
+								}
+							/* eslint-enable new-cap -- This is a valid call */
 						}
 					},
 				}),
