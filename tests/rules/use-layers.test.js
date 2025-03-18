@@ -57,6 +57,22 @@ ruleTester.run("use-layers", rule, {
 			code: "@import 'foo.css';",
 			options: [{ requireImportLayers: false }],
 		},
+		{
+			code: "@layer foo.bar { a { color: red; } }",
+			options: [{ layerNamePattern: "^(foo|bar)$" }],
+		},
+		{
+			code: "@layer foo.bar.baz { a { color: red; } }",
+			options: [{ layerNamePattern: "^(foo|bar|baz)$" }],
+		},
+		{
+			code: "@import 'foo.css' layer(foo.bar);",
+			options: [{ layerNamePattern: "^(foo|bar)$" }],
+		},
+		{
+			code: "@layer foo, bar.baz, baz.qux;",
+			options: [{ layerNamePattern: "^(foo|bar|baz|qux)$" }],
+		},
 	],
 	invalid: [
 		{
@@ -260,6 +276,135 @@ ruleTester.run("use-layers", rule, {
 					column: 1,
 					endLine: 1,
 					endColumn: 18,
+				},
+			],
+		},
+		{
+			code: "@layer foo.bar { a { color: red; } }",
+			options: [{ layerNamePattern: "bar" }],
+			errors: [
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "foo",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "@layer foo.baz { a { color: red; } }",
+			options: [{ layerNamePattern: "bar" }],
+			errors: [
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "foo",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 11,
+				},
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "baz",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 12,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: "@layer foo.bar, baz.qux { a { color: red; } }",
+			options: [{ layerNamePattern: "bar" }],
+			errors: [
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "foo",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 11,
+				},
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "baz",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 20,
+				},
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "qux",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: "@import 'style.css' layer(foo.bar);",
+			options: [{ layerNamePattern: "bar" }],
+			errors: [
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "foo",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 30,
+				},
+			],
+		},
+		{
+			code: "@import 'style.css' layer(foo.baz);",
+			options: [{ layerNamePattern: "bar" }],
+			errors: [
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "foo",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 30,
+				},
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "baz",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 31,
+					endLine: 1,
+					endColumn: 34,
 				},
 			],
 		},

@@ -89,16 +89,39 @@ export default {
 					return;
 				}
 
-				if (!layerNameRegex.test(node.name)) {
-					context.report({
-						loc: node.loc,
-						messageId: "layerNameMismatch",
-						data: {
-							name: node.name,
-							pattern: options.layerNamePattern,
-						},
-					});
-				}
+				const parts = node.name.split(".");
+				let currentPos = 0;
+
+				parts.forEach((part, index) => {
+					if (!layerNameRegex.test(part)) {
+						const startColumn = node.loc.start.column + currentPos;
+						const endColumn = startColumn + part.length;
+
+						context.report({
+							loc: {
+								start: {
+									line: node.loc.start.line,
+									column: startColumn,
+								},
+								end: {
+									line: node.loc.start.line,
+									column: endColumn,
+								},
+							},
+							messageId: "layerNameMismatch",
+							data: {
+								name: part,
+								pattern: options.layerNamePattern,
+							},
+						});
+					}
+
+					currentPos += part.length;
+					// add 1 to account for the . symbol
+					if (index < parts.length - 1) {
+						currentPos += 1;
+					}
+				});
 			},
 
 			"Atrule[name=layer]"(node) {
