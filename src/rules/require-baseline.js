@@ -31,13 +31,6 @@ import { namedColors } from "../data/colors.js";
 // Helpers
 //-----------------------------------------------------------------------------
 
-const alwaysOkSelectorTypes = new Set([
-	"TypeSelector",
-	"IdSelector",
-	"ClassSelector",
-	"AttributeSelector",
-]);
-
 /**
  * Represents a property that is supported via @supports.
  */
@@ -742,54 +735,48 @@ export default {
 				}
 			},
 
-			Selector(node) {
-				for (const child of node.children) {
-					const selector = child.name;
+			"PseudoClassSelector,PseudoElementSelector"(node) {
+				const selector = node.name;
 
-					if (alwaysOkSelectorTypes.has(child.type)) {
-						continue;
+				if (!selectors.has(selector)) {
+					return;
+				}
+
+				// if the selector has been tested in a @supports rule, don't check it
+				if (supportsRules.hasSelector(selector)) {
+					return;
+				}
+
+				const featureStatus = selectors.get(selector);
+
+				if (!baselineAvailability.isSupported(featureStatus)) {
+					const loc = node.loc;
+
+					// some selectors are prefixed with the : or :: symbols
+					let prefixSymbolLength = 0;
+					if (node.type.startsWith("PseudoClass")) {
+						prefixSymbolLength = 1;
+					} else if (node.type.startsWith("PseudoElement")) {
+						prefixSymbolLength = 2;
 					}
 
-					if (!selectors.has(selector)) {
-						continue;
-					}
-
-					// if the selector has been tested in a @supports rule, don't check it
-					if (supportsRules.hasSelector(selector)) {
-						continue;
-					}
-
-					const featureStatus = selectors.get(selector);
-
-					if (!baselineAvailability.isSupported(featureStatus)) {
-						const loc = child.loc;
-
-						// some selectors are prefixed with the : or :: symbols
-						let prefixSymbolLength = 0;
-						if (child.type === "PseudoClassSelector") {
-							prefixSymbolLength = 1;
-						} else if (child.type === "PseudoElementSelector") {
-							prefixSymbolLength = 2;
-						}
-
-						context.report({
-							loc: {
-								start: loc.start,
-								end: {
-									line: loc.start.line,
-									column:
-										loc.start.column +
-										selector.length +
-										prefixSymbolLength,
-								},
+					context.report({
+						loc: {
+							start: loc.start,
+							end: {
+								line: loc.start.line,
+								column:
+									loc.start.column +
+									selector.length +
+									prefixSymbolLength,
 							},
-							messageId: "notBaselineSelector",
-							data: {
-								selector,
-								availability: baselineAvailability.availability,
-							},
-						});
-					}
+						},
+						messageId: "notBaselineSelector",
+						data: {
+							selector,
+							availability: baselineAvailability.availability,
+						},
+					});
 				}
 			},
 
