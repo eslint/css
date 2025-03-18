@@ -91,7 +91,7 @@ When `allowUnnamedLayers` is set to `true`, the following code is **correct**:
 
 #### `layerNamePattern`
 
-The `layerNamePattern` is a regular expression string that allows you to validate the name of layers and prevent misspellings.
+The `layerNamePattern` is a regular expression string that allows you to validate the name of layers and prevent misspellings. This option supports period-separated layer names (e.g., `foo.bar`) as defined in [CSS Cascade and Inheritance Level 5](https://drafts.csswg.org/css-cascade-5/#layer-names).
 
 Here's an example of **incorrect** code:
 
@@ -106,7 +106,20 @@ Here's an example of **incorrect** code:
 		color: red;
 	}
 }
+
+/* unknown period-separated layer name */
+@layer theme.custom {
+	a {
+		color: red;
+	}
+}
 ```
+
+Each part of a period-separated layer name is validated individually against the pattern. For example, with `layerNamePattern: "^(reset|theme|base)$"`:
+
+- `theme.base` is valid (both parts match the pattern)
+- `theme.custom` is invalid (`custom` doesn't match the pattern)
+- `other.base` is invalid (`other` doesn't match the pattern)
 
 #### `requireImportLayers: false`
 
