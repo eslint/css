@@ -44,6 +44,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 //-----------------------------------------------------------------------------
 
 const blockOpenerTokenTypes = new Map([
+	[tokenTypes.Function, ")"],
 	[tokenTypes.LeftCurlyBracket, "}"],
 	[tokenTypes.LeftParenthesis, ")"],
 	[tokenTypes.LeftSquareBracket, "]"],
