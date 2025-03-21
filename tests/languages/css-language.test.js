@@ -203,6 +203,22 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.errors[0].offset, 10);
 		});
 
+		it("should return an error when function parentheses is unclosed", () => {
+			const language = new CSSLanguage();
+			const result = language.parse({
+				body: "a { width: min(40%, 400px; }",
+				path: "test.css",
+			});
+
+			assert.strictEqual(result.ok, false);
+			assert.strictEqual(result.ast, undefined);
+			assert.strictEqual(result.errors.length, 4); // other errors caused by the first one
+			assert.strictEqual(result.errors[1].message, "Missing closing )");
+			assert.strictEqual(result.errors[1].line, 1);
+			assert.strictEqual(result.errors[1].column, 12);
+			assert.strictEqual(result.errors[1].offset, 11);
+		});
+
 		it("should not return an error when braces are unclosed and tolerant: true is used", () => {
 			const language = new CSSLanguage();
 			const result = language.parse(
