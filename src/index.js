@@ -15,7 +15,7 @@ import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
 import preferLogicalProperties from "./rules/prefer-logical-properties.js";
 import useLayers from "./rules/use-layers.js";
-import requireBaseline from "./rules/require-baseline.js";
+import useBaseline from "./rules/use-baseline.js";
 
 //-----------------------------------------------------------------------------
 // Plugin
@@ -36,7 +36,7 @@ const plugin = {
 		"no-invalid-properties": noInvalidProperties,
 		"prefer-logical-properties": preferLogicalProperties,
 		"use-layers": useLayers,
-		"require-baseline": requireBaseline,
+		"use-baseline": useBaseline,
 	},
 	configs: {
 		recommended: {
@@ -46,7 +46,7 @@ const plugin = {
 				"css/no-duplicate-imports": "error",
 				"css/no-invalid-at-rules": "error",
 				"css/no-invalid-properties": "error",
-				"css/require-baseline": "error",
+				"css/use-baseline": "error",
 			}),
 		},
 	},

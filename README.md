@@ -63,7 +63,7 @@ export default [
 | [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)             | Disallow invalid at-rules             |       yes       |
 | [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)         | Disallow invalid properties           |       yes       |
 | [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md) | Enforce the use of logical properties |       no        |
-| [`require-baseline`](./docs/rules/require-baseline.md)                   | Enforce the use of baseline features  |       yes       |
+| [`use-baseline`](./docs/rules/use-baseline.md)                           | Enforce the use of baseline features  |       yes       |
 | [`use-layers`](./docs/rules/use-layers.md)                               | Require use of layers                 |       no        |
 
 <!-- Rule Table End -->
