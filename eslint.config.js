@@ -79,6 +79,13 @@ export default [
 		...eslintPluginRulesRecommendedConfig,
 		rules: {
 			...eslintPluginRulesRecommendedConfig.rules,
+			"eslint-plugin/require-meta-docs-url": [
+				"error",
+				{
+					pattern:
+						"https://github.com/eslint/css/blob/main/docs/rules/{{name}}.md",
+				},
+			],
 			"eslint-plugin/require-meta-schema": "off", // `schema` defaults to []
 			"eslint-plugin/prefer-placeholders": "error",
 			"eslint-plugin/prefer-replace-text": "error",

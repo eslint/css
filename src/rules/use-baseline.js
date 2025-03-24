@@ -403,6 +403,7 @@ export default {
 		docs: {
 			description: "Enforce the use of baseline features",
 			recommended: true,
+			url: "https://github.com/eslint/css/blob/main/docs/rules/use-baseline.md",
 		},
 
 		schema: [
