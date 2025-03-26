@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.6.0](https://github.com/eslint/css/compare/css-v0.5.0...css-v0.6.0) (2025-03-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Rename require-basline -> use-baseline ([#100](https://github.com/eslint/css/issues/100))
+
+### Features
+
+* CSS nesting baseline support ([#87](https://github.com/eslint/css/issues/87)) ([8fcae6c](https://github.com/eslint/css/commit/8fcae6c17e85809f507c8efbec6d158725f89221))
+* Rename require-basline -&gt; use-baseline ([#100](https://github.com/eslint/css/issues/100)) ([21b71b4](https://github.com/eslint/css/commit/21b71b4c3fdb283dc0eb0e3d304e3ec7194578f8)), closes [#96](https://github.com/eslint/css/issues/96)
+
+
+### Bug Fixes
+
+* Add support period-separated layer names in use-layers rule ([#92](https://github.com/eslint/css/issues/92)) ([54b7da5](https://github.com/eslint/css/commit/54b7da55e39b65a1b2c3ccc793c25b1fef8f2929))
+* Catch more parse errors ([#97](https://github.com/eslint/css/issues/97)) ([d08df74](https://github.com/eslint/css/commit/d08df74ac48d34557ebc6f976418ac9d555e9dec))
+* compute baseline status of individual features ([#82](https://github.com/eslint/css/issues/82)) ([3d91042](https://github.com/eslint/css/commit/3d910420ce8c6d3923b3256224406902cc721d59))
+* Don't check class names in require-baseline ([#93](https://github.com/eslint/css/issues/93)) ([b8d6356](https://github.com/eslint/css/commit/b8d6356f4bf42ff74affcf26bbfb8487b7c26e3d))
+* expand supported types in baseline-data ([#74](https://github.com/eslint/css/issues/74)) ([96c3f95](https://github.com/eslint/css/commit/96c3f957c9f7a5f8c676693a50ea9b58e7e93d9a))
+
 ## [0.5.0](https://github.com/eslint/css/compare/css-v0.4.0...css-v0.5.0) (2025-03-14)
 
 
