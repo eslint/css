@@ -4,15 +4,21 @@ Enforce the use of baseline features
 
 ## Background
 
-[Baseline](https://web.dev/baseline) is an effort by the [W3C WebDX Community Group](https://github.com/web-platform-dx) to document which features are available in four core browsers: Chrome (desktop and Android), Edge, Firefox (desktop and Android), and Safari (macOS and iOS). This data allows developers to choose the technologies that are best supported for their audience. As part of this effort, Baseline tracks which CSS features are available in which browsers.
+[Baseline](https://web-platform-dx.github.io/web-features/) is an effort by the [W3C WebDX Community Group](https://www.w3.org/community/webdx/) to document which features of the web platform are available in a [set of core browsers](https://web-platform-dx.github.io/web-features/#:~:text=using%20the%20following-,core%20browser%20set,-%3A) (currently composed of Chrome, Chrome for Android, Edge, Firefox, Firefox for Android, Safari, and Safari for iOS). The Baseline data allows developers to make quicker decisions about the technologies they wish to use on their websites.
 
-Features are grouped into three levels:
+Baseline tracks features that cover the entire web platform, including features that are about CSS properties, values, or selectors. This rule uses the Baseline data from these CSS-related features.
 
-- **Widely available** features are those supported by all core browsers for at least 30 months.
-- **Newly available** features are those supported by all core browsers for less than 30 months.
-- **Limited availability** features are those supported by some but not all core browsers.
+Features tracked by Baseline can be in either of these three stages:
 
-Generally speaking, it's preferable to stick to widely available features to ensure the greatest interoperability across browsers.
+- **Widely available** features are supported by all the core browsers for at least 30 months.
+- **Newly available** features are supported by all the core browsers for less than 30 months.
+- **Limited availability** features are not yet supported by all the core browsers.
+
+While using only Baseline widely available features can help ensure the greatest interoperability across browsers, note that:
+
+- Testing your site is still required, especially if your audience uses browsers other than the Baseline core browser set.
+- Testing how accessible your site is with assistive technologies is still required. Baseline does not track how assistive technologies support web platform features.
+- You might still want to use non-widely available features, for example as part of a progressive enhancement strategy, using the `@supports` rule, or by defining fallbacks, or because of the browsers or devices your audience uses.
 
 ## Rule Details
 
@@ -88,8 +94,8 @@ h1:has(+ h2) {
 This rule accepts an option object with the following properties:
 
 - `available` (default: `"widely"`)
-    - change to `"newly"` available to allow features that have had cross-browser support for fewer than 30 months
-    - set to a numeric baseline year, for which all features that became baseline that year or earlier should be allowed (example: `2023`)
+    - change to `"newly"` to allow features that are at the Baseline newly available stage: features that have been supported on all core browsers for less than 30 months
+    - set to a numeric baseline year, such as `2023`, to allow features that became Baseline newly available that year, or earlier
 
 ## When Not to Use It
 
@@ -97,4 +103,4 @@ If your web application doesn't target all Baseline browsers then you can safely
 
 ## Further Reading
 
-- [How do things become baseline?](https://web.dev/baseline#how-do-things-become-baseline)
+- [How do features become part of Baseline?](https://web-platform-dx.github.io/web-features/#how-do-features-become-part-of-baseline%3F)
