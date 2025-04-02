@@ -21,18 +21,13 @@ import { visitorKeys } from "./css-visitor-keys.js";
 // Types
 //-----------------------------------------------------------------------------
 
-/** @typedef {import("@eslint/css-tree").CssNode} CssNode */
-/** @typedef {import("@eslint/css-tree").CssNodePlain} CssNodePlain */
-/** @typedef {import("@eslint/css-tree").StyleSheet} StyleSheet */
-/** @typedef {import("@eslint/css-tree").Comment} Comment */
-/** @typedef {import("@eslint/css-tree").Lexer} Lexer */
-/** @typedef {import("@eslint/css-tree").SyntaxConfig} SyntaxConfig */
-/** @typedef {import("@eslint/core").Language} Language */
-/** @typedef {import("@eslint/core").OkParseResult<CssNodePlain> & { comments: Comment[], lexer: Lexer }} OkParseResult */
-/** @typedef {import("@eslint/core").ParseResult<CssNodePlain>} ParseResult */
-/** @typedef {import("@eslint/core").File} File */
-/** @typedef {import("@eslint/core").FileError} FileError */
+/**
+ * @import { CssNodePlain, Comment, Lexer, StyleSheetPlain, SyntaxConfig } from "@eslint/css-tree"
+ * @import { Language, OkParseResult, ParseResult, File, FileError } from "@eslint/core";
+ */
 
+/** @typedef {OkParseResult<StyleSheetPlain> & { comments: Comment[], lexer: Lexer }} CSSOkParseResult */
+/** @typedef {ParseResult<StyleSheetPlain>} CSSParseResult */
 /**
  * @typedef {Object} CSSLanguageOptions
  * @property {boolean} [tolerant] Whether to be tolerant of recoverable parsing errors.
@@ -62,7 +57,7 @@ const blockCloserTokenTypes = new Map([
 
 /**
  * CSS Language Object
- * @implements {Language}
+ * @implements {Language<{ LangOptions: CSSLanguageOptions; Code: CSSSourceCode; RootNode: StyleSheetPlain; Node: CssNodePlain}>}
  */
 export class CSSLanguage {
 	/**
@@ -135,7 +130,7 @@ export class CSSLanguage {
 	 * @param {File} file The virtual file to parse.
 	 * @param {Object} [context] The parsing context.
 	 * @param {CSSLanguageOptions} [context.languageOptions] The language options to use for parsing.
-	 * @returns {ParseResult} The result of parsing.
+	 * @returns {CSSParseResult} The result of parsing.
 	 */
 	parse(file, { languageOptions = {} } = {}) {
 		// Note: BOM already removed
@@ -242,7 +237,7 @@ export class CSSLanguage {
 
 			return {
 				ok: true,
-				ast: root,
+				ast: /** @type {StyleSheetPlain} */ (root),
 				comments,
 				lexer,
 			};
@@ -257,7 +252,7 @@ export class CSSLanguage {
 	/**
 	 * Creates a new `CSSSourceCode` object from the given information.
 	 * @param {File} file The virtual file to create a `CSSSourceCode` object from.
-	 * @param {OkParseResult} parseResult The result returned from `parse()`.
+	 * @param {CSSOkParseResult} parseResult The result returned from `parse()`.
 	 * @returns {CSSSourceCode} The new `CSSSourceCode` object.
 	 */
 	createSourceCode(file, parseResult) {

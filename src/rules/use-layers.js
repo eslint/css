@@ -4,12 +4,28 @@
  */
 
 //-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/**
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @typedef {"missingLayer" | "missingLayerName" | "missingImportLayer" | "layerNameMismatch"} UseLayersMessageIds
+ * @typedef {[{
+ *     allowUnnamedLayers?: boolean,
+ *     requireImportLayers?: boolean,
+ *     layerNamePattern?: string
+ * }]} UseLayersOptions
+ * @typedef {CSSRuleDefinition<{ RuleOptions: UseLayersOptions, MessageIds: UseLayersMessageIds }>} UseLayersRuleDefinition
+ */
+
+//-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
 
+/** @type {UseLayersRuleDefinition} */
 export default {
 	meta: {
-		type: /** @type {const} */ ("problem"),
+		type: "problem",
 
 		docs: {
 			description: "Require use of layers",

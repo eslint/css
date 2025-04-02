@@ -3,9 +3,24 @@
  * @author Nicholas C. Zakas
  */
 
+//-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/**
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @typedef {"emptyBlock"} NoEmptyBlocksMessageIds
+ * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoEmptyBlocksMessageIds }>} NoEmptyBlocksRuleDefinition
+ */
+
+//-----------------------------------------------------------------------------
+// Rule Definition
+//-----------------------------------------------------------------------------
+
+/** @type {NoEmptyBlocksRuleDefinition} */
 export default {
 	meta: {
-		type: /** @type {const} */ ("problem"),
+		type: "problem",
 
 		docs: {
 			description: "Disallow empty blocks",

@@ -4,6 +4,17 @@
  */
 
 //-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/**
+ * @import { AtrulePlain } from "@eslint/css-tree"
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @typedef {"unknownAtRule" | "invalidPrelude" | "unknownDescriptor" | "invalidDescriptor" | "invalidExtraPrelude" | "missingPrelude"} NoInvalidAtRulesMessageIds
+ * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidAtRulesMessageIds }>} NoInvalidAtRulesRuleDefinition
+ */
+
+//-----------------------------------------------------------------------------
 // Imports
 //-----------------------------------------------------------------------------
 
@@ -41,9 +52,10 @@ function extractMetaDataFromError(error) {
 // Rule Definition
 //-----------------------------------------------------------------------------
 
+/** @type {NoInvalidAtRulesRuleDefinition} */
 export default {
 	meta: {
-		type: /** @type {const} */ ("problem"),
+		type: "problem",
 
 		docs: {
 			description: "Disallow invalid at-rules",
@@ -110,7 +122,9 @@ export default {
 
 			"AtRule > Block > Declaration"(node) {
 				// get at rule node
-				const atRule = sourceCode.getParent(sourceCode.getParent(node));
+				const atRule = /** @type {AtrulePlain} */ (
+					sourceCode.getParent(sourceCode.getParent(node))
+				);
 
 				const { error } = lexer.matchAtruleDescriptor(
 					atRule.name,
