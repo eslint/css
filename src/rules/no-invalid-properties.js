@@ -4,6 +4,12 @@
  */
 
 //-----------------------------------------------------------------------------
+// Imports
+//-----------------------------------------------------------------------------
+
+import { isSyntaxMatchError } from "../util.js";
+
+//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
@@ -12,12 +18,6 @@
  * @typedef {"invalidPropertyValue" | "unknownProperty"} NoInvalidPropertiesMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidPropertiesMessageIds }>} NoInvalidPropertiesRuleDefinition
  */
-
-//-----------------------------------------------------------------------------
-// Imports
-//-----------------------------------------------------------------------------
-
-import { isSyntaxMatchError } from "../util.js";
 
 //-----------------------------------------------------------------------------
 // Rule Definition

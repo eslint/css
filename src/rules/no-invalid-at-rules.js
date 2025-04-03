@@ -4,6 +4,12 @@
  */
 
 //-----------------------------------------------------------------------------
+// Imports
+//-----------------------------------------------------------------------------
+
+import { isSyntaxMatchError } from "../util.js";
+
+//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
@@ -13,12 +19,6 @@
  * @typedef {"unknownAtRule" | "invalidPrelude" | "unknownDescriptor" | "invalidDescriptor" | "invalidExtraPrelude" | "missingPrelude"} NoInvalidAtRulesMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidAtRulesMessageIds }>} NoInvalidAtRulesRuleDefinition
  */
-
-//-----------------------------------------------------------------------------
-// Imports
-//-----------------------------------------------------------------------------
-
-import { isSyntaxMatchError } from "../util.js";
 
 //-----------------------------------------------------------------------------
 // Helpers
