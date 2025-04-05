@@ -3,9 +3,26 @@
  * @author Nicholas C. Zakas
  */
 
+//-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/**
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @typedef {"duplicateImport"} NoDuplicateKeysMessageIds
+ * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoDuplicateKeysMessageIds }>} NoDuplicateImportsRuleDefinition
+ */
+
+//-----------------------------------------------------------------------------
+// Rule
+//-----------------------------------------------------------------------------
+
+/**
+ * @type {NoDuplicateImportsRuleDefinition}
+ */
 export default {
 	meta: {
-		type: /** @type {const} */ ("problem"),
+		type: "problem",
 
 		docs: {
 			description: "Disallow duplicate @import rules",

@@ -10,12 +10,23 @@
 import { isSyntaxMatchError } from "../util.js";
 
 //-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/**
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @typedef {"invalidPropertyValue" | "unknownProperty"} NoInvalidPropertiesMessageIds
+ * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidPropertiesMessageIds }>} NoInvalidPropertiesRuleDefinition
+ */
+
+//-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
 
+/** @type {NoInvalidPropertiesRuleDefinition} */
 export default {
 	meta: {
-		type: /** @type {const} */ ("problem"),
+		type: "problem",
 
 		docs: {
 			description: "Disallow invalid properties",

@@ -19,21 +19,12 @@ import { visitorKeys } from "./css-visitor-keys.js";
 // Types
 //-----------------------------------------------------------------------------
 
-/** @typedef {import("@eslint/css-tree").CssNode} CssNode */
-/** @typedef {import("@eslint/css-tree").CssNodePlain} CssNodePlain */
-/** @typedef {import("@eslint/css-tree").BlockPlain} BlockPlain */
-/** @typedef {import("@eslint/css-tree").Comment} Comment */
-/** @typedef {import("@eslint/css-tree").Lexer} Lexer */
-/** @typedef {import("@eslint/core").SourceRange} SourceRange */
-/** @typedef {import("@eslint/core").SourceLocation} SourceLocation */
-/** @typedef {import("@eslint/core").SourceLocationWithOffset} SourceLocationWithOffset */
-/** @typedef {import("@eslint/core").File} File */
-/** @typedef {import("@eslint/core").TraversalStep} TraversalStep */
-/** @typedef {import("@eslint/core").TextSourceCode} TextSourceCode */
-/** @typedef {import("@eslint/core").VisitTraversalStep} VisitTraversalStep */
-/** @typedef {import("@eslint/core").FileProblem} FileProblem */
-/** @typedef {import("@eslint/core").DirectiveType} DirectiveType */
-/** @typedef {import("@eslint/core").RulesConfig} RulesConfig */
+/**
+ * @import { CssNode, CssNodePlain, Comment, Lexer, StyleSheetPlain } from "@eslint/css-tree"
+ * @import { SourceRange, SourceLocation, FileProblem, DirectiveType, RulesConfig, TextSourceCode } from "@eslint/core"
+ * @import { CSSSyntaxElement } from "../types.js"
+ * @import { CSSLanguageOptions } from "./css-language.js"
+ */
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -73,7 +64,8 @@ class CSSTraversalStep extends VisitNodeStep {
 //-----------------------------------------------------------------------------
 
 /**
- * CSS Source Code Object
+ * CSS Source Code Object.
+ * @implements {TextSourceCode<{LangOptions: CSSLanguageOptions, RootNode: StyleSheetPlain, SyntaxElementWithLoc: CSSSyntaxElement, ConfigNode: Comment}>}
  */
 export class CSSSourceCode extends TextSourceCodeBase {
 	/**
@@ -96,7 +88,7 @@ export class CSSSourceCode extends TextSourceCodeBase {
 
 	/**
 	 * The AST of the source code.
-	 * @type {CssNodePlain}
+	 * @type {StyleSheetPlain}
 	 */
 	ast = undefined;
 
@@ -116,7 +108,7 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	 * Creates a new instance.
 	 * @param {Object} options The options for the instance.
 	 * @param {string} options.text The source code text.
-	 * @param {CssNodePlain} options.ast The root AST node.
+	 * @param {StyleSheetPlain} options.ast The root AST node.
 	 * @param {Array<Comment>} options.comments The comment nodes in the source code.
 	 * @param {Lexer} options.lexer The lexer used to parse the source code.
 	 */

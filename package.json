@@ -85,8 +85,8 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "@eslint/core": "^0.10.0",
-    "@eslint/css-tree": "^3.3.1",
+    "@eslint/core": "^0.13.0",
+    "@eslint/css-tree": "^3.3.2",
     "@eslint/plugin-kit": "^0.2.5"
   },
   "devDependencies": {
@@ -105,7 +105,8 @@
     "prettier": "^3.4.1",
     "rollup": "^4.16.2",
     "rollup-plugin-copy": "^3.5.0",
-    "typescript": "^5.4.5",
+    "rollup-plugin-delete": "^3.0.1",
+    "typescript": "^5.8.2",
     "web-features": "^2.23.0",
     "yorkie": "^2.0.0"
   },

@@ -23,9 +23,15 @@ import { namedColors } from "../data/colors.js";
 // Type Definitions
 //-----------------------------------------------------------------------------
 
-/** @typedef {import("@eslint/css-tree").AtrulePlain} AtrulePlain */
-/** @typedef {import("@eslint/css-tree").Identifier} Identifier */
-/** @typedef {import("@eslint/css-tree").FunctionNodePlain} FunctionNodePlain */
+/**
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @import { Identifier, FunctionNodePlain } from "@eslint/css-tree"
+ * @typedef {"notBaselineProperty" | "notBaselinePropertyValue" | "notBaselineAtRule" | "notBaselineType" | "notBaselineMediaCondition" | "notBaselineSelector"} UseBaselineMessageIds
+ * @typedef {[{
+ *     available?: "widely" | "newly" | number
+ * }]} UseBaselineOptions
+ * @typedef {CSSRuleDefinition<{ RuleOptions: UseBaselineOptions, MessageIds: UseBaselineMessageIds }>} UseBaselineRuleDefinition
+ */
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -396,9 +402,10 @@ class BaselineAvailability {
 // Rule Definition
 //-----------------------------------------------------------------------------
 
+/** @type {UseBaselineRuleDefinition} */
 export default {
 	meta: {
-		type: /** @type {const} */ ("problem"),
+		type: "problem",
 
 		docs: {
 			description: "Enforce the use of baseline features",
@@ -488,7 +495,7 @@ export default {
 					data: {
 						property,
 						value: child.name,
-						availability: baselineAvailability.availability,
+						availability: String(baselineAvailability.availability),
 					},
 				});
 			}
@@ -496,7 +503,7 @@ export default {
 
 		/**
 		 * Checks a property value function to see if it's a baseline feature.
-		 * @param {import("@eslint/css-tree").FunctionNodePlain} child The node to check.
+		 * @param {FunctionNodePlain} child The node to check.
 		 * @returns {void}
 		 **/
 		function checkPropertyValueFunction(child) {
@@ -513,7 +520,7 @@ export default {
 					messageId: "notBaselineType",
 					data: {
 						type: child.name,
-						availability: baselineAvailability.availability,
+						availability: String(baselineAvailability.availability),
 					},
 				});
 			}
@@ -603,7 +610,9 @@ export default {
 							messageId: "notBaselineProperty",
 							data: {
 								property,
-								availability: baselineAvailability.availability,
+								availability: String(
+									baselineAvailability.availability,
+								),
 							},
 						});
 
@@ -699,7 +708,9 @@ export default {
 							messageId: "notBaselineMediaCondition",
 							data: {
 								condition: child.name,
-								availability: baselineAvailability.availability,
+								availability: String(
+									baselineAvailability.availability,
+								),
 							},
 						});
 					}
@@ -730,7 +741,9 @@ export default {
 						messageId: "notBaselineAtRule",
 						data: {
 							atRule: node.name,
-							availability: baselineAvailability.availability,
+							availability: String(
+								baselineAvailability.availability,
+							),
 						},
 					});
 				}
@@ -775,7 +788,9 @@ export default {
 						messageId: "notBaselineSelector",
 						data: {
 							selector,
-							availability: baselineAvailability.availability,
+							availability: String(
+								baselineAvailability.availability,
+							),
 						},
 					});
 				}
@@ -794,7 +809,7 @@ export default {
 					messageId: "notBaselineSelector",
 					data: {
 						selector,
-						availability: baselineAvailability.availability,
+						availability: String(baselineAvailability.availability),
 					},
 				});
 			},
