@@ -77,9 +77,12 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: "lts/*"
+            - name: Install Corepack latest
+              run: |
+                  npm install -g corepack@latest
+                  corepack enable yarn
             - name: yarn add
               run: |
-                  corepack enable yarn
                   corepack use yarn@latest
                   yarn init -p
                   yarn add ./eslint-css-${{ needs.npm-build.outputs.version }}.tgz -D
