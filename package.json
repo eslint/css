@@ -62,7 +62,7 @@
   "scripts": {
     "build:dedupe-types": "node tools/dedupe-types.js dist/cjs/index.cjs dist/esm/index.js",
     "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\"",
-    "build:syntax-cts": "node -e \"fs.copyFileSync('dist/esm/syntax/index.d.ts', 'dist/cjs/syntax/index.d.cts')\"",
+    "build:syntax-cts": "node -e \"fs.copyFileSync('dist/esm/syntax/index.d.ts', 'dist/cjs/syntax/index.d.cts')\" && node tools/update-cts.js dist/cjs/types.cts dist/cjs/index.d.cts",
     "build": "rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts && tsc -p tsconfig.syntax.json && npm run build:syntax-cts",
     "build:readme": "node tools/update-readme.js",
     "build:update-rules-docs": "node tools/update-rules-docs.js",
@@ -86,7 +86,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@eslint/core": "^0.13.0",
-    "@eslint/css-tree": "^3.3.2",
+    "@eslint/css-tree": "^3.3.3",
     "@eslint/plugin-kit": "^0.2.5"
   },
   "devDependencies": {

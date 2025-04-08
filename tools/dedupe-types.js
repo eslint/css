@@ -75,9 +75,13 @@ files.forEach(filePath => {
 	remainingLines.unshift(""); // add a blank line before the block
 
 	// replace references to ../types.ts with ./types.ts
-	const text = remainingLines
+	let text = remainingLines
 		.join("\n")
 		.replace(/\.\.\/types\.js/gu, "./types.js");
+
+	if (filePath.endsWith(".cjs")) {
+		text = text.replace("types.js", "types.cjs");
+	}
 
 	fs.writeFileSync(filePath, text, "utf8");
 });
