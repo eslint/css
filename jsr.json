@@ -7,10 +7,7 @@
   },
   "publish": {
     "include": [
-      "dist/esm/index.js",
-      "dist/esm/index.d.ts",
-      "dist/esm/syntax/index.js",
-      "dist/esm/syntax/index.d.ts",
+      "dist/esm",
       "README.md",
       "jsr.json",
       "LICENSE"
