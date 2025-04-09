@@ -261,4 +261,64 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(sourceCode.comments.length, 1);
 		});
 	});
+	
+	describe.only("SCSS", () => {
+		const language = new CSSLanguage({ mode: "scss" });
+		
+		it("should parse SCSS declaration at top level", () => {
+			const result = language.parse({
+				body: "$foo: red;",
+				path: "test.scss",
+			});
+
+			assert.strictEqual(result.ok, true);
+			assert.strictEqual(result.ast.type, "StyleSheet");
+			
+			const declaration = result.ast.children[0];
+			assert.strictEqual(declaration.type, "ScssDeclaration");
+			assert.strictEqual(declaration.variable, "$foo");
+			assert.strictEqual(declaration.value.type, "Value");
+			assert.strictEqual(declaration.value.children[0].type, "Identifier");
+			assert.strictEqual(declaration.value.children[0].name, "red");
+		});
+		
+		it("should parse the @use rule in SCSS", () => {
+			
+			const result = language.parse({
+				body: "@use 'foo';",
+				path: "test.scss",
+			});
+			
+			assert.strictEqual(result.ok, true);
+			assert.strictEqual(result.ast.type, "StyleSheet");
+			
+			const useRule = result.ast.children[0];
+			assert.strictEqual(useRule.type, "Atrule");
+			assert.strictEqual(useRule.name, "use");
+			assert.strictEqual(useRule.prelude.children[0].type, "String");
+			assert.strictEqual(useRule.prelude.children[0].value, "foo");
+		});
+		
+		it("should parse a variable reference in a value", () => {
+			
+			const result = language.parse({
+				body: "$foo: red; a { color: $foo; }",
+				path: "test.scss"
+			});
+			
+			assert.strictEqual(result.ok, true);
+			assert.strictEqual(result.ast.type, "StyleSheet");
+			
+			const sccsDeclaration = result.ast.children[0];
+			assert.strictEqual(sccsDeclaration.type, "ScssDeclaration");
+			assert.strictEqual(sccsDeclaration.variable, "$foo");
+			assert.strictEqual(sccsDeclaration.value.type, "Value");
+			assert.strictEqual(sccsDeclaration.value.children[0].type, "Identifier");
+			assert.strictEqual(sccsDeclaration.value.children[0].name, "red");
+			
+			const declaration = result.ast.children[1].block.children[0];
+			assert.strictEqual(declaration.value.children[0].type, "ScssVariable");
+			assert.strictEqual(declaration.value.children[0].name, "foo");
+		});
+	});
 });
