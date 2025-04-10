@@ -94,7 +94,7 @@
     "c8": "^9.1.0",
     "compute-baseline": "^0.3.0",
     "dedent": "^1.5.3",
-    "eslint": "^9.11.1",
+    "eslint": "^9.24.0",
     "eslint-config-eslint": "^11.0.0",
     "eslint-plugin-eslint-plugin": "^6.3.2",
     "got": "^14.4.2",

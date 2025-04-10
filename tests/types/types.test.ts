@@ -1,8 +1,7 @@
 import css from "@eslint/css";
-import type { CSSLanguageOptions } from "@eslint/css";
-// import { ESLint } from "eslint";
+import { ESLint } from "eslint";
 
-// json satisfies ESLint.Plugin;
+css satisfies ESLint.Plugin;
 css.meta.name satisfies string;
 css.meta.version satisfies string;
 
