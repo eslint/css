@@ -29,7 +29,7 @@ type WithExit<RuleVisitorType extends RuleVisitor> = {
 //------------------------------------------------------------------------------
 
 /**
- * A JSON syntax element, including nodes and tokens.
+ * A CSS syntax element, including nodes and comments.
  */
 export type CSSSyntaxElement = CssNodePlain | Comment;
 
