@@ -60,7 +60,7 @@ export type CSSRuleDefinition<
 > = RuleDefinition<
 	// Language specific type options (non-configurable)
 	{
-		LangOptions: {};
+		LangOptions: CSSLanguageOptions;
 		Code: CSSSourceCode;
 		Visitor: CSSRuleVisitor;
 		Node: CssNodePlain;
