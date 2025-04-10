@@ -320,5 +320,22 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(declaration.value.children[0].type, "ScssVariable");
 			assert.strictEqual(declaration.value.children[0].name, "foo");
 		});
+		
+		it("should parse SCSS placeholder selector", () => {
+			
+			const result = language.parse({
+				body: "%placeholder { color: red; }",
+				path: "test.scss"
+			});
+			
+			assert.strictEqual(result.ok, true);
+			assert.strictEqual(result.ast.type, "StyleSheet");
+			
+			const placeholder = result.ast.children[0];
+			assert.strictEqual(placeholder.type, "Rule");
+			assert.strictEqual(placeholder.prelude.type, "SelectorList");
+			assert.strictEqual(placeholder.prelude.children[0].type, "Selector");
+			assert.strictEqual(placeholder.prelude.children[0].children[0].name, "placeholder");
+		});
 	});
 });
