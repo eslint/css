@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/eslint/css/compare/css-v0.6.0...css-v0.6.1) (2025-04-11)
+
+
+### Bug Fixes
+
+* Set use-baseline to 'warn' in recommended config ([#110](https://github.com/eslint/css/issues/110)) ([2152e9d](https://github.com/eslint/css/commit/2152e9d4981b4920254296cd261d5839558484e7)), closes [#80](https://github.com/eslint/css/issues/80)
+
 ## [0.6.0](https://github.com/eslint/css/compare/css-v0.5.0...css-v0.6.0) (2025-03-26)
 
 
