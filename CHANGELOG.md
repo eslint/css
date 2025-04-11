@@ -5,7 +5,7 @@
 
 ### ⚠ BREAKING CHANGES
 
-* Rename require-basline -> use-baseline ([#100](https://github.com/eslint/css/issues/100))
+* Rename require-baseline -> use-baseline ([#100](https://github.com/eslint/css/issues/100))
 
 ### Features
 
