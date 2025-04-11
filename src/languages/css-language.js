@@ -11,11 +11,11 @@ import {
 	parse as originalParse,
 	lexer as originalLexer,
 	fork,
-	toPlainObject,
 	tokenTypes,
 } from "@eslint/css-tree";
 import { CSSSourceCode } from "./css-source-code.js";
 import { visitorKeys } from "./css-visitor-keys.js";
+import scss from "./scss-syntax.js"
 
 //-----------------------------------------------------------------------------
 // Types
@@ -32,6 +32,10 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /** @typedef {import("@eslint/core").ParseResult<CssNodePlain>} ParseResult */
 /** @typedef {import("@eslint/core").File} File */
 /** @typedef {import("@eslint/core").FileError} FileError */
+
+/**
+ * @typedef {"css"|"scss"} LanguageMode
+ */
 
 /**
  * @typedef {Object} CSSLanguageOptions
@@ -94,7 +98,13 @@ export class CSSLanguage {
 	 * @type {Record<string, string[]>}
 	 */
 	visitorKeys = visitorKeys;
-
+	
+	/**
+	 * The language mode.
+	 * @type {LanguageMode}
+	 */
+	mode;
+	
 	/**
 	 * The default language options.
 	 * @type {CSSLanguageOptions}
@@ -102,6 +112,15 @@ export class CSSLanguage {
 	defaultLanguageOptions = {
 		tolerant: false,
 	};
+	
+	/**
+	 * Creates a new instance of the CSSLanguage class.
+	 * @param {Object} options The options for the language.
+	 * @param {LanguageMode} [options.mode] The language mode to use.
+	 */
+	constructor({ mode = "css" } = {}) {
+		this.mode = mode;
+	}
 
 	/**
 	 * Validates the language options.
@@ -147,9 +166,11 @@ export class CSSLanguage {
 		/** @type {FileError[]} */
 		const errors = [];
 
+		const syntax = this.mode === "scss" ? scss : languageOptions.customSyntax;
+		
 		const { tolerant } = languageOptions;
-		const { parse, lexer } = languageOptions.customSyntax
-			? fork(languageOptions.customSyntax)
+		const { parse, lexer, toPlainObject } = syntax
+			? fork(syntax)
 			: { parse: originalParse, lexer: originalLexer };
 
 		/*

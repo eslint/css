@@ -114,6 +114,7 @@ em {
 | **Language Name** | **Description**        |
 | ----------------- | ---------------------- |
 | `css`             | Parse CSS stylesheets. |
+| `scss`            | Parse SCSS stylesheets.|
 
 In order to individually configure a language in your `eslint.config.js` file, import `@eslint/css` and configure a `language`:
 
@@ -131,6 +132,13 @@ export default [
 		rules: {
 			"css/no-empty-blocks": "error",
 		},
+	},
+	{
+		files: ["**/*.scss"],
+		plugins: {
+			css,
+		},
+		language: "css/scss"
 	},
 ];
 ```
