@@ -58,4 +58,5 @@ const plugin = {
 }
 
 export default plugin;
-export { CSSLanguage, CSSSourceCode };
+export { CSSSourceCode };
+export * from "./languages/css-language.js";

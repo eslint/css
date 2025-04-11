@@ -1,4 +1,18 @@
 //-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/**
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @typedef {"notLogicalProperty" | "notLogicalValue" | "notLogicalUnit"} PreferLogicalPropertiesMessageIds
+ * @typedef {[{
+ *     allowProperties?: string[],
+ *     allowUnits?: string[]
+ * }]} PreferLogicalPropertiesOptions
+ * @typedef {CSSRuleDefinition<{ RuleOptions: PreferLogicalPropertiesOptions, MessageIds: PreferLogicalPropertiesMessageIds }>} PreferLogicalPropertiesRuleDefinition
+ */
+
+//-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
 
@@ -118,11 +132,13 @@ const unitReplacements = new Map([
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
+
+/** @type {PreferLogicalPropertiesRuleDefinition} */
 export default {
 	meta: {
-		type: /** @type {const} */ ("problem"),
+		type: "problem",
 
-		fixable: /** @type {const} */ ("code"),
+		fixable: "code",
 
 		docs: {
 			description: "Enforce the use of logical properties",
@@ -194,6 +210,7 @@ export default {
 
 				if (
 					propertyValuesReplacements.get(node.property) &&
+					node.value.type === "Value" &&
 					node.value.children[0].type === "Identifier"
 				) {
 					const nodeValue = node.value.children[0].name;
