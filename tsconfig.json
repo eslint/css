@@ -7,6 +7,7 @@
     "checkJs": true,
     "outDir": "dist/esm",
     "target": "ES2022",
+    "lib": ["ES2022"],
     "moduleResolution": "NodeNext",
     "module": "NodeNext"
   }
