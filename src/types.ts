@@ -9,7 +9,7 @@
 
 import type { RuleVisitor, RuleDefinition } from "@eslint/core";
 
-import type { CssNodePlain, CssNodeNames, Comment } from "@eslint/css-tree";
+import type { CssNodePlain, CssNodeNames } from "@eslint/css-tree";
 
 import type { CSSLanguageOptions, CSSSourceCode } from "./index.js";
 
@@ -31,7 +31,7 @@ type WithExit<RuleVisitorType extends RuleVisitor> = {
 /**
  * A CSS syntax element, including nodes and comments.
  */
-export type CSSSyntaxElement = CssNodePlain | Comment;
+export type CSSSyntaxElement = CssNodePlain;
 
 type CSSNodeVisitor = {
 	[Type in CssNodeNames]: (
