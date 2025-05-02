@@ -28,6 +28,7 @@ const plugin = {
 	},
 	languages: {
 		css: new CSSLanguage(),
+		scss: new CSSLanguage({ mode: "scss" }),
 	},
 	rules: {
 		"no-empty-blocks": noEmptyBlocks,
