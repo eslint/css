@@ -11,6 +11,7 @@ import { CSSLanguage } from "./languages/css-language.js";
 import { CSSSourceCode } from "./languages/css-source-code.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
+import noImportant from "./rules/no-important.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
 import preferLogicalProperties from "./rules/prefer-logical-properties.js";
@@ -32,6 +33,7 @@ const plugin = {
 	rules: {
 		"no-empty-blocks": noEmptyBlocks,
 		"no-duplicate-imports": noDuplicateImports,
+		"no-important": noImportant,
 		"no-invalid-at-rules": noInvalidAtRules,
 		"no-invalid-properties": noInvalidProperties,
 		"prefer-logical-properties": preferLogicalProperties,
@@ -44,6 +46,7 @@ const plugin = {
 			rules: /** @type {const} */ ({
 				"css/no-empty-blocks": "error",
 				"css/no-duplicate-imports": "error",
+				"css/no-important": "error",
 				"css/no-invalid-at-rules": "error",
 				"css/no-invalid-properties": "error",
 				"css/use-baseline": "warn",

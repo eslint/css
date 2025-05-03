@@ -23,3 +23,28 @@
 export function isSyntaxMatchError(error) {
 	return typeof error.syntax === "string";
 }
+
+/**
+ * Finds the line and column offsets for a given offset in a string.
+ * @param {string} text The text to search.
+ * @param {number} offset The offset to find.
+ * @returns {{lineOffset:number,columnOffset:number}} The location of the offset.
+ */
+export function findOffsets(text, offset) {
+	let lineOffset = 0;
+	let columnOffset = 0;
+
+	for (let i = 0; i < offset; i++) {
+		if (text[i] === "\n") {
+			lineOffset++;
+			columnOffset = 0;
+		} else {
+			columnOffset++;
+		}
+	}
+
+	return {
+		lineOffset,
+		columnOffset,
+	};
+}
