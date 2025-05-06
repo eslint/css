@@ -35,9 +35,9 @@ Examples of correct code:
 
 You may disable this rule if you are using `!important` in these specific cases:
 
-- Overriding third-party styles where you lack control over the source CSS.
-- Fixing accessibility issues (e.g., enforcing focus states or color contrast).
-- Working with legacy code where refactoring isn’t feasible.
+- Overriding third-party styles where you lack control over the source CSS
+- Fixing accessibility issues (e.g., enforcing focus states or color contrast)
+- Working with legacy code where refactoring isn’t feasible
 
 ## Prior Art
 
