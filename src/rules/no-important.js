@@ -1,5 +1,7 @@
 /**
- * @fileoverview Rule to disallow !important flags.
+ * @fileoverview Rule to disallow `!important` flags.
+ * @author thecalamiity
+ * @author Yann Bertrand
  */
 
 //-----------------------------------------------------------------------------
@@ -39,11 +41,12 @@ export default {
 	},
 
 	create(context) {
+		const importantPattern = /!(\s|\/\*.*?\*\/)*important/iu;
+
 		return {
 			Declaration(node) {
 				if (node.important) {
 					const declarationText = context.sourceCode.getText(node);
-					const importantPattern = /!(\s|\/\*.*?\*\/)*important/iu;
 					const importantMatch =
 						importantPattern.exec(declarationText);
 

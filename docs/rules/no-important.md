@@ -1,6 +1,6 @@
 # no-important
 
-Disallow !important flags.
+Disallow `!important` flags.
 
 ## Background
 
@@ -33,7 +33,7 @@ Examples of correct code:
 
 ## When Not to Use It
 
-You may disable this rule in these specific cases:
+You may disable this rule if you are using `!important` in these specific cases:
 
 - Overriding third-party styles where you lack control over the source CSS.
 - Fixing accessibility issues (e.g., enforcing focus states or color contrast).
