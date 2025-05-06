@@ -1,0 +1,12 @@
+{
+  "added": {
+    "no-duplicate-imports": "0.1.0",
+    "no-empty-blocks": "0.1.0",
+    "no-invalid-at-rules": "0.1.0",
+    "no-invalid-properties": "0.1.0",
+    "prefer-logical-properties": "0.5.0",
+    "use-baseline": "0.6.0",
+    "use-layers": "0.3.0"
+  },
+  "removed": {}
+}

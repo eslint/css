@@ -22,6 +22,8 @@ jobs:
               run: npm run build
             - name: Lint files
               run: npm run lint
+            - name: Check Rule Types
+              run: npm run lint:rule-types
             - name: Check Formatting
               run: npm run fmt:check
     test:

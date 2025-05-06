@@ -25,6 +25,12 @@ export default [
 						rename: "types.cts",
 					},
 					{ src: "src/types.ts", dest: "dist/esm" },
+					{
+						src: "src/types/rules.d.ts",
+						dest: "dist/cjs/types",
+						rename: "rules.d.cts",
+					},
+					{ src: "src/types/rules.d.ts", dest: "dist/esm/types" },
 				],
 			}),
 		],

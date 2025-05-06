@@ -26,6 +26,14 @@
         "types": "./dist/esm/syntax/index.d.ts",
         "default": "./dist/esm/syntax/index.js"
       }
+    },
+    "./rules": {
+      "require": {
+        "types": "./dist/cjs/types/rules.d.cts"
+      },
+      "import": {
+        "types": "./dist/esm/types/rules.d.ts"
+      }
     }
   },
   "files": [
@@ -49,6 +57,10 @@
     "{src/rules/*.js,tools/update-rules-docs.js}": [
       "node tools/update-rules-docs.js",
       "git add README.md"
+    ],
+    "src/rules/*.js": [
+      "node tools/update-rule-type-headers.js",
+      "git add src/types/rules.d.ts"
     ]
   },
   "repository": {
@@ -70,6 +82,7 @@
     "test:jsr": "npx jsr@latest publish --dry-run",
     "pretest": "npm run build",
     "lint": "eslint",
+    "lint:rule-types": "node tools/update-rule-type-headers.js --check",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "test": "mocha tests/**/*.js",
