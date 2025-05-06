@@ -21,7 +21,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 
 /**
  * @import { CssNode, CssNodePlain, Comment, Lexer, StyleSheetPlain } from "@eslint/css-tree"
- * @import { SourceRange, SourceLocation, FileProblem, DirectiveType, RulesConfig, TextSourceCode } from "@eslint/core"
+ * @import { SourceRange, SourceLocation, FileProblem, DirectiveType, RulesConfig } from "@eslint/core"
  * @import { CSSSyntaxElement } from "../types.js"
  * @import { CSSLanguageOptions } from "./css-language.js"
  */
@@ -65,7 +65,7 @@ class CSSTraversalStep extends VisitNodeStep {
 
 /**
  * CSS Source Code Object.
- * @implements {TextSourceCode<{LangOptions: CSSLanguageOptions, RootNode: StyleSheetPlain, SyntaxElementWithLoc: CSSSyntaxElement, ConfigNode: Comment}>}
+ * @extends {TextSourceCodeBase<{LangOptions: CSSLanguageOptions, RootNode: StyleSheetPlain, SyntaxElementWithLoc: CSSSyntaxElement, ConfigNode: Comment}>}
  */
 export class CSSSourceCode extends TextSourceCodeBase {
 	/**

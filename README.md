@@ -36,18 +36,20 @@ In your `eslint.config.js` file, import `@eslint/css` and include the recommende
 
 ```js
 // eslint.config.js
+import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 
-export default [
+export default defineConfig([
 	// lint CSS files
 	{
 		files: ["**/*.css"],
 		language: "css/css",
-		...css.configs.recommended,
+		plugins: { css },
+		extends: ["css/recommended"],
 	},
 
 	// your other configs here
-];
+]);
 ```
 
 ### Rules
@@ -74,9 +76,10 @@ In order to individually configure a rule in your `eslint.config.js` file, impor
 
 ```js
 // eslint.config.js
+import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 
-export default [
+export default defineConfig([
 	{
 		files: ["**/*.css"],
 		plugins: {
@@ -87,7 +90,7 @@ export default [
 			"css/no-empty-blocks": "error",
 		},
 	},
-];
+]);
 ```
 
 You can individually config, disable, and enable rules in CSS using comments, such as:
@@ -119,9 +122,10 @@ In order to individually configure a language in your `eslint.config.js` file, i
 
 ```js
 // eslint.config.js
+import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 
-export default [
+export default defineConfig([
 	{
 		files: ["**/*.css"],
 		plugins: {
@@ -132,7 +136,7 @@ export default [
 			"css/no-empty-blocks": "error",
 		},
 	},
-];
+]);
 ```
 
 #### Tolerant Mode
@@ -141,9 +145,10 @@ By default, the CSS parser runs in strict mode, which reports all parsing errors
 
 ```js
 // eslint.config.js
+import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 
-export default [
+export default defineConfig([
 	{
 		files: ["**/*.css"],
 		plugins: {
@@ -157,7 +162,7 @@ export default [
 			"css/no-empty-blocks": "error",
 		},
 	},
-];
+]);
 ```
 
 Setting `tolerant` to `true` is necessary if you are using custom syntax, such as [PostCSS](https://postcss.org/) plugins, that aren't part of the standard CSS syntax.
@@ -176,9 +181,10 @@ You can configure that syntax as follows:
 
 ```js
 // eslint.config.js
+import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 
-export default [
+export default defineConfig([
 	{
 		files: ["**/*.css"],
 		plugins: {
@@ -198,7 +204,7 @@ export default [
 			"css/no-empty-blocks": "error",
 		},
 	},
-];
+]);
 ```
 
 #### Configuring Tailwind Syntax
@@ -207,10 +213,11 @@ export default [
 
 ```js
 // eslint.config.js
+import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
 import { tailwindSyntax } from "@eslint/css/syntax";
 
-export default [
+export default defineConfig([
 	{
 		files: ["**/*.css"],
 		plugins: {
@@ -224,7 +231,7 @@ export default [
 			"css/no-empty-blocks": "error",
 		},
 	},
-];
+]);
 ```
 
 **Note:** The Tailwind syntax doesn't currently provide for the `theme()` function. This is a [limitation of CSSTree](https://github.com/csstree/csstree/issues/292) that we hope will be resolved soon.
@@ -246,7 +253,7 @@ to get your logo on our READMEs and [website](https://eslint.org/sponsors).
 <p><a href="https://automattic.com"><img src="https://images.opencollective.com/automattic/d0ef3e1/logo.png" alt="Automattic" height="128"></a> <a href="https://www.airbnb.com/"><img src="https://images.opencollective.com/airbnb/d327d66/logo.png" alt="Airbnb" height="128"></a></p><h3>Gold Sponsors</h3>
 <p><a href="https://qlty.sh/"><img src="https://images.opencollective.com/qltysh/33d157d/logo.png" alt="Qlty Software" height="96"></a> <a href="https://trunk.io/"><img src="https://images.opencollective.com/trunkio/fb92d60/avatar.png" alt="trunk.io" height="96"></a> <a href="https://shopify.engineering/"><img src="https://avatars.githubusercontent.com/u/8085" alt="Shopify" height="96"></a></p><h3>Silver Sponsors</h3>
 <p><a href="https://vite.dev/"><img src="https://images.opencollective.com/vite/e6d15e1/logo.png" alt="Vite" height="64"></a> <a href="https://liftoff.io/"><img src="https://images.opencollective.com/liftoff/5c4fa84/logo.png" alt="Liftoff" height="64"></a> <a href="https://americanexpress.io"><img src="https://avatars.githubusercontent.com/u/3853301" alt="American Express" height="64"></a> <a href="https://stackblitz.com"><img src="https://avatars.githubusercontent.com/u/28635252" alt="StackBlitz" height="64"></a></p><h3>Bronze Sponsors</h3>
-<p><a href="https://icons8.com/"><img src="https://images.opencollective.com/icons8/7fa1641/logo.png" alt="Icons8" height="32"></a> <a href="https://discord.com"><img src="https://images.opencollective.com/discordapp/f9645d9/logo.png" alt="Discord" height="32"></a> <a href="https://www.gitbook.com"><img src="https://avatars.githubusercontent.com/u/7111340" alt="GitBook" height="32"></a> <a href="https://nolebase.ayaka.io"><img src="https://avatars.githubusercontent.com/u/11081491" alt="Neko" height="32"></a> <a href="https://nx.dev"><img src="https://avatars.githubusercontent.com/u/23692104" alt="Nx" height="32"></a> <a href="https://opensource.mercedes-benz.com/"><img src="https://avatars.githubusercontent.com/u/34240465" alt="Mercedes-Benz Group" height="32"></a> <a href="https://herocoders.com"><img src="https://avatars.githubusercontent.com/u/37549774" alt="HeroCoders" height="32"></a> <a href="https://www.lambdatest.com"><img src="https://avatars.githubusercontent.com/u/171592363" alt="LambdaTest" height="32"></a></p>
+<p><a href="https://cybozu.co.jp/"><img src="https://images.opencollective.com/cybozu/933e46d/logo.png" alt="Cybozu" height="32"></a> <a href="https://www.crosswordsolver.org/anagram-solver/"><img src="https://images.opencollective.com/anagram-solver/2666271/logo.png" alt="Anagram Solver" height="32"></a> <a href="https://icons8.com/"><img src="https://images.opencollective.com/icons8/7fa1641/logo.png" alt="Icons8" height="32"></a> <a href="https://discord.com"><img src="https://images.opencollective.com/discordapp/f9645d9/logo.png" alt="Discord" height="32"></a> <a href="https://www.gitbook.com"><img src="https://avatars.githubusercontent.com/u/7111340" alt="GitBook" height="32"></a> <a href="https://nolebase.ayaka.io"><img src="https://avatars.githubusercontent.com/u/11081491" alt="Neko" height="32"></a> <a href="https://nx.dev"><img src="https://avatars.githubusercontent.com/u/23692104" alt="Nx" height="32"></a> <a href="https://opensource.mercedes-benz.com/"><img src="https://avatars.githubusercontent.com/u/34240465" alt="Mercedes-Benz Group" height="32"></a> <a href="https://herocoders.com"><img src="https://avatars.githubusercontent.com/u/37549774" alt="HeroCoders" height="32"></a> <a href="https://www.lambdatest.com"><img src="https://avatars.githubusercontent.com/u/171592363" alt="LambdaTest" height="32"></a></p>
 <h3>Technology Sponsors</h3>
 Technology sponsors allow us to use their products and services for free as part of a contribution to the open source ecosystem and our work.
 <p><a href="https://netlify.com"><img src="https://raw.githubusercontent.com/eslint/eslint.org/main/src/assets/images/techsponsors/netlify-icon.svg" alt="Netlify" height="32"></a> <a href="https://algolia.com"><img src="https://raw.githubusercontent.com/eslint/eslint.org/main/src/assets/images/techsponsors/algolia-icon.svg" alt="Algolia" height="32"></a> <a href="https://1password.com"><img src="https://raw.githubusercontent.com/eslint/eslint.org/main/src/assets/images/techsponsors/1password-icon.svg" alt="1Password" height="32"></a></p>
