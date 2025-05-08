@@ -67,6 +67,19 @@ ruleTester.run("no-invalid-at-rules", rule, {
 				customSyntax: tailwindSyntax,
 			},
 		},
+		{
+			code: `@custom-rule {
+				--foo: red;
+				--bar: blue;
+			}`,
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						"custom-rule": {},
+					},
+				},
+			},
+		},
 	],
 	invalid: [
 		{
