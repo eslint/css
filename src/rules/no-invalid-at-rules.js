@@ -121,6 +121,10 @@ export default {
 			},
 
 			"AtRule > Block > Declaration"(node) {
+				if (node.property.startsWith("--")) {
+					return;
+				}
+
 				// get at rule node
 				const atRule = /** @type {AtrulePlain} */ (
 					sourceCode.getParent(sourceCode.getParent(node))
