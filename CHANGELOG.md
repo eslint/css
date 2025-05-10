@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.0](https://github.com/eslint/css/compare/css-v0.7.0...css-v0.8.0) (2025-05-10)
+
+
+### Features
+
+* add no-important rule ([#124](https://github.com/eslint/css/issues/124)) ([af043db](https://github.com/eslint/css/commit/af043dbc3359bdd7f2b92e963be630d5141684d7))
+
+
+### Bug Fixes
+
+* remove redundant `Comment` member from `CSSSyntaxElement` union ([#119](https://github.com/eslint/css/issues/119)) ([67f3d4e](https://github.com/eslint/css/commit/67f3d4e7c442be9cc96a83824a67efeea81a2e85))
+
 ## [0.7.0](https://github.com/eslint/css/compare/css-v0.6.0...css-v0.7.0) (2025-04-16)
 
 

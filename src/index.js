@@ -25,7 +25,7 @@ import useBaseline from "./rules/use-baseline.js";
 const plugin = {
 	meta: {
 		name: "@eslint/css",
-		version: "0.7.0", // x-release-please-version
+		version: "0.8.0", // x-release-please-version
 	},
 	languages: {
 		css: new CSSLanguage(),
