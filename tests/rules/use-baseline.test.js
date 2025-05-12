@@ -91,18 +91,18 @@ ruleTester.run("use-baseline", rule, {
 	],
 	invalid: [
 		{
-			code: "a { alignment-baseline: baseline; backdrop-filter: auto }",
+			code: "a { accent-color: bar; backdrop-filter: auto }",
 			errors: [
 				{
 					messageId: "notBaselineProperty",
 					data: {
-						property: "alignment-baseline",
+						property: "accent-color",
 						availability: "widely",
 					},
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 23,
+					endColumn: 17,
 				},
 				{
 					messageId: "notBaselineProperty",
@@ -111,26 +111,26 @@ ruleTester.run("use-baseline", rule, {
 						availability: "widely",
 					},
 					line: 1,
-					column: 35,
+					column: 24,
 					endLine: 1,
-					endColumn: 50,
+					endColumn: 39,
 				},
 			],
 		},
 		{
-			code: "a { alignment-baseline: baseline; backdrop-filter: auto }",
+			code: "a { accent-color: bar; backdrop-filter: auto }",
 			options: [{ available: "newly" }],
 			errors: [
 				{
 					messageId: "notBaselineProperty",
 					data: {
-						property: "alignment-baseline",
+						property: "accent-color",
 						availability: "newly",
 					},
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 23,
+					endColumn: 17,
 				},
 			],
 		},
@@ -246,18 +246,18 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@supports not (alignment-baseline: baseline) { a { alignment-baseline: baseline } }",
+			code: "@supports not (accent-color: auto) { a { accent-color: auto } }",
 			errors: [
 				{
 					messageId: "notBaselineProperty",
 					data: {
-						property: "alignment-baseline",
+						property: "accent-color",
 						availability: "widely",
 					},
 					line: 1,
-					column: 52,
+					column: 42,
 					endLine: 1,
-					endColumn: 70,
+					endColumn: 54,
 				},
 			],
 		},

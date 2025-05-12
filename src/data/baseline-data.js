@@ -10,7 +10,7 @@ export const BASELINE_LOW = 5;
 export const BASELINE_FALSE = 0;
 
 export const properties = new Map([
-	["accent-color", "10:2022"],
+	["accent-color", "0:"],
 	["alignment-baseline", "0:"],
 	["all", "10:2020"],
 	["anchor-name", "0:"],
