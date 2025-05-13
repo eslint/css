@@ -237,6 +237,28 @@ export default defineConfig([
 
 **Note:** The Tailwind syntax doesn't currently provide for the `theme()` function. This is a [limitation of CSSTree](https://github.com/csstree/csstree/issues/292) that we hope will be resolved soon.
 
+## Editor and IDE Setup
+
+### Visual Studio Code
+
+First, ensure you have the [ESLint plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) installed.
+
+Then, edit `eslint.validate` in your `settings.json` file to include `css`:
+
+```json
+{
+	"eslint.validate": ["css"]
+}
+```
+
+### JetBrains IDEs
+
+For any JetBrains IDE, configure the [ESLint scope](https://www.jetbrains.com/help/webstorm/eslint.html#ws_eslint_configure_scope) to include `css`, such as:
+
+```text
+**/*.{js,ts,jsx,tsx,cjs,cts,mjs,mts,html,vue,css}
+```
+
 ## License
 
 Apache 2.0
