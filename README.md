@@ -251,9 +251,9 @@ Then, edit `eslint.validate` in your `settings.json` file to include `css`:
 }
 ```
 
-### JetBrains IDEs
+### JetBrains WebStorm
 
-For any JetBrains IDE, configure the [ESLint scope](https://www.jetbrains.com/help/webstorm/eslint.html#ws_eslint_configure_scope) to include `css`, such as:
+For any [JetBrains WebStorm](https://www.jetbrains.com/webstorm/), configure the [ESLint scope](https://www.jetbrains.com/help/webstorm/eslint.html#ws_eslint_configure_scope) to include `css`, such as:
 
 ```text
 **/*.{js,ts,jsx,tsx,cjs,cts,mjs,mts,html,vue,css}
