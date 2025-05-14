@@ -3,6 +3,10 @@ on:
         branches:
             - main
 name: release-please
+
+permissions:
+    models: read
+
 jobs:
     release-please:
         runs-on: ubuntu-latest
@@ -36,8 +40,14 @@ jobs:
                   npx jsr publish
               if: ${{ steps.release.outputs.release_created }}
 
+            # Generates the social media post
+            - run: npx @humanwhocodes/social-changelog --org ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --tag ${{ steps.release.outputs.tag_name }} > social-post.txt
+              if: ${{ steps.release.outputs.release_created }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Post release announcement
-              run: 'npx @humanwhocodes/crosspost -t -m -b "eslint/css v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }} has been released:\n\n${{ steps.release.outputs.html_url }}"'
+              run: npx @humanwhocodes/crosspost -t -b -m -l --file social-post.txt
               if: ${{ steps.release.outputs.release_created }}
               env:
                   TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
