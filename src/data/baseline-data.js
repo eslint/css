@@ -777,7 +777,7 @@ export const propertyValues = new Map([
 			["sticky", "10:2019"],
 		]),
 	],
-	["accent-color", new Map([["auto", "10:2022"]])],
+	["accent-color", new Map([["auto", "0:"]])],
 	[
 		"alignment-baseline",
 		new Map([

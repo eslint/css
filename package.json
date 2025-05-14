@@ -115,7 +115,7 @@
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-delete": "^3.0.1",
     "typescript": "^5.8.2",
-    "web-features": "^2.35.0",
+    "web-features": "^2.35.1",
     "yorkie": "^2.0.0"
   },
   "engines": {
