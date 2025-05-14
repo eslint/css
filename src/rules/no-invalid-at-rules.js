@@ -121,7 +121,6 @@ export default {
 			},
 
 			"AtRule > Block > Declaration"(node) {
-
 				// skip custom descriptors
 				if (node.property.startsWith("--")) {
 					return;
