@@ -15,6 +15,7 @@ import noImportant from "./rules/no-important.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
 import preferLogicalProperties from "./rules/prefer-logical-properties.js";
+import relativeFontUnits from "./rules/relative-font-units.js";
 import useLayers from "./rules/use-layers.js";
 import useBaseline from "./rules/use-baseline.js";
 
@@ -37,6 +38,7 @@ const plugin = {
 		"no-invalid-at-rules": noInvalidAtRules,
 		"no-invalid-properties": noInvalidProperties,
 		"prefer-logical-properties": preferLogicalProperties,
+		"relative-font-units": relativeFontUnits,
 		"use-layers": useLayers,
 		"use-baseline": useBaseline,
 	},
