@@ -47,7 +47,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Post release announcement
-              run: npx @humanwhocodes/crosspost -t -b -m -l --file social-post.txt
+              run: npx @humanwhocodes/crosspost -t -b -m --file social-post.txt
               if: ${{ steps.release.outputs.release_created }}
               env:
                   TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
