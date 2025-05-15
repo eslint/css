@@ -102,8 +102,7 @@ function extractCSSFeatures(features) {
 	const cssAtRulePattern = /^css\.at-rules\.(?<atRule>[a-zA-Z$\d-]+)$/u;
 	const cssMediaConditionPattern =
 		/^css\.at-rules\.media\.(?<condition>[a-zA-Z$\d-]+)$/u;
-	const cssTypePattern =
-		/^css\.types\.(?:.*?\.)?(?<type>[a-zA-Z\d-]+)(?:\.[^.]*$|[^.]*$)/u;
+	const cssTypePattern = /^css\.types\.(?:.*?\.)?(?<type>[a-zA-Z\d-]+)$/u;
 	const cssSelectorPattern = /^css\.selectors\.(?<selector>[a-zA-Z$\d-]+)$/u;
 
 	const properties = {};
