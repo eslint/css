@@ -28,6 +28,8 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font-size: 1rem; }",
 		"a { font: 2rem Arial, sans-serif; }",
 		"a { font: 1.2rem/2 Arial, sans-serif; }",
+		"a { font-size: var(--foo); }",
+		"a { font: Arial var(-foo); }",
 		{
 			code: "a { font-size: 1em; }",
 			options: [

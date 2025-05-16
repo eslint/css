@@ -94,7 +94,10 @@ export default {
 		return {
 			Declaration(node) {
 				if (node.property === "font-size") {
-					if (node.value.type === "Value") {
+					if (
+						node.value.type === "Value" &&
+						node.value.children.length > 0
+					) {
 						const value = node.value.children[0];
 
 						if (
@@ -117,9 +120,12 @@ export default {
 				}
 
 				if (node.property === "font") {
-					const value = node.value;
+					if (
+						node.value.type === "Value" &&
+						node.value.children.length > 0
+					) {
+						const value = node.value;
 
-					if (value.type === "Value") {
 						const dimensionNode = value.children.find(
 							child => child.type === "Dimension",
 						);
@@ -134,22 +140,32 @@ export default {
 						let location;
 						let shouldReport = false;
 
-						if (!allowedFontUnits.includes("%") && percentageNode) {
-							shouldReport = true;
-							location = percentageNode.loc;
-						}
-
-						if (identifierNode) {
-							shouldReport = true;
-							location = identifierNode.loc;
-						}
-
-						if (
-							dimensionNode &&
-							!allowedFontUnits.includes(dimensionNode.unit)
-						) {
-							shouldReport = true;
-							location = dimensionNode.loc;
+						const conditions = [
+							{
+								check:
+									!allowedFontUnits.includes("%") &&
+									percentageNode,
+								loc: percentageNode?.loc,
+							},
+							{
+								check: identifierNode,
+								loc: identifierNode?.loc,
+							},
+							{
+								check:
+									dimensionNode &&
+									!allowedFontUnits.includes(
+										dimensionNode.unit,
+									),
+								loc: dimensionNode?.loc,
+							},
+						];
+						for (const condition of conditions) {
+							if (condition.check) {
+								shouldReport = true;
+								location = condition.loc;
+								break;
+							}
 						}
 
 						if (shouldReport) {

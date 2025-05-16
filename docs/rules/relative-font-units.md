@@ -68,6 +68,10 @@ b {
 	font-size: 1rem;
 	width: 20px;
 }
+
+c {
+	font-size: var(--foo);
+}
 ```
 
 Font size can also be specified in `font` property:
@@ -84,8 +88,16 @@ b {
 		20% Arial,
 		sans-serif;
 }
+
+c {
+	font: Arial var(--foo);
+}
 ```
 
 ## When Not to Use It
 
 If your project does not prioritize the use of relative font-size units—such as in cases requiring absolute sizing for print styles, pixel-perfect UI components, or embedded widgets—you may safely disable this rule without impacting your intended design precision.
+
+## Prior Art
+
+- [`Surprising truth about Pixels and Accessibility`](https://www.joshwcomeau.com/css/surprising-truth-about-pixels-and-accessibility/)
