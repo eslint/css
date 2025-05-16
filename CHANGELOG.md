@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.1](https://github.com/eslint/css/compare/css-v0.8.0...css-v0.8.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* improve use-baseline types regex ([#137](https://github.com/eslint/css/issues/137)) ([5ed6073](https://github.com/eslint/css/commit/5ed607360960f2acf83f8e322fd9016ec125ea38))
+
 ## [0.8.0](https://github.com/eslint/css/compare/css-v0.7.0...css-v0.8.0) (2025-05-15)
 
 
