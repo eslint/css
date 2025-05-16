@@ -94,71 +94,74 @@ export default {
 		return {
 			Declaration(node) {
 				if (node.property === "font-size") {
-					const value = node.value.children[0];
+					if (node.value.type === "Value") {
+						const value = node.value.children[0];
 
-					if (
-						allowedFontUnits.includes("%") &&
-						value.type === "Percentage"
-					) {
-						return;
-					}
-
-					if (
-						!allowedFontUnits.includes(value?.unit) ||
-						value.type === "Identifier"
-					) {
-						context.report({
-							loc: value.loc,
-							messageId: "allowedFontUnits",
-							data: {
-								allowedFontUnits,
-							},
-						});
+						if (
+							(value.type === "Dimension" &&
+								!allowedFontUnits.includes(value.unit)) ||
+							value.type === "Identifier" ||
+							(value.type === "Percentage" &&
+								!allowedFontUnits.includes("%"))
+						) {
+							context.report({
+								loc: value.loc,
+								messageId: "allowedFontUnits",
+								data: {
+									allowedFontUnits:
+										allowedFontUnits.join(", "),
+								},
+							});
+						}
 					}
 				}
 
 				if (node.property === "font") {
 					const value = node.value;
-					const dimensionNode = value.children.find(
-						child => child.type === "Dimension",
-					);
-					const identifierNode = value.children.find(
-						child =>
-							child.type === "Identifier" &&
-							fontSizeIdentifiers.has(child.name),
-					);
-					const percentageNode = value.children.find(
-						child => child.type === "Percentage",
-					);
-					let location;
-					let shouldReport = false;
 
-					if (!allowedFontUnits.includes("%") && percentageNode) {
-						shouldReport = true;
-						location = percentageNode.loc;
-					}
+					if (value.type === "Value") {
+						const dimensionNode = value.children.find(
+							child => child.type === "Dimension",
+						);
+						const identifierNode = value.children.find(
+							child =>
+								child.type === "Identifier" &&
+								fontSizeIdentifiers.has(child.name),
+						);
+						const percentageNode = value.children.find(
+							child => child.type === "Percentage",
+						);
+						let location;
+						let shouldReport = false;
 
-					if (identifierNode) {
-						shouldReport = true;
-						location = identifierNode.loc;
-					}
+						if (!allowedFontUnits.includes("%") && percentageNode) {
+							shouldReport = true;
+							location = percentageNode.loc;
+						}
 
-					if (
-						dimensionNode &&
-						!allowedFontUnits.includes(dimensionNode.unit)
-					) {
-						shouldReport = true;
-						location = dimensionNode.loc;
-					}
+						if (identifierNode) {
+							shouldReport = true;
+							location = identifierNode.loc;
+						}
 
-					if (shouldReport) {
-						context.report({
-							loc: location,
-							messageId: "allowedFontUnits",
-							data: {
-								allowedFontUnits,
-							},
-						});
+						if (
+							dimensionNode &&
+							!allowedFontUnits.includes(dimensionNode.unit)
+						) {
+							shouldReport = true;
+							location = dimensionNode.loc;
+						}
+
+						if (shouldReport) {
+							context.report({
+								loc: location,
+								messageId: "allowedFontUnits",
+								data: {
+									allowedFontUnits:
+										allowedFontUnits.join(", "),
+								},
+							});
+						}
 					}
 				}
 			},
