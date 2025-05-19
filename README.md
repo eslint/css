@@ -6,6 +6,13 @@ This package contains a plugin that allows you to natively lint CSS files using 
 
 **Important:** This plugin requires ESLint v9.6.0 or higher and you must be using the [new configuration system](https://eslint.org/docs/latest/use/configure/configuration-files).
 
+## Prequisites
+
+In order to use the ESLint CSS plugin, you must have the following installed:
+
+1. [Node.js](https://nodejs.org)
+1. [ESLint](https://eslint.org/docs/latest/use/getting-started)
+
 ## Installation
 
 For Node.js and compatible runtimes:
