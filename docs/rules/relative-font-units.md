@@ -6,9 +6,9 @@ Enforce the use of relative units for font size.
 
 The `font-size` property in CSS defines the size of the text. It can be set using:
 
-1. Keywords (e.g., small, medium, large).
-1. Length units (e.g., px, em, rem, pt).
-1. Percentages (%, relative to the parent element's font size).
+1. Keywords (e.g., `small`, `medium`, `large`).
+1. Length units (e.g., `px`, `em`, `rem`, `pt`).
+1. Percentages (`%`, relative to the parent element's font size).
 
 Generally, relative unit such as `rem` or `em` are preferred over absolute ones like `px`, `pt` because of following reasons:
 
@@ -17,7 +17,7 @@ Generally, relative unit such as `rem` or `em` are preferred over absolute ones 
 - **Consistency and Scalability** - Using relative units allow for consistent scaling across a whole site.
 - **Maintainability and Reusability** - Relative units allow components or utility classes to work well in different contexts.
 
-## Rule Detail
+## Rule Details
 
 This rule enforces the use of relative units for font size.
 
@@ -98,6 +98,6 @@ c {
 
 If your project does not prioritize the use of relative font-size units—such as in cases requiring absolute sizing for print styles, pixel-perfect UI components, or embedded widgets—you may safely disable this rule without impacting your intended design precision.
 
-## Prior Art
+## Further Reading
 
 - [`Surprising truth about Pixels and Accessibility`](https://www.joshwcomeau.com/css/surprising-truth-about-pixels-and-accessibility/)
