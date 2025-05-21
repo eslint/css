@@ -11,6 +11,7 @@ import { CSSLanguage } from "./languages/css-language.js";
 import { CSSSourceCode } from "./languages/css-source-code.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
+import noDuplicateKeyframeSelectors from "./rules/no-duplicate-keyframe-selectors.js";
 import noImportant from "./rules/no-important.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
@@ -34,6 +35,7 @@ const plugin = {
 	rules: {
 		"no-empty-blocks": noEmptyBlocks,
 		"no-duplicate-imports": noDuplicateImports,
+		"no-duplicate-keyframe-selectors": noDuplicateKeyframeSelectors,
 		"no-important": noImportant,
 		"no-invalid-at-rules": noInvalidAtRules,
 		"no-invalid-properties": noInvalidProperties,
@@ -50,6 +52,7 @@ const plugin = {
 				"css/no-duplicate-imports": "error",
 				"css/no-important": "error",
 				"css/no-invalid-at-rules": "error",
+				"css/no-duplicate-keyframe-selectors": "error",
 				"css/no-invalid-properties": "error",
 				"css/use-baseline": "warn",
 			}),
