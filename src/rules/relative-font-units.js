@@ -10,7 +10,7 @@
 /**
  * @import { CSSRuleDefinition } from "../types.js"
  * @typedef {"allowedFontUnits"} RelativeFontUnitsMessageIds
- * @typedef {[{allow?: string[]}]} RelativeFontUnitsOptions
+ * @typedef {[{allowUnits?: string[]}]} RelativeFontUnitsOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: RelativeFontUnitsOptions, MessageIds: RelativeFontUnitsMessageIds}>} RelativeFontUnitsRuleDefinition
  */
 
@@ -72,7 +72,7 @@ export default {
 			{
 				type: "object",
 				properties: {
-					allow: {
+					allowUnits: {
 						type: "array",
 						items: {
 							enum: relativeFontUnits,
@@ -85,7 +85,7 @@ export default {
 
 		defaultOptions: [
 			{
-				allow: ["rem"],
+				allowUnits: ["rem"],
 			},
 		],
 
@@ -96,7 +96,7 @@ export default {
 	},
 
 	create(context) {
-		const [{ allow: allowedFontUnits }] = context.options;
+		const [{ allowUnits: allowedFontUnits }] = context.options;
 
 		return {
 			Declaration(node) {

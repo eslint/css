@@ -30,11 +30,12 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font: 1.2rem/2 Arial, sans-serif; }",
 		"a { font-size: var(--foo); }",
 		"a { font: Arial var(-foo); }",
+		"a { font-size: calc(10px + 2px); }",
 		{
 			code: "a { font-size: 1em; }",
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 		},
@@ -42,7 +43,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 20%; }",
 			options: [
 				{
-					allow: ["%"],
+					allowUnits: ["%"],
 				},
 			],
 		},
@@ -50,7 +51,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2cap; }",
 			options: [
 				{
-					allow: ["cap"],
+					allowUnits: ["cap"],
 				},
 			],
 		},
@@ -58,7 +59,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 20ch; }",
 			options: [
 				{
-					allow: ["ch"],
+					allowUnits: ["ch"],
 				},
 			],
 		},
@@ -66,7 +67,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 3ex; }",
 			options: [
 				{
-					allow: ["ex"],
+					allowUnits: ["ex"],
 				},
 			],
 		},
@@ -74,7 +75,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2ic; }",
 			options: [
 				{
-					allow: ["ic"],
+					allowUnits: ["ic"],
 				},
 			],
 		},
@@ -82,7 +83,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 1lh; }",
 			options: [
 				{
-					allow: ["lh"],
+					allowUnits: ["lh"],
 				},
 			],
 		},
@@ -90,7 +91,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2rcap; }",
 			options: [
 				{
-					allow: ["rcap"],
+					allowUnits: ["rcap"],
 				},
 			],
 		},
@@ -98,7 +99,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 20rch; }",
 			options: [
 				{
-					allow: ["rch"],
+					allowUnits: ["rch"],
 				},
 			],
 		},
@@ -106,7 +107,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2rex; }",
 			options: [
 				{
-					allow: ["rex"],
+					allowUnits: ["rex"],
 				},
 			],
 		},
@@ -114,7 +115,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 1.5ric; }",
 			options: [
 				{
-					allow: ["ric"],
+					allowUnits: ["ric"],
 				},
 			],
 		},
@@ -122,7 +123,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 1rlh; }",
 			options: [
 				{
-					allow: ["rlh"],
+					allowUnits: ["rlh"],
 				},
 			],
 		},
@@ -137,7 +138,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["rem", "em"],
+					allowUnits: ["rem", "em"],
 				},
 			],
 		},
@@ -150,7 +151,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 		},
@@ -166,7 +167,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["rem", "em"],
+					allowUnits: ["rem", "em"],
 				},
 			],
 		},
@@ -174,7 +175,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font: 20% Arial, sans-serif; }",
 			options: [
 				{
-					allow: ["%"],
+					allowUnits: ["%"],
 				},
 			],
 		},
@@ -190,7 +191,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["rem", "em"],
+					allowUnits: ["rem", "em"],
 				},
 			],
 		},
@@ -202,7 +203,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["rem", "em"],
+					allowUnits: ["rem", "em"],
 				},
 			],
 		},
@@ -228,7 +229,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 1rem; }",
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 			errors: [
@@ -241,7 +242,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 20%; }",
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 			errors: [
@@ -254,7 +255,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2em; }",
 			options: [
 				{
-					allow: ["%"],
+					allowUnits: ["%"],
 				},
 			],
 			errors: [
@@ -267,7 +268,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 20ch; }",
 			options: [
 				{
-					allow: ["cap"],
+					allowUnits: ["cap"],
 				},
 			],
 			errors: [
@@ -280,7 +281,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2cap; }",
 			options: [
 				{
-					allow: ["ch"],
+					allowUnits: ["ch"],
 				},
 			],
 			errors: [
@@ -293,7 +294,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 10px; }",
 			options: [
 				{
-					allow: ["ex"],
+					allowUnits: ["ex"],
 				},
 			],
 			errors: [
@@ -306,7 +307,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2rem; }",
 			options: [
 				{
-					allow: ["ic"],
+					allowUnits: ["ic"],
 				},
 			],
 			errors: [
@@ -319,7 +320,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2ic; }",
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 			errors: [
@@ -332,7 +333,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 1rlh; }",
 			options: [
 				{
-					allow: ["lh"],
+					allowUnits: ["lh"],
 				},
 			],
 			errors: [
@@ -345,7 +346,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 1lh; }",
 			options: [
 				{
-					allow: ["rcap"],
+					allowUnits: ["rcap"],
 				},
 			],
 			errors: [
@@ -358,7 +359,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2in; }",
 			options: [
 				{
-					allow: ["rch"],
+					allowUnits: ["rch"],
 				},
 			],
 			errors: [
@@ -371,7 +372,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 3ex; }",
 			options: [
 				{
-					allow: ["rex"],
+					allowUnits: ["rex"],
 				},
 			],
 			errors: [
@@ -384,7 +385,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 2rem; }",
 			options: [
 				{
-					allow: ["ric"],
+					allowUnits: ["ric"],
 				},
 			],
 			errors: [
@@ -397,7 +398,7 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: 1lh; }",
 			options: [
 				{
-					allow: ["rlh"],
+					allowUnits: ["rlh"],
 				},
 			],
 			errors: [
@@ -417,7 +418,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 			errors: [
@@ -435,7 +436,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 			errors: [
@@ -708,7 +709,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 			errors: [
@@ -725,7 +726,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["em"],
+					allowUnits: ["em"],
 				},
 			],
 			errors: [
@@ -742,7 +743,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["%"],
+					allowUnits: ["%"],
 				},
 			],
 			errors: [
@@ -759,7 +760,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["%"],
+					allowUnits: ["%"],
 				},
 			],
 			errors: [
@@ -776,7 +777,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["%", "em"],
+					allowUnits: ["%", "em"],
 				},
 			],
 			errors: [
@@ -796,7 +797,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["rem", "rex"],
+					allowUnits: ["rem", "rex"],
 				},
 			],
 			errors: [
@@ -817,7 +818,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["rem", "rex", "%"],
+					allowUnits: ["rem", "rex", "%"],
 				},
 			],
 			errors: [
@@ -834,7 +835,7 @@ ruleTester.run("relative-font-units", rule, {
             `,
 			options: [
 				{
-					allow: ["lh", "rex", "%"],
+					allowUnits: ["lh", "rex", "%"],
 				},
 			],
 			errors: [

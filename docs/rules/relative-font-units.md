@@ -25,7 +25,7 @@ This rule enforces the use of relative units for font size.
 
 This rule accepts an option which is an object with the following property:
 
-- `allow` (default: `["rem"]`) - Specify an array of relative units that are allowed to be used. You can use the following units:
+- `allowUnits` (default: `["rem"]`) - Specify an array of relative units that are allowed to be used. You can use the following units:
 
     - **%**: Represents the "percentage" of the parent element’s font size, allowing the text to scale relative to its container.
     - **cap**: Represents the "cap height" (nominal height of capital letters) of the element's font.
@@ -41,10 +41,10 @@ This rule accepts an option which is an object with the following property:
     - **ric**: Equal to the ic unit on the root element's font.
     - **rlh**: Equal to the lh unit on the root element's font.
 
-Example of **incorrect** code for default `{ allow: ["rem"] }` option:
+Example of **incorrect** code for default `{ allowUnits: ["rem"] }` option:
 
 ```css
-/* eslint css/relative-font-units: ["error",  { allow: ["rem"] }] */
+/* eslint css/relative-font-units: ["error",  { allowUnits: ["rem"] }] */
 
 a {
 	font-size: 10px;
@@ -59,10 +59,10 @@ c {
 }
 ```
 
-Example of **correct** code for default `{ allow: ["rem"] }` option:
+Example of **correct** code for default `{ allowUnits: ["rem"] }` option:
 
 ```css
-/* eslint css/relative-font-units: ["error",  { allow: ["rem"] }] */
+/* eslint css/relative-font-units: ["error",  { allowUnits: ["rem"] }] */
 
 a {
 	font-size: 2rem;
@@ -76,14 +76,18 @@ b {
 c {
 	font-size: var(--foo);
 }
+
+d {
+	font-size: calc(2rem + 2px);
+}
 ```
 
 Font size can also be specified in `font` property:
 
-Example of **correct** code for `{ allow: ["em", "%"] }` option:
+Example of **correct** code for `{ allowUnits: ["em", "%"] }` option:
 
 ```css
-/* eslint css/relative-font-units: ["error",  { allow: ["em", "%"] }] */
+/* eslint css/relative-font-units: ["error",  { allowUnits: ["em", "%"] }] */
 
 a {
 	font-size: 2em;
