@@ -42,8 +42,15 @@ const fontSizeIdentifiers = new Set([
 	"large",
 	"x-large",
 	"xx-large",
+	"xxx-large",
 	"smaller",
 	"larger",
+	"math",
+	"inherit",
+	"initial",
+	"revert",
+	"revert-layer",
+	"unset",
 ]);
 
 //-----------------------------------------------------------------------------

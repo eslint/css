@@ -194,6 +194,18 @@ ruleTester.run("relative-font-units", rule, {
 				},
 			],
 		},
+		{
+			code: dedent`
+                a {
+                    font: italic small-caps bold condensed 18rem/1.6px "Georgia", serif;
+                }
+            `,
+			options: [
+				{
+					allow: ["rem", "em"],
+				},
+			],
+		},
 	],
 	invalid: [
 		{
@@ -545,6 +557,22 @@ ruleTester.run("relative-font-units", rule, {
 			],
 		},
 		{
+			code: "a { font-size: xxx-large; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font: xxx-large Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
 			code: "a { font-size: smaller; }",
 			errors: [
 				{
@@ -570,6 +598,102 @@ ruleTester.run("relative-font-units", rule, {
 		},
 		{
 			code: "a { font: larger Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font-size: math; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font: math Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font-size: inherit; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font: inherit Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font-size: initial; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font: initial Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font-size: revert; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font: revert Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font-size: revert-layer; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font: revert-layer Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font-size: unset; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: "a { font: unset Arial, sans-serif; }",
 			errors: [
 				{
 					messageId: "allowedFontUnits",
@@ -713,6 +837,55 @@ ruleTester.run("relative-font-units", rule, {
 					allow: ["lh", "rex", "%"],
 				},
 			],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: dedent`
+                a {
+                    font: italic bold 1.2em/2 "Helvetica", sans-serif;
+                }
+            `,
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: dedent`
+                a {
+                    font: ultra-condensed small-caps 1.2em "Fira Sans", sans-serif;
+                }
+            `,
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: dedent`
+                a {
+                    font: italic small-caps 700 condensed 16px/1.5 "Helvetica Neue", sans-serif;
+                }
+            `,
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+				},
+			],
+		},
+		{
+			code: dedent`
+                a {
+                    font: caption;
+                    font-size: 20px;
+                }
+            `,
 			errors: [
 				{
 					messageId: "allowedFontUnits",

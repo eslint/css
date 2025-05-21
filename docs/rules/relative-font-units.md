@@ -10,7 +10,7 @@ The `font-size` property in CSS defines the size of the text. It can be set usin
 1. Length units (e.g., `px`, `em`, `rem`, `pt`).
 1. Percentages (`%`, relative to the parent element's font size).
 
-Generally, relative unit such as `rem` or `em` are preferred over absolute ones like `px`, `pt` because of following reasons:
+Generally, relative units such as `rem` or `em` are preferred over absolute ones like `px`, `pt` because of the following reasons:
 
 - **Responsive Design** - Relative units adapt better to various screen widths and pixel densities (e.g., mobile vs. desktop).
 - **Accessibility** - Relative units allow text to scale when users adjust browser settings or zoom levels.
@@ -21,11 +21,11 @@ Generally, relative unit such as `rem` or `em` are preferred over absolute ones 
 
 This rule enforces the use of relative units for font size.
 
-### Options
+## Options
 
-This rule accepts an option which is an object with following property:
+This rule accepts an option which is an object with the following property:
 
-- `allow` (default: `["rem"]`) - Specify an array of relative units that are allowed to be used. You can use following units:
+- `allow` (default: `["rem"]`) - Specify an array of relative units that are allowed to be used. You can use the following units:
 
     - **%**: Represents the "percentage" of the parent element’s font size, allowing the text to scale relative to its container.
     - **cap**: Represents the "cap height" (nominal height of capital letters) of the element's font.
@@ -44,6 +44,8 @@ This rule accepts an option which is an object with following property:
 Example of **incorrect** code for default `{ allow: ["rem"] }` option:
 
 ```css
+/* eslint css/relative-font-units: ["error",  { allow: ["rem"] }] */
+
 a {
 	font-size: 10px;
 }
@@ -60,6 +62,8 @@ c {
 Example of **correct** code for default `{ allow: ["rem"] }` option:
 
 ```css
+/* eslint css/relative-font-units: ["error",  { allow: ["rem"] }] */
+
 a {
 	font-size: 2rem;
 }
@@ -79,6 +83,8 @@ Font size can also be specified in `font` property:
 Example of **correct** code for `{ allow: ["em", "%"] }` option:
 
 ```css
+/* eslint css/relative-font-units: ["error",  { allow: ["em", "%"] }] */
+
 a {
 	font-size: 2em;
 }
