@@ -4,7 +4,7 @@ Disallow duplicate selectors within keyframe blocks.
 
 ## Background
 
-The @keyframes at-rule in CSS defines intermediate steps in an animation sequence. Each keyframe selector (like `0%`, `50%`, `100%`, `from`, or `to`) represents a point in the animation timeline and contains styles to apply at that point.
+The [`@keyframes` at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes) in CSS defines intermediate steps in an animation sequence. Each keyframe selector (like `0%`, `50%`, `100%`, `from`, or `to`) represents a point in the animation timeline and contains styles to apply at that point.
 
 ```css
 @keyframes test {
@@ -27,6 +27,8 @@ This rule warns when it finds a keyframe block that contains duplicate selectors
 Examples of **incorrect** code for this rule:
 
 ```css
+/* eslint css/no-duplicate-keyframe-selectors: "error" */
+
 @keyframes test {
 	0% {
 		opacity: 0;
@@ -61,6 +63,8 @@ Examples of **incorrect** code for this rule:
 Examples of **correct** code for this rule:
 
 ```css
+/* eslint css/no-duplicate-keyframe-selectors: "error" */
+
 @keyframes test {
 	0% {
 		opacity: 0;
