@@ -44,7 +44,7 @@ This rule accepts an option which is an object with the following property:
 Example of **incorrect** code for default `{ allowUnits: ["rem"] }` option:
 
 ```css
-/* eslint css/relative-font-units: ["error",  { allowUnits: ["rem"] }] */
+/* eslint css/relative-font-units: ["error", { allowUnits: ["rem"] }] */
 
 a {
 	font-size: 10px;
