@@ -44,7 +44,19 @@ body {
 
 ### Limitations
 
-This rule uses the lexer from [CSSTree](https://github.com/csstree/csstree), which does not support validation of property values that contain variable references (i.e., `var(--bg-color)`). The lexer throws an error when it comes across a variable reference, and rather than displaying that error, this rule ignores it. This unfortunately means that this rule cannot properly validate properties values that contain variable references. We'll continue to work towards a solution for this.
+When a variable is used in a property value, such as `var(--my-color)`, this rule can only properly validate the value if the parser has already encountered the `--my-color` custom property. For example, this will validate correctly:
+
+```css
+:root {
+	--my-color: red;
+}
+
+a {
+	color: var(--my-color);
+}
+```
+
+This code defines `--my-color` before it is used and therefore the rule can validate the `color` property. If `--my-color` was not defined before `var(--my-color)` was used, it results in a lint error because the validation cannot be completed. If the custom property is defined in another file, it's recommended to create a dummy rule just for the purpose of ensuring proper validation.
 
 ## When Not to Use It
 
