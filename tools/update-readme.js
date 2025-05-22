@@ -28,7 +28,7 @@ const README_FILE_PATH = "./README.md";
 
 /**
  * Fetches the latest sponsors from the website.
- * @returns {Promise<string>}} Prerendered sponsors markdown.
+ * @returns {Promise<string>} Prerendered sponsors markdown.
  */
 async function fetchSponsorsMarkdown() {
 	return got(SPONSORS_URL).text();
