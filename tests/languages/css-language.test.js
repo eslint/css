@@ -74,7 +74,7 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.ok, true);
 		});
 
-		it("should use custom syntax when provided", () => {
+		it("should use custom syntax when provided with an object", () => {
 			const language = new CSSLanguage();
 			const customSyntax = {
 				properties: {
@@ -95,12 +95,28 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(result.ast.children[0].type, "Rule");
 		});
 
-		it("should error when invalid custom syntax is provided", () => {
+		it("should use custom syntax when provided with a function", () => {
 			const language = new CSSLanguage();
+			const result = language.parse(
+				{
+					body: "a { -custom-prop: 5px; }",
+					path: "test.css",
+				},
+				{
+					languageOptions: {
+						customSyntax(syntax) {
+							syntax.properties = {
+								"-custom-prop": "<length>",
+							};
+							return syntax;
+						},
+					},
+				},
+			);
 
-			assert.throws(() => {
-				language.validateLanguageOptions({ customSyntax: null });
-			}, /Expected an object value for 'customSyntax' option/u);
+			assert.strictEqual(result.ok, true);
+			assert.strictEqual(result.ast.type, "StyleSheet");
+			assert.strictEqual(result.ast.children[0].type, "Rule");
 		});
 
 		it("should return an error when EOF is discovered before block close", () => {
@@ -230,6 +246,80 @@ describe("CSSLanguage", () => {
 			);
 
 			assert.strictEqual(result.ok, true);
+		});
+	});
+
+	describe("validateLanguageOptions()", () => {
+		it("should not throw for valid language options", () => {
+			const language = new CSSLanguage();
+
+			assert.doesNotThrow(() => {
+				language.validateLanguageOptions({});
+			});
+
+			assert.doesNotThrow(() => {
+				language.validateLanguageOptions({ tolerant: true });
+			});
+
+			assert.doesNotThrow(() => {
+				language.validateLanguageOptions({ tolerant: false });
+			});
+
+			assert.doesNotThrow(() => {
+				language.validateLanguageOptions({
+					customSyntax: {
+						properties: {
+							"-custom-prop": "<length>",
+						},
+					},
+				});
+			});
+
+			assert.doesNotThrow(() => {
+				language.validateLanguageOptions({
+					customSyntax: () => ({}),
+				});
+			});
+		});
+
+		it("should throw for invalid tolerant option", () => {
+			const language = new CSSLanguage();
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ tolerant: "true" });
+			}, new TypeError("Expected a boolean value for 'tolerant' option."));
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ tolerant: 1 });
+			}, new TypeError("Expected a boolean value for 'tolerant' option."));
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ tolerant: {} });
+			}, new TypeError("Expected a boolean value for 'tolerant' option."));
+		});
+
+		it("should throw for null customSyntax option", () => {
+			const language = new CSSLanguage();
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ customSyntax: null });
+			}, new TypeError("Expected an object or function value for 'customSyntax' option."));
+		});
+
+		it("should throw for invalid customSyntax option types", () => {
+			const language = new CSSLanguage();
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ customSyntax: "string" });
+			}, new TypeError("Expected an object or function value for 'customSyntax' option."));
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ customSyntax: 123 });
+			}, new TypeError("Expected an object or function value for 'customSyntax' option."));
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ customSyntax: true });
+			}, new TypeError("Expected an object or function value for 'customSyntax' option."));
 		});
 	});
 

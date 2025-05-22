@@ -22,7 +22,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 //-----------------------------------------------------------------------------
 
 /**
- * @import { CssNodePlain, Comment, Lexer, StyleSheetPlain, SyntaxConfig } from "@eslint/css-tree"
+ * @import { CssNodePlain, Comment, Lexer, StyleSheetPlain, SyntaxExtension } from "@eslint/css-tree"
  * @import { Language, OkParseResult, ParseResult, File, FileError } from "@eslint/core";
  */
 
@@ -31,7 +31,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /**
  * @typedef {Object} CSSLanguageOptions
  * @property {boolean} [tolerant] Whether to be tolerant of recoverable parsing errors.
- * @property {SyntaxConfig} [customSyntax] Custom syntax to use for parsing.
+ * @property {SyntaxExtension} [customSyntax] Custom syntax to use for parsing.
  */
 
 //-----------------------------------------------------------------------------
@@ -115,11 +115,12 @@ export class CSSLanguage {
 
 		if ("customSyntax" in languageOptions) {
 			if (
-				typeof languageOptions.customSyntax !== "object" ||
+				(typeof languageOptions.customSyntax !== "function" &&
+					typeof languageOptions.customSyntax !== "object") ||
 				languageOptions.customSyntax === null
 			) {
 				throw new TypeError(
-					"Expected an object value for 'customSyntax' option.",
+					"Expected an object or function value for 'customSyntax' option.",
 				);
 			}
 		}

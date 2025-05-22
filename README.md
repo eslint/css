@@ -180,7 +180,7 @@ Setting `tolerant` to `true` is necessary if you are using custom syntax, such a
 
 The CSS lexer comes prebuilt with a set of known syntax for CSS that is used in rules like `no-invalid-properties` to validate CSS code. While this works for most cases, there may be cases when you want to define your own extensions to CSS, and this can be done using the `customSyntax` language option.
 
-The `customSyntax` option is an object that uses the [CSSTree format](https://github.com/csstree/csstree/blob/master/data/patch.json) for defining custom syntax, which allows you to specify at-rules, properties, and some types. For example, suppose you'd like to define a custom at-rule that looks like this:
+The `customSyntax` option is an object or function that uses the [CSSTree format](https://github.com/csstree/csstree/blob/master/data/patch.json) for defining custom syntax, which allows you to specify at-rules, properties, and some types. For example, suppose you'd like to define a custom at-rule that looks like this:
 
 ```css
 @my-at-rule "hello world!";
