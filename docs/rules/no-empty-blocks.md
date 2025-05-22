@@ -20,9 +20,11 @@ Sometimes during refactoring, you can end up with empty blocks in your code. Thi
 
 This rule warns when it finds a block that is empty. For the purposes of this rule, comments do not count as content and this rule warns when the only content inside of a block is a comment.
 
-Examples of incorrect code:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/no-empty-blocks: "error" */
+
 a {
 }
 

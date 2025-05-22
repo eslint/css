@@ -40,9 +40,11 @@ This rule enforces the use of layers and warns when:
 1. Any `@import` doesn't specify a layer.
 1. If any layer doesn't have a name.
 
-Examples of incorrect code:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/use-layers: "error" */
+
 /* no layer name */
 @import url(foo.css) layer;
 

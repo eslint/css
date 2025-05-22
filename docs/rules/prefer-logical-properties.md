@@ -13,6 +13,8 @@ This rule checks for the use of physical properties and suggests using their log
 Examples of **incorrect** code for this rule:
 
 ```css
+/* eslint css/prefer-logical-properties: "error" */
+
 /* incorrect use of physical properties */
 a {
 	margin-left: 10px;
@@ -22,6 +24,8 @@ a {
 Examples of **correct** code for this rule:
 
 ```css
+/* eslint css/prefer-logical-properties: "error" */
+
 a {
 	margin-inline-start: 10px;
 }

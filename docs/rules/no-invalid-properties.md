@@ -28,9 +28,11 @@ Here, `ccolor` is a syntactically valid identifier even though it will be ignore
 
 This rule warns when it finds a CSS property that doesn't exist or a value that doesn't match with the property name in the CSS specification (custom properties such as `--my-color` are ignored). The property data is provided via the [CSSTree](https://github.com/csstree/csstree) project.
 
-Examples of incorrect code:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/no-invalid-properties: "error" */
+
 a {
 	display: black;
 	ccolor: black;

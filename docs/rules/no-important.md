@@ -15,17 +15,21 @@ The `!important` flag is a CSS declaration modifier that overrides normal cascad
 
 This rule warns when it detects the `!important` flag in declarations.
 
-Examples of incorrect code:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/no-important: "error" */
+
 .foo {
 	color: red !important;
 }
 ```
 
-Examples of correct code:
+Examples of **correct** code:
 
 ```css
+/* eslint css/no-important: "error" */
+
 .foo {
 	color: red;
 }

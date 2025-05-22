@@ -36,6 +36,8 @@ The data is provided via the [web-features](https://npmjs.com/package/web-featur
 Here are some examples:
 
 ```css
+/* eslint css/use-baseline: "error" */
+
 /* invalid - accent-color is not widely available */
 a {
 	accent-color: red;

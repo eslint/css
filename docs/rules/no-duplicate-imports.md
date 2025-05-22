@@ -19,9 +19,11 @@ There is no reason to import the same URL twice, so this is a mistake.
 
 This rule warns when it finds an `@import` rule that imports the same URL as a previous `@import` rule. This includes all of the URL forms (`"a.css"`, `url("a.css")`, and `url(a.css)`).
 
-Examples of incorrect code:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/no-duplicate-imports: "error" */
+
 @import url(a.css);
 @import "b.css";
 @import url("c.css");
