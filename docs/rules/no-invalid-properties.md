@@ -44,7 +44,7 @@ body {
 
 ### Limitations
 
-When a variable is used in a property value, such as `var(--my-color)`, this rule can only properly validate the value if the parser has already encountered the `--my-color` custom property. For example, this will validate correctly:
+When a variable is used in a property value, such as `var(--my-color)`, the rule can only properly be validated if the parser has already encountered the `--my-color` custom property. For example, this will validate correctly:
 
 ```css
 :root {
@@ -56,7 +56,9 @@ a {
 }
 ```
 
-This code defines `--my-color` before it is used and therefore the rule can validate the `color` property. If `--my-color` was not defined before `var(--my-color)` was used, it results in a lint error because the validation cannot be completed. If the custom property is defined in another file, it's recommended to create a dummy rule just for the purpose of ensuring proper validation.
+This code defines `--my-color` before it is used and therefore the rule can validate the `color` property. If `--my-color` was not defined before `var(--my-color)` was used, it results in a lint error because the validation cannot be completed.
+
+If the custom property is defined in another file, it's recommended to create a dummy rule just for the purpose of ensuring proper validation.
 
 ## When Not to Use It
 
