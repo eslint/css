@@ -33,6 +33,7 @@ ruleTester.run("no-invalid-properties", rule, {
 		"@font-face { font-weight: 100 400 }",
 		'@property --foo { syntax: "*"; inherits: false; }',
 		"a { --my-color: red; color: var(--my-color) }",
+		":root { --my-color: red; }\na { color: var(--my-color) }",
 		{
 			code: "a { my-custom-color: red; }",
 			languageOptions: {
@@ -226,6 +227,128 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 22,
 					endLine: 1,
 					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: "a { color: var(--my-color); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--my-color",
+					},
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 26,
+				},
+			],
+		},
+		{
+			code: "a { --my-color: 10px; color: var(--my-color); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "10px",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 45,
+				},
+			],
+		},
+		{
+			code: "a { --my-color: 10px; color: var(--my-color); background-color: var(--my-color); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "10px",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 45,
+				},
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "background-color",
+						value: "10px",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 65,
+					endLine: 1,
+					endColumn: 80,
+				},
+			],
+		},
+		{
+			code: "a { --my-color: 10px; color: var(--my-color); background-color: var(--unknown-var); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "10px",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 45,
+				},
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--unknown-var",
+					},
+					line: 1,
+					column: 69,
+					endLine: 1,
+					endColumn: 82,
+				},
+			],
+		},
+		{
+			code: "a { --width: 1px; border-top: var(--width) solid bar; }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "1px solid bar",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 1,
+					column: 31,
+					endLine: 1,
+					endColumn: 53,
+				},
+			],
+		},
+		{
+			code: "a { --width: baz; --style: foo; border-top: var(--width) var(--style) bar; }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "baz foo bar",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 1,
+					column: 45,
+					endLine: 1,
+					endColumn: 57,
 				},
 			],
 		},
