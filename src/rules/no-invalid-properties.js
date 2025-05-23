@@ -29,7 +29,8 @@ import { isSyntaxMatchError } from "../util.js";
  * @param {string} text The text to perform replacements on
  * @param {string} searchValue The string to search for
  * @param {string} replaceValue The string to replace with
- * @returns {{text: string, offsets: Array<number>}} The updated text and array of offsets where replacements occurred
+ * @returns {{text: string, offsets: Array<number>}} The updated text and array of offsets
+ * where replacements occurred
  */
 function replaceWithOffsets(text, searchValue, replaceValue) {
 	const offsets = [];
@@ -113,9 +114,10 @@ export default {
 
 				/** @type {Map<number,CssLocationRange>} */
 				const varsFoundLocs = new Map();
+				const usingVars = varsFound?.size > 0;
 				let value = node.value;
 
-				if (varsFound?.size > 0) {
+				if (usingVars) {
 					// need to use a text version of the value here
 					value = sourceCode.getText(node.value);
 					let offsets;
@@ -158,9 +160,10 @@ export default {
 					// validation failure
 					if (isSyntaxMatchError(error)) {
 						context.report({
-							loc:
-								varsFoundLocs.get(error.mismatchOffset) ??
-								error.loc,
+							loc: usingVars
+								? (varsFoundLocs.get(error.mismatchOffset) ??
+									node.value.loc)
+								: error.loc,
 							messageId: "invalidPropertyValue",
 							data: {
 								property: node.property,

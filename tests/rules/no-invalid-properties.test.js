@@ -318,5 +318,39 @@ ruleTester.run("no-invalid-properties", rule, {
 				},
 			],
 		},
+		{
+			code: "a { --width: 1px; border-top: var(--width) solid bar; }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "1px solid bar",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 1,
+					column: 31,
+					endLine: 1,
+					endColumn: 53,
+				},
+			],
+		},
+		{
+			code: "a { --width: baz; --style: foo; border-top: var(--width) var(--style) bar; }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "baz foo bar",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 1,
+					column: 45,
+					endLine: 1,
+					endColumn: 57,
+				},
+			],
+		},
 	],
 });
