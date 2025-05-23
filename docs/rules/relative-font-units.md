@@ -44,7 +44,7 @@ This rule accepts an option which is an object with the following property:
 Example of **incorrect** code for default `{ allowUnits: ["rem"] }` option:
 
 ```css
-/* eslint css/relative-font-units: ["error",  { allowUnits: ["rem"] }] */
+/* eslint css/relative-font-units: ["error", { allowUnits: ["rem"] }] */
 
 a {
 	font-size: 10px;
@@ -62,7 +62,7 @@ c {
 Example of **correct** code for default `{ allowUnits: ["rem"] }` option:
 
 ```css
-/* eslint css/relative-font-units: ["error",  { allowUnits: ["rem"] }] */
+/* eslint css/relative-font-units: ["error", { allowUnits: ["rem"] }] */
 
 a {
 	font-size: 2rem;
@@ -87,7 +87,7 @@ Font size can also be specified in `font` property:
 Example of **correct** code for `{ allowUnits: ["em", "%"] }` option:
 
 ```css
-/* eslint css/relative-font-units: ["error",  { allowUnits: ["em", "%"] }] */
+/* eslint css/relative-font-units: ["error", { allowUnits: ["em", "%"] }] */
 
 a {
 	font-size: 2em;

@@ -47,9 +47,11 @@ This rule warns when it finds a CSS at-rule that is unknown or invalid according
 
 The at-rule data is provided via the [CSSTree](https://github.com/csstree/csstree) project.
 
-Examples of incorrect code:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/no-invalid-at-rules: "error" */
+
 @charse "UTF-8";
 
 @importx url(foo.css);

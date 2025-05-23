@@ -33,9 +33,11 @@ This rule warns when it finds any of the following:
 
 The data is provided via the [web-features](https://npmjs.com/package/web-features) package.
 
-Here are some examples:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/use-baseline: "error" */
+
 /* invalid - accent-color is not widely available */
 a {
 	accent-color: red;
@@ -49,13 +51,6 @@ a {
 /* invalid - :has() is not widely available */
 h1:has(+ h2) {
 	margin: 0 0 0.25rem 0;
-}
-
-/* valid - @supports indicates you're choosing a limited availability selector */
-@supports selector(:has()) {
-	h1:has(+ h2) {
-		margin: 0 0 0.25rem 0;
-	}
 }
 
 /* invalid - device-posture is not widely available */
@@ -72,15 +67,28 @@ h1:has(+ h2) {
 	}
 }
 
-/* valid - @supports indicates you're choosing a limited availability property */
-@supports (accent-color: auto) {
+/* invalid - @supports says that this property isn't available */
+@supports not (accent-color: auto) {
 	a {
 		accent-color: auto;
 	}
 }
+```
 
-/* invalid - @supports says that this property isn't available */
-@supports not (accent-color: auto) {
+Examples of **correct** code:
+
+```css
+/* eslint css/use-baseline: "error" */
+
+/* valid - @supports indicates you're choosing a limited availability selector */
+@supports selector(:has()) {
+	h1:has(+ h2) {
+		margin: 0 0 0.25rem 0;
+	}
+}
+
+/* valid - @supports indicates you're choosing a limited availability property */
+@supports (accent-color: auto) {
 	a {
 		accent-color: auto;
 	}

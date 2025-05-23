@@ -15,9 +15,11 @@ The `!important` flag is a CSS declaration modifier that overrides normal cascad
 
 This rule warns when it detects the `!important` flag in declarations. This includes declarations within `@keyframes` rules, where `!important` is ignored by browsers and should be avoided.
 
-Examples of incorrect code:
+Examples of **incorrect** code:
 
 ```css
+/* eslint css/no-important: "error" */
+
 .foo {
 	color: red !important;
 }
@@ -32,9 +34,11 @@ Examples of incorrect code:
 }
 ```
 
-Examples of correct code:
+Examples of **correct** code:
 
 ```css
+/* eslint css/no-important: "error" */
+
 .foo {
 	color: red;
 }
