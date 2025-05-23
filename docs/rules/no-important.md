@@ -13,13 +13,22 @@ The `!important` flag is a CSS declaration modifier that overrides normal cascad
 
 ## Rule Details
 
-This rule warns when it detects the `!important` flag in declarations.
+This rule warns when it detects the `!important` flag in declarations. This includes declarations within `@keyframes` rules, where `!important` is ignored by browsers and should be avoided.
 
 Examples of incorrect code:
 
 ```css
 .foo {
 	color: red !important;
+}
+
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1 !important; /* This is ignored by browsers */
+	}
 }
 ```
 
@@ -28,6 +37,15 @@ Examples of correct code:
 ```css
 .foo {
 	color: red;
+}
+
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 ```
 
