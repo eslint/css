@@ -160,6 +160,12 @@ export default {
 					// validation failure
 					if (isSyntaxMatchError(error)) {
 						context.report({
+							/*
+							 * When using variables, check to see if the error
+							 * occurred at a location where a variable was replaced.
+							 * If so, use that location; otherwise, use the error's
+							 * reported location.
+							 */
 							loc: usingVars
 								? (varsFoundLocs.get(error.mismatchOffset) ??
 									node.value.loc)
@@ -167,7 +173,19 @@ export default {
 							messageId: "invalidPropertyValue",
 							data: {
 								property: node.property,
-								value: error.css,
+
+								/*
+								 * When using variables, slice the value to
+								 * only include the part that caused the error.
+								 * Otherwise, use the full value from the error.
+								 */
+								value: usingVars
+									? value.slice(
+											error.mismatchOffset,
+											error.mismatchOffset +
+												error.mismatchLength,
+										)
+									: error.css,
 								expected: error.syntax,
 							},
 						});

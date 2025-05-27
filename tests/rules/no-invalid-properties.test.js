@@ -81,6 +81,23 @@ ruleTester.run("no-invalid-properties", rule, {
 			],
 		},
 		{
+			code: "a { border-top: 10px solid foo }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "10px solid foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 31,
+				},
+			],
+		},
+		{
 			code: "a { width: red }",
 			errors: [
 				{
@@ -325,7 +342,7 @@ ruleTester.run("no-invalid-properties", rule, {
 					messageId: "invalidPropertyValue",
 					data: {
 						property: "border-top",
-						value: "1px solid bar",
+						value: "bar",
 						expected: "<line-width> || <line-style> || <color>",
 					},
 					line: 1,
@@ -342,7 +359,7 @@ ruleTester.run("no-invalid-properties", rule, {
 					messageId: "invalidPropertyValue",
 					data: {
 						property: "border-top",
-						value: "baz foo bar",
+						value: "baz",
 						expected: "<line-width> || <line-style> || <color>",
 					},
 					line: 1,
