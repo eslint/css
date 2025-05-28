@@ -58,7 +58,7 @@ a {
 
 This code defines `--my-color` before it is used and therefore the rule can validate the `color` property. If `--my-color` was not defined before `var(--my-color)` was used, it results in a lint error because the validation cannot be completed.
 
-If the custom property is defined in another file, it's recommended to create a dummy rule just for the purpose of ensuring proper validation.
+If the custom property is defined in another file, it's recommended to create a dummy rule just to ensure proper validation.
 
 ## When Not to Use It
 
