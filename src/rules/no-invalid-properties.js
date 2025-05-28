@@ -81,7 +81,12 @@ export default {
 		/** @type {Map<string,ValuePlain>} */
 		const vars = new Map();
 
-		/** @type {Array<Map<string,FunctionNodePlain>>} */
+		/**
+		 * We need to track this as a stack because we can have nested
+		 * rules that use the `var()` function, and we need to
+		 * ensure that we validate the innermost rule first.
+		 * @type {Array<Map<string,FunctionNodePlain>>}
+		 */
 		const replacements = [];
 
 		return {

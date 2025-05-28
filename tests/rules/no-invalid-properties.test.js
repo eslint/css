@@ -35,6 +35,7 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { --my-color: red; color: var(--my-color) }",
 		":root { --my-color: red; }\na { color: var(--my-color) }",
 		":root { --my-color: red; }\na { color: var(   --my-color   ) }",
+		":root { --my-color: red;\n.foo { color: var(--my-color) }\n}",
 		{
 			code: "a { my-custom-color: red; }",
 			languageOptions: {
@@ -260,6 +261,21 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 26,
+				},
+			],
+		},
+		{
+			code: "a { .foo { color: var(--undefined-var); } }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--undefined-var",
+					},
+					line: 1,
+					column: 23,
+					endLine: 1,
+					endColumn: 38,
 				},
 			],
 		},
