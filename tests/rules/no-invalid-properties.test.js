@@ -34,6 +34,7 @@ ruleTester.run("no-invalid-properties", rule, {
 		'@property --foo { syntax: "*"; inherits: false; }',
 		"a { --my-color: red; color: var(--my-color) }",
 		":root { --my-color: red; }\na { color: var(--my-color) }",
+		":root { --my-color: red; }\na { color: var(   --my-color   ) }",
 		{
 			code: "a { my-custom-color: red; }",
 			languageOptions: {

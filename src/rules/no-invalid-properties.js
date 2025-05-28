@@ -25,24 +25,26 @@ import { isSyntaxMatchError } from "../util.js";
 //-----------------------------------------------------------------------------
 
 /**
- * Replaces all instances of a search string with a replacement and tracks the offsets
+ * Replaces all instances of a regex pattern with a replacement and tracks the offsets
  * @param {string} text The text to perform replacements on
- * @param {string} searchValue The string to search for
+ * @param {string} varName The regex pattern string to search for
  * @param {string} replaceValue The string to replace with
  * @returns {{text: string, offsets: Array<number>}} The updated text and array of offsets
  * where replacements occurred
  */
-function replaceWithOffsets(text, searchValue, replaceValue) {
+function replaceWithOffsets(text, varName, replaceValue) {
 	const offsets = [];
 	let result = "";
 	let lastIndex = 0;
-	let index;
 
-	while ((index = text.indexOf(searchValue, lastIndex)) !== -1) {
-		result += text.slice(lastIndex, index);
+	const regex = new RegExp(`var\\(\\s*${varName}\\s*\\)`, "gu");
+	let match;
+
+	while ((match = regex.exec(text)) !== null) {
+		result += text.slice(lastIndex, match.index);
 		result += replaceValue;
-		offsets.push(index);
-		lastIndex = index + searchValue.length;
+		offsets.push(match.index);
+		lastIndex = match.index + match[0].length;
 	}
 
 	result += text.slice(lastIndex);
@@ -129,7 +131,7 @@ export default {
 						if (varValue) {
 							({ text: value, offsets } = replaceWithOffsets(
 								value,
-								`var(${name})`,
+								name,
 								sourceCode.getText(varValue).trim(),
 							));
 
