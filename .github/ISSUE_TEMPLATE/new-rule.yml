@@ -29,6 +29,11 @@ body:
           render: css
       validations:
           required: true
+    - type: textarea
+      attributes:
+          label: Prior Art
+          description: If this rule already exists in another CSS linter, please mention that here and provide link(s) to documentation.
+          render: markdown          
     - type: checkboxes
       attributes:
           label: Participation
