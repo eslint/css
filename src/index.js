@@ -14,6 +14,7 @@ import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noImportant from "./rules/no-important.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
+import noInvalidImportPlacement from "./rules/no-invalid-import-placement.js";
 import preferLogicalProperties from "./rules/prefer-logical-properties.js";
 import relativeFontUnits from "./rules/relative-font-units.js";
 import useLayers from "./rules/use-layers.js";
@@ -37,6 +38,7 @@ const plugin = {
 		"no-important": noImportant,
 		"no-invalid-at-rules": noInvalidAtRules,
 		"no-invalid-properties": noInvalidProperties,
+		"no-invalid-import-placement": noInvalidImportPlacement,
 		"prefer-logical-properties": preferLogicalProperties,
 		"relative-font-units": relativeFontUnits,
 		"use-layers": useLayers,
@@ -51,6 +53,7 @@ const plugin = {
 				"css/no-important": "error",
 				"css/no-invalid-at-rules": "error",
 				"css/no-invalid-properties": "error",
+				"css/no-invalid-import-placement": "error",
 				"css/use-baseline": "warn",
 			}),
 		},
