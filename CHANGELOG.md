@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/eslint/css/compare/css-v0.8.1...css-v0.9.0) (2025-05-30)
+
+
+### Features
+
+* add `relative-font-units` rule ([#133](https://github.com/eslint/css/issues/133)) ([ce256da](https://github.com/eslint/css/commit/ce256da671503792e74ad2113daa72319361c8b5))
+
 ## [0.8.1](https://github.com/eslint/css/compare/css-v0.8.0...css-v0.8.1) (2025-05-16)
 
 
