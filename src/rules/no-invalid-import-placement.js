@@ -36,7 +36,7 @@ export default {
 
 		messages: {
 			invalidImportPlacement:
-				"@import must come before other rules (except @charset and @layer).",
+				"@import must be placed before all other rules, except @charset and @layer.",
 		},
 	},
 

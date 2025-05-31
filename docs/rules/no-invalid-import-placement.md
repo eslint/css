@@ -4,7 +4,7 @@ Disallow invalid placement of `@import` rules.
 
 ## Background
 
-The `@import` rule must be placed at the beginning of a stylesheet, before any other at-rules (except `@charset` and `@layer`) and style rules. If placed elsewhere, browsers will ignore the `@import` rule, causing the imported styles to be missing from the page.
+The `@import` rule must be placed at the beginning of a stylesheet, before any other at-rules (except `@charset` and `@layer`) and style rules. If placed elsewhere, browsers will ignore the `@import` rule, resulting in the imported styles being missing from the page.
 
 ## Rule Details
 
@@ -20,6 +20,10 @@ a {
 	color: red;
 }
 @import "foo.css";
+```
+
+```css
+/* eslint css/no-invalid-import-placement: "error" */
 
 /* @import after at-rules */
 @media screen {
@@ -37,6 +41,10 @@ Examples of **correct** code:
 a {
 	color: red;
 }
+```
+
+```css
+/* eslint css/no-invalid-import-placement: "error" */
 
 /* @import after @charset */
 @charset "utf-8";
@@ -44,6 +52,10 @@ a {
 a {
 	color: red;
 }
+```
+
+```css
+/* eslint css/no-invalid-import-placement: "error" */
 
 /* @import after @layer */
 @layer base;
@@ -51,6 +63,10 @@ a {
 a {
 	color: red;
 }
+```
+
+```css
+/* eslint css/no-invalid-import-placement: "error" */
 
 /* Multiple @import rules together */
 @import "foo.css";
@@ -62,7 +78,7 @@ a {
 
 ## When Not to Use It
 
-If you don't care about the placement of `@import` rules in your stylesheets, you can safely disable this rule.
+You can disable this rule if your stylesheets don't use `@import` or if you're not concerned about the impact of incorrect placement on style loading.
 
 ## Prior Art
 
