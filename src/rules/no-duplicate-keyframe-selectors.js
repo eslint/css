@@ -39,8 +39,8 @@ export default {
 			Atrule(node) {
 				if (node.name === "keyframes" && node.block) {
 					const selectorNodes = node.block.children.map(child => {
-						// eslint-disable-next-line dot-notation -- bracket notation to avoid type error even though it's valid
 						const selector =
+							// eslint-disable-next-line dot-notation -- bracket notation to avoid type error even though it's valid
 							child["prelude"].children[0].children[0];
 						let value;
 						if (selector.type === "Percentage") {
