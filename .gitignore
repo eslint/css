@@ -37,6 +37,7 @@ node_modules/
 
 # VSCode
 .vscode
+*.code-workspace
 
 # yarn v2
 .yarn/cache
