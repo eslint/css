@@ -39,8 +39,9 @@ export default {
 			Atrule(node) {
 				if (node.name === "keyframes" && node.block) {
 					const selectorNodes = node.block.children.map(child => {
-						// @ts-ignore - prelude is a valid property
-						const selector = child.prelude.children[0].children[0];
+						// eslint-disable-next-line dot-notation -- bracket notation to avoid type error even though it's valid
+						const selector =
+							child["prelude"].children[0].children[0];
 						let value;
 						if (selector.type === "Percentage") {
 							value = `${selector.value}%`;
