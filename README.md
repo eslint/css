@@ -24,7 +24,7 @@ yarn add @eslint/css -D
 # or
 pnpm install @eslint/css -D
 # or
-bun install @eslint/css -D
+bun add @eslint/css -D
 ```
 
 For Deno (experimental):
