@@ -9,7 +9,7 @@
 
 import rule from "../../src/rules/no-invalid-at-rules.js";
 import css from "../../src/index.js";
-import tailwindSyntax from "../../src/syntax/tailwind-syntax.js";
+import { tailwind3 } from "tailwind-csstree";
 import { RuleTester } from "eslint";
 
 //------------------------------------------------------------------------------
@@ -46,25 +46,25 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "@tailwind base; @tailwind components; @tailwind utilities;",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
 			code: "a { @apply text-red-500; }",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
 			code: "a { @apply text-red-500 bg-blue-500; }",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
 			code: "@config 'tailwind.config.js';",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
@@ -240,7 +240,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "a { @apply; }",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 			errors: [
 				{
@@ -258,7 +258,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "@config;",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 			errors: [
 				{
@@ -276,7 +276,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "@config foo;",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 			errors: [
 				{
