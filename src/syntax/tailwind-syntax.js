@@ -13,6 +13,9 @@ export default {
 		config: {
 			prelude: "<string>",
 		},
+		plugin: {
+			prelude: "<string>",
+		},
 	},
 
 	/*
