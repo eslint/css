@@ -386,5 +386,22 @@ ruleTester.run("no-invalid-properties", rule, {
 				},
 			],
 		},
+		{
+			code: "a { --width: 1px; border-top: var(--width) solid var(--width); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "1px",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 1,
+					column: 50,
+					endLine: 1,
+					endColumn: 62,
+				},
+			],
+		},
 	],
 });

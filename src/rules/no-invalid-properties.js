@@ -42,8 +42,14 @@ function replaceWithOffsets(text, varName, replaceValue) {
 
 	while ((match = regex.exec(text)) !== null) {
 		result += text.slice(lastIndex, match.index);
+
+		/*
+		 * We need the offset of the replacement after other replacements have
+		 * been made, so we push the current length of the result before appending
+		 * the replacement value.
+		 */
+		offsets.push(result.length);
 		result += replaceValue;
-		offsets.push(match.index);
 		lastIndex = match.index + match[0].length;
 	}
 
