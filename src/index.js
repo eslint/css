@@ -14,6 +14,7 @@ import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noImportant from "./rules/no-important.js";
 import noInvalidProperties from "./rules/no-invalid-properties.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
+import noInvalidNamedGridAreas from "./rules/no-invalid-named-grid-areas.js";
 import preferLogicalProperties from "./rules/prefer-logical-properties.js";
 import relativeFontUnits from "./rules/relative-font-units.js";
 import useLayers from "./rules/use-layers.js";
@@ -36,6 +37,7 @@ const plugin = {
 		"no-duplicate-imports": noDuplicateImports,
 		"no-important": noImportant,
 		"no-invalid-at-rules": noInvalidAtRules,
+		"no-invalid-named-grid-areas": noInvalidNamedGridAreas,
 		"no-invalid-properties": noInvalidProperties,
 		"prefer-logical-properties": preferLogicalProperties,
 		"relative-font-units": relativeFontUnits,
@@ -50,6 +52,7 @@ const plugin = {
 				"css/no-duplicate-imports": "error",
 				"css/no-important": "error",
 				"css/no-invalid-at-rules": "error",
+				"css/no-invalid-named-grid-areas": "error",
 				"css/no-invalid-properties": "error",
 				"css/use-baseline": "warn",
 			}),
