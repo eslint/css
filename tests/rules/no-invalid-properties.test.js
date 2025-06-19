@@ -47,6 +47,14 @@ ruleTester.run("no-invalid-properties", rule, {
 				},
 			},
 		},
+		{
+			code: "a { color: var(--my-color); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: "a { --my-color: red; color: var(--my-color); background-color: var(--unknown-var); }",
+			options: [{ allowUnknownVariables: true }],
+		},
 
 		/*
 		 * CSSTree doesn't currently support custom functions properly, so leaving
@@ -401,6 +409,50 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 50,
 					endLine: 1,
 					endColumn: 62,
+				},
+			],
+		},
+		{
+			code: "a { colorr: var(--my-color); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: {
+						property: "colorr",
+					},
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "a { --my-color: 10px; color: var(--my-color); background_color: var(--unknown-var); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "10px",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 45,
+				},
+				{
+					messageId: "unknownProperty",
+					data: {
+						property: "background_color",
+					},
+					line: 1,
+					column: 47,
+					endLine: 1,
+					endColumn: 63,
 				},
 			],
 		},

@@ -44,9 +44,25 @@ body {
 }
 ```
 
-### Limitations
+## Options
 
-When a variable is used in a property value, such as `var(--my-color)`, the rule can only properly be validated if the parser has already encountered the `--my-color` custom property. For example, this will validate correctly:
+This rule accepts an option which is an object with the following property:
+
+- `allowUnknownVariables` (default: `false`) - Ignore variables that cannot be traced to custom properties in the current file
+
+When a variable is used in a property value, such as `var(--my-color)`, the rule can only properly be validated if the parser has already encountered the `--my-color` custom property. With `{ allowUnknownVariables: false }`, unknown variables will result in a lint error. With `{ allowUnknownVariables: true }`, the property value will be ignored and only the property name will be validated.
+
+Examples of **incorrect** code with `{ allowUnknownVariables: false }` (the default):
+
+```css
+a {
+	color: var(--my-color);
+}
+```
+
+This code uses `var(--my-color)` before `--my-color` was defined, or where it is defined in another CSS file. Therefore, `color: var(--my-color)` cannot be property validated.
+
+Examples of **correct** code with `{ allowUnknownVariables: false }`:
 
 ```css
 :root {
@@ -60,7 +76,25 @@ a {
 
 This code defines `--my-color` before it is used and therefore the rule can validate the `color` property. If `--my-color` was not defined before `var(--my-color)` was used, it results in a lint error because the validation cannot be completed.
 
-If the custom property is defined in another file, it's recommended to create a dummy rule just to ensure proper validation.
+Examples of **incorrect** code with `{ allowUnknownVariables: true }`:
+
+```css
+a {
+	ccolorr: var(--my-color);
+}
+```
+
+This code uses an unknown property `ccolorr`, which results in a validation error. The unknown reference to `var(--my-color)` is ignored.
+
+Examples of **correct** code with `{ allowUnknownVariables: true }`:
+
+```css
+a {
+	color: var(--my-color);
+}
+```
+
+Even though `var(--my-color)` cannot be traced to a custom property definition, this code passes validation.
 
 ## When Not to Use It
 
