@@ -79,9 +79,15 @@ export default {
 				properties: {
 					allowUnknownVariables: {
 						type: "boolean",
-						default: false,
 					},
 				},
+				additionalProperties: false,
+			},
+		],
+
+		defaultOptions: [
+			{
+				allowUnknownVariables: false,
 			},
 		],
 
@@ -108,8 +114,7 @@ export default {
 		 */
 		const replacements = [];
 
-		const allowUnknownVariables =
-			context.options?.[0]?.allowUnknownVariables ?? false;
+		const [{ allowUnknownVariables }] = context.options;
 
 		return {
 			"Rule > Block > Declaration"() {
