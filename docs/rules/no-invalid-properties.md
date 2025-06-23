@@ -67,6 +67,8 @@ This code uses `var(--my-color)` before `--my-color` is defined, or whether it i
 Examples of **correct** code with `{ allowUnknownVariables: false }`:
 
 ```css
+/* eslint css/no-invalid-properties: ["error", { allowUnknownVariables: false }] */
+
 :root {
 	--my-color: red;
 }
