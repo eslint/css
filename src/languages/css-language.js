@@ -1,5 +1,5 @@
 /**
- * @filedescription The CSSLanguage class.
+ * @fileoverview The CSSLanguage class.
  * @author Nicholas C. Zakas
  */
 
