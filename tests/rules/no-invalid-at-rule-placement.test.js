@@ -49,6 +49,10 @@ ruleTester.run("no-invalid-at-rule-placement", rule, {
             @layer base;
             @import 'foo.css';`,
 		dedent`
+			@import 'foo.css';
+			@layer base;
+			@import 'bar.css';`,
+		dedent`
             @import 'foo.css';
             @import 'bar.css';`,
 		dedent`

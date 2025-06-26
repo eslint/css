@@ -52,8 +52,7 @@ Examples of **correct** code:
 ```css
 /* eslint css/no-invalid-at-rule-placement: "error" */
 
-/* @charset at the beginning */
-@charset "utf-8";
+@charset "utf-8"; /* @charset at the beginning */
 @import "foo.css";
 ```
 
@@ -93,3 +92,8 @@ You can disable this rule if your stylesheets don't use `@charset` or `@import` 
 ## Prior Art
 
 - [`no-invalid-position-at-import-rule`](https://stylelint.io/user-guide/rules/no-invalid-position-at-import-rule/)
+
+## Further Reading
+
+- [@charset - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
+- [@import - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)

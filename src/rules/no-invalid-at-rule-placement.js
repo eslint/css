@@ -30,7 +30,7 @@ export default {
 
 		messages: {
 			invalidCharsetPlacement:
-				"@charset must be placed at the very beginning of the stylesheet, before any other rules, comments, or whitespace.",
+				"@charset must be placed at the very beginning of the stylesheet, before any rules, comments, or whitespace.",
 			invalidImportPlacement:
 				"@import must be placed before all other rules, except @charset and @layer statements.",
 		},
