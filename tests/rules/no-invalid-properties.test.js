@@ -36,6 +36,7 @@ ruleTester.run("no-invalid-properties", rule, {
 		":root { --my-color: red; }\na { color: var(--my-color) }",
 		":root { --my-color: red; }\na { color: var(   --my-color   ) }",
 		":root { --my-color: red;\n.foo { color: var(--my-color) }\n}",
+		".fluidHeading {font-size: clamp(2.1rem, calc(7.2vw - 0.2rem), 2.5rem);}",
 		{
 			code: "a { my-custom-color: red; }",
 			languageOptions: {
@@ -45,6 +46,14 @@ ruleTester.run("no-invalid-properties", rule, {
 					},
 				},
 			},
+		},
+		{
+			code: "a { color: var(--my-color); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: "a { --my-color: red; color: var(--my-color); background-color: var(--unknown-var); }",
+			options: [{ allowUnknownVariables: true }],
 		},
 
 		/*
@@ -400,6 +409,50 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 50,
 					endLine: 1,
 					endColumn: 62,
+				},
+			],
+		},
+		{
+			code: "a { colorr: var(--my-color); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: {
+						property: "colorr",
+					},
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "a { --my-color: 10px; color: var(--my-color); background_color: var(--unknown-var); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "10px",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 45,
+				},
+				{
+					messageId: "unknownProperty",
+					data: {
+						property: "background_color",
+					},
+					line: 1,
+					column: 47,
+					endLine: 1,
+					endColumn: 63,
 				},
 			],
 		},

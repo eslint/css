@@ -72,6 +72,7 @@ export default defineConfig([
 | [`no-important`](./docs/rules/no-important.md)                                 | Disallow !important flags              |       yes       |
 | [`no-invalid-at-rule-placement`](./docs/rules/no-invalid-at-rule-placement.md) | Disallow invalid placement of at-rules |       yes       |
 | [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)                   | Disallow invalid at-rules              |       yes       |
+| [`no-invalid-named-grid-areas`](./docs/rules/no-invalid-named-grid-areas.md)   | Disallow invalid named grid areas      |       yes       |
 | [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)               | Disallow invalid properties            |       yes       |
 | [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md)       | Enforce the use of logical properties  |       no        |
 | [`relative-font-units`](./docs/rules/relative-font-units.md)                   | Enforce the use of relative font units |       no        |
@@ -219,13 +220,19 @@ export default defineConfig([
 
 #### Configuring Tailwind Syntax
 
-[Tailwind](https://tailwindcss.com) specifies some extensions to CSS that will otherwise be flagged as invalid by the rules in this plugin. You can configure most of the custom syntax for Tailwind using the builtin `tailwindSyntax` object, like this:
+[Tailwind](https://tailwindcss.com) specifies some extensions to CSS that will otherwise be flagged as invalid by the rules in this plugin. To properly parse Tailwind-specific syntax, install the [`tailwind-csstree`](https://npmjs.com/package/tailwind-csstree) package:
+
+```shell
+npm i tailwind-csstree --save-dev
+```
+
+Then include it in your configuration using `languageOptions.customSyntax`:
 
 ```js
 // eslint.config.js
 import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
-import { tailwindSyntax } from "@eslint/css/syntax";
+import { tailwind4 } from "tailwind-csstree";
 
 export default defineConfig([
 	{
@@ -235,7 +242,7 @@ export default defineConfig([
 		},
 		language: "css/css",
 		languageOptions: {
-			customSyntax: tailwindSyntax,
+			customSyntax: tailwind4,
 		},
 		rules: {
 			"css/no-empty-blocks": "error",
@@ -243,8 +250,6 @@ export default defineConfig([
 	},
 ]);
 ```
-
-**Note:** The Tailwind syntax doesn't currently provide for the `theme()` function. This is a [limitation of CSSTree](https://github.com/csstree/csstree/issues/292) that we hope will be resolved soon.
 
 ## Editor and IDE Setup
 
