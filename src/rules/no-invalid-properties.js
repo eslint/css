@@ -58,6 +58,94 @@ function replaceWithOffsets(text, varName, replaceValue) {
 	return { text: result, offsets };
 }
 
+/**
+ * Simplifies the `var()` function calls in a CSS value by removing fallbacks.
+ * @param {string} value The property value that using `var()` function.
+ * @returns {string} The simplified value with fallbacks removed.
+ */
+function simplifyVarsWithFallbacks(value) {
+	let output = "";
+	let i = 0;
+
+	while (i < value.length) {
+		const start = value.indexOf("var(", i);
+
+		if (start === -1) {
+			output += value.slice(i);
+			break;
+		}
+
+		output += value.slice(i, start);
+
+		let j = start + 4;
+		let openParens = 1;
+
+		while (j < value.length && openParens > 0) {
+			if (value[j] === "(") {
+				openParens++;
+			} else if (value[j] === ")") {
+				openParens--;
+			}
+
+			j++;
+		}
+
+		const fullText = value.slice(start, j);
+		const firstArgMatch = fullText.match(/var\(\s*(--[\w-]+)\s*,/u);
+
+		if (firstArgMatch) {
+			output += `var(${firstArgMatch[1]})`;
+		} else {
+			output += fullText;
+		}
+
+		i = j;
+	}
+
+	return output;
+}
+
+/**
+ * Extracts the list of fallback value or variable name used in a `var()` that is used as fallback function.
+ * For example, for `var(--my-color, var(--fallback-color, red));` it will return `["--fallback-color", "red"]`.
+ * @param {string} value The fallback value that is used in `var()`.
+ * @return {Array<string>} The list of variable names of fallback value.
+ */
+function getVarFallbackList(value) {
+	const list = [];
+	let currentValue = value;
+
+	while (true) {
+		const match = currentValue.match(
+			/var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)/u,
+		);
+
+		if (!match) {
+			break;
+		}
+
+		const prop = match[1].trim();
+		const fallback = match[2]?.trim();
+
+		list.push(prop);
+
+		if (!fallback) {
+			break;
+		}
+
+		// If fallback is not another var(), we're done
+		if (!fallback.includes("var(")) {
+			list.push(fallback);
+			break;
+		}
+
+		// Continue parsing from fallback
+		currentValue = fallback;
+	}
+
+	return list;
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -155,17 +243,24 @@ export default {
 					// need to use a text version of the value here
 					value = sourceCode.getText(node.value);
 					let offsets;
+					let valueWithNoFallback = simplifyVarsWithFallbacks(
+						sourceCode.getText(node.value),
+					).trim();
 
 					// replace any custom properties with their values
 					for (const [name, func] of varsFound) {
 						const varValue = vars.get(name);
 
 						if (varValue) {
-							({ text: value, offsets } = replaceWithOffsets(
-								value,
+							const result = replaceWithOffsets(
+								valueWithNoFallback,
 								name,
 								sourceCode.getText(varValue).trim(),
-							));
+							);
+
+							valueWithNoFallback = result.text;
+							offsets = result.offsets;
+							value = valueWithNoFallback;
 
 							/*
 							 * Store the offsets of the replacements so we can
@@ -174,16 +269,73 @@ export default {
 							offsets.forEach(offset => {
 								varsFoundLocs.set(offset, func.loc);
 							});
-						} else if (!allowUnknownVariables) {
-							context.report({
-								loc: func.children[0].loc,
-								messageId: "unknownVar",
-								data: {
-									var: name,
-								},
-							});
+						} else {
+							if (func.children.length > 1) {
+								if (func.children[2].type === "Raw") {
+									if (
+										func.children[2].value
+											.trim()
+											.startsWith("var")
+									) {
+										const fallbackVarList =
+											getVarFallbackList(
+												func.children[2].value.trim(),
+											);
 
-							return;
+										let gotFallbackVarValue = false;
+
+										for (const fallbackVar of fallbackVarList) {
+											if (fallbackVar.startsWith("--")) {
+												const fallbackVarValue =
+													vars.get(fallbackVar);
+
+												if (!fallbackVarValue) {
+													continue; // Try the next fallback
+												}
+
+												value = sourceCode
+													.getText(fallbackVarValue)
+													.trim();
+												gotFallbackVarValue = true;
+												break; // Stop after finding the first valid variable
+											} else {
+												value = fallbackVar.trim();
+												gotFallbackVarValue = true;
+												break; // Stop after finding the first non-variable fallback
+											}
+										}
+
+										if (
+											!allowUnknownVariables &&
+											!gotFallbackVarValue
+										) {
+											context.report({
+												loc: func.children[0].loc,
+												messageId: "unknownVar",
+												data: {
+													var: name,
+												},
+											});
+
+											return;
+										}
+									} else {
+										value = func.children[2].value.trim();
+									}
+								}
+							} else {
+								if (!allowUnknownVariables) {
+									context.report({
+										loc: func.children[0].loc,
+										messageId: "unknownVar",
+										data: {
+											var: name,
+										},
+									});
+
+									return;
+								}
+							}
 						}
 					}
 				}
