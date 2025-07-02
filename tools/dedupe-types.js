@@ -44,8 +44,12 @@ files.forEach(filePath => {
 		const source = match.groups.source;
 		const ids = match.groups.ids.split(/,/gu).map(id => id.trim());
 
-		// save the import data
+		// omit language files
+		if (source.includes("languages/")) {
+			return false;
+		}
 
+		// save the import data
 		if (!imports.has(source)) {
 			imports.set(source, new Set());
 		}

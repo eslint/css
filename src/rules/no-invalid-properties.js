@@ -15,7 +15,8 @@ import { isSyntaxMatchError } from "../util.js";
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @import { ValuePlain, FunctionNodePlain, CssLocationRange } from "@eslint/css-tree";
+ * @import { CSSSourceCode } from "../languages/css-source-code.js"
+ * @import { ValuePlain, FunctionNodePlain, CssLocationRange, Identifier } from "@eslint/css-tree"
  * @typedef {"invalidPropertyValue" | "unknownProperty" | "unknownVar"} NoInvalidPropertiesMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidPropertiesMessageIds }>} NoInvalidPropertiesRuleDefinition
  */
@@ -25,36 +26,76 @@ import { isSyntaxMatchError } from "../util.js";
 //-----------------------------------------------------------------------------
 
 /**
- * Replaces all instances of a regex pattern with a replacement and tracks the offsets
- * @param {string} text The text to perform replacements on
- * @param {string} varName The regex pattern string to search for
- * @param {string} replaceValue The string to replace with
- * @returns {{text: string, offsets: Array<number>}} The updated text and array of offsets
- * where replacements occurred
+ * Given a value node, replaces any var() references with their corresponding values
+ * from the provided functions and returns the updated value along with a map
+ * of offsets where the replacements occurred to the functions' locations, plus
+ * an array of variable names whose value could not be determined.
+ * @param {ValuePlain} valueNode The value node to process.
+ * @param {Array<FunctionNodePlain>} funcs The var() functions in the value.
+ * @param {CSSSourceCode} sourceCode The source code object to get variable values from.
+ * @returns {{text: string, offsets: Map<number,CssLocationRange>, unknownVars: Array<string>}}
  */
-function replaceWithOffsets(text, varName, replaceValue) {
-	const offsets = [];
-	let result = "";
-	let lastIndex = 0;
-
-	const regex = new RegExp(`var\\(\\s*${varName}\\s*\\)`, "gu");
-	let match;
-
-	while ((match = regex.exec(text)) !== null) {
-		result += text.slice(lastIndex, match.index);
-
-		/*
-		 * We need the offset of the replacement after other replacements have
-		 * been made, so we push the current length of the result before appending
-		 * the replacement value.
-		 */
-		offsets.push(result.length);
-		result += replaceValue;
-		lastIndex = match.index + match[0].length;
+function replaceVariablesInValue(valueNode, funcs, sourceCode) {
+	/**
+	 * The funcs array is already sorted by start offset.
+	 */
+	if (!funcs || funcs.length === 0) {
+		const value = sourceCode.getText(valueNode);
+		return { text: value, offsets: new Map(), unknownVars: [] };
 	}
 
-	result += text.slice(lastIndex);
-	return { text: result, offsets };
+	const offsets = new Map();
+	const unknownVars = [];
+	const valueText = sourceCode.getText(valueNode);
+
+	// Calculate the starting position of the value node in the document
+	const valueStartOffset = valueNode.loc.start.offset;
+
+	// Process functions in forward order and track offset adjustments
+	let modifiedValue = valueText;
+	let offsetAdjustment = 0;
+
+	for (const func of funcs) {
+		// Extract the variable name from the function node
+		const varName = /** @type {Identifier} */ (func.children[0]).name;
+
+		// Pass the full var() function node to getVariableValue
+		const replacement = sourceCode.getVariableValue(func);
+
+		if (!replacement) {
+			unknownVars.push(varName);
+			continue;
+		}
+
+		const replacementText = sourceCode.getText(replacement).trim();
+
+		// Calculate the relative position of the function within the original value
+		const funcStart = func.loc.start.offset;
+		const funcEnd = func.loc.end.offset;
+		const relativeStart = funcStart - valueStartOffset;
+		const relativeEnd = funcEnd - valueStartOffset;
+
+		// Adjust for previous replacements
+		const adjustedRelativeStart = relativeStart + offsetAdjustment;
+		const adjustedRelativeEnd = relativeEnd + offsetAdjustment;
+
+		// Ensure the function is actually within the value bounds
+		if (relativeStart >= 0 && relativeEnd <= valueText.length) {
+			// Replace the function text with the replacement text
+			const before = modifiedValue.slice(0, adjustedRelativeStart);
+			const after = modifiedValue.slice(adjustedRelativeEnd);
+
+			modifiedValue = before + replacementText + after;
+			offsets.set(adjustedRelativeStart, func.loc);
+
+			// Update offset adjustment for subsequent replacements
+			const originalLength = funcEnd - funcStart;
+			const newLength = replacementText.length;
+			offsetAdjustment += newLength - originalLength;
+		}
+	}
+
+	return { text: modifiedValue, offsets, unknownVars };
 }
 
 //-----------------------------------------------------------------------------
@@ -84,86 +125,60 @@ export default {
 		const sourceCode = context.sourceCode;
 		const lexer = sourceCode.lexer;
 
-		/** @type {Map<string,ValuePlain>} */
-		const vars = new Map();
-
-		/**
-		 * We need to track this as a stack because we can have nested
-		 * rules that use the `var()` function, and we need to
-		 * ensure that we validate the innermost rule first.
-		 * @type {Array<Map<string,FunctionNodePlain>>}
-		 */
-		const replacements = [];
-
 		return {
-			"Rule > Block > Declaration"() {
-				replacements.push(new Map());
-			},
-
-			"Function[name=var]"(node) {
-				const map = replacements.at(-1);
-				if (!map) {
-					return;
-				}
-
-				/*
-				 * Store the custom property name and the function node
-				 * so can use these to validate the value later.
-				 */
-				const name = node.children[0].name;
-				map.set(name, node);
-			},
-
 			"Rule > Block > Declaration:exit"(node) {
+				// don't validate custom properties
 				if (node.property.startsWith("--")) {
-					// store the custom property name and value to validate later
-					vars.set(node.property, node.value);
-
-					// don't validate custom properties
 					return;
 				}
 
-				const varsFound = replacements.pop();
+				const varsFound = sourceCode.getDeclarationVariables(node);
 
 				/** @type {Map<number,CssLocationRange>} */
 				const varsFoundLocs = new Map();
-				const usingVars = varsFound?.size > 0;
+				const usingVars = varsFound.length > 0;
 				let value = node.value;
 
 				if (usingVars) {
-					// need to use a text version of the value here
-					value = sourceCode.getText(node.value);
-					let offsets;
+					const { text, offsets, unknownVars } =
+						replaceVariablesInValue(
+							node.value,
+							varsFound,
+							sourceCode,
+						);
 
-					// replace any custom properties with their values
-					for (const [name, func] of varsFound) {
-						const varValue = vars.get(name);
+					value = text;
 
-						if (varValue) {
-							({ text: value, offsets } = replaceWithOffsets(
-								value,
-								name,
-								sourceCode.getText(varValue).trim(),
-							));
+					/*
+					 * Store the offsets of the replacements so we can
+					 * report the correct location of any validation error.
+					 */
+					offsets.forEach((loc, offset) => {
+						varsFoundLocs.set(offset, loc);
+					});
 
-							/*
-							 * Store the offsets of the replacements so we can
-							 * report the correct location of any validation error.
-							 */
-							offsets.forEach(offset => {
-								varsFoundLocs.set(offset, func.loc);
+					// report all unknown variables and return early if any exist
+					if (unknownVars.length > 0) {
+						unknownVars.forEach(varName => {
+							// Find the corresponding function node for this variable
+							const funcNode = varsFound.find(func => {
+								const name = /** @type {Identifier} */ (
+									func.children[0]
+								).name;
+								return name === varName;
 							});
-						} else {
+
 							context.report({
-								loc: func.children[0].loc,
+								loc: funcNode
+									? funcNode.children[0].loc
+									: node.value.loc,
 								messageId: "unknownVar",
 								data: {
-									var: name,
+									var: varName,
 								},
 							});
-
-							return;
-						}
+						});
+						return; // Don't validate further if variables can't be resolved
 					}
 				}
 

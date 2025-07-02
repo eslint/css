@@ -20,7 +20,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 //-----------------------------------------------------------------------------
 
 /**
- * @import { CssNode, CssNodePlain, Comment, Lexer, StyleSheetPlain } from "@eslint/css-tree"
+ * @import { CssNode, CssNodePlain, Comment, Lexer, StyleSheetPlain, DeclarationPlain, FunctionNodePlain, Raw, Identifier } from "@eslint/css-tree"
  * @import { SourceRange, SourceLocation, FileProblem, DirectiveType, RulesConfig } from "@eslint/core"
  * @import { CSSSyntaxElement } from "../types.js"
  * @import { CSSLanguageOptions } from "./css-language.js"
@@ -57,6 +57,24 @@ class CSSTraversalStep extends VisitNodeStep {
 
 		this.target = target;
 	}
+}
+
+/**
+ * A class to represent a custom property and its uses.
+ * This is used to track custom properties and their declarations and references.
+ */
+class CustomPropertyUses {
+	/**
+	 * The Declaration nodes that define this custom property.
+	 * @type {Array<DeclarationPlain>}
+	 */
+	declarations = [];
+
+	/**
+	 * The references to this custom property.
+	 * @type {Array<FunctionNodePlain>}
+	 */
+	references = [];
 }
 
 //-----------------------------------------------------------------------------
@@ -103,6 +121,23 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	 * @type {Lexer}
 	 */
 	lexer;
+
+	/**
+	 * A map of custom properties and their uses.
+	 * The keys are the custom property names (e.g., `--my-custom-property`),
+	 * and the values are instances of `CustomPropertyUses` that contain
+	 * the declarations and references for that custom property.
+	 * @type {Map<string, CustomPropertyUses>}
+	 */
+	customProperties = new Map();
+
+	/**
+	 * A map to track the variables found in declarations.
+	 * The keys are the declaration nodes and the values are an array of
+	 * function nodes that reference the variable.
+	 * @type {WeakMap<DeclarationPlain, Array<FunctionNodePlain>>}
+	 */
+	#declarationVars = new WeakMap();
 
 	/**
 	 * Creates a new instance.
@@ -265,7 +300,7 @@ export class CSSSourceCode extends TextSourceCodeBase {
 
 		// Note: We can't use `walk` from `css-tree` because it uses `CssNode` instead of `CssNodePlain`
 
-		const visit = (node, parent) => {
+		const visit = (node, parent, declaration) => {
 			// first set the parent
 			this.#parents.set(node, parent);
 
@@ -278,6 +313,52 @@ export class CSSSourceCode extends TextSourceCodeBase {
 				}),
 			);
 
+			const isDeclaration = node.type === "Declaration";
+
+			// track custom properties
+			if (isDeclaration && node.property.startsWith("--")) {
+				//Note: node.value.type is always Raw
+
+				const customPropertyName = node.property;
+				let customPropertyUses =
+					this.customProperties.get(customPropertyName);
+
+				if (!customPropertyUses) {
+					customPropertyUses = new CustomPropertyUses();
+					this.customProperties.set(
+						customPropertyName,
+						customPropertyUses,
+					);
+				}
+
+				customPropertyUses.declarations.push(node);
+			} else if (node.type === "Function" && node.name === "var") {
+				const customPropertyName = node.children[0].name;
+				let customPropertyUses =
+					this.customProperties.get(customPropertyName);
+
+				if (!customPropertyUses) {
+					customPropertyUses = new CustomPropertyUses();
+					this.customProperties.set(
+						customPropertyName,
+						customPropertyUses,
+					);
+				}
+
+				customPropertyUses.references.push(node);
+
+				// track the variables in the declaration
+				if (declaration) {
+					const vars = this.#declarationVars.get(declaration) || [];
+					vars.push(node);
+					this.#declarationVars.set(declaration, vars);
+				}
+			}
+
+			const d = isDeclaration
+				? /** @type {DeclarationPlain} */ (node)
+				: declaration;
+
 			// then visit the children
 			for (const key of visitorKeys[node.type] || []) {
 				const child = node[key];
@@ -285,10 +366,10 @@ export class CSSSourceCode extends TextSourceCodeBase {
 				if (child) {
 					if (Array.isArray(child)) {
 						child.forEach(grandchild => {
-							visit(grandchild, node);
+							visit(grandchild, node, d);
 						});
 					} else {
-						visit(child, node);
+						visit(child, node, d);
 					}
 				}
 			}
@@ -306,5 +387,50 @@ export class CSSSourceCode extends TextSourceCodeBase {
 		visit(this.ast);
 
 		return steps;
+	}
+
+	/**
+	 * Gets the variables referenced in a specific declaration node.
+	 * This method returns an array of function nodes that reference the variable
+	 * in the declaration.
+	 * @param {DeclarationPlain} declaration The declaration node to get the variables for.
+	 * @returns {Array<FunctionNodePlain>} An array of function nodes that reference the variable in the declaration.
+	 */
+	getDeclarationVariables(declaration) {
+		return this.#declarationVars.get(declaration) || [];
+	}
+
+	/**
+	 * Gets the value of a custom property used in a `var()` function node.
+	 * This method searches for the last declaration of the custom property
+	 * before the given node and returns its value.
+	 * @param {FunctionNodePlain} node The `var()` function node to get the value for.
+	 * @returns {Raw|null} The value of the custom property, or null if not found.
+	 * @throws {TypeError} If the node is not a `var` function node.
+	 */
+	getVariableValue(node) {
+		if (node.type !== "Function" || node.name !== "var") {
+			throw new TypeError("Node must be a 'var' function node.");
+		}
+
+		const customPropertyName = /** @type {Identifier} */ (node.children[0])
+			.name;
+		const customPropertyUses =
+			this.customProperties.get(customPropertyName);
+
+		if (!customPropertyUses) {
+			return null; // No declaration found for this custom property
+		}
+
+		// search for the last declaration before this node
+		for (let i = customPropertyUses.declarations.length - 1; i >= 0; i--) {
+			const declaration = customPropertyUses.declarations[i];
+
+			if (declaration.loc.start.offset < node.loc.start.offset) {
+				return /** @type {Raw} */ (declaration.value);
+			}
+		}
+
+		return null; // No declaration found before this node
 	}
 }
