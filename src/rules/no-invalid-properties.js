@@ -26,86 +26,6 @@ import { isSyntaxMatchError, isSyntaxReferenceError } from "../util.js";
 //-----------------------------------------------------------------------------
 
 /**
- * Replaces all instances of a regex pattern with a replacement and tracks the offsets
- * @param {string} text The text to perform replacements on
- * @param {string} varName The regex pattern string to search for
- * @param {string} replaceValue The string to replace with
- * @returns {{text: string, offsets: Array<number>}} The updated text and array of offsets
- * where replacements occurred
- */
-function replaceWithOffsets(text, varName, replaceValue) {
-	const offsets = [];
-	let result = "";
-	let lastIndex = 0;
-
-	const regex = new RegExp(`var\\(\\s*${varName}\\s*\\)`, "gu");
-	let match;
-
-	while ((match = regex.exec(text)) !== null) {
-		result += text.slice(lastIndex, match.index);
-
-		/*
-		 * We need the offset of the replacement after other replacements have
-		 * been made, so we push the current length of the result before appending
-		 * the replacement value.
-		 */
-		offsets.push(result.length);
-		result += replaceValue;
-		lastIndex = match.index + match[0].length;
-	}
-
-	result += text.slice(lastIndex);
-	return { text: result, offsets };
-}
-
-/**
- * Simplifies the `var()` function calls in a CSS value by removing fallbacks.
- * @param {string} value The property value that using `var()` function.
- * @returns {string} The simplified value with fallbacks removed.
- */
-function simplifyVarsWithFallbacks(value) {
-	let output = "";
-	let i = 0;
-
-	while (i < value.length) {
-		const start = value.indexOf("var(", i);
-
-		if (start === -1) {
-			output += value.slice(i);
-			break;
-		}
-
-		output += value.slice(i, start);
-
-		let j = start + 4;
-		let openParens = 1;
-
-		while (j < value.length && openParens > 0) {
-			if (value[j] === "(") {
-				openParens++;
-			} else if (value[j] === ")") {
-				openParens--;
-			}
-
-			j++;
-		}
-
-		const fullText = value.slice(start, j);
-		const firstArgMatch = fullText.match(/var\(\s*(--[\w-]+)\s*,/u);
-
-		if (firstArgMatch) {
-			output += `var(${firstArgMatch[1]})`;
-		} else {
-			output += fullText;
-		}
-
-		i = j;
-	}
-
-	return output;
-}
-
-/**
  * Extracts the list of fallback value or variable name used in a `var()` that is used as fallback function.
  * For example, for `var(--my-color, var(--fallback-color, red));` it will return `["--fallback-color", "red"]`.
  * @param {string} value The fallback value that is used in `var()`.
@@ -234,110 +154,141 @@ export default {
 
 				const varsFound = replacements.pop();
 
-				/** @type {Map<number,CssLocationRange>} */
-				const varsFoundLocs = new Map();
+				/** @type {Map<string,CssLocationRange>} */
+				const valuesWithVarLocs = new Map();
 				const usingVars = varsFound?.size > 0;
 				let value = node.value;
 
 				if (usingVars) {
-					// need to use a text version of the value here
-					value = sourceCode.getText(node.value);
-					let offsets;
-					let valueWithNoFallback = simplifyVarsWithFallbacks(
-						sourceCode.getText(node.value),
-					).trim();
+					const valueList = [];
+					const valueNodes = node.value.children;
 
-					// replace any custom properties with their values
-					for (const [name, func] of varsFound) {
-						const varValue = vars.get(name);
+					// When `var()` is used, we store all the values to `valueList` with the replacement of `var()` with there values or fallback values
+					for (const child of valueNodes) {
+						// If value is a function starts with `var()`
+						if (child.type === "Function" && child.name === "var") {
+							const varValue = vars.get(child.children[0].name);
 
-						if (varValue) {
-							const result = replaceWithOffsets(
-								valueWithNoFallback,
-								name,
-								sourceCode.getText(varValue).trim(),
-							);
+							// If the variable is found, use its value, otherwise check for fallback values
+							if (varValue) {
+								const varValueText = sourceCode
+									.getText(varValue)
+									.trim();
 
-							valueWithNoFallback = result.text;
-							offsets = result.offsets;
-							value = valueWithNoFallback;
+								valueList.push(varValueText);
+								valuesWithVarLocs.set(varValueText, child.loc);
+							} else {
+								// If the variable is not found and doesn't have a fallback value, report it
+								if (child.children.length === 1) {
+									if (!allowUnknownVariables) {
+										context.report({
+											loc: child.children[0].loc,
+											messageId: "unknownVar",
+											data: {
+												var: child.children[0].name,
+											},
+										});
 
-							/*
-							 * Store the offsets of the replacements so we can
-							 * report the correct location of any validation error.
-							 */
-							offsets.forEach(offset => {
-								varsFoundLocs.set(offset, func.loc);
-							});
-						} else {
-							if (func.children.length > 1) {
-								if (func.children[2].type === "Raw") {
-									if (
-										func.children[2].value
-											.trim()
-											.startsWith("var")
-									) {
-										const fallbackVarList =
-											getVarFallbackList(
-												func.children[2].value.trim(),
-											);
-
-										let gotFallbackVarValue = false;
-
-										for (const fallbackVar of fallbackVarList) {
-											if (fallbackVar.startsWith("--")) {
-												const fallbackVarValue =
-													vars.get(fallbackVar);
-
-												if (!fallbackVarValue) {
-													continue; // Try the next fallback
-												}
-
-												value = sourceCode
-													.getText(fallbackVarValue)
-													.trim();
-												gotFallbackVarValue = true;
-												break; // Stop after finding the first valid variable
-											} else {
-												value = fallbackVar.trim();
-												gotFallbackVarValue = true;
-												break; // Stop after finding the first non-variable fallback
-											}
-										}
-
+										return;
+									}
+								} else {
+									// If it has a fallback value, use that
+									if (child.children[2].type === "Raw") {
 										if (
-											!allowUnknownVariables &&
-											!gotFallbackVarValue
+											child.children[2].value
+												.trim()
+												.startsWith("var")
 										) {
-											context.report({
-												loc: func.children[0].loc,
-												messageId: "unknownVar",
-												data: {
-													var: name,
-												},
-											});
+											const fallbackVarList =
+												getVarFallbackList(
+													child.children[2].value.trim(),
+												);
+											let gotFallbackVarValue = false;
 
-											return;
+											for (const fallbackVar of fallbackVarList) {
+												if (
+													fallbackVar.startsWith("--")
+												) {
+													const fallbackVarValue =
+														vars.get(fallbackVar);
+
+													if (!fallbackVarValue) {
+														continue; // Try the next fallback
+													}
+
+													valueList.push(
+														sourceCode
+															.getText(
+																fallbackVarValue,
+															)
+															.trim(),
+													);
+													valuesWithVarLocs.set(
+														sourceCode
+															.getText(
+																fallbackVarValue,
+															)
+															.trim(),
+														child.loc,
+													);
+													gotFallbackVarValue = true;
+													break; // Stop after finding the first valid variable
+												} else {
+													const fallbackValue =
+														fallbackVar.trim();
+													valueList.push(
+														fallbackValue,
+													);
+													valuesWithVarLocs.set(
+														fallbackValue,
+														child.loc,
+													);
+													gotFallbackVarValue = true;
+													break; // Stop after finding the first non-variable fallback
+												}
+											}
+
+											// If none of the fallback value is defined then report an error
+											if (
+												!allowUnknownVariables &&
+												!gotFallbackVarValue
+											) {
+												context.report({
+													loc: child.children[0].loc,
+													messageId: "unknownVar",
+													data: {
+														var: child.children[0]
+															.name,
+													},
+												});
+
+												return;
+											}
+										} else {
+											// if it has a fallback value, use that
+											const fallbackValue =
+												child.children[2].value.trim();
+											valueList.push(fallbackValue);
+											valuesWithVarLocs.set(
+												fallbackValue,
+												child.loc,
+											);
 										}
-									} else {
-										value = func.children[2].value.trim();
 									}
 								}
-							} else {
-								if (!allowUnknownVariables) {
-									context.report({
-										loc: func.children[0].loc,
-										messageId: "unknownVar",
-										data: {
-											var: name,
-										},
-									});
-
-									return;
-								}
 							}
+						} else {
+							// If the child is not a `var()` function, just add its text to the `valueList`
+							const valueText = sourceCode.getText(child).trim();
+							valueList.push(valueText);
+							valuesWithVarLocs.set(valueText, child.loc);
 						}
 					}
+
+					value =
+						valueList.length > 0
+							? valueList.join(" ")
+							: sourceCode.getText(node.value);
 				}
 
 				const { error } = lexer.matchProperty(node.property, value);
@@ -345,6 +296,13 @@ export default {
 				if (error) {
 					// validation failure
 					if (isSyntaxMatchError(error)) {
+						const errorValue =
+							usingVars &&
+							value.slice(
+								error.mismatchOffset,
+								error.mismatchOffset + error.mismatchLength,
+							);
+
 						context.report({
 							/*
 							 * When using variables, check to see if the error
@@ -353,7 +311,7 @@ export default {
 							 * reported location.
 							 */
 							loc: usingVars
-								? (varsFoundLocs.get(error.mismatchOffset) ??
+								? (valuesWithVarLocs.get(errorValue) ??
 									node.value.loc)
 								: error.loc,
 							messageId: "invalidPropertyValue",
