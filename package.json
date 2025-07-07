@@ -88,7 +88,6 @@
   },
   "devDependencies": {
     "@eslint/json": "^0.5.0",
-    "@types/minimatch": "^5.1.2",
     "c8": "^9.1.0",
     "compute-baseline": "^0.3.1",
     "dedent": "^1.5.3",
