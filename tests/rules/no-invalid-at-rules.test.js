@@ -30,6 +30,8 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		"@keyframes slidein { from { transform: translateX(0%); } to { transform: translateX(100%); } }",
 		"@supports (display: grid) { .grid-container { display: grid; } }",
 		"@namespace url(http://www.w3.org/1999/xhtml);",
+		'@charset "UTF-8";',
+		'@charset "UTF-8"; @import url("foo.css");',
 		"@media screen and (max-width: 600px) { body { font-size: 12px; } }",
 		{
 			code: "@foobar url(foo.css) { body { font-size: 12px } }",
@@ -96,15 +98,15 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			],
 		},
 		{
-			code: '@charse "test";',
+			code: '@impor "foo.css";',
 			errors: [
 				{
 					messageId: "unknownAtRule",
-					data: { name: "charse" },
+					data: { name: "impor" },
 					line: 1,
 					column: 1,
 					endLine: 1,
-					endColumn: 8,
+					endColumn: 7,
 				},
 			],
 		},
@@ -290,6 +292,198 @@ ruleTester.run("no-invalid-at-rules", rule, {
 					column: 9,
 					endLine: 1,
 					endColumn: 12,
+				},
+			],
+		},
+		{
+			code: '@CHARSET "UTF-8";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "CHARSET" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: '@CharSet "UTF-8";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "CharSet" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset;",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset ;",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset 'UTF-8';",
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "charset",
+						prelude: "'UTF-8'",
+						expected: "<string>",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@charset UTF-8;",
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "charset",
+						prelude: "UTF-8",
+						expected: "<string>",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: '@charset"UTF-8";',
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "charset",
+						prelude: '"UTF-8"',
+						expected: "<string>",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 16,
+				},
+			],
+		},
+		{
+			code: '@charset  "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "charset",
+						prelude: '"UTF-8"',
+						expected: "<string>",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 18,
+				},
+			],
+		},
+		{
+			code: '@charset "UTF-8"',
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "charset",
+						prelude: '"UTF-8"',
+						expected: "<string>",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: '@charset "UTF-8" ;',
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "charset",
+						prelude: '"UTF-8"',
+						expected: "<string>",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: '@charset  "UTF-8";\n@impor "foo.css";',
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "charset",
+						prelude: '"UTF-8"',
+						expected: "<string>",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 18,
+				},
+				{
+					messageId: "unknownAtRule",
+					data: { name: "impor" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 7,
 				},
 			],
 		},

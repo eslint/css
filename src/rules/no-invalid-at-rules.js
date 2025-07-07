@@ -25,6 +25,14 @@ import { isSyntaxMatchError } from "../util.js";
 //-----------------------------------------------------------------------------
 
 /**
+ * A valid `@charset` rule must:
+ * - Enclose the encoding name in double quotes
+ * - Include exactly one space character after `@charset`
+ * - End immediately with a semicolon
+ */
+const charsetPattern = /^@charset "[^"]+";$/u;
+
+/**
  * Extracts metadata from an error object.
  * @param {SyntaxError} error The error object to extract metadata from.
  * @returns {Object} The metadata extracted from the error.
@@ -81,8 +89,72 @@ export default {
 		const { sourceCode } = context;
 		const lexer = sourceCode.lexer;
 
+		/**
+		 * Validates a `@charset` rule for correct syntax:
+		 * - Verifies the rule name is exactly "charset" (case-sensitive)
+		 * - Ensures the rule has a prelude
+		 * - Validates the prelude matches the expected pattern
+		 * @param {AtrulePlain} node The node representing the rule.
+		 */
+		function validateCharsetRule(node) {
+			const { name, prelude, loc } = node;
+
+			const charsetNameLoc = {
+				start: loc.start,
+				end: {
+					line: loc.start.line,
+					column: loc.start.column + name.length + 1,
+				},
+			};
+
+			if (name !== "charset") {
+				context.report({
+					loc: charsetNameLoc,
+					messageId: "unknownAtRule",
+					data: {
+						name,
+					},
+				});
+				return;
+			}
+
+			if (!prelude) {
+				context.report({
+					loc: charsetNameLoc,
+					messageId: "missingPrelude",
+					data: {
+						name,
+					},
+				});
+				return;
+			}
+
+			const nodeText = sourceCode.getText(node);
+			if (!charsetPattern.test(nodeText)) {
+				const preludeText = nodeText.slice(
+					prelude.loc.start.offset,
+					prelude.loc.end.offset,
+				);
+
+				context.report({
+					loc: prelude.loc,
+					messageId: "invalidPrelude",
+					data: {
+						name,
+						prelude: preludeText,
+						expected: "<string>",
+					},
+				});
+			}
+		}
+
 		return {
 			Atrule(node) {
+				if (node.name.toLowerCase() === "charset") {
+					validateCharsetRule(node);
+					return;
+				}
+
 				// checks both name and prelude
 				const { error } = lexer.matchAtrulePrelude(
 					node.name,

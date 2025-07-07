@@ -13,16 +13,15 @@ CSS contains a number of at-rules, each beginning with a `@`, that perform vario
 - `@supports`
 - `@namespace`
 - `@page`
-- `@charset`
 
 It's important to use a known at-rule because unknown at-rules cause the browser to ignore the entire block, including any rules contained within. For example:
 
 ```css
 /* typo */
-@charse "UTF-8";
+@impor "foo.css";
 ```
 
-Here, the `@charset` at-rule is incorrectly spelled as `@charse`, which means that it will be ignored.
+Here, the `@import` at-rule is incorrectly spelled as `@impor`, which means that it will be ignored.
 
 Each at-rule also has a defined prelude (which may be empty) and potentially one or more descriptors. For example:
 
@@ -71,6 +70,28 @@ Examples of **incorrect** code:
 @property --main-bg-color {
 	syntax: red;
 }
+```
+
+Note on `@charset`: Although it begins with an `@` symbol, it is not an at-rule. It is a specific byte sequence of the following form:
+
+```css
+@charset "<charset>";
+```
+
+where `charset` is a [`<string>`](https://developer.mozilla.org/en-US/docs/Web/CSS/string) denoting the character encoding to be used. It must be the name of a web-safe character encoding defined in the [IANA-registry](https://www.iana.org/assignments/character-sets/character-sets.xhtml), and must be double-quoted, following exactly one space character (U+0020), and immediately terminated with a semicolon.
+
+Examples of **incorrect** code:
+
+```css
+@charset 'iso-8859-15'; /* Wrong quotes used */
+@charset "UTF-8"; /* More than one space */
+@charset UTF-8; /* The charset is a CSS <string> and requires double-quotes */
+```
+
+Examples of **correct** code:
+
+```css
+@charset "UTF-8";
 ```
 
 ## When Not to Use It
