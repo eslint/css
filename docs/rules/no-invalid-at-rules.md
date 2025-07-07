@@ -84,7 +84,7 @@ Examples of **incorrect** code:
 
 ```css
 @charset 'iso-8859-15'; /* Wrong quotes used */
-@charset "UTF-8"; /* More than one space */
+@charset  "UTF-8"; /* More than one space */
 @charset UTF-8; /* The charset is a CSS <string> and requires double-quotes */
 ```
 
