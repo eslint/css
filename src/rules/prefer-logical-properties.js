@@ -154,12 +154,14 @@ export default {
 						items: {
 							type: "string",
 						},
+						uniqueItems: true,
 					},
 					allowUnits: {
 						type: "array",
 						items: {
 							type: "string",
 						},
+						uniqueItems: true,
 					},
 				},
 				additionalProperties: false,

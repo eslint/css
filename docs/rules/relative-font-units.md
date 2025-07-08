@@ -26,7 +26,6 @@ This rule enforces the use of relative units for font size.
 This rule accepts an option which is an object with the following property:
 
 - `allowUnits` (default: `["rem"]`) - Specify an array of relative units that are allowed to be used. You can use the following units:
-
     - **%**: Represents the "percentage" of the parent element’s font size, allowing the text to scale relative to its container.
     - **cap**: Represents the "cap height" (nominal height of capital letters) of the element's font.
     - **ch**: Represents the width or advance measure of the "0" glyph in the element's font.

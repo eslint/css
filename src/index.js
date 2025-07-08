@@ -13,8 +13,10 @@ import fontFamilyFallbacks from "./rules/font-family-fallbacks.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noImportant from "./rules/no-important.js";
-import noInvalidProperties from "./rules/no-invalid-properties.js";
+import noInvalidAtRulePlacement from "./rules/no-invalid-at-rule-placement.js";
 import noInvalidAtRules from "./rules/no-invalid-at-rules.js";
+import noInvalidNamedGridAreas from "./rules/no-invalid-named-grid-areas.js";
+import noInvalidProperties from "./rules/no-invalid-properties.js";
 import preferLogicalProperties from "./rules/prefer-logical-properties.js";
 import relativeFontUnits from "./rules/relative-font-units.js";
 import useLayers from "./rules/use-layers.js";
@@ -27,7 +29,7 @@ import useBaseline from "./rules/use-baseline.js";
 const plugin = {
 	meta: {
 		name: "@eslint/css",
-		version: "0.8.1", // x-release-please-version
+		version: "0.9.0", // x-release-please-version
 	},
 	languages: { css: new CSSLanguage() },
 	rules: {
@@ -35,7 +37,9 @@ const plugin = {
 		"no-empty-blocks": noEmptyBlocks,
 		"no-duplicate-imports": noDuplicateImports,
 		"no-important": noImportant,
+		"no-invalid-at-rule-placement": noInvalidAtRulePlacement,
 		"no-invalid-at-rules": noInvalidAtRules,
+		"no-invalid-named-grid-areas": noInvalidNamedGridAreas,
 		"no-invalid-properties": noInvalidProperties,
 		"prefer-logical-properties": preferLogicalProperties,
 		"relative-font-units": relativeFontUnits,
@@ -50,7 +54,9 @@ const plugin = {
 				"css/no-empty-blocks": "error",
 				"css/no-duplicate-imports": "error",
 				"css/no-important": "error",
+				"css/no-invalid-at-rule-placement": "error",
 				"css/no-invalid-at-rules": "error",
+				"css/no-invalid-named-grid-areas": "error",
 				"css/no-invalid-properties": "error",
 				"css/use-baseline": "warn",
 			}),

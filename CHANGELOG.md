@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.9.0](https://github.com/eslint/css/compare/css-v0.8.1...css-v0.9.0) (2025-06-12)
+
+
+### Features
+
+* add `relative-font-units` rule ([#133](https://github.com/eslint/css/issues/133)) ([ce256da](https://github.com/eslint/css/commit/ce256da671503792e74ad2113daa72319361c8b5))
+* Validate property values containing variables ([#148](https://github.com/eslint/css/issues/148)) ([9fb07fa](https://github.com/eslint/css/commit/9fb07fab74849e31ec363c75ce0d405a6a3108ec))
+
+
+### Bug Fixes
+
+* Upgrade @eslint/css-tree to update syntax support ([#173](https://github.com/eslint/css/issues/173)) ([8909277](https://github.com/eslint/css/commit/8909277ec65d3e75336070274d13fb390c710069)), closes [#159](https://github.com/eslint/css/issues/159)
+
 ## [0.8.1](https://github.com/eslint/css/compare/css-v0.8.0...css-v0.8.1) (2025-05-16)
 
 
