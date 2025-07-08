@@ -97,7 +97,7 @@
     "got": "^14.4.2",
     "lint-staged": "^15.2.7",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.21.0",
+    "mdn-data": "^2.22.1",
     "mocha": "^10.4.0",
     "prettier": "^3.6.0",
     "rollup": "^4.16.2",
@@ -105,7 +105,7 @@
     "rollup-plugin-delete": "^3.0.1",
     "tailwind-csstree": "^0.1.0",
     "typescript": "^5.8.2",
-    "web-features": "^2.35.1",
+    "web-features": "^2.41.0",
     "yorkie": "^2.0.0"
   },
   "engines": {

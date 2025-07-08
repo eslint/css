@@ -97,4 +97,3 @@ You can disable this rule if your stylesheets don't use `@charset` or `@import` 
 
 - [@charset - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@charset)
 - [@import - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
-- [@namespace - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/@namespace)
