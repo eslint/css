@@ -15,6 +15,7 @@ ruleTester.run("font-family-fallbacks", rule, {
 		":root { --my-font: 'Arial', sans-serif; } a { font-family: var(--my-font); }",
 		":root { --my-font: 'Arial', 'Segoe UI Emoji', serif; } a { font-family: var(--my-font); }",
 		"a { font-family: serif; }",
+		"a { font-family: sans-serif;; }",
 		"a { font-family: 'Arial', 'Segoe UI Emoji', serif; }",
 		"a { font-family: 'Arial', var(--my-font); }",
 		"a { font-family: 'Arial', var(--my-font), serif; }",
