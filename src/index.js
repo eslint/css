@@ -9,6 +9,7 @@
 
 import { CSSLanguage } from "./languages/css-language.js";
 import { CSSSourceCode } from "./languages/css-source-code.js";
+import fontFamilyFallbacks from "./rules/font-family-fallbacks.js";
 import noEmptyBlocks from "./rules/no-empty-blocks.js";
 import noDuplicateImports from "./rules/no-duplicate-imports.js";
 import noImportant from "./rules/no-important.js";
@@ -30,10 +31,9 @@ const plugin = {
 		name: "@eslint/css",
 		version: "0.9.0", // x-release-please-version
 	},
-	languages: {
-		css: new CSSLanguage(),
-	},
+	languages: { css: new CSSLanguage() },
 	rules: {
+		"font-family-fallbacks": fontFamilyFallbacks,
 		"no-empty-blocks": noEmptyBlocks,
 		"no-duplicate-imports": noDuplicateImports,
 		"no-important": noImportant,
@@ -50,6 +50,7 @@ const plugin = {
 		recommended: {
 			plugins: {},
 			rules: /** @type {const} */ ({
+				"css/font-family-fallbacks": "error",
 				"css/no-empty-blocks": "error",
 				"css/no-duplicate-imports": "error",
 				"css/no-important": "error",
