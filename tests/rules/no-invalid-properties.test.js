@@ -37,6 +37,24 @@ ruleTester.run("no-invalid-properties", rule, {
 		":root { --my-color: red; }\na { color: var(   --my-color   ) }",
 		":root { --my-color: red;\n.foo { color: var(--my-color) }\n}",
 		".fluidHeading {font-size: clamp(2.1rem, calc(7.2vw - 0.2rem), 2.5rem);}",
+		"a { color: var(--my-color, red) }",
+		":root { --my-heading: 3rem; }\na { color: var(--my-color, red) }",
+		":root { --my-heading: 3rem; --foo: red }\na { color: var(--my-color, var(--foo, blue)) }",
+		":root { --my-heading: 3rem; }\na { color: var(--my-color, var(--foo, blue)) }",
+		"a { color: var(--my-color, var(--foo, var(--bar, blue))) }",
+		":root { --my-color: red; }\na { color: var(--my-color, blue) }",
+		":root { --my-fallback: red; }\na { color: var(--my-color, var(--my-fallback)) }",
+		":root { --my-fallback: red; }\na { color: var(--my-color, var(--my-fallback, blue)) }",
+		":root { --foo: red; }\na { color: var(--my-color, var(--my-fallback, var(--foo))) }",
+		"a { color: var(--my-color, var(--my-fallback, var(--foo, blue))) }",
+		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color)) }",
+		":root { --my-color: red; --fallback-color: blue; }\na { color: var(--my-color, var(--fallback-color)) }",
+		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color, blue)) }",
+		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color, var(--foo))) }",
+		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color, var(--foo, blue))) }",
+		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color, var(--foo, var(--bar)))) }",
+		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color, var(--foo, var(--bar, blue)))) }",
+		":root { --color: red }\na { border-top: 1px var(--style, var(--fallback, solid)) var(--color, blue); }",
 		{
 			code: "a { my-custom-color: red; }",
 			languageOptions: {
@@ -53,6 +71,10 @@ ruleTester.run("no-invalid-properties", rule, {
 		},
 		{
 			code: "a { --my-color: red; color: var(--my-color); background-color: var(--unknown-var); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: ":root { --color: red }\na { border-top: 1px var(--style, var(--fallback)) var(--color, blue); }",
 			options: [{ allowUnknownVariables: true }],
 		},
 
@@ -372,7 +394,7 @@ ruleTester.run("no-invalid-properties", rule, {
 						expected: "<line-width> || <line-style> || <color>",
 					},
 					line: 1,
-					column: 31,
+					column: 50,
 					endLine: 1,
 					endColumn: 53,
 				},
@@ -453,6 +475,120 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 47,
 					endLine: 1,
 					endColumn: 63,
+				},
+			],
+		},
+		{
+			code: "a { border-top: 1px var(--style, solid) var(--color); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--color",
+					},
+					line: 1,
+					column: 45,
+					endLine: 1,
+					endColumn: 52,
+				},
+			],
+		},
+		{
+			code: ":root { --style: foo }\na { border-top: 1px var(--style) var(--color, red); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 21,
+					endLine: 2,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: ":root { --style: foo }\na { border-top: 1px var(--style, solid) var(--color, red); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 21,
+					endLine: 2,
+					endColumn: 40,
+				},
+			],
+		},
+		{
+			code: ":root { --color: foo }\na { border-top: 1px var(--style, var(--fallback, solid)) var(--color); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 58,
+					endLine: 2,
+					endColumn: 70,
+				},
+			],
+		},
+		{
+			code: ":root { --color: foo }\na { border-top: 1px var(--style, var(--fallback)) var(--color); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 51,
+					endLine: 2,
+					endColumn: 63,
+				},
+			],
+		},
+		{
+			code: ":root { --color: foo }\na { border-top: 1px var(--style, var(--fallback)) var(--color); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--style",
+					},
+					line: 2,
+					column: 25,
+					endLine: 2,
+					endColumn: 32,
+				},
+			],
+		},
+		{
+			code: ":root { --color: red }\na { colorr: var(--color, blue); }",
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: {
+						property: "colorr",
+					},
+					line: 2,
+					column: 5,
+					endLine: 2,
+					endColumn: 11,
 				},
 			],
 		},
