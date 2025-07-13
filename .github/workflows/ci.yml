@@ -18,8 +18,6 @@ jobs:
                   node-version: "lts/*"
             - name: Install dependencies
               run: npm install
-            - name: Build
-              run: npm run build
             - name: Lint files
               run: npm run lint
             - name: Check Formatting
@@ -70,6 +68,4 @@ jobs:
             - name: Install Packages
               run: npm install
             - name: Run --dry-run
-              run: |
-                  npm run build
-                  npm run test:jsr
+              run: npm run test:jsr

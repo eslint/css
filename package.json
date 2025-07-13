@@ -1,6 +1,6 @@
 {
   "name": "@eslint/css",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "CSS linting plugin for ESLint",
   "author": "Nicholas C. Zakas",
   "type": "module",
@@ -60,16 +60,18 @@
   "scripts": {
     "build:dedupe-types": "node tools/dedupe-types.js dist/cjs/index.cjs dist/esm/index.js",
     "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\" && node tools/update-cts.js dist/cjs/types.cts dist/cjs/index.d.cts",
-    "build": "rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
+    "build:rules": "node tools/build-rules.js",
+    "build": "npm run build:rules && rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
     "build:readme": "node tools/update-readme.js",
     "build:update-rules-docs": "node tools/update-rules-docs.js",
     "build:baseline": "node tools/generate-baseline.js",
-    "test:jsr": "npx jsr@latest publish --dry-run",
+    "prepare": "npm run build",
     "pretest": "npm run build",
     "lint": "eslint",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "test": "mocha tests/**/*.js",
+    "test:jsr": "npx jsr@latest publish --dry-run",
     "test:coverage": "c8 npm test",
     "test:types": "npm run build && tsc -p tests/types/tsconfig.json"
   },

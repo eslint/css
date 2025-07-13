@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.10.0](https://github.com/eslint/css/compare/css-v0.9.0...css-v0.10.0) (2025-07-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove Tailwind syntax in favor of external tailwind-csstree ([#166](https://github.com/eslint/css/issues/166))
+
+### Features
+
+* add `allowUnknownVariables` option to no-invalid-properties ([#178](https://github.com/eslint/css/issues/178)) ([932cf62](https://github.com/eslint/css/commit/932cf62fd10e3fea226e2509dda7bf37bc1a1806))
+* add `no-invalid-named-grid-areas` rule ([#169](https://github.com/eslint/css/issues/169)) ([162f6e5](https://github.com/eslint/css/commit/162f6e5bd2f3cd2a26f90eef44fa85be6c5a5c93))
+* add no-invalid-at-rule-placement rule ([#171](https://github.com/eslint/css/issues/171)) ([bb90e3a](https://github.com/eslint/css/commit/bb90e3a8f08da986817d29ff409bdbf583bfe9df))
+* Remove Tailwind syntax in favor of external tailwind-csstree ([#166](https://github.com/eslint/css/issues/166)) ([a035fa7](https://github.com/eslint/css/commit/a035fa7c5b36845b73131e2d1a0b8c83f6c89ffe))
+
+
+### Bug Fixes
+
+* Enforce unique items in the options of `prefer-logical-properties` ([b720cf8](https://github.com/eslint/css/commit/b720cf89b611eca7b5778d11bdc4c872813209c3))
+* enforce unique items in the options of `prefer-logical-properties` ([#176](https://github.com/eslint/css/issues/176)) ([b720cf8](https://github.com/eslint/css/commit/b720cf89b611eca7b5778d11bdc4c872813209c3))
+* update baseline data ([#189](https://github.com/eslint/css/issues/189)) ([9bdb155](https://github.com/eslint/css/commit/9bdb15582a5ed72934b224573d90f70c2d4343d5))
+
 ## [0.9.0](https://github.com/eslint/css/compare/css-v0.8.1...css-v0.9.0) (2025-06-12)
 
 

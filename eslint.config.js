@@ -115,4 +115,10 @@ export default defineConfig([
 			"eslint-plugin/test-case-shorthand-strings": "error",
 		},
 	},
+	{
+		files: ["tools/**/*.js"],
+		rules: {
+			"no-console": "off",
+		},
+	},
 ]);
