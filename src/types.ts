@@ -7,7 +7,11 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import type { RuleVisitor, RuleDefinition } from "@eslint/core";
+import type {
+	CustomRuleDefinitionType,
+	CustomRuleTypeDefinitions,
+	RuleVisitor,
+} from "@eslint/core";
 
 import type { CssNodePlain, CssNodeNames } from "@eslint/css-tree";
 
@@ -46,28 +50,19 @@ export interface CSSRuleVisitor
 	extends RuleVisitor,
 		Partial<WithExit<CSSNodeVisitor>> {}
 
-export type CSSRuleDefinitionTypeOptions = {
-	RuleOptions: unknown[];
-	MessageIds: string;
-	ExtRuleDocs: Record<string, unknown>;
-};
+export type CSSRuleDefinitionTypeOptions = CustomRuleTypeDefinitions;
 
 /**
  * A rule definition for CSS.
  */
 export type CSSRuleDefinition<
 	Options extends Partial<CSSRuleDefinitionTypeOptions> = {},
-> = RuleDefinition<
-	// Language specific type options (non-configurable)
+> = CustomRuleDefinitionType<
 	{
 		LangOptions: CSSLanguageOptions;
 		Code: CSSSourceCode;
 		Visitor: CSSRuleVisitor;
 		Node: CssNodePlain;
-	} & Required<
-		// Rule specific type options (custom)
-		Options &
-			// Rule specific type options (defaults)
-			Omit<CSSRuleDefinitionTypeOptions, keyof Options>
-	>
+	},
+	Options
 >;
