@@ -58,4 +58,5 @@ pnpm-lock.yaml
 # Build
 dist/
 
+src/build
 test.css

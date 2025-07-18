@@ -7,7 +7,7 @@
 // Imports
 //-----------------------------------------------------------------------------
 
-import { isSyntaxMatchError } from "../util.js";
+import { isSyntaxMatchError, isSyntaxReferenceError } from "../util.js";
 
 //-----------------------------------------------------------------------------
 // Type Definitions
@@ -17,7 +17,8 @@ import { isSyntaxMatchError } from "../util.js";
  * @import { CSSRuleDefinition } from "../types.js"
  * @import { ValuePlain, FunctionNodePlain, CssLocationRange } from "@eslint/css-tree";
  * @typedef {"invalidPropertyValue" | "unknownProperty" | "unknownVar"} NoInvalidPropertiesMessageIds
- * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidPropertiesMessageIds }>} NoInvalidPropertiesRuleDefinition
+ * @typedef {[{allowUnknownVariables?: boolean}]} NoInvalidPropertiesOptions
+ * @typedef {CSSRuleDefinition<{ RuleOptions: NoInvalidPropertiesOptions, MessageIds: NoInvalidPropertiesMessageIds }>} NoInvalidPropertiesRuleDefinition
  */
 
 //-----------------------------------------------------------------------------
@@ -72,6 +73,24 @@ export default {
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-properties.md",
 		},
 
+		schema: [
+			{
+				type: "object",
+				properties: {
+					allowUnknownVariables: {
+						type: "boolean",
+					},
+				},
+				additionalProperties: false,
+			},
+		],
+
+		defaultOptions: [
+			{
+				allowUnknownVariables: false,
+			},
+		],
+
 		messages: {
 			invalidPropertyValue:
 				"Invalid value '{{value}}' for property '{{property}}'. Expected {{expected}}.",
@@ -94,6 +113,8 @@ export default {
 		 * @type {Array<Map<string,FunctionNodePlain>>}
 		 */
 		const replacements = [];
+
+		const [{ allowUnknownVariables }] = context.options;
 
 		return {
 			"Rule > Block > Declaration"() {
@@ -153,7 +174,7 @@ export default {
 							offsets.forEach(offset => {
 								varsFoundLocs.set(offset, func.loc);
 							});
-						} else {
+						} else if (!allowUnknownVariables) {
 							context.report({
 								loc: func.children[0].loc,
 								messageId: "unknownVar",
@@ -205,22 +226,27 @@ export default {
 						return;
 					}
 
-					// unknown property
-					context.report({
-						loc: {
-							start: node.loc.start,
-							end: {
-								line: node.loc.start.line,
-								column:
-									node.loc.start.column +
-									node.property.length,
+					if (
+						!allowUnknownVariables ||
+						isSyntaxReferenceError(error)
+					) {
+						// unknown property
+						context.report({
+							loc: {
+								start: node.loc.start,
+								end: {
+									line: node.loc.start.line,
+									column:
+										node.loc.start.column +
+										node.property.length,
+								},
 							},
-						},
-						messageId: "unknownProperty",
-						data: {
-							property: node.property,
-						},
-					});
+							messageId: "unknownProperty",
+							data: {
+								property: node.property,
+							},
+						});
+					}
 				}
 			},
 		};

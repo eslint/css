@@ -1,6 +1,6 @@
 {
   "name": "@eslint/css",
-  "version": "0.8.1",
+  "version": "0.10.0",
   "description": "CSS linting plugin for ESLint",
   "author": "Nicholas C. Zakas",
   "type": "module",
@@ -15,16 +15,6 @@
       "import": {
         "types": "./dist/esm/index.d.ts",
         "default": "./dist/esm/index.js"
-      }
-    },
-    "./syntax": {
-      "require": {
-        "types": "./dist/cjs/syntax/index.d.cts",
-        "default": "./dist/cjs/syntax/index.cjs"
-      },
-      "import": {
-        "types": "./dist/esm/syntax/index.d.ts",
-        "default": "./dist/esm/syntax/index.js"
       }
     },
     "./types": {
@@ -69,18 +59,19 @@
   "homepage": "https://github.com/eslint/css#readme",
   "scripts": {
     "build:dedupe-types": "node tools/dedupe-types.js dist/cjs/index.cjs dist/esm/index.js",
-    "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\"",
-    "build:syntax-cts": "node -e \"fs.copyFileSync('dist/esm/syntax/index.d.ts', 'dist/cjs/syntax/index.d.cts')\" && node tools/update-cts.js dist/cjs/types.cts dist/cjs/index.d.cts",
-    "build": "rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts && tsc -p tsconfig.syntax.json && npm run build:syntax-cts",
+    "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\" && node tools/update-cts.js dist/cjs/types.cts dist/cjs/index.d.cts",
+    "build:rules": "node tools/build-rules.js",
+    "build": "npm run build:rules && rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
     "build:readme": "node tools/update-readme.js",
     "build:update-rules-docs": "node tools/update-rules-docs.js",
     "build:baseline": "node tools/generate-baseline.js",
-    "test:jsr": "npx jsr@latest publish --dry-run",
+    "prepare": "npm run build",
     "pretest": "npm run build",
     "lint": "eslint",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "test": "mocha tests/**/*.js",
+    "test:jsr": "npx jsr@latest publish --dry-run",
     "test:coverage": "c8 npm test",
     "test:types": "npm run build && tsc -p tests/types/tsconfig.json"
   },
@@ -94,7 +85,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@eslint/core": "^0.14.0",
-    "@eslint/css-tree": "^3.3.3",
+    "@eslint/css-tree": "^3.6.1",
     "@eslint/plugin-kit": "^0.3.1"
   },
   "devDependencies": {
@@ -108,14 +99,15 @@
     "got": "^14.4.2",
     "lint-staged": "^15.2.7",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.21.0",
+    "mdn-data": "^2.22.1",
     "mocha": "^10.4.0",
-    "prettier": "^3.4.1",
+    "prettier": "^3.6.0",
     "rollup": "^4.16.2",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-delete": "^3.0.1",
+    "tailwind-csstree": "^0.1.0",
     "typescript": "^5.8.2",
-    "web-features": "^2.35.1",
+    "web-features": "^2.41.0",
     "yorkie": "^2.0.0"
   },
   "engines": {

@@ -121,4 +121,10 @@ export default defineConfig([
 		language: "css/css",
 		...css.configs.recommended,
 	},
+	{
+		files: ["tools/**/*.js"],
+		rules: {
+			"no-console": "off",
+		},
+	},
 ]);
