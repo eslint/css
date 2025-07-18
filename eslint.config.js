@@ -11,6 +11,7 @@ import eslintConfigESLint from "eslint-config-eslint";
 import eslintPlugin from "eslint-plugin-eslint-plugin";
 import json from "@eslint/json";
 import { defineConfig, globalIgnores } from "eslint/config";
+import css from "./src/index.js";
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -30,7 +31,7 @@ const eslintPluginTestsRecommendedConfig =
 //-----------------------------------------------------------------------------
 
 export default defineConfig([
-	globalIgnores(["**/tests/fixtures/", "**/dist/"]),
+	globalIgnores(["**/tests/fixtures/", "**/dist/", "test.css"]),
 
 	...eslintConfigESLint.map(config => ({
 		files: ["**/*.js"],
@@ -114,6 +115,12 @@ export default defineConfig([
 			],
 			"eslint-plugin/test-case-shorthand-strings": "error",
 		},
+	},
+	{
+		files: ["**/*.css"],
+		language: "css/css",
+		plugins: { css },
+		extends: ["css/recommended"],
 	},
 	{
 		files: ["tools/**/*.js"],
