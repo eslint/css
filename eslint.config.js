@@ -119,7 +119,8 @@ export default defineConfig([
 	{
 		files: ["**/*.css"],
 		language: "css/css",
-		...css.configs.recommended,
+		plugins: { css },
+		extends: ["css/recommended"],
 	},
 	{
 		files: ["tools/**/*.js"],
