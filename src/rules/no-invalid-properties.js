@@ -194,15 +194,11 @@ export default {
 								} else {
 									// If it has a fallback value, use that
 									if (child.children[2].type === "Raw") {
-										if (
-											child.children[2].value
-												.trim()
-												.startsWith("var")
-										) {
-											const fallbackVarList =
-												getVarFallbackList(
-													child.children[2].value.trim(),
-												);
+										const fallbackVarList =
+											getVarFallbackList(
+												child.children[2].value.trim(),
+											);
+										if (fallbackVarList.length > 0) {
 											let gotFallbackVarValue = false;
 
 											for (const fallbackVar of fallbackVarList) {
