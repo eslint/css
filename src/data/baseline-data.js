@@ -1543,9 +1543,9 @@ export const propertyValues = new Map([
 	[
 		"flex-direction",
 		new Map([
-			["column", "10:2020"],
+			["column", "10:2015"],
 			["column-reverse", "10:2020"],
-			["row", "10:2020"],
+			["row", "10:2015"],
 			["row-reverse", "10:2020"],
 		]),
 	],
@@ -1557,7 +1557,7 @@ export const propertyValues = new Map([
 			["wrap-reverse", "10:2015"],
 		]),
 	],
-	["flex", new Map([["none", "10:2020"]])],
+	["flex", new Map([["none", "10:2015"]])],
 	[
 		"clear",
 		new Map([
