@@ -31,6 +31,7 @@ import { isSyntaxMatchError } from "../util.js";
  * - End immediately with a semicolon
  */
 const charsetPattern = /^@charset "[^"]+";$/u;
+const charsetEncodingPattern = /^['"]?([^"';]+)['"]?/u;
 
 /**
  * Extracts metadata from an error object.
@@ -64,6 +65,8 @@ function extractMetaDataFromError(error) {
 export default {
 	meta: {
 		type: "problem",
+
+		fixable: "code",
 
 		docs: {
 			description: "Disallow invalid at-rules",
@@ -114,6 +117,15 @@ export default {
 					data: {
 						name,
 					},
+					fix(fixer) {
+						return fixer.replaceTextRange(
+							[
+								loc.start.offset,
+								loc.start.offset + name.length + 1,
+							],
+							"@charset",
+						);
+					},
 				});
 				return;
 			}
@@ -136,6 +148,8 @@ export default {
 					prelude.loc.end.offset,
 				);
 
+				const encoding = preludeText.match(charsetEncodingPattern)?.[1];
+
 				context.report({
 					loc: prelude.loc,
 					messageId: "invalidPrelude",
@@ -143,6 +157,16 @@ export default {
 						name,
 						prelude: preludeText,
 						expected: "<string>",
+					},
+					fix(fixer) {
+						if (!encoding) {
+							return null;
+						}
+
+						return fixer.replaceText(
+							node,
+							`@charset "${encoding}";`,
+						);
 					},
 				});
 			}

@@ -297,6 +297,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: '@CHARSET "UTF-8";',
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "unknownAtRule",
@@ -310,6 +311,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: '@CharSet "UTF-8";',
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "unknownAtRule",
@@ -362,6 +364,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: "@charset 'UTF-8';",
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "invalidPrelude",
@@ -379,6 +382,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: "@charset UTF-8;",
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "invalidPrelude",
@@ -396,6 +400,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: '@charset"UTF-8";',
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "invalidPrelude",
@@ -413,6 +418,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: '@charset  "UTF-8";',
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "invalidPrelude",
@@ -430,6 +436,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: '@charset "UTF-8"',
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "invalidPrelude",
@@ -447,6 +454,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: '@charset "UTF-8" ;',
+			output: '@charset "UTF-8";',
 			errors: [
 				{
 					messageId: "invalidPrelude",
@@ -464,6 +472,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		},
 		{
 			code: '@charset  "UTF-8";\n@impor "foo.css";',
+			output: '@charset "UTF-8";\n@impor "foo.css";',
 			errors: [
 				{
 					messageId: "invalidPrelude",
