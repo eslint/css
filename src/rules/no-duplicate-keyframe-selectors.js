@@ -35,38 +35,46 @@ export default {
 	},
 
 	create(context) {
-		let selectorNodes = [];
+		let insideKeyframes = false;
+		const seen = new Map();
+
 		return {
-			"Atrule[name='keyframes']"(node) {
-				selectorNodes = node.block.children.map(child => {
-					const selector = child.prelude.children[0].children[0];
-					let value;
-					if (selector.type === "Percentage") {
-						value = `${selector.value}%`;
-					} else if (selector.type === "TypeSelector") {
-						value = selector.name.toLowerCase();
-					} else {
-						value = selector.value;
-					}
-					return { value, loc: selector.loc };
-				});
+			"Atrule[name=keyframes]"() {
+				insideKeyframes = true;
+				seen.clear();
 			},
+
 			"Atrule[name=keyframes]:exit"() {
-				const seen = new Map();
-				selectorNodes.forEach((selectorNode, index) => {
-					if (seen.has(selectorNode.value)) {
-						context.report({
-							loc: selectorNode.loc,
-							messageId: "duplicateKeyframeSelector",
-							data: {
-								selector: selectorNode.value,
-							},
-						});
-					} else {
-						seen.set(selectorNode.value, index);
-					}
-				});
-				selectorNodes = [];
+				insideKeyframes = false;
+			},
+
+			Rule(node) {
+				if (!insideKeyframes) {
+					return;
+				}
+
+				// @ts-ignore - children is a valid property for prelude
+				const selector = node.prelude.children[0].children[0];
+				let value;
+				if (selector.type === "Percentage") {
+					value = `${selector.value}%`;
+				} else if (selector.type === "TypeSelector") {
+					value = selector.name.toLowerCase();
+				} else {
+					value = selector.value;
+				}
+
+				if (seen.has(value)) {
+					context.report({
+						loc: selector.loc,
+						messageId: "duplicateKeyframeSelector",
+						data: {
+							selector: value,
+						},
+					});
+				} else {
+					seen.set(value, true);
+				}
 			},
 		};
 	},
