@@ -33,6 +33,20 @@ ruleTester.run("no-invalid-at-rule-placement", rule, {
             @charset "utf-8";
             /* comment */
             a { color: red; }`,
+		"@namespace url(http://www.w3.org/1999/xhtml);",
+		'@namespace svg "http://www.w3.org/2000/svg"',
+		dedent`
+            @charset "utf-8";
+            @namespace url(http://www.w3.org/1999/xhtml);`,
+		dedent`
+            @charset "utf-8";
+            @import "foo.css";
+            @namespace url(http://www.w3.org/1999/xhtml);`,
+		dedent`
+            @charset "utf-8";
+            @import "foo.css";
+            @NAMESPACE svg url(http://www.w3.org/2000/svg);
+            a { color: red; }`,
 		"@import 'foo.css';",
 		"@import url('foo.css');",
 		"@import 'foo.css' screen;",
@@ -264,6 +278,169 @@ ruleTester.run("no-invalid-at-rule-placement", rule, {
 					column: 1,
 					endLine: 3,
 					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: dedent`
+                a { color: red; }
+                @namespace url(http://www.w3.org/1999/xhtml);`,
+			errors: [
+				{
+					messageId: "invalidNamespacePlacement",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 46,
+				},
+			],
+		},
+		{
+			code: dedent`
+                a { color: red; }
+                @namespace url(http://www.w3.org/1999/xhtml);
+                @namespace svg url(http://www.w3.org/2000/svg);`,
+			errors: [
+				{
+					messageId: "invalidNamespacePlacement",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 46,
+				},
+				{
+					messageId: "invalidNamespacePlacement",
+					line: 3,
+					column: 1,
+					endLine: 3,
+					endColumn: 48,
+				},
+			],
+		},
+		{
+			code: dedent`
+			  @charset "utf-8";
+			  @namespace url(http://www.w3.org/1999/xhtml);
+			  a { color: red; }
+			  @namespace svg url(http://www.w3.org/2000/svg);`,
+			errors: [
+				{
+					messageId: "invalidNamespacePlacement",
+					line: 4,
+					column: 1,
+					endLine: 4,
+					endColumn: 48,
+				},
+			],
+		},
+		{
+			code: dedent`
+			  @custom-rule {}
+			  @namespace url(http://www.w3.org/1999/xhtml);
+			`,
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						"custom-rule": {},
+					},
+				},
+			},
+			errors: [
+				{
+					messageId: "invalidNamespacePlacement",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 46,
+				},
+			],
+		},
+		{
+			code: dedent`
+                @media print { }
+                @namespace svg url(http://www.w3.org/2000/svg);`,
+			errors: [
+				{
+					messageId: "invalidNamespacePlacement",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 48,
+				},
+			],
+		},
+		{
+			code: dedent`
+                @layer base;
+                @namespace url(http://www.w3.org/1999/xhtml);`,
+			errors: [
+				{
+					messageId: "invalidNamespacePlacement",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 46,
+				},
+			],
+		},
+		{
+			code: dedent`
+                @charset "utf-8";
+                @namespace url(http://www.w3.org/1999/xhtml);
+                @import "foo.css";`,
+			errors: [
+				{
+					messageId: "invalidImportPlacement",
+					line: 3,
+					column: 1,
+					endLine: 3,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: dedent`
+                @namespace url(http://www.w3.org/1999/xhtml);
+				@charset "utf-8";
+				a { color: red; }
+				@import "foo.css";`,
+			errors: [
+				{
+					messageId: "invalidCharsetPlacement",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 18,
+				},
+				{
+					messageId: "invalidImportPlacement",
+					line: 4,
+					column: 1,
+					endLine: 4,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: dedent`
+                @namespace url(http://www.w3.org/1999/xhtml);
+				@charset "utf-8";
+				@namespace svg url(http://www.w3.org/2000/svg);
+				@import "foo.css";`,
+			errors: [
+				{
+					messageId: "invalidCharsetPlacement",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 18,
+				},
+				{
+					messageId: "invalidImportPlacement",
+					line: 4,
+					column: 1,
+					endLine: 4,
+					endColumn: 19,
 				},
 			],
 		},

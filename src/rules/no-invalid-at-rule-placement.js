@@ -9,7 +9,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"invalidCharsetPlacement" | "invalidImportPlacement"} NoInvalidAtRulePlacementMessageIds
+ * @typedef {"invalidCharsetPlacement" | "invalidImportPlacement" | "invalidNamespacePlacement"} NoInvalidAtRulePlacementMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidAtRulePlacementMessageIds }>} NoInvalidAtRulePlacementRuleDefinition
  */
 
@@ -33,12 +33,16 @@ export default {
 				"@charset must be placed at the very beginning of the stylesheet, before any rules, comments, or whitespace.",
 			invalidImportPlacement:
 				"@import must be placed before all other rules, except @charset and @layer statements.",
+			invalidNamespacePlacement:
+				"@namespace must be placed before all other rules, except @charset and @import.",
 		},
 	},
 
 	create(context) {
 		let hasSeenNonImportRule = false;
 		let hasSeenLayerBlock = false;
+		let hasSeenLayer = false;
+		let hasSeenNamespace = false;
 
 		return {
 			Atrule(node) {
@@ -61,11 +65,27 @@ export default {
 					if (node.block) {
 						hasSeenLayerBlock = true;
 					}
+					hasSeenLayer = true;
+					return;
+				}
+
+				if (name === "namespace") {
+					if (hasSeenNonImportRule || hasSeenLayer) {
+						context.report({
+							node,
+							messageId: "invalidNamespacePlacement",
+						});
+					}
+					hasSeenNamespace = true;
 					return;
 				}
 
 				if (name === "import") {
-					if (hasSeenNonImportRule || hasSeenLayerBlock) {
+					if (
+						hasSeenNonImportRule ||
+						hasSeenNamespace ||
+						hasSeenLayerBlock
+					) {
 						context.report({
 							node,
 							messageId: "invalidImportPlacement",
