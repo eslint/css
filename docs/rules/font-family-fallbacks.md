@@ -8,7 +8,7 @@ The `font-family` property in CSS is used to specify which fonts should be used 
 
 The browser checks if the first font is available to the user's system, if the first font is not available, it tries the next font in the list. This process continues until a font is found. If none of the specified fonts are available, the browser uses the generic font family (like `serif`, `sans-serif`, etc.) at the end of the list.
 
-It is often suggested to use a fallback font and a generic font last in the `font-family` list to ensure that text is always displayed in readable and consistent way, even if the preferred fonts are not available on the user's system or if the browser doesn't support the preferred font.
+It is a best practice to use a fallback font and a generic font last in the `font-family` list to ensure that text is always displayed in readable and consistent way, even if the preferred fonts are not available on the user's system or if the browser doesn't support the preferred font.
 
 ## Rule Details
 
