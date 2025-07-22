@@ -65,20 +65,21 @@ export default defineConfig([
 
 <!-- Rule Table Start -->
 
-| **Rule Name**                                                                  | **Description**                                       | **Recommended** |
-| :----------------------------------------------------------------------------- | :---------------------------------------------------- | :-------------: |
-| [`font-family-fallbacks`](./docs/rules/font-family-fallbacks.md)               | Enforce use of fallback fonts and a generic font last |       yes       |
-| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)                 | Disallow duplicate @import rules                      |       yes       |
-| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)                           | Disallow empty blocks                                 |       yes       |
-| [`no-important`](./docs/rules/no-important.md)                                 | Disallow !important flags                             |       yes       |
-| [`no-invalid-at-rule-placement`](./docs/rules/no-invalid-at-rule-placement.md) | Disallow invalid placement of at-rules                |       yes       |
-| [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)                   | Disallow invalid at-rules                             |       yes       |
-| [`no-invalid-named-grid-areas`](./docs/rules/no-invalid-named-grid-areas.md)   | Disallow invalid named grid areas                     |       yes       |
-| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)               | Disallow invalid properties                           |       yes       |
-| [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md)       | Enforce the use of logical properties                 |       no        |
-| [`relative-font-units`](./docs/rules/relative-font-units.md)                   | Enforce the use of relative font units                |       no        |
-| [`use-baseline`](./docs/rules/use-baseline.md)                                 | Enforce the use of baseline features                  |       yes       |
-| [`use-layers`](./docs/rules/use-layers.md)                                     | Require use of layers                                 |       no        |
+| **Rule Name**                                                                        | **Description**                                       | **Recommended** |
+| :----------------------------------------------------------------------------------- | :---------------------------------------------------- | :-------------: |
+| [`font-family-fallbacks`](./docs/rules/font-family-fallbacks.md)                     | Enforce use of fallback fonts and a generic font last |       yes       |
+| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)                       | Disallow duplicate @import rules                      |       yes       |
+| [`no-duplicate-keyframe-selectors`](./docs/rules/no-duplicate-keyframe-selectors.md) | Disallow duplicate selectors within keyframe blocks   |       yes       |
+| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)                                 | Disallow empty blocks                                 |       yes       |
+| [`no-important`](./docs/rules/no-important.md)                                       | Disallow !important flags                             |       yes       |
+| [`no-invalid-at-rule-placement`](./docs/rules/no-invalid-at-rule-placement.md)       | Disallow invalid placement of at-rules                |       yes       |
+| [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)                         | Disallow invalid at-rules                             |       yes       |
+| [`no-invalid-named-grid-areas`](./docs/rules/no-invalid-named-grid-areas.md)         | Disallow invalid named grid areas                     |       yes       |
+| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)                     | Disallow invalid properties                           |       yes       |
+| [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md)             | Enforce the use of logical properties                 |       no        |
+| [`relative-font-units`](./docs/rules/relative-font-units.md)                         | Enforce the use of relative font units                |       no        |
+| [`use-baseline`](./docs/rules/use-baseline.md)                                       | Enforce the use of baseline features                  |       yes       |
+| [`use-layers`](./docs/rules/use-layers.md)                                           | Require use of layers                                 |       no        |
 
 <!-- Rule Table End -->
 
