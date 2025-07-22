@@ -84,22 +84,22 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "@eslint/core": "^0.14.0",
-    "@eslint/css-tree": "^3.6.1",
-    "@eslint/plugin-kit": "^0.3.1"
+    "@eslint/core": "^0.15.1",
+    "@eslint/css-tree": "^3.6.2",
+    "@eslint/plugin-kit": "^0.3.4"
   },
   "devDependencies": {
-    "@eslint/json": "^0.5.0",
+    "@eslint/json": "^0.13.0",
     "c8": "^9.1.0",
     "compute-baseline": "^0.3.1",
     "dedent": "^1.5.3",
-    "eslint": "^9.27.0",
+    "eslint": "^9.31.0",
     "eslint-config-eslint": "^11.0.0",
     "eslint-plugin-eslint-plugin": "^6.3.2",
     "got": "^14.4.2",
     "lint-staged": "^15.2.7",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.22.1",
+    "mdn-data": "^2.23.0",
     "mocha": "^10.4.0",
     "prettier": "^3.6.0",
     "rollup": "^4.16.2",
@@ -107,7 +107,7 @@
     "rollup-plugin-delete": "^3.0.1",
     "tailwind-csstree": "^0.1.0",
     "typescript": "^5.8.2",
-    "web-features": "^2.41.0",
+    "web-features": "^2.41.2",
     "yorkie": "^2.0.0"
   },
   "engines": {
