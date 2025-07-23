@@ -64,14 +64,14 @@ function reportFontWithoutFallbacksInFontProperty(
 
 		if (!containsGenericFont) {
 			context.report({
-				loc: node.value.loc,
+				loc: node.loc,
 				messageId: "useFallbackFonts",
 			});
 		}
 	} else {
 		if (!genericFonts.has(valueList.at(-1))) {
 			context.report({
-				loc: node.value.loc,
+				loc: node.loc,
 				messageId: "useGenericFont",
 			});
 		}
@@ -107,184 +107,285 @@ export default {
 		const variableMap = new Map();
 
 		return {
-			Rule(node) {
-				if (
-					node.prelude.type === "SelectorList" &&
-					node.prelude.children[0].type === "Selector" &&
-					node.prelude.children[0].children[0].type ===
-						"PseudoClassSelector" &&
-					node.prelude.children[0].children[0].name === "root"
-				) {
-					node?.block?.children.forEach(child => {
-						if (child.type === "Declaration") {
-							const variableName = child.property;
-							const variableValue =
-								child.value.type === "Raw" && child.value.value;
-
-							variableMap.set(variableName, variableValue);
-						}
-					});
+			"Rule > Block > Declaration"(node) {
+				if (node.property.startsWith("--")) {
+					const variableName = node.property;
+					const variableValue =
+						node.value.type === "Raw" && node.value.value;
+					variableMap.set(variableName, variableValue);
 				}
 			},
 
-			Declaration(node) {
-				if (node.property === "font-family") {
+			"Rule > Block > Declaration[property='font-family'] > Value"(node) {
+				const valueArr = node.children;
+
+				if (valueArr.length === 1) {
 					if (
-						node.value.type === "Value" &&
-						node.value.children.length > 0
+						valueArr[0].type === "Function" &&
+						valueArr[0].name === "var"
 					) {
-						if (node.value.children.length === 1) {
+						const variableName =
+							valueArr[0].children[0].type === "Identifier" &&
+							valueArr[0].children[0].name;
+						const variableValue = variableMap.get(variableName);
+
+						if (!variableValue) {
+							return;
+						}
+
+						const variableList = variableValue
+							.split(",")
+							.map(v => v.trim());
+
+						if (
+							variableList.length === 1 &&
+							!genericFonts.has(variableList[0])
+						) {
+							context.report({
+								loc: node.loc,
+								messageId: "useFallbackFonts",
+							});
+						} else if (!genericFonts.has(variableList.at(-1))) {
+							context.report({
+								loc: node.loc,
+								messageId: "useGenericFont",
+							});
+						}
+					} else {
+						if (
+							valueArr[0].type === "Identifier" &&
+							genericFonts.has(valueArr[0].name)
+						) {
+							return;
+						}
+
+						context.report({
+							loc: node.loc,
+							messageId: "useFallbackFonts",
+						});
+					}
+				} else {
+					const isUsingVariable = valueArr.some(child =>
+						isVarFunction(child),
+					);
+
+					if (isUsingVariable) {
+						const fontsList = [];
+						const lastNode = valueArr.at(-1);
+
+						if (
+							lastNode.type === "Function" &&
+							lastNode.name === "var"
+						) {
+							const variableName =
+								lastNode.children[0].type === "Identifier" &&
+								lastNode.children[0].name;
+							const lastVariable = variableMap.get(variableName);
+
+							if (!lastVariable) {
+								return;
+							}
+						}
+
+						valueArr.forEach(child => {
+							if (child.type === "String") {
+								fontsList.push(child.value);
+							}
+
+							if (child.type === "Identifier") {
+								fontsList.push(child.name);
+							}
+
 							if (
-								node.value.children[0].type === "Function" &&
-								node.value.children[0].name === "var"
+								child.type === "Function" &&
+								child.name === "var"
 							) {
 								const variableName =
-									node.value.children[0].children[0].type ===
-										"Identifier" &&
-									node.value.children[0].children[0].name;
+									child.children[0].type === "Identifier" &&
+									child.children[0].name;
 								const variableValue =
 									variableMap.get(variableName);
 
-								if (!variableValue) {
-									return;
-								}
-
-								const variableList = variableValue
-									.split(",")
-									.map(v => v.trim());
-
-								if (
-									variableList.length === 1 &&
-									!genericFonts.has(variableList[0])
-								) {
-									context.report({
-										loc: node.value.loc,
-										messageId: "useFallbackFonts",
-									});
-								} else if (
-									!genericFonts.has(variableList.at(-1))
-								) {
-									context.report({
-										loc: node.value.loc,
-										messageId: "useGenericFont",
-									});
-								}
-							} else {
-								if (
-									node.value.children[0].type ===
-										"Identifier" &&
-									genericFonts.has(
-										node.value.children[0].name,
-									)
-								) {
-									return;
-								}
-
-								context.report({
-									loc: node.value.loc,
-									messageId: "useFallbackFonts",
-								});
-							}
-						} else {
-							const isUsingVariable = node.value.children.some(
-								child => isVarFunction(child),
-							);
-
-							if (isUsingVariable) {
-								const fontsList = [];
-								const lastNode = node.value.children.at(-1);
-
-								if (
-									lastNode.type === "Function" &&
-									lastNode.name === "var"
-								) {
-									const variableName =
-										lastNode.children[0].type ===
-											"Identifier" &&
-										lastNode.children[0].name;
-									const lastVariable =
-										variableMap.get(variableName);
-
-									if (!lastVariable) {
-										return;
-									}
-								}
-
-								node.value.children.forEach(child => {
-									if (child.type === "String") {
-										fontsList.push(child.value);
-									}
-
-									if (child.type === "Identifier") {
-										fontsList.push(child.name);
-									}
-
-									if (
-										child.type === "Function" &&
-										child.name === "var"
-									) {
-										const variableName =
-											child.children[0].type ===
-												"Identifier" &&
-											child.children[0].name;
-										const variableValue =
-											variableMap.get(variableName);
-
-										if (variableValue) {
-											const variableList = variableValue
-												.split(",")
-												.map(v => v.trim());
-											fontsList.push(...variableList);
-										}
-									}
-								});
-
-								if (
-									fontsList.length > 0 &&
-									!genericFonts.has(fontsList.at(-1))
-								) {
-									context.report({
-										loc: node.value.loc,
-										messageId: "useGenericFont",
-									});
-								}
-							} else {
-								const lastFont = node.value.children.at(-1);
-
-								if (
-									!(
-										lastFont.type === "Identifier" &&
-										genericFonts.has(lastFont.name)
-									)
-								) {
-									context.report({
-										loc: node.value.loc,
-										messageId: "useGenericFont",
-									});
+								if (variableValue) {
+									const variableList = variableValue
+										.split(",")
+										.map(v => v.trim());
+									fontsList.push(...variableList);
 								}
 							}
+						});
+
+						if (
+							fontsList.length > 0 &&
+							!genericFonts.has(fontsList.at(-1))
+						) {
+							context.report({
+								loc: node.loc,
+								messageId: "useGenericFont",
+							});
+						}
+					} else {
+						const lastFont = valueArr.at(-1);
+
+						if (
+							!(
+								lastFont.type === "Identifier" &&
+								genericFonts.has(lastFont.name)
+							)
+						) {
+							context.report({
+								loc: node.loc,
+								messageId: "useGenericFont",
+							});
 						}
 					}
 				}
+			},
 
-				if (node.property === "font") {
-					if (node.value.type === "Value") {
-						if (node.value.children.length === 1) {
-							// If it font is set to system font, we don't need to check for fallbacks
-							if (node.value.children[0].type === "Identifier") {
-								return;
+			"Rule > Block > Declaration[property='font'] > Value"(node) {
+				const valueArr = node.children;
+
+				if (valueArr.length === 1) {
+					const firstValue = valueArr[0];
+
+					// If it font is set to system font, we don't need to check for fallbacks
+					if (firstValue.type === "Identifier") {
+						return;
+					}
+
+					// If the value is a variable function, we need to check the variable value
+					if (
+						firstValue.type === "Function" &&
+						firstValue.name === "var"
+					) {
+						// Check if the function is a variable
+						const variableName =
+							firstValue.children[0].type === "Identifier" &&
+							firstValue.children[0].name;
+						const variableValue = variableMap.get(variableName);
+
+						if (!variableValue) {
+							return;
+						}
+
+						reportFontWithoutFallbacksInFontProperty(
+							variableValue,
+							context,
+							node,
+						);
+					}
+				} else {
+					const isUsingVariable = valueArr.some(child =>
+						isVarFunction(child),
+					);
+
+					if (isUsingVariable) {
+						const beforOperator = [];
+						const afterOperator = [];
+
+						const operator = valueArr.find(
+							child =>
+								child.type === "Operator" &&
+								child.value === ",",
+						);
+						const operatorOffset =
+							operator && operator.loc.end.offset;
+
+						if (operatorOffset) {
+							valueArr.forEach(child => {
+								if (child.loc.end.offset < operatorOffset) {
+									beforOperator.push(
+										sourceCode.getText(child).trim(),
+									);
+								} else if (
+									child.loc.end.offset > operatorOffset
+								) {
+									afterOperator.push(
+										sourceCode.getText(child).trim(),
+									);
+								}
+							});
+
+							if (afterOperator.length !== 0) {
+								const usingVar = afterOperator.some(value =>
+									value.startsWith("var"),
+								);
+
+								if (!usingVar) {
+									if (
+										!genericFonts.has(afterOperator.at(-1))
+									) {
+										context.report({
+											loc: node.loc,
+											messageId: "useGenericFont",
+										});
+									}
+								} else {
+									if (
+										afterOperator.at(-1).startsWith("var")
+									) {
+										const lastNode = valueArr.at(-1);
+										const isFunctionVar =
+											lastNode.type === "Function" &&
+											lastNode.name === "var";
+										const variableName =
+											isFunctionVar &&
+											lastNode.children[0].type ===
+												"Identifier" &&
+											lastNode.children[0].name;
+										const variableValue =
+											variableMap.get(variableName);
+
+										if (!variableValue) {
+											return;
+										}
+
+										const variableList = variableValue
+											.split(",")
+											.map(v => v.trim());
+
+										if (
+											variableList.length > 0 &&
+											!genericFonts.has(
+												variableList.at(-1),
+											)
+										) {
+											context.report({
+												loc: node.loc,
+												messageId: "useGenericFont",
+											});
+										}
+									} else {
+										if (
+											!genericFonts.has(
+												afterOperator.at(-1),
+											)
+										) {
+											context.report({
+												loc: node.loc,
+												messageId: "useGenericFont",
+											});
+										}
+									}
+								}
 							}
-
-							// If the value is a variable function, we need to check the variable value
+						} else {
 							if (
-								node.value.children[0].type === "Function" &&
-								node.value.children[0].name === "var"
+								sourceCode
+									.getText(valueArr.at(-1))
+									.trim()
+									.startsWith("var")
 							) {
-								// Check if the function is a variable
+								const lastNode = valueArr.at(-1);
+								const isFunctionVar =
+									lastNode.type === "Function" &&
+									lastNode.name === "var";
 								const variableName =
-									node.value.children[0].children[0].type ===
+									isFunctionVar &&
+									lastNode.children[0].type ===
 										"Identifier" &&
-									node.value.children[0].children[0].name;
+									lastNode.children[0].name;
+
 								const variableValue =
 									variableMap.get(variableName);
 
@@ -297,184 +398,30 @@ export default {
 									context,
 									node,
 								);
-							}
-						} else {
-							const isUsingVariable = node.value.children.some(
-								child => isVarFunction(child),
-							);
-
-							if (isUsingVariable) {
-								const beforOperator = [];
-								const afterOperator = [];
-
-								const operator = node.value.children.find(
-									child =>
-										child.type === "Operator" &&
-										child.value === ",",
-								);
-								const operatorOffset =
-									operator && operator.loc.end.offset;
-
-								if (operatorOffset) {
-									node.value.children.forEach(child => {
-										if (
-											child.loc.end.offset <
-											operatorOffset
-										) {
-											beforOperator.push(
-												sourceCode
-													.getText(child)
-													.trim(),
-											);
-										} else if (
-											child.loc.end.offset >
-											operatorOffset
-										) {
-											afterOperator.push(
-												sourceCode
-													.getText(child)
-													.trim(),
-											);
-										}
-									});
-
-									if (afterOperator.length !== 0) {
-										const usingVar = afterOperator.some(
-											value => value.startsWith("var"),
-										);
-
-										if (!usingVar) {
-											if (
-												!genericFonts.has(
-													afterOperator.at(-1),
-												)
-											) {
-												context.report({
-													loc: node.value.loc,
-													messageId: "useGenericFont",
-												});
-											}
-										} else {
-											if (
-												afterOperator
-													.at(-1)
-													.startsWith("var")
-											) {
-												const lastNode =
-													node.value.children.at(-1);
-												const isFunctionVar =
-													lastNode.type ===
-														"Function" &&
-													lastNode.name === "var";
-												const variableName =
-													isFunctionVar &&
-													lastNode.children[0]
-														.type ===
-														"Identifier" &&
-													lastNode.children[0].name;
-												const variableValue =
-													variableMap.get(
-														variableName,
-													);
-
-												if (!variableValue) {
-													return;
-												}
-
-												const variableList =
-													variableValue
-														.split(",")
-														.map(v => v.trim());
-
-												if (
-													variableList.length > 0 &&
-													!genericFonts.has(
-														variableList.at(-1),
-													)
-												) {
-													context.report({
-														loc: node.value.loc,
-														messageId:
-															"useGenericFont",
-													});
-												}
-											} else {
-												if (
-													!genericFonts.has(
-														afterOperator.at(-1),
-													)
-												) {
-													context.report({
-														loc: node.value.loc,
-														messageId:
-															"useGenericFont",
-													});
-												}
-											}
-										}
-									}
-								} else {
-									if (
-										sourceCode
-											.getText(node.value.children.at(-1))
-											.trim()
-											.startsWith("var")
-									) {
-										const lastNode =
-											node.value.children.at(-1);
-										const isFunctionVar =
-											lastNode.type === "Function" &&
-											lastNode.name === "var";
-										const variableName =
-											isFunctionVar &&
-											lastNode.children[0].type ===
-												"Identifier" &&
-											lastNode.children[0].name;
-
-										const variableValue =
-											variableMap.get(variableName);
-
-										if (!variableValue) {
-											return;
-										}
-
-										reportFontWithoutFallbacksInFontProperty(
-											variableValue,
-											context,
-											node,
-										);
-									} else {
-										if (
-											!genericFonts.has(
-												sourceCode
-													.getText(
-														node.value.children.at(
-															-1,
-														),
-													)
-													.trim(),
-											)
-										) {
-											context.report({
-												loc: node.value.loc,
-												messageId: "useFallbackFonts",
-											});
-										}
-									}
-								}
 							} else {
-								const fontPropertyValues = sourceCode.getText(
-									node.value,
-								);
-
-								if (fontPropertyValues) {
-									reportFontWithoutFallbacksInFontProperty(
-										fontPropertyValues,
-										context,
-										node,
-									);
+								if (
+									!genericFonts.has(
+										sourceCode
+											.getText(valueArr.at(-1))
+											.trim(),
+									)
+								) {
+									context.report({
+										loc: node.loc,
+										messageId: "useFallbackFonts",
+									});
 								}
 							}
+						}
+					} else {
+						const fontPropertyValues = sourceCode.getText(node);
+
+						if (fontPropertyValues) {
+							reportFontWithoutFallbacksInFontProperty(
+								fontPropertyValues,
+								context,
+								node,
+							);
 						}
 					}
 				}
