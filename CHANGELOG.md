@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.11.0](https://github.com/eslint/css/compare/css-v0.10.0...css-v0.11.0) (2025-07-23)
+
+
+### Features
+
+* add [@namespace](https://github.com/namespace) validation to no-invalid-at-rule-placement rule ([#183](https://github.com/eslint/css/issues/183)) ([26b902c](https://github.com/eslint/css/commit/26b902c4f42cccb33d7f8119a3376773e0ad91bd))
+* add `font-family-fallbacks` rule ([#174](https://github.com/eslint/css/issues/174)) ([5678024](https://github.com/eslint/css/commit/5678024802af61fff74e71172a3732c5deec7afe))
+* add new rule `no-duplicate-keyframe-selectors` ([#143](https://github.com/eslint/css/issues/143)) ([dfe9c05](https://github.com/eslint/css/commit/dfe9c051907a49ccf58cf4c7b14fea1324fc5ab5))
+
+
+### Bug Fixes
+
+* bump `plugin-kit` to latest to resolve security vulnerabilities ([#209](https://github.com/eslint/css/issues/209)) ([32e02d6](https://github.com/eslint/css/commit/32e02d6c1425caefa83a98ef868364b734339241))
+* disallow extra properties in rule options ([#197](https://github.com/eslint/css/issues/197)) ([8fd755d](https://github.com/eslint/css/commit/8fd755d132b08105838ac032654a3be906fe44ca))
+* update baseline data ([#207](https://github.com/eslint/css/issues/207)) ([79e06c6](https://github.com/eslint/css/commit/79e06c6510aabeb121ef94d2b48047eb529fbff1))
+* var() with fallback value in `no-invalid-properties` ([#184](https://github.com/eslint/css/issues/184)) ([1db0b1a](https://github.com/eslint/css/commit/1db0b1ae3873f4efff0f17e95654ed0f744ec04d))
+
 ## [0.10.0](https://github.com/eslint/css/compare/css-v0.9.0...css-v0.10.0) (2025-07-11)
 
 
