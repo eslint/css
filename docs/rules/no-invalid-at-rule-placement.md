@@ -8,7 +8,7 @@ At-rules are CSS statements that instruct CSS how to behave. Some at-rules have 
 
 - The `@charset` rule must be placed at the very beginning of a stylesheet, before any other rules, comments, or whitespace.
 - The `@import` rule must be placed at the beginning of a stylesheet, before any other at-rules (except `@charset` and `@layer` statements) and style rules.
-- The `@namespace` rule must be placed at the beginning of a stylesheet, before any other at-rules (except `@charset` and `@import`) and style rules.
+- The `@namespace` rule must be placed after `@charset` and `@import` and before any other at-rules and style rules.
 
 If these rules are placed incorrectly, browsers will ignore them, resulting in potential encoding issues, missing imported styles, or incorrect namespace application.
 
@@ -18,7 +18,7 @@ This rule warns when it finds:
 
 1. A `@charset` rule that is not the first rule in the stylesheet
 2. An `@import` rule that appears after any other at-rules or style rules (except `@charset` and `@layer` statements)
-3. A `@namespace` rule that appears after any other at-rules or style rules (except `@charset` and `@import`)
+3. A `@namespace` rule that appears before `@charset` or `@import` or after any other at-rules or style rules
 
 Examples of **incorrect** code:
 
