@@ -261,4 +261,64 @@ describe("CSSLanguage", () => {
 			assert.strictEqual(sourceCode.comments.length, 1);
 		});
 	});
+
+	describe("normalizeLanguageOptions", () => {
+		it("should return the same object if no customSyntax is present", () => {
+			const language = new CSSLanguage();
+			const options = { tolerant: true };
+			const result = language.normalizeLanguageOptions(options);
+			assert.strictEqual(result, options);
+			assert.strictEqual(typeof result.toJSON, "undefined");
+		});
+
+		it("should add a toJSON method if customSyntax is present", () => {
+			const language = new CSSLanguage();
+			const options = { tolerant: true, customSyntax: { foo: "bar" } };
+			const result = language.normalizeLanguageOptions(options);
+			assert.strictEqual(result, options);
+			assert.strictEqual(typeof result.toJSON, "function");
+		});
+
+		it("should replace functions with true in toJSON output", () => {
+			const language = new CSSLanguage();
+			const options = {
+				tolerant: false,
+				customSyntax: {
+					node: {
+						foo() {},
+						bar: 42,
+						baz: {
+							qux() {},
+						},
+					},
+					scope: {
+						test() {},
+					},
+					atrule: {
+						other() {},
+					},
+				},
+			};
+			language.normalizeLanguageOptions(options);
+			const json = options.toJSON();
+			assert.deepStrictEqual(json, {
+				tolerant: false,
+				customSyntax: {
+					node: {
+						foo: true,
+						bar: 42,
+						baz: {
+							qux: true,
+						},
+					},
+					scope: {
+						test: true,
+					},
+					atrule: {
+						other: true,
+					},
+				},
+			});
+		});
+	});
 });
