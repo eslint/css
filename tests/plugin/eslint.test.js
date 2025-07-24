@@ -109,6 +109,89 @@ describe("Plugin", () => {
 				assert.strictEqual(results[0].messages[1].column, 18);
 			});
 		});
+
+		describe("serialization", () => {
+			it("should serialize the config to JSON", async () => {
+				const languageOptions = {
+					tolerant: true,
+				};
+
+				const configWithLanguageOptions = {
+					...config,
+					languageOptions,
+				};
+
+				const eslint = new ESLint({
+					overrideConfigFile: true,
+					overrideConfig: configWithLanguageOptions,
+				});
+
+				const resultConfig =
+					await eslint.calculateConfigForFile("test.css");
+				const serializedConfig = JSON.stringify(
+					resultConfig.languageOptions,
+					null,
+					2,
+				);
+				const expectedConfig = JSON.stringify(languageOptions, null, 2);
+				assert.strictEqual(serializedConfig, expectedConfig);
+			});
+
+			it("should serialize the config to JSON when it has functions", async () => {
+				const languageOptions = {
+					tolerant: true,
+					customSyntax: {
+						node: {
+							CustomNode: {
+								parse() {},
+							},
+						},
+						scope: {
+							Value: {
+								theme() {},
+							},
+						},
+						atrule: {
+							CustomAtRule: {
+								parse: {
+									prelude() {},
+								},
+							},
+						},
+					},
+				};
+
+				const configWithLanguageOptions = {
+					...config,
+					languageOptions,
+				};
+
+				const eslint = new ESLint({
+					overrideConfigFile: true,
+					overrideConfig: configWithLanguageOptions,
+				});
+
+				const resultConfig =
+					await eslint.calculateConfigForFile("test.css");
+				const serializedConfig = JSON.stringify(
+					resultConfig.languageOptions,
+					null,
+					2,
+				);
+				const expectedConfig = JSON.stringify(
+					languageOptions,
+					(key, value) => {
+						if (typeof value === "function") {
+							return true;
+						}
+
+						return value;
+					},
+					2,
+				);
+				assert.strictEqual(serializedConfig, expectedConfig);
+			});
+		});
 	});
 
 	describe("Configuration Comments", () => {

@@ -51,6 +51,34 @@ const blockCloserTokenTypes = new Map([
 	[tokenTypes.RightSquareBracket, "["],
 ]);
 
+/**
+ * Recursively replaces all function values in an object with boolean true.
+ * Used to make objects serializable for JSON output.
+ *
+ * @param {Record<string,any>} object The object to process.
+ * @returns {Record<string,any>} A copy of the object with all functions replaced by true.
+ */
+function replaceFunctions(object) {
+	if (typeof object !== "object" || object === null) {
+		return object;
+	}
+	if (Array.isArray(object)) {
+		return object.map(replaceFunctions);
+	}
+	const result = {};
+	for (const key of Object.keys(object)) {
+		const value = object[key];
+		if (typeof value === "function") {
+			result[key] = true;
+		} else if (typeof value === "object" && value !== null) {
+			result[key] = replaceFunctions(value);
+		} else {
+			result[key] = value;
+		}
+	}
+	return result;
+}
+
 //-----------------------------------------------------------------------------
 // Exports
 //-----------------------------------------------------------------------------
@@ -101,7 +129,8 @@ export class CSSLanguage {
 	/**
 	 * Validates the language options.
 	 * @param {CSSLanguageOptions} languageOptions The language options to validate.
-	 * @throws {Error} When the language options are invalid.
+	 * @returns {void}
+	 * @throws {TypeError} When the language options are invalid.
 	 */
 	validateLanguageOptions(languageOptions) {
 		if (
@@ -123,6 +152,53 @@ export class CSSLanguage {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Normalizes the language options to they can be serialized.
+	 * @param {CSSLanguageOptions} languageOptions The language options to normalize.
+	 * @returns {CSSLanguageOptions} The normalized language options.
+	 */
+	normalizeLanguageOptions(languageOptions) {
+		// if there's no custom syntax then no changes are necessary
+		if (!languageOptions?.customSyntax) {
+			return languageOptions;
+		}
+
+		Object.defineProperty(languageOptions, "toJSON", {
+			value() {
+				// Shallow copy
+				const result = { ...languageOptions };
+
+				if (result.customSyntax) {
+					result.customSyntax = { ...result.customSyntax };
+
+					if (result.customSyntax.node) {
+						result.customSyntax.node = replaceFunctions(
+							result.customSyntax.node,
+						);
+					}
+
+					if (result.customSyntax.scope) {
+						result.customSyntax.scope = replaceFunctions(
+							result.customSyntax.scope,
+						);
+					}
+
+					if (result.customSyntax.atrule) {
+						result.customSyntax.atrule = replaceFunctions(
+							result.customSyntax.atrule,
+						);
+					}
+				}
+
+				return result;
+			},
+			enumerable: false,
+			configurable: true,
+		});
+
+		return languageOptions;
 	}
 
 	/**
