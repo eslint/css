@@ -169,27 +169,24 @@ export class CSSLanguage {
 			value() {
 				// Shallow copy
 				const result = { ...languageOptions };
+				result.customSyntax = { ...result.customSyntax };
 
-				if (result.customSyntax) {
-					result.customSyntax = { ...result.customSyntax };
+				if (result.customSyntax.node) {
+					result.customSyntax.node = replaceFunctions(
+						result.customSyntax.node,
+					);
+				}
 
-					if (result.customSyntax.node) {
-						result.customSyntax.node = replaceFunctions(
-							result.customSyntax.node,
-						);
-					}
+				if (result.customSyntax.scope) {
+					result.customSyntax.scope = replaceFunctions(
+						result.customSyntax.scope,
+					);
+				}
 
-					if (result.customSyntax.scope) {
-						result.customSyntax.scope = replaceFunctions(
-							result.customSyntax.scope,
-						);
-					}
-
-					if (result.customSyntax.atrule) {
-						result.customSyntax.atrule = replaceFunctions(
-							result.customSyntax.atrule,
-						);
-					}
+				if (result.customSyntax.atrule) {
+					result.customSyntax.atrule = replaceFunctions(
+						result.customSyntax.atrule,
+					);
 				}
 
 				return result;
