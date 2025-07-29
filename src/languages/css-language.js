@@ -155,7 +155,7 @@ export class CSSLanguage {
 	}
 
 	/**
-	 * Normalizes the language options to they can be serialized.
+	 * Normalizes the language options so they can be serialized.
 	 * @param {CSSLanguageOptions} languageOptions The language options to normalize.
 	 * @returns {CSSLanguageOptions} The normalized language options.
 	 */
