@@ -16,9 +16,15 @@ import { findOffsets } from "../util.js";
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"unexpectedImportant"} NoImportantMessageIds
+ * @typedef {"unexpectedImportant" | "removeImportant"} NoImportantMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoImportantMessageIds }>} NoImportantRuleDefinition
  */
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
+const importantPattern = /!(\s|\/\*.*?\*\/)*important/iu;
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -29,6 +35,8 @@ export default {
 	meta: {
 		type: "problem",
 
+		hasSuggestions: true,
+
 		docs: {
 			description: "Disallow !important flags",
 			recommended: true,
@@ -37,12 +45,11 @@ export default {
 
 		messages: {
 			unexpectedImportant: "Unexpected !important flag found.",
+			removeImportant: "Remove !important flag.",
 		},
 	},
 
 	create(context) {
-		const importantPattern = /!(\s|\/\*.*?\*\/)*important/iu;
-
 		return {
 			Declaration(node) {
 				if (node.important) {
@@ -86,6 +93,19 @@ export default {
 							},
 						},
 						messageId: "unexpectedImportant",
+						suggest: [
+							{
+								messageId: "removeImportant",
+								fix(fixer) {
+									const start =
+										node.loc.start.offset +
+										importantMatch.index;
+									const end =
+										start + importantMatch[0].length;
+									return fixer.removeRange([start, end]);
+								},
+							},
+						],
 					});
 				}
 			},
