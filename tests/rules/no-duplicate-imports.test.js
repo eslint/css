@@ -31,6 +31,7 @@ ruleTester.run("no-duplicate-imports", rule, {
 	invalid: [
 		{
 			code: "@import url('x.css');\n@import url('x.css');",
+			output: "@import url('x.css');\n",
 			errors: [
 				{
 					messageId: "duplicateImport",
@@ -43,7 +44,36 @@ ruleTester.run("no-duplicate-imports", rule, {
 			],
 		},
 		{
+			code: "@import url('x.css');@import url('x.css');",
+			output: "@import url('x.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 43,
+				},
+			],
+		},
+		{
+			code: "@import url('x.css');@import url('x.css');@import url('y.css')",
+			output: "@import url('x.css');@import url('y.css')",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 43,
+				},
+			],
+		},
+		{
 			code: "@import url('x.css');\n@import 'x.css';",
+			output: "@import url('x.css');\n",
 			errors: [
 				{
 					messageId: "duplicateImport",
@@ -57,6 +87,7 @@ ruleTester.run("no-duplicate-imports", rule, {
 		},
 		{
 			code: "@import url('x.css');\n@import 'x.css';\n@import 'x.css';",
+			output: "@import url('x.css');\n@import 'x.css';",
 			errors: [
 				{
 					messageId: "duplicateImport",
@@ -78,6 +109,7 @@ ruleTester.run("no-duplicate-imports", rule, {
 		},
 		{
 			code: "@import url('x.css');\n@import 'x.css';\n@import url('y.css');\n@import 'y.css';",
+			output: "@import url('x.css');\n@import url('y.css');\n",
 			errors: [
 				{
 					messageId: "duplicateImport",
