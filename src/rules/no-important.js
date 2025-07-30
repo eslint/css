@@ -25,6 +25,7 @@ import { findOffsets } from "../util.js";
 //-----------------------------------------------------------------------------
 
 const importantPattern = /!(\s|\/\*.*?\*\/)*important/iu;
+const trailingWhitespacePattern = /\s*$/u;
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -97,11 +98,25 @@ export default {
 							{
 								messageId: "removeImportant",
 								fix(fixer) {
+									const importantStart = importantMatch.index;
+									const importantEnd =
+										importantStart +
+										importantMatch[0].length;
+
+									// Find any trailing whitespace before the !important
+									const valuePart = declarationText.slice(
+										0,
+										importantStart,
+									);
+									const whitespaceEnd = valuePart.search(
+										trailingWhitespacePattern,
+									);
+
 									const start =
-										node.loc.start.offset +
-										importantMatch.index;
+										node.loc.start.offset + whitespaceEnd;
 									const end =
-										start + importantMatch[0].length;
+										node.loc.start.offset + importantEnd;
+
 									return fixer.removeRange([start, end]);
 								},
 							},

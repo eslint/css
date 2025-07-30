@@ -61,7 +61,25 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { color: red ; }",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red !important }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 26,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red }",
 						},
 					],
 				},
@@ -97,7 +115,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { padding: 10px 20px 30px 40px ; }",
+							output: "a { padding: 10px 20px 30px 40px; }",
 						},
 					],
 				},
@@ -115,7 +133,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { border: 0 ; }",
+							output: "a { border: 0; }",
 						},
 					],
 				},
@@ -133,7 +151,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { color: red ; margin: 0 ! important; }",
+							output: "a { color: red; margin: 0 ! important; }",
 						},
 					],
 				},
@@ -146,7 +164,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { color: red !important; margin: 0 ; }",
+							output: "a { color: red !important; margin: 0; }",
 						},
 					],
 				},
@@ -171,8 +189,7 @@ ruleTester.run("no-important", rule, {
 							messageId: "removeImportant",
 							output: dedent`
 							a {
-								color: red
-									;
+								color: red;
 							}
 							`,
 						},
@@ -199,8 +216,7 @@ ruleTester.run("no-important", rule, {
 							messageId: "removeImportant",
 							output: dedent`
 							a {
-								color: red
-									;
+								color: red;
 							}
 							`,
 						},
@@ -220,7 +236,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { color: red /* comment */ ; }",
+							output: "a { color: red /* comment */; }",
 						},
 					],
 				},
@@ -245,8 +261,7 @@ ruleTester.run("no-important", rule, {
 							messageId: "removeImportant",
 							output: dedent`
 							a {
-								color: red /* comment */
-									;
+								color: red /* comment */;
 							}
 							`,
 						},
@@ -266,7 +281,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { color: red ; }",
+							output: "a { color: red; }",
 						},
 					],
 				},
@@ -284,7 +299,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "a { color: red ; }",
+							output: "a { color: red; }",
 						},
 					],
 				},
@@ -309,8 +324,7 @@ ruleTester.run("no-important", rule, {
 							messageId: "removeImportant",
 							output: dedent`
 							a {
-								color: red
-									;
+								color: red;
 							}
 							`,
 						},
@@ -337,8 +351,7 @@ ruleTester.run("no-important", rule, {
 							messageId: "removeImportant",
 							output: dedent`
 							a {
-								color: red
-									;
+								color: red;
 							}
 							`,
 						},
@@ -367,8 +380,7 @@ ruleTester.run("no-important", rule, {
 							messageId: "removeImportant",
 							output: dedent`
 							a {
-								color: red
-									;
+								color: red;
 								margin: 0
 									! important;
 							}
@@ -389,8 +401,7 @@ ruleTester.run("no-important", rule, {
 							a {
 								color: red
 									!important;
-								margin: 0
-									;
+								margin: 0;
 							}
 							`,
 						},
@@ -410,7 +421,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "@keyframes important { from { margin: 1px ; } }",
+							output: "@keyframes important { from { margin: 1px; } }",
 						},
 					],
 				},
@@ -428,7 +439,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "@-webkit-keyframes important { from { margin: 1px ; } }",
+							output: "@-webkit-keyframes important { from { margin: 1px; } }",
 						},
 					],
 				},
@@ -446,7 +457,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "@-WEBKIT-KEYFRAMES important { from { margin: 1px ; } }",
+							output: "@-WEBKIT-KEYFRAMES important { from { margin: 1px; } }",
 						},
 					],
 				},
@@ -482,7 +493,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "@keyframes important { from { margin: 1px ; } }",
+							output: "@keyframes important { from { margin: 1px; } }",
 						},
 					],
 				},
@@ -500,7 +511,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "@kEyFrAmEs important { from { margin: 1px ; } }",
+							output: "@kEyFrAmEs important { from { margin: 1px; } }",
 						},
 					],
 				},
@@ -518,7 +529,7 @@ ruleTester.run("no-important", rule, {
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: "@KEYFRAMES important { from { margin: 1px ; } }",
+							output: "@KEYFRAMES important { from { margin: 1px; } }",
 						},
 					],
 				},
