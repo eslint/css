@@ -129,5 +129,33 @@ ruleTester.run("no-duplicate-imports", rule, {
 				},
 			],
 		},
+		{
+			code: "@import url('a.css');\n@import url('b.css');\n@import url('c.css');\n@import url('a.css');\n@import url('d.css');",
+			output: "@import url('a.css');\n@import url('b.css');\n@import url('c.css');\n@import url('d.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 4,
+					column: 1,
+					endLine: 4,
+					endColumn: 22,
+				},
+			],
+		},
+		{
+			code: "@import url('a.css');\n@import url('b.css');\n/* comment */\n@import 'a.css';",
+			output: "@import url('a.css');\n@import url('b.css');\n/* comment */\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 4,
+					column: 1,
+					endLine: 4,
+					endColumn: 17,
+				},
+			],
+		},
 	],
 });
