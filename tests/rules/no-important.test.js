@@ -47,6 +47,9 @@ ruleTester.run("no-important", rule, {
 		"@keyframes important { from { margin: 1px; } }",
 		"@-webkit-keyframes important { from { margin: 1px; } }",
 		"@-WEBKIT-KEYFRAMES important { from { margin: 1px; } }",
+		"a { color: red /* !important */; }",
+		"a { color: /* !important */ red; }",
+		"a { color: red; /* !important */ background: blue; }",
 	],
 	invalid: [
 		{
@@ -344,6 +347,93 @@ ruleTester.run("no-important", rule, {
 					column: 43,
 					endLine: 1,
 					endColumn: 53,
+				},
+			],
+		},
+		{
+			code: "a { color: red /* !important */ !important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 43,
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red /* !important */
+						!important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 13,
+				},
+			],
+		},
+		{
+			code: "a { color: red !/* !important */important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 42,
+				},
+			],
+		},
+		{
+			code: "a { color: red ! /* !important */ important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 44,
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red
+						!/* !important */important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red
+						! /* !important */ important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 31,
 				},
 			],
 		},
