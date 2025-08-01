@@ -547,6 +547,12 @@ ruleTester.run("no-important", rule, {
 					column: 33,
 					endLine: 1,
 					endColumn: 43,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red /* !important */; }",
+						},
+					],
 				},
 			],
 		},
@@ -564,6 +570,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 13,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red /* !important */;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -576,6 +592,12 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 42,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
 				},
 			],
 		},
@@ -588,6 +610,12 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 44,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
 				},
 			],
 		},
@@ -605,6 +633,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 29,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -622,6 +660,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 31,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -634,6 +682,12 @@ ruleTester.run("no-important", rule, {
 					column: 50,
 					endLine: 1,
 					endColumn: 60,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red /* !important */ /* !important */; }",
+						},
+					],
 				},
 			],
 		},
@@ -651,6 +705,17 @@ ruleTester.run("no-important", rule, {
 					column: 5,
 					endLine: 3,
 					endColumn: 15,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red /* !important */ /* !important
+								*/;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -663,6 +728,12 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 87,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
 				},
 			],
 		},
@@ -680,6 +751,16 @@ ruleTester.run("no-important", rule, {
 					column: 13,
 					endLine: 3,
 					endColumn: 43,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
