@@ -437,5 +437,63 @@ ruleTester.run("no-important", rule, {
 				},
 			],
 		},
+		{
+			code: "a { color: red /* !important */ /* !important */ !important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 50,
+					endLine: 1,
+					endColumn: 60,
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red /* !important */ /* !important
+					*/ !important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: "a { color: red ! /* !important */ /* another comment */ /* a third comment */important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 87,
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red ! /* !important */ /* another
+					comment */ /* a third comment */important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 2,
+					column: 13,
+					endLine: 3,
+					endColumn: 43,
+				},
+			],
+		},
 	],
 });
