@@ -34,7 +34,7 @@ const relativeFontUnits = [
 	"rlh",
 ];
 
-const fontSizeIdentifiers = new Set([
+const disallowedFontSizeKeywords = new Set([
 	"xx-small",
 	"x-small",
 	"small",
@@ -43,14 +43,7 @@ const fontSizeIdentifiers = new Set([
 	"x-large",
 	"xx-large",
 	"xxx-large",
-	"smaller",
-	"larger",
 	"math",
-	"inherit",
-	"initial",
-	"revert",
-	"revert-layer",
-	"unset",
 ]);
 
 //-----------------------------------------------------------------------------
@@ -111,7 +104,10 @@ export default {
 						if (
 							(value.type === "Dimension" &&
 								!allowedFontUnits.includes(value.unit)) ||
-							value.type === "Identifier" ||
+							(value.type === "Identifier" &&
+								disallowedFontSizeKeywords.has(
+									value.name.toLowerCase(),
+								)) ||
 							(value.type === "Percentage" &&
 								!allowedFontUnits.includes("%"))
 						) {
@@ -138,9 +134,7 @@ export default {
 							child => child.type === "Dimension",
 						);
 						const identifierNode = value.children.find(
-							child =>
-								child.type === "Identifier" &&
-								fontSizeIdentifiers.has(child.name),
+							child => child.type === "Identifier",
 						);
 						const percentageNode = value.children.find(
 							child => child.type === "Percentage",
@@ -156,7 +150,11 @@ export default {
 								loc: percentageNode?.loc,
 							},
 							{
-								check: identifierNode,
+								check:
+									identifierNode &&
+									disallowedFontSizeKeywords.has(
+										identifierNode.name.toLowerCase(),
+									),
 								loc: identifierNode?.loc,
 							},
 							{

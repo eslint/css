@@ -16,7 +16,7 @@ import { findOffsets } from "../util.js";
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"unexpectedImportant"} NoImportantMessageIds
+ * @typedef {"unexpectedImportant" | "removeImportant"} NoImportantMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoImportantMessageIds }>} NoImportantRuleDefinition
  */
 
@@ -26,6 +26,7 @@ import { findOffsets } from "../util.js";
 
 const importantPattern = /!\s*important/iu;
 const commentPattern = /\/\*[\s\S]*?\*\//gu;
+const trailingWhitespacePattern = /\s*$/u;
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -36,6 +37,8 @@ export default {
 	meta: {
 		type: "problem",
 
+		hasSuggestions: true,
+
 		docs: {
 			description: "Disallow !important flags",
 			recommended: true,
@@ -44,6 +47,7 @@ export default {
 
 		messages: {
 			unexpectedImportant: "Unexpected !important flag found.",
+			removeImportant: "Remove !important flag.",
 		},
 	},
 
@@ -95,6 +99,33 @@ export default {
 							},
 						},
 						messageId: "unexpectedImportant",
+						suggest: [
+							{
+								messageId: "removeImportant",
+								fix(fixer) {
+									const importantStart = importantMatch.index;
+									const importantEnd =
+										importantStart +
+										importantMatch[0].length;
+
+									// Find any trailing whitespace before the !important
+									const valuePart = declarationText.slice(
+										0,
+										importantStart,
+									);
+									const whitespaceEnd = valuePart.search(
+										trailingWhitespacePattern,
+									);
+
+									const start =
+										node.loc.start.offset + whitespaceEnd;
+									const end =
+										node.loc.start.offset + importantEnd;
+
+									return fixer.removeRange([start, end]);
+								},
+							},
+						],
 					});
 				}
 			},

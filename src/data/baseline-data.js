@@ -562,7 +562,7 @@ export const mediaConditions = new Map([
 ]);
 export const types = new Map([
 	["abs", "5:2025"],
-	["sign", "0:"],
+	["sign", "5:2025"],
 	["anchor", "0:"],
 	["anchor-size", "0:"],
 	["color", "5:2023"],

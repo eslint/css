@@ -19,14 +19,14 @@ Generally, relative units such as `rem` or `em` are preferred over absolute ones
 
 ## Rule Details
 
-This rule enforces the use of relative units for font size.
+This rule enforces the use of relative units for font size. Relative-size keywords (`smaller`, `larger`) and global values (`inherit`, `initial`, `revert`, `revert-layer`, `unset`) are always allowed. Conversely, absolute-size keywords (`xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large`, `xxx-large`) along with the `math` keyword and any absolute length units (such as `px` or `pt`), are never allowed.
 
 ## Options
 
 This rule accepts an option which is an object with the following property:
 
 - `allowUnits` (default: `["rem"]`) - Specify an array of relative units that are allowed to be used. You can use the following units:
-    - **%**: Represents the "percentage" of the parent element’s font size, allowing the text to scale relative to its container.
+    - **%**: Represents the "percentage" of the parent element's font size, allowing the text to scale relative to its container.
     - **cap**: Represents the "cap height" (nominal height of capital letters) of the element's font.
     - **ch**: Represents the width or advance measure of the "0" glyph in the element's font.
     - **em**: Represents the calculated font-size of the element.
@@ -45,16 +45,20 @@ Example of **incorrect** code for default `{ allowUnits: ["rem"] }` option:
 ```css
 /* eslint css/relative-font-units: ["error", { allowUnits: ["rem"] }] */
 
-a {
+.a {
 	font-size: 10px;
 }
 
-b {
+.b {
 	font-size: 2em;
 }
 
-c {
+.c {
 	font-size: small;
+}
+
+.d {
+	font-size: math;
 }
 ```
 
@@ -63,21 +67,37 @@ Example of **correct** code for default `{ allowUnits: ["rem"] }` option:
 ```css
 /* eslint css/relative-font-units: ["error", { allowUnits: ["rem"] }] */
 
-a {
+.a {
 	font-size: 2rem;
 }
 
-b {
+.b {
 	font-size: 1rem;
 	width: 20px;
 }
 
-c {
+.c {
 	font-size: var(--foo);
 }
 
-d {
+.d {
 	font-size: calc(2rem + 2px);
+}
+
+.e {
+	font-size: smaller;
+}
+
+.f {
+	font-size: larger;
+}
+
+.g {
+	font-size: inherit;
+}
+
+.h {
+	font-size: unset;
 }
 ```
 
@@ -88,18 +108,30 @@ Example of **correct** code for `{ allowUnits: ["em", "%"] }` option:
 ```css
 /* eslint css/relative-font-units: ["error", { allowUnits: ["em", "%"] }] */
 
-a {
+.a {
 	font-size: 2em;
 }
 
-b {
+.b {
 	font:
 		20% Arial,
 		sans-serif;
 }
 
-c {
-	font: Arial var(--foo);
+.c {
+	font: var(--foo) Arial;
+}
+
+.d {
+	font:
+		smaller Arial,
+		sans-serif;
+}
+
+.e {
+	font:
+		inherit Arial,
+		sans-serif;
 }
 ```
 
