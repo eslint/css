@@ -103,7 +103,9 @@ export default {
 
 						if (
 							(value.type === "Dimension" &&
-								!allowedFontUnits.includes(value.unit)) ||
+								!allowedFontUnits.includes(
+									value.unit.toLowerCase(),
+								)) ||
 							(value.type === "Identifier" &&
 								disallowedFontSizeKeywords.has(
 									value.name.toLowerCase(),
@@ -161,7 +163,7 @@ export default {
 								check:
 									dimensionNode &&
 									!allowedFontUnits.includes(
-										dimensionNode.unit,
+										dimensionNode.unit.toLowerCase(),
 									),
 								loc: dimensionNode?.loc,
 							},
