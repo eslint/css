@@ -24,7 +24,8 @@ import { findOffsets } from "../util.js";
 // Helpers
 //-----------------------------------------------------------------------------
 
-const importantPattern = /!(\s|\/\*.*?\*\/)*important/iu;
+const importantPattern = /!\s*important/iu;
+const commentPattern = /\/\*[\s\S]*?\*\//gu;
 const trailingWhitespacePattern = /\s*$/u;
 
 //-----------------------------------------------------------------------------
@@ -55,8 +56,12 @@ export default {
 			Declaration(node) {
 				if (node.important) {
 					const declarationText = context.sourceCode.getText(node);
+					const textWithoutComments = declarationText.replace(
+						commentPattern,
+						match => match.replace(/[^\n]/gu, " "),
+					);
 					const importantMatch =
-						importantPattern.exec(declarationText);
+						importantPattern.exec(textWithoutComments);
 
 					const {
 						lineOffset: startLineOffset,
