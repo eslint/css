@@ -77,7 +77,8 @@ ruleTester.run("no-invalid-properties", rule, {
 			code: ":root { --color: red }\na { border-top: 1px var(--style, var(--fallback)) var(--color, blue); }",
 			options: [{ allowUnknownVariables: true }],
 		},
-
+		":root { --width: 10px; }\ndiv { width: calc(100% - var(--width)) }",
+		":root { --sm: 10px; --m: 20px; }\ndiv { font-size: calc(100px - var(--sm) - var(--m)); }",
 		/*
 		 * CSSTree doesn't currently support custom functions properly, so leaving
 		 * these out for now.

@@ -166,8 +166,22 @@ export default {
 					// When `var()` is used, we store all the values to `valueList` with the replacement of `var()` with there values or fallback values
 					for (const child of valueNodes) {
 						// If value is a function starts with `var()`
-						if (child.type === "Function" && child.name === "var") {
-							const varValue = vars.get(child.children[0].name);
+						if (
+							child.type === "Function" &&
+							(child.name === "var" || child.name === "calc")
+						) {
+							const isCalcFn = child.name === "calc";
+
+							const varFn = isCalcFn
+								? child.children.find(
+										c =>
+											c.type === "Function" &&
+											c.name === "var",
+									)
+								: child;
+
+							const varName = varFn.children[0].name;
+							const varValue = vars.get(varName);
 
 							// If the variable is found, use its value, otherwise check for fallback values
 							if (varValue) {
