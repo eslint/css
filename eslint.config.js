@@ -31,7 +31,13 @@ const eslintPluginTestsRecommendedConfig =
 //-----------------------------------------------------------------------------
 
 export default defineConfig([
-	globalIgnores(["**/tests/fixtures/", "**/dist/", "test.css", "coverage/"]),
+	globalIgnores([
+		"**/tests/fixtures/",
+		"**/dist/",
+		"test.css",
+		"coverage/",
+		"src/build/",
+	]),
 
 	...eslintConfigESLint.map(config => ({
 		files: ["**/*.js"],
