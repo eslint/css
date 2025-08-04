@@ -88,6 +88,26 @@ ruleTester.run("use-baseline", rule, {
 			code: ".box { backdrop-filter: blur(10px); }",
 			options: [{ available: 2024 }],
 		},
+		{
+			code: "h1:has(+ h2) { margin: 0 0 0.25rem 0; }",
+			options: [{ allowSelectors: ["has"] }],
+		},
+		{
+			code: `label {
+				& input {
+					border: blue 2px dashed;
+				}
+			}`,
+			options: [{ available: 2022, allowSelectors: ["nesting"] }],
+		},
+		{
+			code: "@container (min-width: 800px) { a { color: red; } }",
+			options: [{ available: 2022, allowAtRules: ["container"] }],
+		},
+		{
+			code: "a { accent-color: bar; backdrop-filter: auto }",
+			options: [{ allowProperties: ["accent-color", "backdrop-filter"] }],
+		},
 	],
 	invalid: [
 		{
