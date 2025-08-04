@@ -104,6 +104,46 @@ This rule accepts an option object with the following properties:
 - `available` (default: `"widely"`)
     - change to `"newly"` to allow features that are at the Baseline newly available stage: features that have been supported on all core browsers for less than 30 months
     - set to a numeric baseline year, such as `2023`, to allow features that became Baseline newly available that year, or earlier
+- `allowAtRules` (default: `[]`) - Specify an array of at-rules that are allowed to be used.
+
+Examples of **correct** code with `{ allowAtRules: ["container"] }`:
+
+```css
+/* eslint css/use-baseline: ["error", { allowAtRules: ["container"] }] */
+
+@container (width > 400px) {
+	h2 {
+		font-size: 1.5em;
+	}
+}
+```
+
+- `allowProperties` (default: `[]`) - Specify an array of properties that are allowed to be used.
+
+Examples of **correct** code with `{ allowProperties: ["user-select"] }`:
+
+```css
+/* eslint css/use-baseline: ["error", { allowProperties: ["user-select"] }] */
+
+.unselectable {
+	user-select: none;
+}
+```
+
+- `allowSelectors` (default: `[]`) - Specify an array of selectors that are allowed to be used.
+
+Examples of **correct** code with `{ allowSelectors: ["nesting", "has"] }`:
+
+```css
+/* eslint css/use-baseline: ["error", { allowSelectors: ["nesting", "has"] }] */
+
+h1 {
+	margin: 0 0 1rem 0;
+	&:has(+ h2) {
+		margin: 0 0 0.25rem 0;
+	}
+}
+```
 
 ## When Not to Use It
 
