@@ -124,6 +124,127 @@ export default {
 
 		const [{ allowUnknownVariables }] = context.options;
 
+		/**
+		 * Process a var function node and add its resolved value to the value list
+		 * @param {Object} varNode The var function node
+		 * @param {string[]} valueList Array to collect processed values
+		 * @param {Map<string,CssLocationRange>} valuesWithVarLocs Map of values to their locations
+		 * @returns {boolean} Whether processing was successful
+		 */
+		function processVarFunction(varNode, valueList, valuesWithVarLocs) {
+			const varValue = vars.get(varNode.children[0].name);
+
+			if (varValue) {
+				const varValueText = sourceCode.getText(varValue).trim();
+				valueList.push(varValueText);
+				valuesWithVarLocs.set(varValueText, varNode.loc);
+				return true;
+			}
+
+			// If the variable is not found and doesn't have a fallback value, report it
+			if (varNode.children.length === 1) {
+				if (!allowUnknownVariables) {
+					context.report({
+						loc: varNode.children[0].loc,
+						messageId: "unknownVar",
+						data: { var: varNode.children[0].name },
+					});
+					return false;
+				}
+				return true;
+			}
+
+			// Handle fallback values
+			if (varNode.children[2].type !== "Raw") {
+				return true;
+			}
+
+			const fallbackVarList = getVarFallbackList(
+				varNode.children[2].value.trim(),
+			);
+
+			if (fallbackVarList.length === 0) {
+				const fallbackValue = varNode.children[2].value.trim();
+				valueList.push(fallbackValue);
+				valuesWithVarLocs.set(fallbackValue, varNode.loc);
+				return true;
+			}
+
+			// Process fallback variables
+			for (const fallbackVar of fallbackVarList) {
+				if (fallbackVar.startsWith("--")) {
+					const fallbackVarValue = vars.get(fallbackVar);
+					if (fallbackVarValue) {
+						const fallbackValue = sourceCode
+							.getText(fallbackVarValue)
+							.trim();
+						valueList.push(fallbackValue);
+						valuesWithVarLocs.set(fallbackValue, varNode.loc);
+						return true;
+					}
+				} else {
+					valueList.push(fallbackVar.trim());
+					valuesWithVarLocs.set(fallbackVar.trim(), varNode.loc);
+					return true;
+				}
+			}
+
+			// No valid fallback found
+			if (!allowUnknownVariables) {
+				context.report({
+					loc: varNode.children[0].loc,
+					messageId: "unknownVar",
+					data: { var: varNode.children[0].name },
+				});
+				return false;
+			}
+
+			return true;
+		}
+
+		/**
+		 * Process a nested function by recursively handling its children
+		 * @param {FunctionNodePlain} funcNode The function node
+		 * @param {Map<string,CssLocationRange>} valuesWithVarLocs Map of values to their locations
+		 * @returns {string|null} The processed function string or null if processing failed
+		 */
+		function processNestedFunction(funcNode, valuesWithVarLocs) {
+			const nestedValueList = [];
+
+			for (const nestedChild of funcNode.children) {
+				if (
+					nestedChild.type === "Function" &&
+					nestedChild.name === "var"
+				) {
+					if (
+						!processVarFunction(
+							nestedChild,
+							nestedValueList,
+							valuesWithVarLocs,
+						)
+					) {
+						return null;
+					}
+				} else if (nestedChild.type === "Function") {
+					// Recursively process nested functions
+					const processedNestedFunction = processNestedFunction(
+						nestedChild,
+						valuesWithVarLocs,
+					);
+					if (!processedNestedFunction) {
+						return null;
+					}
+					nestedValueList.push(processedNestedFunction);
+				} else {
+					nestedValueList.push(
+						sourceCode.getText(nestedChild).trim(),
+					);
+				}
+			}
+
+			return `${funcNode.name}(${nestedValueList.join(" ")})`;
+		}
+
 		return {
 			"Rule > Block > Declaration"() {
 				replacements.push(new Map());
@@ -167,112 +288,24 @@ export default {
 					for (const child of valueNodes) {
 						// If value is a function starts with `var()`
 						if (child.type === "Function" && child.name === "var") {
-							const varValue = vars.get(child.children[0].name);
-
-							// If the variable is found, use its value, otherwise check for fallback values
-							if (varValue) {
-								const varValueText = sourceCode
-									.getText(varValue)
-									.trim();
-
-								valueList.push(varValueText);
-								valuesWithVarLocs.set(varValueText, child.loc);
-							} else {
-								// If the variable is not found and doesn't have a fallback value, report it
-								if (child.children.length === 1) {
-									if (!allowUnknownVariables) {
-										context.report({
-											loc: child.children[0].loc,
-											messageId: "unknownVar",
-											data: {
-												var: child.children[0].name,
-											},
-										});
-
-										return;
-									}
-								} else {
-									// If it has a fallback value, use that
-									if (child.children[2].type === "Raw") {
-										const fallbackVarList =
-											getVarFallbackList(
-												child.children[2].value.trim(),
-											);
-										if (fallbackVarList.length > 0) {
-											let gotFallbackVarValue = false;
-
-											for (const fallbackVar of fallbackVarList) {
-												if (
-													fallbackVar.startsWith("--")
-												) {
-													const fallbackVarValue =
-														vars.get(fallbackVar);
-
-													if (!fallbackVarValue) {
-														continue; // Try the next fallback
-													}
-
-													valueList.push(
-														sourceCode
-															.getText(
-																fallbackVarValue,
-															)
-															.trim(),
-													);
-													valuesWithVarLocs.set(
-														sourceCode
-															.getText(
-																fallbackVarValue,
-															)
-															.trim(),
-														child.loc,
-													);
-													gotFallbackVarValue = true;
-													break; // Stop after finding the first valid variable
-												} else {
-													const fallbackValue =
-														fallbackVar.trim();
-													valueList.push(
-														fallbackValue,
-													);
-													valuesWithVarLocs.set(
-														fallbackValue,
-														child.loc,
-													);
-													gotFallbackVarValue = true;
-													break; // Stop after finding the first non-variable fallback
-												}
-											}
-
-											// If none of the fallback value is defined then report an error
-											if (
-												!allowUnknownVariables &&
-												!gotFallbackVarValue
-											) {
-												context.report({
-													loc: child.children[0].loc,
-													messageId: "unknownVar",
-													data: {
-														var: child.children[0]
-															.name,
-													},
-												});
-
-												return;
-											}
-										} else {
-											// if it has a fallback value, use that
-											const fallbackValue =
-												child.children[2].value.trim();
-											valueList.push(fallbackValue);
-											valuesWithVarLocs.set(
-												fallbackValue,
-												child.loc,
-											);
-										}
-									}
-								}
+							if (
+								!processVarFunction(
+									child,
+									valueList,
+									valuesWithVarLocs,
+								)
+							) {
+								return;
 							}
+						} else if (child.type === "Function") {
+							const processedFunction = processNestedFunction(
+								child,
+								valuesWithVarLocs,
+							);
+							if (!processedFunction) {
+								return;
+							}
+							valueList.push(processedFunction);
 						} else {
 							// If the child is not a `var()` function, just add its text to the `valueList`
 							const valueText = sourceCode.getText(child).trim();

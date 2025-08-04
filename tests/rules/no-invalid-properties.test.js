@@ -55,6 +55,36 @@ ruleTester.run("no-invalid-properties", rule, {
 		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color, var(--foo, var(--bar)))) }",
 		":root { --my-color: red; }\na { color: var(--my-color, var(--fallback-color, var(--foo, var(--bar, blue)))) }",
 		":root { --color: red }\na { border-top: 1px var(--style, var(--fallback, solid)) var(--color, blue); }",
+		"a { width: calc(var(--my-width, 100px)) }",
+		":root { --my-heading: 3rem; }\na { width: calc(var(--my-width, 100px)) }",
+		":root { --my-heading: 3rem; --foo: 100px }\na { width: calc(var(--my-width, var(--foo, 200px))) }",
+		":root { --my-heading: 3rem; }\na { width: calc(var(--my-width, var(--foo, 200px))) }",
+		"a { width: calc(var(--my-width, var(--foo, var(--bar, 200px)))) }",
+		":root { --my-width: 100px; }\na { width: calc(var(--my-width, 200px)) }",
+		":root { --my-fallback: 100px; }\na { width: calc(var(--my-width, var(--my-fallback))) }",
+		":root { --my-fallback: 100px; }\na { width: calc(var(--my-width, var(--my-fallback, 200px))) }",
+		":root { --foo: 100px; }\na { width: calc(var(--my-width, var(--my-fallback, var(--foo)))) }",
+		"a { width: calc(var(--my-width, var(--my-fallback, var(--foo, 200px)))) }",
+		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width))) }",
+		":root { --my-width: 100px; --fallback-width: 200px; }\na { width: calc(var(--my-width, var(--fallback-width))) }",
+		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width, 200px))) }",
+		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width, var(--foo)))) }",
+		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width, var(--foo, 200px)))) }",
+		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width, var(--foo, var(--bar))))) }",
+		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width, var(--foo, var(--bar, 200px))))) }",
+		":root { --width: 1px; }\na { border-top: calc(var(--width, 2px)) var(--style, var(--fallback, solid)) red; }",
+		":root { --width: 100px; }\na { width: calc(calc(100% - var(--width))); }",
+		":root { --width: 100px; }\na { width: calc(calc(var(--width) + 50px) - 25px); }",
+		":root { --color: red; }\na { background: linear-gradient(to right, var(--color), blue); }",
+		":root { --color: red; --offset: 10px; }\na { transform: translateX(calc(var(--offset) + 20px)); }",
+		":root { --width: 100px; }\na { width: clamp(50px, var(--width), 200px); }",
+		":root { --width: 100px; }\na { width: min(var(--width), 150px); }",
+		":root { --width: 100px; }\na { width: max(var(--width), 50px); }",
+		":root { --width: 100px; }\na { width: calc(min(var(--width), 150px) + 10px); }",
+		":root { --width: 100px; }\na { width: calc(max(var(--width), 50px) - 5px); }",
+		":root { --width: 100px; }\na { width: calc(clamp(50px, var(--width), 200px) / 2); }",
+		":root { --color: red; }\na { filter: drop-shadow(0 0 10px var(--color)); }",
+		":root { --color: red; }\na { background: radial-gradient(circle, var(--color), transparent); }",
 		{
 			code: "a { my-custom-color: red; }",
 			languageOptions: {
@@ -67,6 +97,10 @@ ruleTester.run("no-invalid-properties", rule, {
 		},
 		{
 			code: "a { color: var(--my-color); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: "a { width: calc(var(--width)); }",
 			options: [{ allowUnknownVariables: true }],
 		},
 		{
@@ -589,6 +623,96 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 5,
 					endLine: 2,
 					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "a { padding: calc(var(--padding-top, 1px) + 1px) 2px calc(var(--padding-bottom) + 1px); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--padding-bottom",
+					},
+					line: 1,
+					column: 63,
+					endLine: 1,
+					endColumn: 79,
+				},
+			],
+		},
+		{
+			code: "a { padding: calc(var(--padding-top, var(--fallback))) 2px calc(var(--padding-bottom)); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--padding-top",
+					},
+					line: 1,
+					column: 23,
+					endLine: 1,
+					endColumn: 36,
+				},
+			],
+		},
+		{
+			code: ":root { --width: 100px }\na { widthh: calc(var(--width, 200px)); }",
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: {
+						property: "widthh",
+					},
+					line: 2,
+					column: 5,
+					endLine: 2,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "a { padding: calc(max(var(--padding-top, var(--fallback))), 1px) 2px calc(var(--padding-bottom)); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--padding-top",
+					},
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 40,
+				},
+			],
+		},
+		{
+			code: "a { color: rgba(calc(var(--red, 255) + var(--green)), 0, calc(var(--blue)), 1); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--green",
+					},
+					line: 1,
+					column: 44,
+					endLine: 1,
+					endColumn: 51,
+				},
+			],
+		},
+		{
+			code: "a { transform: translateX(calc(var(--offset-x, min(var(--default-offset, 5px), 10px))) rotate(var(--rotation))); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--rotation",
+					},
+					line: 1,
+					column: 99,
+					endLine: 1,
+					endColumn: 109,
 				},
 			],
 		},
