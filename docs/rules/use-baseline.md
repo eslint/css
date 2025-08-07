@@ -132,16 +132,27 @@ Examples of **correct** code with `{ allowProperties: ["user-select"] }`:
 
 - `allowSelectors` (default: `[]`) - Specify an array of selectors that are allowed to be used.
 
-Examples of **correct** code with `{ allowSelectors: ["nesting", "has"] }`:
+When you want to allow the [& nesting selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Nesting_selector), you can use `"nesting"`.
+
+Examples of **correct** code with `{ allowSelectors: ["nesting"] }`:
 
 ```css
-/* eslint css/use-baseline: ["error", { allowSelectors: ["nesting", "has"] }] */
+/* eslint css/use-baseline: ["error", { allowSelectors: ["nesting"] }] */
 
-h1 {
-	margin: 0 0 1rem 0;
-	&:has(+ h2) {
-		margin: 0 0 0.25rem 0;
+.parent {
+	&:hover {
+		background-color: blue;
 	}
+}
+```
+
+Examples of **correct** code with `{ allowSelectors: ["has"] }`:
+
+```css
+/* eslint css/use-baseline: ["error", { allowSelectors: ["has"] }] */
+
+h1:has(+ h2) {
+	margin: 0 0 0.25rem 0;
 }
 ```
 
