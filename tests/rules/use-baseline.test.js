@@ -553,5 +553,56 @@ ruleTester.run("use-baseline", rule, {
 				},
 			],
 		},
+		{
+			code: "@view-transition { from-view: a; to-view: b; }\n@container (min-width: 800px) { a { color: red; } }",
+			options: [{ allowAtRules: ["container"] }],
+			errors: [
+				{
+					messageId: "notBaselineAtRule",
+					data: {
+						atRule: "view-transition",
+						availability: "widely",
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "a { accent-color: red; backdrop-filter: blur(10px); }",
+			options: [{ allowProperties: ["accent-color"] }],
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "backdrop-filter",
+						availability: "widely",
+					},
+					line: 1,
+					column: 24,
+					endLine: 1,
+					endColumn: 39,
+				},
+			],
+		},
+		{
+			code: "h1:has(+ h2) { margin: 0; }\nh1:fullscreen { color: red; }",
+			options: [{ allowSelectors: ["has"] }],
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "fullscreen",
+						availability: "widely",
+					},
+					line: 2,
+					column: 3,
+					endLine: 2,
+					endColumn: 14,
+				},
+			],
+		},
 	],
 });
