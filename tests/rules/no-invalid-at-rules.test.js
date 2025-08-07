@@ -367,11 +367,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			output: '@charset "UTF-8";',
 			errors: [
 				{
-					messageId: "invalidPrelude",
+					messageId: "invalidCharsetSyntax",
 					data: {
-						name: "charset",
-						prelude: "'UTF-8'",
-						expected: "<string>",
+						encoding: "UTF-8",
 					},
 					line: 1,
 					column: 10,
@@ -385,11 +383,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			output: '@charset "UTF-8";',
 			errors: [
 				{
-					messageId: "invalidPrelude",
+					messageId: "invalidCharsetSyntax",
 					data: {
-						name: "charset",
-						prelude: "UTF-8",
-						expected: "<string>",
+						encoding: "UTF-8",
 					},
 					line: 1,
 					column: 10,
@@ -403,11 +399,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			output: '@charset "UTF-8";',
 			errors: [
 				{
-					messageId: "invalidPrelude",
+					messageId: "invalidCharsetSyntax",
 					data: {
-						name: "charset",
-						prelude: '"UTF-8"',
-						expected: "<string>",
+						encoding: "UTF-8",
 					},
 					line: 1,
 					column: 9,
@@ -421,11 +415,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			output: '@charset "UTF-8";',
 			errors: [
 				{
-					messageId: "invalidPrelude",
+					messageId: "invalidCharsetSyntax",
 					data: {
-						name: "charset",
-						prelude: '"UTF-8"',
-						expected: "<string>",
+						encoding: "UTF-8",
 					},
 					line: 1,
 					column: 11,
@@ -439,11 +431,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			output: '@charset "UTF-8";',
 			errors: [
 				{
-					messageId: "invalidPrelude",
+					messageId: "invalidCharsetSyntax",
 					data: {
-						name: "charset",
-						prelude: '"UTF-8"',
-						expected: "<string>",
+						encoding: "UTF-8",
 					},
 					line: 1,
 					column: 10,
@@ -457,11 +447,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			output: '@charset "UTF-8";',
 			errors: [
 				{
-					messageId: "invalidPrelude",
+					messageId: "invalidCharsetSyntax",
 					data: {
-						name: "charset",
-						prelude: '"UTF-8"',
-						expected: "<string>",
+						encoding: "UTF-8",
 					},
 					line: 1,
 					column: 10,
@@ -475,11 +463,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			output: '@charset "UTF-8";\n@impor "foo.css";',
 			errors: [
 				{
-					messageId: "invalidPrelude",
+					messageId: "invalidCharsetSyntax",
 					data: {
-						name: "charset",
-						prelude: '"UTF-8"',
-						expected: "<string>",
+						encoding: "UTF-8",
 					},
 					line: 1,
 					column: 11,

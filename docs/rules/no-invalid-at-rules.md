@@ -78,7 +78,7 @@ Note on `@charset`: Although it begins with an `@` symbol, it is not an at-rule.
 @charset "<charset>";
 ```
 
-where `charset` is a [`<string>`](https://developer.mozilla.org/en-US/docs/Web/CSS/string) denoting the character encoding to be used. It must be the name of a web-safe character encoding defined in the [IANA-registry](https://www.iana.org/assignments/character-sets/character-sets.xhtml), and must be double-quoted, following exactly one space character (U+0020), and immediately terminated with a semicolon.
+where `<charset>` is a [`<string>`](https://developer.mozilla.org/en-US/docs/Web/CSS/string) denoting the character encoding to be used. It must be the name of a web-safe character encoding defined in the [IANA-registry](https://www.iana.org/assignments/character-sets/character-sets.xhtml), and must be double-quoted, following exactly one space character (U+0020) after `@charset`, and immediately terminated with a semicolon.
 
 Examples of **incorrect** code:
 

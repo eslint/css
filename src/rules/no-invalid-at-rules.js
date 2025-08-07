@@ -16,7 +16,7 @@ import { isSyntaxMatchError } from "../util.js";
 /**
  * @import { AtrulePlain } from "@eslint/css-tree"
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"unknownAtRule" | "invalidPrelude" | "unknownDescriptor" | "invalidDescriptor" | "invalidExtraPrelude" | "missingPrelude"} NoInvalidAtRulesMessageIds
+ * @typedef {"unknownAtRule" | "invalidPrelude" | "unknownDescriptor" | "invalidDescriptor" | "invalidExtraPrelude" | "missingPrelude" | "invalidCharsetSyntax"} NoInvalidAtRulesMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidAtRulesMessageIds }>} NoInvalidAtRulesRuleDefinition
  */
 
@@ -85,6 +85,8 @@ export default {
 			invalidExtraPrelude:
 				"At-rule '@{{name}}' should not contain a prelude.",
 			missingPrelude: "At-rule '@{{name}}' should contain a prelude.",
+			invalidCharsetSyntax:
+				"Invalid @charset syntax. Expected '@charset \"{{encoding}}\";'.",
 		},
 	},
 
@@ -143,26 +145,15 @@ export default {
 
 			const nodeText = sourceCode.getText(node);
 			if (!charsetPattern.test(nodeText)) {
-				const preludeText = nodeText.slice(
-					prelude.loc.start.offset,
-					prelude.loc.end.offset,
-				);
-
-				const encoding = preludeText.match(charsetEncodingPattern)?.[1];
+				const preludeText = sourceCode.getText(prelude);
+				const encoding =
+					preludeText.match(charsetEncodingPattern)?.[1] ?? "UTF-8";
 
 				context.report({
 					loc: prelude.loc,
-					messageId: "invalidPrelude",
-					data: {
-						name,
-						prelude: preludeText,
-						expected: "<string>",
-					},
+					messageId: "invalidCharsetSyntax",
+					data: { encoding },
 					fix(fixer) {
-						if (!encoding) {
-							return null;
-						}
-
 						return fixer.replaceText(
 							node,
 							`@charset "${encoding}";`,
