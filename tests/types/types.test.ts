@@ -273,3 +273,18 @@ css.configs.recommended.plugins satisfies object;
 		return {};
 	},
 });
+
+// `meta.docs.recommended` can be any type
+(): CSSRuleDefinition => ({
+	create() {
+		return {};
+	},
+	meta: {
+		docs: {
+			recommended: {
+				severity: "warn",
+				options: ["never"],
+			},
+		},
+	},
+});
