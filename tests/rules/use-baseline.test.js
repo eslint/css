@@ -88,6 +88,26 @@ ruleTester.run("use-baseline", rule, {
 			code: ".box { backdrop-filter: blur(10px); }",
 			options: [{ available: 2024 }],
 		},
+		{
+			code: "h1:has(+ h2) { margin: 0 0 0.25rem 0; }",
+			options: [{ allowSelectors: ["has"] }],
+		},
+		{
+			code: `label {
+				& input {
+					border: blue 2px dashed;
+				}
+			}`,
+			options: [{ available: 2022, allowSelectors: ["nesting"] }],
+		},
+		{
+			code: "@container (min-width: 800px) { a { color: red; } }",
+			options: [{ available: 2022, allowAtRules: ["container"] }],
+		},
+		{
+			code: "a { accent-color: bar; backdrop-filter: auto }",
+			options: [{ allowProperties: ["accent-color", "backdrop-filter"] }],
+		},
 	],
 	invalid: [
 		{
@@ -475,6 +495,57 @@ ruleTester.run("use-baseline", rule, {
 					column: 5,
 					endLine: 2,
 					endColumn: 6,
+				},
+			],
+		},
+		{
+			code: "@view-transition { from-view: a; to-view: b; }\n@container (min-width: 800px) { a { color: red; } }",
+			options: [{ allowAtRules: ["container"] }],
+			errors: [
+				{
+					messageId: "notBaselineAtRule",
+					data: {
+						atRule: "view-transition",
+						availability: "widely",
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "a { accent-color: red; backdrop-filter: blur(10px); }",
+			options: [{ allowProperties: ["accent-color"] }],
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "backdrop-filter",
+						availability: "widely",
+					},
+					line: 1,
+					column: 24,
+					endLine: 1,
+					endColumn: 39,
+				},
+			],
+		},
+		{
+			code: "h1:has(+ h2) { margin: 0; }\nh1:fullscreen { color: red; }",
+			options: [{ allowSelectors: ["has"] }],
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "fullscreen",
+						availability: "widely",
+					},
+					line: 2,
+					column: 3,
+					endLine: 2,
+					endColumn: 14,
 				},
 			],
 		},
