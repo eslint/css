@@ -342,6 +342,21 @@ ruleTester.run("no-invalid-properties", rule, {
 			],
 		},
 		{
+			code: "a { --my-color: red; color: var(--MY-COLOR); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--MY-COLOR",
+					},
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 43,
+				},
+			],
+		},
+		{
 			code: "a { .foo { color: var(--undefined-var); } }",
 			errors: [
 				{
