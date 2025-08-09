@@ -39,12 +39,12 @@ export default {
 		const seen = new Map();
 
 		return {
-			"Atrule[name=keyframes]"() {
+			"Atrule[name=/^keyframes$/i]"() {
 				insideKeyframes = true;
 				seen.clear();
 			},
 
-			"Atrule[name=keyframes]:exit"() {
+			"Atrule[name=/^keyframes$/i]:exit"() {
 				insideKeyframes = false;
 			},
 
