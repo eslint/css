@@ -527,11 +527,11 @@ export default {
 		}
 
 		return {
-			"Atrule[name=supports]"() {
+			"Atrule[name=/^supports$/i]"() {
 				supportsRules.push(new SupportsRule());
 			},
 
-			"Atrule[name=supports] > AtrulePrelude > Condition"(node) {
+			"Atrule[name=/^supports$/i] > AtrulePrelude > Condition"(node) {
 				const supportsRule = supportsRules.last();
 
 				for (let i = 0; i < node.children.length; i++) {
@@ -667,11 +667,11 @@ export default {
 				}
 			},
 
-			"Atrule[name=supports]:exit"() {
+			"Atrule[name=/^supports$/i]:exit"() {
 				supportsRules.pop();
 			},
 
-			"Atrule[name=media] > AtrulePrelude > MediaQueryList > MediaQuery > Condition"(
+			"Atrule[name=/^media$/i] > AtrulePrelude > MediaQueryList > MediaQuery > Condition"(
 				node,
 			) {
 				for (const child of node.children) {
@@ -719,11 +719,12 @@ export default {
 
 			Atrule(node) {
 				// ignore unknown at-rules - no-invalid-at-rules already catches this
-				if (!atRules.has(node.name)) {
+				const atRuleName = node.name.toLowerCase();
+				if (!atRules.has(atRuleName)) {
 					return;
 				}
 
-				const featureStatus = atRules.get(node.name);
+				const featureStatus = atRules.get(atRuleName);
 
 				if (!baselineAvailability.isSupported(featureStatus)) {
 					const loc = node.loc;

@@ -36,6 +36,9 @@ ruleTester.run("use-baseline", rule, {
 		"@media (min-width: 800px) { a { color: red; } }",
 		"@media (foo) { a { color: red; } }",
 		"@media (prefers-color-scheme: dark) { a { color: red; } }",
+		"@MEDIA (min-width: 800px) { a { color: red; } }",
+		"@Media (foo) { a { color: red; } }",
+		"@MeDia (prefers-color-scheme: dark) { a { color: red; } }",
 		"@supports (accent-color: auto) { a { accent-color: auto; } }",
 		"@supports (accent-color: red) { a { accent-color: red; } }",
 		"@supports (accent-color: auto) { a { accent-color: red; } }",
@@ -45,6 +48,15 @@ ruleTester.run("use-baseline", rule, {
 		}`,
 		`@supports (accent-color: auto) {
 			@supports (backdrop-filter: auto) {
+				a { accent-color: auto; background-filter: auto }
+			}
+		}`,
+		"@SUPPORTS (clip-path: fill-box) { a { clip-path: fill-box; } }",
+		`@Supports (accent-color: auto) and (backdrop-filter: auto) {
+			a { accent-color: auto; background-filter: auto }
+		}`,
+		`@SUPPORTS (accent-color: auto) {
+			@SuPpOrTs (backdrop-filter: auto) {
 				a { accent-color: auto; background-filter: auto }
 			}
 		}`,
@@ -191,6 +203,23 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
+			code: "@VIEW-TRANSITION { from-view: a; to-view: b; }",
+			options: [{ available: "newly" }],
+			errors: [
+				{
+					messageId: "notBaselineAtRule",
+					data: {
+						atRule: "VIEW-TRANSITION",
+						availability: "newly",
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
 			code: dedent`@supports (accent-color: auto) {
 				@supports (backdrop-filter: auto) {
 					a { accent-color: red; }
@@ -213,7 +242,46 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
+			code: dedent`@SUPPORTS (accent-color: auto) {
+				@SuPpOrTs (backdrop-filter: auto) {
+					a { accent-color: red; }
+				}
+
+				a { backdrop-filter: auto; }
+			}`,
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "backdrop-filter",
+						availability: "widely",
+					},
+					line: 6,
+					column: 6,
+					endLine: 6,
+					endColumn: 21,
+				},
+			],
+		},
+		{
 			code: "@supports (clip-path: fill-box) { a { clip-path: stroke-box; } }",
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "clip-path",
+						value: "stroke-box",
+						availability: "widely",
+					},
+					line: 1,
+					column: 50,
+					endLine: 1,
+					endColumn: 60,
+				},
+			],
+		},
+		{
+			code: "@SUPPORTS (clip-path: fill-box) { a { clip-path: stroke-box; } }",
 			errors: [
 				{
 					messageId: "notBaselinePropertyValue",
@@ -295,6 +363,22 @@ ruleTester.run("use-baseline", rule, {
 		},
 		{
 			code: "@media (color-gamut: srgb) { a { color: red; } }",
+			errors: [
+				{
+					messageId: "notBaselineMediaCondition",
+					data: {
+						condition: "color-gamut",
+						availability: "widely",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 20,
+				},
+			],
+		},
+		{
+			code: "@MEDIA (color-gamut: srgb) { a { color: red; } }",
 			errors: [
 				{
 					messageId: "notBaselineMediaCondition",
