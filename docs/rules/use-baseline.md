@@ -99,12 +99,16 @@ Examples of **correct** code:
 
 ### Options
 
-This rule accepts an option object with the following properties:
+This rule accepts an options object with the following properties:
 
 - `available` (default: `"widely"`)
     - change to `"newly"` to allow features that are at the Baseline newly available stage: features that have been supported on all core browsers for less than 30 months
     - set to a numeric baseline year, such as `2023`, to allow features that became Baseline newly available that year, or earlier
 - `allowAtRules` (default: `[]`) - Specify an array of at-rules that are allowed to be used.
+- `allowProperties` (default: `[]`) - Specify an array of properties that are allowed to be used.
+- `allowSelectors` (default: `[]`) - Specify an array of selectors that are allowed to be used.
+
+#### `allowAtRules`
 
 Examples of **correct** code with `{ allowAtRules: ["container"] }`:
 
@@ -118,7 +122,7 @@ Examples of **correct** code with `{ allowAtRules: ["container"] }`:
 }
 ```
 
-- `allowProperties` (default: `[]`) - Specify an array of properties that are allowed to be used.
+#### `allowProperties`
 
 Examples of **correct** code with `{ allowProperties: ["user-select"] }`:
 
@@ -130,7 +134,7 @@ Examples of **correct** code with `{ allowProperties: ["user-select"] }`:
 }
 ```
 
-- `allowSelectors` (default: `[]`) - Specify an array of selectors that are allowed to be used.
+#### `allowSelectors`
 
 When you want to allow the [& nesting selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Nesting_selector), you can use `"nesting"`.
 
