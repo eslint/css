@@ -35,6 +35,14 @@ describe("Plugin", () => {
 				await eslint.lintText("div {}", { filePath: "test.css" });
 			});
 		});
+
+		it("recommended config should configure recommended rules", () => {
+			const actualRuleIds = Object.keys(css.configs.recommended.rules);
+			const expectedRuleIds = Object.entries(css.rules)
+				.filter(([, rule]) => rule.meta.docs.recommended)
+				.map(([name]) => `css/${name}`);
+			assert.deepStrictEqual(actualRuleIds, expectedRuleIds);
+		});
 	});
 
 	describe("languageOptions", () => {
