@@ -144,11 +144,21 @@ export default {
 			}
 
 			const nodeText = sourceCode.getText(node);
-			if (!charsetPattern.test(nodeText)) {
-				const preludeText = sourceCode.getText(prelude);
-				const encoding =
-					preludeText.match(charsetEncodingPattern)?.[1] ?? "UTF-8";
+			const preludeText = sourceCode.getText(prelude);
+			const encoding = preludeText
+				.match(charsetEncodingPattern)?.[1]
+				?.trim();
 
+			if (!encoding) {
+				context.report({
+					loc: prelude.loc,
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+				});
+				return;
+			}
+
+			if (!charsetPattern.test(nodeText)) {
 				context.report({
 					loc: prelude.loc,
 					messageId: "invalidCharsetSyntax",

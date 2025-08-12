@@ -363,6 +363,32 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			],
 		},
 		{
+			code: '@charset "";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 12,
+				},
+			],
+		},
+		{
+			code: '@charset "  ";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 14,
+				},
+			],
+		},
+		{
 			code: "@charset 'UTF-8';",
 			output: '@charset "UTF-8";',
 			errors: [
