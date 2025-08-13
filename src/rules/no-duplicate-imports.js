@@ -42,7 +42,7 @@ export default {
 		const imports = new Set();
 
 		return {
-			"Atrule[name=import]"(node) {
+			"Atrule[name=/^import$/i]"(node) {
 				const url = node.prelude.children[0].value;
 
 				if (imports.has(url)) {

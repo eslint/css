@@ -35,6 +35,16 @@ ruleTester.run("use-layers", rule, {
 				}
 			}
 		`,
+		"@LAYER bar { a { color: red; } }",
+		"@Layer foo { a { color: red; } }",
+		"@IMPORT 'foo.css' layer(foo);",
+		dedent`
+			@media (min-width: 600px) {
+				@LAYER foo {
+					a { color: bar }
+				}
+			}
+		`,
 		dedent`
 			@media (min-width: 600px) {
 				@layer foo {
@@ -50,6 +60,10 @@ ruleTester.run("use-layers", rule, {
 			options: [{ allowUnnamedLayers: true }],
 		},
 		{
+			code: "@LAYER { a { color: red; } }",
+			options: [{ allowUnnamedLayers: true }],
+		},
+		{
 			code: "@import 'foo.css' layer;",
 			options: [{ allowUnnamedLayers: true }],
 		},
@@ -58,7 +72,15 @@ ruleTester.run("use-layers", rule, {
 			options: [{ requireImportLayers: false }],
 		},
 		{
+			code: "@IMPORT 'foo.css';",
+			options: [{ requireImportLayers: false }],
+		},
+		{
 			code: "@layer foo.bar { a { color: red; } }",
+			options: [{ layerNamePattern: "^(foo|bar)$" }],
+		},
+		{
+			code: "@LAYER foo.bar { a { color: red; } }",
 			options: [{ layerNamePattern: "^(foo|bar)$" }],
 		},
 		{
@@ -133,6 +155,28 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: dedent`
+				@LAYER { a { color: red; } }
+				a { color: bar }
+			`,
+			errors: [
+				{
+					messageId: "missingLayerName",
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 29,
+				},
+				{
+					messageId: "missingLayer",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: dedent`
 				@media (min-width: 600px) {
 					a { color: bar }
 				}
@@ -172,6 +216,18 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: "@import 'foo.css';",
+			errors: [
+				{
+					messageId: "missingImportLayer",
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: "@IMPORT 'foo.css';",
 			errors: [
 				{
 					messageId: "missingImportLayer",
@@ -224,6 +280,34 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: "@layer foo, bar, baz;",
+			options: [{ layerNamePattern: "bar" }],
+			errors: [
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "foo",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 11,
+				},
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "baz",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 21,
+				},
+			],
+		},
+		{
+			code: "@LAYER foo, bar, baz;",
 			options: [{ layerNamePattern: "bar" }],
 			errors: [
 				{

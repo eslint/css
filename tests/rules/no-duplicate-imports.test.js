@@ -27,6 +27,9 @@ ruleTester.run("no-duplicate-imports", rule, {
 		"@import url('x.css');",
 		"@import url('x.css'); @import url('y.css');",
 		"@import 'x.css'; @import url('y.css'); @import 'z.css';",
+		"@IMPORT url('x.css');",
+		"@imPort url('x.css'); @IMport url('y.css');",
+		"@IMPORT 'x.css'; @import url('y.css'); @IMport 'z.css';",
 	],
 	invalid: [
 		{
@@ -154,6 +157,84 @@ ruleTester.run("no-duplicate-imports", rule, {
 					column: 1,
 					endLine: 4,
 					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@IMPORT url('x.css');\n@IMPORT url('x.css');",
+			output: "@IMPORT url('x.css');\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 22,
+				},
+			],
+		},
+		{
+			code: "@IMport url('x.css');@IMPORT url('x.css');",
+			output: "@IMport url('x.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 43,
+				},
+			],
+		},
+		{
+			code: "@IMPORT url('x.css');@IMPORT url('x.css');@IMPORT url('y.css')",
+			output: "@IMPORT url('x.css');@IMPORT url('y.css')",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 43,
+				},
+			],
+		},
+		{
+			code: "@IMPORT url('x.css');\n@IMPORT 'x.css';\n@IMPORT 'x.css';",
+			output: "@IMPORT url('x.css');\n@IMPORT 'x.css';",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 17,
+				},
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 3,
+					column: 1,
+					endLine: 3,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@IMPORT url('a.css');\n@import url('b.css');\n@IMPORT url('c.css');\n@import url('a.css');\n@IMPORT url('d.css');",
+			output: "@IMPORT url('a.css');\n@import url('b.css');\n@IMPORT url('c.css');\n@IMPORT url('d.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 4,
+					column: 1,
+					endLine: 4,
+					endColumn: 22,
 				},
 			],
 		},
