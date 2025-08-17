@@ -20,7 +20,7 @@ import fs from "node:fs";
 //-----------------------------------------------------------------------------
 
 const importRegExp =
-	/^\s*\*\s*@import\s*\{\s*(?<ids>[^,}]+(?:\s*,\s*[^,}]+)*)\s*\}\s*from\s*"(?<source>[^"]+)"/u;
+	/^\s*\*\s*@import\s*\{\s*(?<ids>[^,}\s]+(?:\s*,\s*[^,}\s]+)*)\s*\}\s*from\s*"(?<source>[^"]+)"/u;
 
 // read files from the command line
 const files = process.argv.slice(2);

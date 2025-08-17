@@ -37,7 +37,7 @@ function getVarFallbackList(value) {
 
 	while (true) {
 		const match = currentValue.match(
-			/var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)/iu,
+			/var\(\s*(--[^,\s)]+)\s*(?:,(.+))?\)/iu,
 		);
 
 		if (!match) {
