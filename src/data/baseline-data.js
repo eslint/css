@@ -656,7 +656,7 @@ export const types = new Map([
 export const selectors = new Map([
 	["active-view-transition", "0:"],
 	["active-view-transition-type", "0:"],
-	["autofill", "5:2023"],
+	["autofill", "10:2023"],
 	["defined", "10:2020"],
 	["backdrop", "10:2022"],
 	["after", "10:2015"],
@@ -790,7 +790,15 @@ export const propertyValues = new Map([
 		]),
 	],
 	["align-items", new Map([["anchor-center", "0:"]])],
-	["align-self", new Map([["anchor-center", "0:"]])],
+	[
+		"align-self",
+		new Map([
+			["anchor-center", "0:"],
+			["auto", "10:2020"],
+			["normal", "10:2020"],
+			["stretch", "10:2020"],
+		]),
+	],
 	["anchor-name", new Map([["none", "0:"]])],
 	[
 		"anchor-scope",
@@ -892,8 +900,26 @@ export const propertyValues = new Map([
 			["auto", "10:2021"],
 		]),
 	],
-	["justify-items", new Map([["anchor-center", "0:"]])],
-	["justify-self", new Map([["anchor-center", "0:"]])],
+	[
+		"justify-items",
+		new Map([
+			["anchor-center", "0:"],
+			["left", "10:2020"],
+			["legacy", "10:2020"],
+			["right", "10:2020"],
+		]),
+	],
+	[
+		"justify-self",
+		new Map([
+			["anchor-center", "0:"],
+			["auto", "10:2020"],
+			["left", "10:2020"],
+			["normal", "10:2020"],
+			["right", "10:2020"],
+			["stretch", "10:2020"],
+		]),
+	],
 	[
 		"left",
 		new Map([
@@ -1327,6 +1353,7 @@ export const propertyValues = new Map([
 			["dark", "10:2022"],
 			["light", "10:2022"],
 			["normal", "10:2022"],
+			["only", "10:2022"],
 		]),
 	],
 	[
@@ -1559,6 +1586,14 @@ export const propertyValues = new Map([
 	],
 	["flex", new Map([["none", "10:2015"]])],
 	[
+		"justify-content",
+		new Map([
+			["left", "10:2020"],
+			["normal", "10:2020"],
+			["right", "10:2020"],
+		]),
+	],
+	[
 		"clear",
 		new Map([
 			["both", "10:2015"],
@@ -1691,8 +1726,8 @@ export const propertyValues = new Map([
 			["historical-forms", "5:2023"],
 			["none", "10:2020"],
 			["normal", "10:2015"],
-			["sub", "5:2023"],
-			["super", "5:2023"],
+			["sub", "10:2023"],
+			["super", "10:2023"],
 		]),
 	],
 	[

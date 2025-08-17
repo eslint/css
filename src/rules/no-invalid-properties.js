@@ -37,7 +37,7 @@ function getVarFallbackList(value) {
 
 	while (true) {
 		const match = currentValue.match(
-			/var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)/u,
+			/var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)/iu,
 		);
 
 		if (!match) {
@@ -54,7 +54,7 @@ function getVarFallbackList(value) {
 		}
 
 		// If fallback is not another var(), we're done
-		if (!fallback.includes("var(")) {
+		if (!fallback.toLowerCase().includes("var(")) {
 			list.push(fallback);
 			break;
 		}
@@ -129,7 +129,7 @@ export default {
 				replacements.push(new Map());
 			},
 
-			"Function[name=var]"(node) {
+			"Function[name=/^var$/i]"(node) {
 				const map = replacements.at(-1);
 				if (!map) {
 					return;
@@ -166,7 +166,10 @@ export default {
 					// When `var()` is used, we store all the values to `valueList` with the replacement of `var()` with there values or fallback values
 					for (const child of valueNodes) {
 						// If value is a function starts with `var()`
-						if (child.type === "Function" && child.name === "var") {
+						if (
+							child.type === "Function" &&
+							child.name.toLowerCase() === "var"
+						) {
 							const varValue = vars.get(child.children[0].name);
 
 							// If the variable is found, use its value, otherwise check for fallback values
