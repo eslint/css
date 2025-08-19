@@ -88,6 +88,8 @@ ruleTester.run("use-baseline", rule, {
 			code: ".box { backdrop-filter: blur(10px); }",
 			options: [{ available: 2024 }],
 		},
+		"@container (min-width: 800px) { a { color: red; } }",
+		"@media (color-gamut: srgb) { a { color: red; } }",
 	],
 	invalid: [
 		{
@@ -154,22 +156,6 @@ ruleTester.run("use-baseline", rule, {
 					column: 1,
 					endLine: 1,
 					endColumn: 10,
-				},
-			],
-		},
-		{
-			code: "@container (min-width: 800px) { a { color: red; } }",
-			errors: [
-				{
-					messageId: "notBaselineAtRule",
-					data: {
-						atRule: "container",
-						availability: "widely",
-					},
-					line: 1,
-					column: 1,
-					endLine: 1,
-					endColumn: 11,
 				},
 			],
 		},
@@ -294,18 +280,18 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@media (color-gamut: srgb) { a { color: red; } }",
+			code: "@media (inverted-colors: inverted) { a { color: red; } }",
 			errors: [
 				{
 					messageId: "notBaselineMediaCondition",
 					data: {
-						condition: "color-gamut",
+						condition: "inverted-colors",
 						availability: "widely",
 					},
 					line: 1,
 					column: 9,
 					endLine: 1,
-					endColumn: 20,
+					endColumn: 24,
 				},
 			],
 		},
@@ -327,18 +313,18 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@media (height: 600px) and (color-gamut: srgb) and (device-posture: folded) { a { color: red; } }",
+			code: "@media (height: 600px) and (inverted-colors: inverted) and (device-posture: folded) { a { color: red; } }",
 			errors: [
 				{
 					messageId: "notBaselineMediaCondition",
 					data: {
-						condition: "color-gamut",
+						condition: "inverted-colors",
 						availability: "widely",
 					},
 					line: 1,
 					column: 29,
 					endLine: 1,
-					endColumn: 40,
+					endColumn: 44,
 				},
 				{
 					messageId: "notBaselineMediaCondition",
@@ -347,25 +333,25 @@ ruleTester.run("use-baseline", rule, {
 						availability: "widely",
 					},
 					line: 1,
-					column: 53,
+					column: 61,
 					endLine: 1,
-					endColumn: 67,
+					endColumn: 75,
 				},
 			],
 		},
 		{
-			code: "@media (foo) and (color-gamut: srgb) { a { color: red; } }",
+			code: "@media (foo) and (inverted-colors: inverted) { a { color: red; } }",
 			errors: [
 				{
 					messageId: "notBaselineMediaCondition",
 					data: {
-						condition: "color-gamut",
+						condition: "inverted-colors",
 						availability: "widely",
 					},
 					line: 1,
 					column: 19,
 					endLine: 1,
-					endColumn: 30,
+					endColumn: 34,
 				},
 			],
 		},
