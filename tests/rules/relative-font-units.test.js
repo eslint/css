@@ -28,6 +28,11 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font-size: 1rem; }",
 		"a { font: 2rem Arial, sans-serif; }",
 		"a { font: 1.2rem/2 Arial, sans-serif; }",
+		"a { font-size: 1REM; }",
+		"a { font-size: 1Rem; }",
+		"a { font-size: 1rEm; }",
+		"a { font: 2REM Arial, sans-serif; }",
+		"a { font: 1.2REM/2 Arial, sans-serif; }",
 		"a { font-size: var(--foo); }",
 		"a { font: var(--foo) Arial; }",
 		"a { font-size: calc(10px + 2px); }",
@@ -220,6 +225,76 @@ ruleTester.run("relative-font-units", rule, {
 					allowUnits: ["rem", "em"],
 				},
 			],
+		},
+		{
+			code: "a { font-size: 1EM; }",
+			options: [{ allowUnits: ["em"] }],
+		},
+		{
+			code: "a { font: 2EM Arial, sans-serif; }",
+			options: [{ allowUnits: ["em"] }],
+		},
+		{
+			code: "a { font-size: 2CAP; }",
+			options: [{ allowUnits: ["cap"] }],
+		},
+		{
+			code: "a { font-size: 20CH; }",
+			options: [{ allowUnits: ["ch"] }],
+		},
+		{
+			code: "a { font-size: 3EX; }",
+			options: [{ allowUnits: ["ex"] }],
+		},
+		{
+			code: "a { font-size: 2IC; }",
+			options: [{ allowUnits: ["ic"] }],
+		},
+		{
+			code: "a { font-size: 1LH; }",
+			options: [{ allowUnits: ["lh"] }],
+		},
+		{
+			code: "a { font-size: 2RCAP; }",
+			options: [{ allowUnits: ["rcap"] }],
+		},
+		{
+			code: "a { font-size: 20RCH; }",
+			options: [{ allowUnits: ["rch"] }],
+		},
+		{
+			code: "a { font-size: 2REX; }",
+			options: [{ allowUnits: ["rex"] }],
+		},
+		{
+			code: "a { font-size: 1.5RIC; }",
+			options: [{ allowUnits: ["ric"] }],
+		},
+		{
+			code: "a { font-size: 1RLH; }",
+			options: [{ allowUnits: ["rlh"] }],
+		},
+		{
+			code: dedent`
+				a {
+					font-size: 1REM;
+				}
+				b {
+					font-size: 1Em;
+				}
+			`,
+			options: [{ allowUnits: ["rem", "em"] }],
+		},
+		{
+			code: dedent`
+				a {
+					font: 2REM Arial, sans-serif;
+				}
+				b {
+					font: 1.5EM "Helvetica", sans-serif;
+				}
+			`,
+			options: [{ allowUnits: ["rem", "em"] }],
 		},
 		{
 			code: "a { font-size: smaller; }",
@@ -490,6 +565,40 @@ ruleTester.run("relative-font-units", rule, {
 					messageId: "allowedFontUnits",
 				},
 			],
+		},
+		{
+			code: "a { font-size: 1PX; }",
+			errors: [{ messageId: "allowedFontUnits" }],
+		},
+		{
+			code: "a { font-size: 1IN; }",
+			errors: [{ messageId: "allowedFontUnits" }],
+		},
+		{
+			code: "a { font-size: 1CM; }",
+			errors: [{ messageId: "allowedFontUnits" }],
+		},
+		{
+			code: "a { font-size: 1MM; }",
+			errors: [{ messageId: "allowedFontUnits" }],
+		},
+		{
+			code: "a { font-size: 1PT; }",
+			errors: [{ messageId: "allowedFontUnits" }],
+		},
+		{
+			code: "a { font-size: 1PC; }",
+			errors: [{ messageId: "allowedFontUnits" }],
+		},
+		{
+			code: "a { font-size: 1EM; }",
+			options: [{ allowUnits: ["rem"] }],
+			errors: [{ messageId: "allowedFontUnits" }],
+		},
+		{
+			code: "a { font: 2EM Arial, sans-serif; }",
+			options: [{ allowUnits: ["rem"] }],
+			errors: [{ messageId: "allowedFontUnits" }],
 		},
 		{
 			code: "a { font-size: xx-small; }",

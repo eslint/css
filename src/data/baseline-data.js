@@ -96,9 +96,9 @@ export const properties = new Map([
 	["contain-intrinsic-inline-size", "5:2023"],
 	["contain-intrinsic-size", "5:2023"],
 	["contain-intrinsic-width", "5:2023"],
-	["container", "5:2023"],
-	["container-name", "5:2023"],
-	["container-type", "5:2023"],
+	["container", "10:2023"],
+	["container-name", "10:2023"],
+	["container-type", "10:2023"],
 	["content", "10:2015"],
 	["content-visibility", "5:2024"],
 	["counter-set", "5:2023"],
@@ -330,7 +330,7 @@ export const properties = new Map([
 	["break-after", "10:2019"],
 	["break-before", "10:2019"],
 	["break-inside", "10:2019"],
-	["page", "5:2023"],
+	["page", "10:2023"],
 	["paint-order", "5:2024"],
 	["bottom", "10:2015"],
 	["left", "10:2015"],
@@ -505,7 +505,7 @@ export const atRules = new Map([
 	["keyframes", "10:2015"],
 	["layer", "10:2022"],
 	["charset", "10:2015"],
-	["container", "5:2023"],
+	["container", "10:2023"],
 	["counter-style", "5:2023"],
 	["view-transition", "0:"],
 	["font-face", "10:2015"],
@@ -521,7 +521,7 @@ export const atRules = new Map([
 	["supports", "10:2015"],
 ]);
 export const mediaConditions = new Map([
-	["color-gamut", "5:2023"],
+	["color-gamut", "10:2023"],
 	["device-posture", "0:"],
 	["device-aspect-ratio", "0:"],
 	["device-height", "0:"],
@@ -656,7 +656,7 @@ export const types = new Map([
 export const selectors = new Map([
 	["active-view-transition", "0:"],
 	["active-view-transition-type", "0:"],
-	["autofill", "5:2023"],
+	["autofill", "10:2023"],
 	["defined", "10:2020"],
 	["backdrop", "10:2022"],
 	["after", "10:2015"],
@@ -790,7 +790,15 @@ export const propertyValues = new Map([
 		]),
 	],
 	["align-items", new Map([["anchor-center", "0:"]])],
-	["align-self", new Map([["anchor-center", "0:"]])],
+	[
+		"align-self",
+		new Map([
+			["anchor-center", "0:"],
+			["auto", "10:2020"],
+			["normal", "10:2020"],
+			["stretch", "10:2020"],
+		]),
+	],
 	["anchor-name", new Map([["none", "0:"]])],
 	[
 		"anchor-scope",
@@ -892,8 +900,26 @@ export const propertyValues = new Map([
 			["auto", "10:2021"],
 		]),
 	],
-	["justify-items", new Map([["anchor-center", "0:"]])],
-	["justify-self", new Map([["anchor-center", "0:"]])],
+	[
+		"justify-items",
+		new Map([
+			["anchor-center", "0:"],
+			["left", "10:2020"],
+			["legacy", "10:2020"],
+			["right", "10:2020"],
+		]),
+	],
+	[
+		"justify-self",
+		new Map([
+			["anchor-center", "0:"],
+			["auto", "10:2020"],
+			["left", "10:2020"],
+			["normal", "10:2020"],
+			["right", "10:2020"],
+			["stretch", "10:2020"],
+		]),
+	],
 	[
 		"left",
 		new Map([
@@ -1327,6 +1353,7 @@ export const propertyValues = new Map([
 			["dark", "10:2022"],
 			["light", "10:2022"],
 			["normal", "10:2022"],
+			["only", "10:2022"],
 		]),
 	],
 	[
@@ -1402,13 +1429,13 @@ export const propertyValues = new Map([
 	["contain-intrinsic-inline-size", new Map([["none", "5:2023"]])],
 	["contain-intrinsic-size", new Map([["none", "5:2023"]])],
 	["contain-intrinsic-width", new Map([["none", "5:2023"]])],
-	["container-name", new Map([["none", "5:2023"]])],
+	["container-name", new Map([["none", "10:2023"]])],
 	[
 		"container-type",
 		new Map([
-			["inline-size", "5:2023"],
-			["normal", "5:2023"],
-			["size", "5:2023"],
+			["inline-size", "10:2023"],
+			["normal", "10:2023"],
+			["size", "10:2023"],
 			["scroll-state", "0:"],
 		]),
 	],
@@ -1559,6 +1586,14 @@ export const propertyValues = new Map([
 	],
 	["flex", new Map([["none", "10:2015"]])],
 	[
+		"justify-content",
+		new Map([
+			["left", "10:2020"],
+			["normal", "10:2020"],
+			["right", "10:2020"],
+		]),
+	],
+	[
 		"clear",
 		new Map([
 			["both", "10:2015"],
@@ -1691,8 +1726,8 @@ export const propertyValues = new Map([
 			["historical-forms", "5:2023"],
 			["none", "10:2020"],
 			["normal", "10:2015"],
-			["sub", "5:2023"],
-			["super", "5:2023"],
+			["sub", "10:2023"],
+			["super", "10:2023"],
 		]),
 	],
 	[
