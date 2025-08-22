@@ -115,29 +115,32 @@ export default {
 		const vars = new Map();
 
 		/**
-		 * We need to track this as a stack because we can have nested
-		 * rules that use the `var()` function, and we need to
-		 * ensure that we validate the innermost rule first.
-		 * @type {Array<Map<string,FunctionNodePlain>>}
+		 * @type {Array<{
+		 *   valueParts: string[],
+		 *   functionPartsStack: string[][],
+		 *   valueSegmentLocs: Map<string,CssLocationRange>,
+		 *   skipValidation: boolean,
+		 *   hadVarSubstitution: boolean,
+		 * }>}
 		 */
-		const replacements = [];
+		const declStack = [];
 
 		const [{ allowUnknownVariables }] = context.options;
 
 		/**
 		 * Process a var function node and add its resolved value to the value list
-		 * @param {Object} varNode The var function node
+		 * @param {Object} varNode The var() function node
 		 * @param {string[]} valueList Array to collect processed values
-		 * @param {Map<string,CssLocationRange>} valuesWithVarLocs Map of values to their locations
+		 * @param {Map<string,CssLocationRange>} valueSegmentLocs Map of rebuilt value segments to their locations
 		 * @returns {boolean} Whether processing was successful
 		 */
-		function processVarFunction(varNode, valueList, valuesWithVarLocs) {
+		function processVarFunction(varNode, valueList, valueSegmentLocs) {
 			const varValue = vars.get(varNode.children[0].name);
 
 			if (varValue) {
 				const varValueText = sourceCode.getText(varValue).trim();
 				valueList.push(varValueText);
-				valuesWithVarLocs.set(varValueText, varNode.loc);
+				valueSegmentLocs.set(varValueText, varNode.loc);
 				return true;
 			}
 
@@ -166,7 +169,7 @@ export default {
 			if (fallbackVarList.length === 0) {
 				const fallbackValue = varNode.children[2].value.trim();
 				valueList.push(fallbackValue);
-				valuesWithVarLocs.set(fallbackValue, varNode.loc);
+				valueSegmentLocs.set(fallbackValue, varNode.loc);
 				return true;
 			}
 
@@ -179,12 +182,12 @@ export default {
 							.getText(fallbackVarValue)
 							.trim();
 						valueList.push(fallbackValue);
-						valuesWithVarLocs.set(fallbackValue, varNode.loc);
+						valueSegmentLocs.set(fallbackValue, varNode.loc);
 						return true;
 					}
 				} else {
 					valueList.push(fallbackVar.trim());
-					valuesWithVarLocs.set(fallbackVar.trim(), varNode.loc);
+					valueSegmentLocs.set(fallbackVar.trim(), varNode.loc);
 					return true;
 				}
 			}
@@ -202,69 +205,77 @@ export default {
 			return true;
 		}
 
-		/**
-		 * Process a nested function by recursively handling its children
-		 * @param {FunctionNodePlain} funcNode The function node
-		 * @param {Map<string,CssLocationRange>} valuesWithVarLocs Map of values to their locations
-		 * @returns {string|null} The processed function string or null if processing failed
-		 */
-		function processNestedFunction(funcNode, valuesWithVarLocs) {
-			const nestedValueList = [];
-
-			for (const nestedChild of funcNode.children) {
-				if (
-					nestedChild.type === "Function" &&
-					nestedChild.name === "var"
-				) {
-					if (
-						!processVarFunction(
-							nestedChild,
-							nestedValueList,
-							valuesWithVarLocs,
-						)
-					) {
-						return null;
-					}
-				} else if (nestedChild.type === "Function") {
-					// Recursively process nested functions
-					const processedNestedFunction = processNestedFunction(
-						nestedChild,
-						valuesWithVarLocs,
-					);
-					if (!processedNestedFunction) {
-						return null;
-					}
-					nestedValueList.push(processedNestedFunction);
-				} else {
-					nestedValueList.push(
-						sourceCode.getText(nestedChild).trim(),
-					);
-				}
-			}
-
-			return `${funcNode.name}(${nestedValueList.join(" ")})`;
-		}
-
 		return {
 			"Rule > Block > Declaration"() {
-				replacements.push(new Map());
+				declStack.push({
+					valueParts: [],
+					functionPartsStack: [],
+					valueSegmentLocs: new Map(),
+					skipValidation: false,
+					hadVarSubstitution: false,
+				});
 			},
 
-			"Function[name=var]"(node) {
-				const map = replacements.at(-1);
-				if (!map) {
+			"Rule > Block > Declaration > Value > *:not(Function)"(node) {
+				const state = declStack.at(-1);
+				const text = sourceCode.getText(node).trim();
+				state.valueParts.push(text);
+				state.valueSegmentLocs.set(text, node.loc);
+			},
+
+			Function() {
+				declStack.at(-1).functionPartsStack.push([]);
+			},
+
+			"Function > *:not(Function)"(node) {
+				const state = declStack.at(-1);
+				const parts = state.functionPartsStack.at(-1);
+				const text = sourceCode.getText(node).trim();
+				parts.push(text);
+				state.valueSegmentLocs.set(text, node.loc);
+			},
+
+			"Function:exit"(node) {
+				const state = declStack.at(-1);
+				if (state.skipValidation) {
 					return;
 				}
 
-				/*
-				 * Store the custom property name and the function node
-				 * so can use these to validate the value later.
-				 */
-				const name = node.children[0].name;
-				map.set(name, node);
+				const parts = state.functionPartsStack.pop();
+				let result;
+				if (node.name.toLowerCase() === "var") {
+					const resolvedParts = [];
+					const success = processVarFunction(
+						node,
+						resolvedParts,
+						state.valueSegmentLocs,
+					);
+
+					if (!success) {
+						state.skipValidation = true;
+						return;
+					}
+
+					if (resolvedParts.length === 0) {
+						return;
+					}
+
+					state.hadVarSubstitution = true;
+					result = resolvedParts[0];
+				} else {
+					result = `${node.name}(${parts.join(" ")})`;
+				}
+
+				const parentParts = state.functionPartsStack.at(-1);
+				if (parentParts) {
+					parentParts.push(result);
+				} else {
+					state.valueParts.push(result);
+				}
 			},
 
 			"Rule > Block > Declaration:exit"(node) {
+				const state = declStack.pop();
 				if (node.property.startsWith("--")) {
 					// store the custom property name and value to validate later
 					vars.set(node.property, node.value);
@@ -273,47 +284,13 @@ export default {
 					return;
 				}
 
-				const varsFound = replacements.pop();
+				if (state.skipValidation) {
+					return;
+				}
 
-				/** @type {Map<string,CssLocationRange>} */
-				const valuesWithVarLocs = new Map();
-				const usingVars = varsFound?.size > 0;
 				let value = node.value;
-
-				if (usingVars) {
-					const valueList = [];
-					const valueNodes = node.value.children;
-
-					// When `var()` is used, we store all the values to `valueList` with the replacement of `var()` with there values or fallback values
-					for (const child of valueNodes) {
-						// If value is a function starts with `var()`
-						if (child.type === "Function" && child.name === "var") {
-							if (
-								!processVarFunction(
-									child,
-									valueList,
-									valuesWithVarLocs,
-								)
-							) {
-								return;
-							}
-						} else if (child.type === "Function") {
-							const processedFunction = processNestedFunction(
-								child,
-								valuesWithVarLocs,
-							);
-							if (!processedFunction) {
-								return;
-							}
-							valueList.push(processedFunction);
-						} else {
-							// If the child is not a `var()` function, just add its text to the `valueList`
-							const valueText = sourceCode.getText(child).trim();
-							valueList.push(valueText);
-							valuesWithVarLocs.set(valueText, child.loc);
-						}
-					}
-
+				if (state.hadVarSubstitution) {
+					const valueList = state.valueParts;
 					value =
 						valueList.length > 0
 							? valueList.join(" ")
@@ -326,7 +303,7 @@ export default {
 					// validation failure
 					if (isSyntaxMatchError(error)) {
 						const errorValue =
-							usingVars &&
+							state.hadVarSubstitution &&
 							value.slice(
 								error.mismatchOffset,
 								error.mismatchOffset + error.mismatchLength,
@@ -339,8 +316,8 @@ export default {
 							 * If so, use that location; otherwise, use the error's
 							 * reported location.
 							 */
-							loc: usingVars
-								? (valuesWithVarLocs.get(errorValue) ??
+							loc: state.hadVarSubstitution
+								? (state.valueSegmentLocs.get(errorValue) ??
 									node.value.loc)
 								: error.loc,
 							messageId: "invalidPropertyValue",
@@ -352,12 +329,8 @@ export default {
 								 * only include the part that caused the error.
 								 * Otherwise, use the full value from the error.
 								 */
-								value: usingVars
-									? value.slice(
-											error.mismatchOffset,
-											error.mismatchOffset +
-												error.mismatchLength,
-										)
+								value: state.hadVarSubstitution
+									? errorValue
 									: error.css,
 								expected: error.syntax,
 							},

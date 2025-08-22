@@ -65,6 +65,7 @@ ruleTester.run("no-invalid-properties", rule, {
 		":root { --my-fallback: 100px; }\na { width: calc(var(--my-width, var(--my-fallback, 200px))) }",
 		":root { --foo: 100px; }\na { width: calc(var(--my-width, var(--my-fallback, var(--foo)))) }",
 		"a { width: calc(var(--my-width, var(--my-fallback, var(--foo, 200px)))) }",
+		"a { background-image: linear-gradient(90deg, red, var(--c, blue)); }",
 		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width))) }",
 		":root { --my-width: 100px; --fallback-width: 200px; }\na { width: calc(var(--my-width, var(--fallback-width))) }",
 		":root { --my-width: 100px; }\na { width: calc(var(--my-width, var(--fallback-width, 200px))) }",
@@ -623,6 +624,23 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 5,
 					endLine: 2,
 					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "a { background-image: linear-gradient(90deg, 45deg, var(--c, blue)); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "background-image",
+						value: "45deg",
+						expected: "<bg-image>#",
+					},
+					line: 1,
+					column: 46,
+					endLine: 1,
+					endColumn: 51,
 				},
 			],
 		},
