@@ -102,6 +102,7 @@ ruleTester.run("use-baseline", rule, {
 		},
 		"@container (min-width: 800px) { a { color: red; } }",
 		"@media (color-gamut: srgb) { a { color: red; } }",
+		"@MEDIA (color-gamut: srgb) { a { color: red; } }",
 	],
 	invalid: [
 		{
@@ -360,22 +361,6 @@ ruleTester.run("use-baseline", rule, {
 					column: 9,
 					endLine: 1,
 					endColumn: 24,
-				},
-			],
-		},
-		{
-			code: "@MEDIA (color-gamut: srgb) { a { color: red; } }",
-			errors: [
-				{
-					messageId: "notBaselineMediaCondition",
-					data: {
-						condition: "color-gamut",
-						availability: "widely",
-					},
-					line: 1,
-					column: 9,
-					endLine: 1,
-					endColumn: 20,
 				},
 			],
 		},
