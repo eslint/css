@@ -115,35 +115,167 @@ export default {
 		const vars = new Map();
 
 		/**
-		 * We need to track this as a stack because we can have nested
-		 * rules that use the `var()` function, and we need to
-		 * ensure that we validate the innermost rule first.
-		 * @type {Array<Map<string,FunctionNodePlain>>}
+		 * @type {Array<{
+		 *   valueParts: string[],
+		 *   functionPartsStack: string[][],
+		 *   valueSegmentLocs: Map<string,CssLocationRange>,
+		 *   skipValidation: boolean,
+		 *   hadVarSubstitution: boolean,
+		 * }>}
 		 */
-		const replacements = [];
+		const declStack = [];
 
 		const [{ allowUnknownVariables }] = context.options;
 
+		/**
+		 * Process a var function node and add its resolved value to the value list
+		 * @param {Object} varNode The var() function node
+		 * @param {string[]} valueList Array to collect processed values
+		 * @param {Map<string,CssLocationRange>} valueSegmentLocs Map of rebuilt value segments to their locations
+		 * @returns {boolean} Whether processing was successful
+		 */
+		function processVarFunction(varNode, valueList, valueSegmentLocs) {
+			const varValue = vars.get(varNode.children[0].name);
+
+			if (varValue) {
+				const varValueText = sourceCode.getText(varValue).trim();
+				valueList.push(varValueText);
+				valueSegmentLocs.set(varValueText, varNode.loc);
+				return true;
+			}
+
+			// If the variable is not found and doesn't have a fallback value, report it
+			if (varNode.children.length === 1) {
+				if (!allowUnknownVariables) {
+					context.report({
+						loc: varNode.children[0].loc,
+						messageId: "unknownVar",
+						data: { var: varNode.children[0].name },
+					});
+					return false;
+				}
+				return true;
+			}
+
+			// Handle fallback values
+			if (varNode.children[2].type !== "Raw") {
+				return true;
+			}
+
+			const fallbackVarList = getVarFallbackList(
+				varNode.children[2].value.trim(),
+			);
+
+			if (fallbackVarList.length === 0) {
+				const fallbackValue = varNode.children[2].value.trim();
+				valueList.push(fallbackValue);
+				valueSegmentLocs.set(fallbackValue, varNode.loc);
+				return true;
+			}
+
+			// Process fallback variables
+			for (const fallbackVar of fallbackVarList) {
+				if (fallbackVar.startsWith("--")) {
+					const fallbackVarValue = vars.get(fallbackVar);
+					if (fallbackVarValue) {
+						const fallbackValue = sourceCode
+							.getText(fallbackVarValue)
+							.trim();
+						valueList.push(fallbackValue);
+						valueSegmentLocs.set(fallbackValue, varNode.loc);
+						return true;
+					}
+				} else {
+					valueList.push(fallbackVar.trim());
+					valueSegmentLocs.set(fallbackVar.trim(), varNode.loc);
+					return true;
+				}
+			}
+
+			// No valid fallback found
+			if (!allowUnknownVariables) {
+				context.report({
+					loc: varNode.children[0].loc,
+					messageId: "unknownVar",
+					data: { var: varNode.children[0].name },
+				});
+				return false;
+			}
+
+			return true;
+		}
+
 		return {
 			"Rule > Block > Declaration"() {
-				replacements.push(new Map());
+				declStack.push({
+					valueParts: [],
+					functionPartsStack: [],
+					valueSegmentLocs: new Map(),
+					skipValidation: false,
+					hadVarSubstitution: false,
+				});
 			},
 
-			"Function[name=/^var$/i]"(node) {
-				const map = replacements.at(-1);
-				if (!map) {
+			"Rule > Block > Declaration > Value > *:not(Function)"(node) {
+				const state = declStack.at(-1);
+				const text = sourceCode.getText(node).trim();
+				state.valueParts.push(text);
+				state.valueSegmentLocs.set(text, node.loc);
+			},
+
+			Function() {
+				declStack.at(-1).functionPartsStack.push([]);
+			},
+
+			"Function > *:not(Function)"(node) {
+				const state = declStack.at(-1);
+				const parts = state.functionPartsStack.at(-1);
+				const text = sourceCode.getText(node).trim();
+				parts.push(text);
+				state.valueSegmentLocs.set(text, node.loc);
+			},
+
+			"Function:exit"(node) {
+				const state = declStack.at(-1);
+				if (state.skipValidation) {
 					return;
 				}
 
-				/*
-				 * Store the custom property name and the function node
-				 * so can use these to validate the value later.
-				 */
-				const name = node.children[0].name;
-				map.set(name, node);
+				const parts = state.functionPartsStack.pop();
+				let result;
+				if (node.name.toLowerCase() === "var") {
+					const resolvedParts = [];
+					const success = processVarFunction(
+						node,
+						resolvedParts,
+						state.valueSegmentLocs,
+					);
+
+					if (!success) {
+						state.skipValidation = true;
+						return;
+					}
+
+					if (resolvedParts.length === 0) {
+						return;
+					}
+
+					state.hadVarSubstitution = true;
+					result = resolvedParts[0];
+				} else {
+					result = `${node.name}(${parts.join(" ")})`;
+				}
+
+				const parentParts = state.functionPartsStack.at(-1);
+				if (parentParts) {
+					parentParts.push(result);
+				} else {
+					state.valueParts.push(result);
+				}
 			},
 
 			"Rule > Block > Declaration:exit"(node) {
+				const state = declStack.pop();
 				if (node.property.startsWith("--")) {
 					// store the custom property name and value to validate later
 					vars.set(node.property, node.value);
@@ -152,138 +284,13 @@ export default {
 					return;
 				}
 
-				const varsFound = replacements.pop();
+				if (state.skipValidation) {
+					return;
+				}
 
-				/** @type {Map<string,CssLocationRange>} */
-				const valuesWithVarLocs = new Map();
-				const usingVars = varsFound?.size > 0;
 				let value = node.value;
-
-				if (usingVars) {
-					const valueList = [];
-					const valueNodes = node.value.children;
-
-					// When `var()` is used, we store all the values to `valueList` with the replacement of `var()` with there values or fallback values
-					for (const child of valueNodes) {
-						// If value is a function starts with `var()`
-						if (
-							child.type === "Function" &&
-							child.name.toLowerCase() === "var"
-						) {
-							const varValue = vars.get(child.children[0].name);
-
-							// If the variable is found, use its value, otherwise check for fallback values
-							if (varValue) {
-								const varValueText = sourceCode
-									.getText(varValue)
-									.trim();
-
-								valueList.push(varValueText);
-								valuesWithVarLocs.set(varValueText, child.loc);
-							} else {
-								// If the variable is not found and doesn't have a fallback value, report it
-								if (child.children.length === 1) {
-									if (!allowUnknownVariables) {
-										context.report({
-											loc: child.children[0].loc,
-											messageId: "unknownVar",
-											data: {
-												var: child.children[0].name,
-											},
-										});
-
-										return;
-									}
-								} else {
-									// If it has a fallback value, use that
-									if (child.children[2].type === "Raw") {
-										const fallbackVarList =
-											getVarFallbackList(
-												child.children[2].value.trim(),
-											);
-										if (fallbackVarList.length > 0) {
-											let gotFallbackVarValue = false;
-
-											for (const fallbackVar of fallbackVarList) {
-												if (
-													fallbackVar.startsWith("--")
-												) {
-													const fallbackVarValue =
-														vars.get(fallbackVar);
-
-													if (!fallbackVarValue) {
-														continue; // Try the next fallback
-													}
-
-													valueList.push(
-														sourceCode
-															.getText(
-																fallbackVarValue,
-															)
-															.trim(),
-													);
-													valuesWithVarLocs.set(
-														sourceCode
-															.getText(
-																fallbackVarValue,
-															)
-															.trim(),
-														child.loc,
-													);
-													gotFallbackVarValue = true;
-													break; // Stop after finding the first valid variable
-												} else {
-													const fallbackValue =
-														fallbackVar.trim();
-													valueList.push(
-														fallbackValue,
-													);
-													valuesWithVarLocs.set(
-														fallbackValue,
-														child.loc,
-													);
-													gotFallbackVarValue = true;
-													break; // Stop after finding the first non-variable fallback
-												}
-											}
-
-											// If none of the fallback value is defined then report an error
-											if (
-												!allowUnknownVariables &&
-												!gotFallbackVarValue
-											) {
-												context.report({
-													loc: child.children[0].loc,
-													messageId: "unknownVar",
-													data: {
-														var: child.children[0]
-															.name,
-													},
-												});
-
-												return;
-											}
-										} else {
-											// if it has a fallback value, use that
-											const fallbackValue =
-												child.children[2].value.trim();
-											valueList.push(fallbackValue);
-											valuesWithVarLocs.set(
-												fallbackValue,
-												child.loc,
-											);
-										}
-									}
-								}
-							}
-						} else {
-							// If the child is not a `var()` function, just add its text to the `valueList`
-							const valueText = sourceCode.getText(child).trim();
-							valueList.push(valueText);
-							valuesWithVarLocs.set(valueText, child.loc);
-						}
-					}
-
+				if (state.hadVarSubstitution) {
+					const valueList = state.valueParts;
 					value =
 						valueList.length > 0
 							? valueList.join(" ")
@@ -296,7 +303,7 @@ export default {
 					// validation failure
 					if (isSyntaxMatchError(error)) {
 						const errorValue =
-							usingVars &&
+							state.hadVarSubstitution &&
 							value.slice(
 								error.mismatchOffset,
 								error.mismatchOffset + error.mismatchLength,
@@ -309,8 +316,8 @@ export default {
 							 * If so, use that location; otherwise, use the error's
 							 * reported location.
 							 */
-							loc: usingVars
-								? (valuesWithVarLocs.get(errorValue) ??
+							loc: state.hadVarSubstitution
+								? (state.valueSegmentLocs.get(errorValue) ??
 									node.value.loc)
 								: error.loc,
 							messageId: "invalidPropertyValue",
@@ -322,12 +329,8 @@ export default {
 								 * only include the part that caused the error.
 								 * Otherwise, use the full value from the error.
 								 */
-								value: usingVars
-									? value.slice(
-											error.mismatchOffset,
-											error.mismatchOffset +
-												error.mismatchLength,
-										)
+								value: state.hadVarSubstitution
+									? errorValue
 									: error.css,
 								expected: error.syntax,
 							},
