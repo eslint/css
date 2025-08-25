@@ -33,7 +33,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 const commentParser = new ConfigCommentParser();
 
 const INLINE_CONFIG =
-	/^\s*(?:eslint(?:-enable|-disable(?:(?:-next)?-line)?)?)(?:\s|$)/u;
+	/^\s*eslint(?:-enable|-disable(?:(?:-next)?-line)?)?(?:\s|$)/u;
 
 /**
  * A class to represent a step in the traversal process.
