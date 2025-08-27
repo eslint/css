@@ -998,6 +998,24 @@ ruleTester.run("no-invalid-properties", rule, {
 			],
 		},
 		{
+			code: "a { padding-top: var(--a,\nvar(--b, red\n)\n); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "padding-top",
+						value: "red",
+						expected: "<length-percentage [0,∞]>",
+					},
+					line: 1,
+					column: 18,
+					endLine: 4,
+					endColumn: 2,
+				},
+			],
+		},
+		{
 			code: ":root { --a: var(--b, red); }\na { padding-top: var(--a); }",
 			errors: [
 				{
