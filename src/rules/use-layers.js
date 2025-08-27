@@ -75,7 +75,7 @@ export default {
 			: null;
 
 		return {
-			"Atrule[name=import]"(node) {
+			"Atrule[name=/^import$/i]"(node) {
 				// layer, if present, must always be the second child of the prelude
 				const secondChild = node.prelude.children[1];
 				const layerNode =
@@ -140,7 +140,7 @@ export default {
 				});
 			},
 
-			"Atrule[name=layer]"(node) {
+			"Atrule[name=/^layer$/i]"(node) {
 				layerDepth++;
 
 				if (!options.allowUnnamedLayers && !node.prelude) {
@@ -151,7 +151,7 @@ export default {
 				}
 			},
 
-			"Atrule[name=layer]:exit"() {
+			"Atrule[name=/^layer$/i]:exit"() {
 				layerDepth--;
 			},
 

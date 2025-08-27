@@ -108,6 +108,20 @@ ruleTester.run("no-invalid-properties", rule, {
 			code: ":root { --color: red }\na { border-top: 1px VAR(--style, VAR(--fallback)) VAR(--color, blue); }",
 			options: [{ allowUnknownVariables: true }],
 		},
+		":root { --a: red; --b: var(--a); }\na { color: var(--b); }",
+		":root { --a: red; --b: var(--a); }\na { color: var(  --b  ); }",
+		":root { --a: red; --b: var(--a); --c: var(--b); }\na { color: var(--c); }",
+		":root { --a: red; }\na { color: var(--b, var(--a)); }",
+		":root { --a: red; }\na { color: var(--b, var(--c, var(--a))); }",
+		":root { --a: 1px; --b: red; --c: var(--a); --d: var(--b); }\na { border-top: var(--c) solid var(--d); }",
+		":root { --a: 1px; --b: var(--a); }\na { border-top: var(--b) solid var(--c, red) }",
+		":root { --a: var(--b, 10px); } a { padding: var(--a); }",
+		":root { --a: var(--b, var(--c, 10px)); } a { padding: var(--a); }",
+		":root { --a: var(--b, var(--c, 10px)); --b: 20px; } a { padding: var(--a); }",
+		{
+			code: ":root { --a: var(--c); --b: var(--a); }\na { color: var(--b); }",
+			options: [{ allowUnknownVariables: true }],
+		},
 
 		/*
 		 * CSSTree doesn't currently support custom functions properly, so leaving
@@ -794,6 +808,204 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 5,
 					endLine: 2,
 					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--b); }\na { color: var(--a); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--a" },
+					line: 2,
+					column: 16,
+					endLine: 2,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--c); --b: var(--a); }\na { color: var(--b); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--b" },
+					line: 2,
+					column: 16,
+					endLine: 2,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--b); --b: var(--c); }\na { color: var(--a); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--a" },
+					line: 2,
+					column: 16,
+					endLine: 2,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--c); --b: var(--a); }\na { color: var(--d, var(--b)); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--d" },
+					line: 2,
+					column: 16,
+					endLine: 2,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--b) var(--c, red); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 21,
+					endLine: 2,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--b, solid) var(--c, red); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 21,
+					endLine: 2,
+					endColumn: 36,
+				},
+			],
+		},
+		{
+			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--c, var(--d, solid)) var(--b); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 47,
+					endLine: 2,
+					endColumn: 55,
+				},
+			],
+		},
+		{
+			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--c, var(--d)) var(--b); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: {
+						var: "--c",
+					},
+					line: 2,
+					column: 25,
+					endLine: 2,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: ":root { --a: red; --b: var(--a); }\na { colorr: var(--b, blue); }",
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: {
+						property: "colorr",
+					},
+					line: 2,
+					column: 5,
+					endLine: 2,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--c, var(--d)) var(--b); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "border-top",
+						value: "foo",
+						expected: "<line-width> || <line-style> || <color>",
+					},
+					line: 2,
+					column: 40,
+					endLine: 2,
+					endColumn: 48,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--b); --b: var(--a); }\na { color: var(--a); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--a" },
+					line: 2,
+					column: 16,
+					endLine: 2,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--b, red); }\na { padding-top: var(--a); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "padding-top",
+						value: "red",
+						expected: "<length-percentage [0,∞]>",
+					},
+					line: 2,
+					column: 18,
+					endLine: 2,
+					endColumn: 26,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--b, var(--c, red)); }\na { padding-top: var(--a); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "padding-top",
+						value: "red",
+						expected: "<length-percentage [0,∞]>",
+					},
+					line: 2,
+					column: 18,
+					endLine: 2,
+					endColumn: 26,
 				},
 			],
 		},
