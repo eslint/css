@@ -28,7 +28,7 @@ import { isSyntaxMatchError, isSyntaxReferenceError } from "../util.js";
 /**
  * Regex to match var() functional notation with optional fallback.
  */
-const varFunctionPattern = /var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)/iu;
+const varFunctionPattern = /var\(\s*(--[^,\s)]+)\s*(?:,([\s\S]+))?\)/iu;
 
 /**
  * Parses a var() function text and extracts the custom property name and fallback.

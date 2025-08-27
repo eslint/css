@@ -78,6 +78,11 @@ ruleTester.run("no-invalid-properties", rule, {
 		":root { --MY-COLOR: red; }\na { color: var(--my-color, blue) }",
 		":root { --FALLBACK-COLOR: blue; }\na { color: var(--MY-COLOR, var(--FALLBACK-COLOR)) }",
 		":root { --fallback-color: blue; }\na { color: VAR(--MY-COLOR, VaR(--fallback-color)) }",
+		"a { color: var(--my-color,\n  red) }",
+		":root { --my-color: red; }\na { color: var(--my-color,\n blue) }",
+		"a { color: var(--x,\n    var(--y,\n      blue\n    )\n) }",
+		"a { color: var(--x,\n    red   ) }",
+		":root { --a: var(--b,\n  10px\n); } a { padding: var(--a); }",
 		{
 			code: "a { my-custom-color: red; }",
 			languageOptions: {
@@ -972,6 +977,23 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 16,
 					endLine: 2,
 					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: ":root { --a: var(--b,\n red); }\na { padding-top: var(--a); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "padding-top",
+						value: "red",
+						expected: "<length-percentage [0,∞]>",
+					},
+					line: 3,
+					column: 18,
+					endLine: 3,
+					endColumn: 26,
 				},
 			],
 		},
