@@ -146,6 +146,7 @@ ruleTester.run("no-invalid-properties", rule, {
 		// },
 		//
 		// https://github.com/eslint/css/issues/235
+		"a { color: rgb(from currentColor r g b / 0.1) }",
 		"a { color: rgb(from green r g b / 0.5) }",
 		"a { color: rgb(from #123456 calc(r + 40) calc(g + 40) b) }",
 		"a { color: rgb(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
@@ -158,7 +159,6 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { color: rgba(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
 		"a { color: rgba(from hsl(0 100% 50%) r g b) }",
 		"a { color: rgba(from hsl(0 100% 50% / 0.8) r g b / alpha) }",
-		"a { color: rgba(from hsl(0 100% 50% / 0.8) r g b / 0.5) }",
 		"a { color: rgba(from hsl(0 100% 50%) calc(r/2) calc(g + 25) calc(b + 175) / calc(alpha - 0.1)) }",
 	],
 	invalid: [
