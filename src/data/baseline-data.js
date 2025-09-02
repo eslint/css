@@ -717,7 +717,6 @@ export const selectors = new Map([
 	["nth-last-of-type", "10:2015"],
 	["nth-of-type", "10:2015"],
 	["only-of-type", "10:2015"],
-	["closed", "0:"],
 	["open", "0:"],
 	["first", "5:2023"],
 	["left", "0:"],

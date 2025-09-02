@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.11.0](https://github.com/eslint/css/compare/css-v0.10.0...css-v0.11.0) (2025-08-28)
+
+
+### Features
+
+* add [@namespace](https://github.com/namespace) validation to no-invalid-at-rule-placement rule ([#183](https://github.com/eslint/css/issues/183)) ([26b902c](https://github.com/eslint/css/commit/26b902c4f42cccb33d7f8119a3376773e0ad91bd))
+* add `font-family-fallbacks` rule ([#174](https://github.com/eslint/css/issues/174)) ([5678024](https://github.com/eslint/css/commit/5678024802af61fff74e71172a3732c5deec7afe))
+* add allow-list options for at-rules, properties, and selectors ([#228](https://github.com/eslint/css/issues/228)) ([623ad8e](https://github.com/eslint/css/commit/623ad8efeee114bc8f2cc814ca9656f560447745))
+* add autofix to no-duplicate-imports rule ([#216](https://github.com/eslint/css/issues/216)) ([0aa7b97](https://github.com/eslint/css/commit/0aa7b977a1ab829698ab40de906be5a2935945a5))
+* add new rule `no-duplicate-keyframe-selectors` ([#143](https://github.com/eslint/css/issues/143)) ([dfe9c05](https://github.com/eslint/css/commit/dfe9c051907a49ccf58cf4c7b14fea1324fc5ab5))
+* add suggestion to no-important rule to remove !important flag ([#217](https://github.com/eslint/css/issues/217)) ([47e26b3](https://github.com/eslint/css/commit/47e26b3a83d18390dc87df718359225b20bd65d9))
+* allow relative-size and global values in relative-font-units ([#214](https://github.com/eslint/css/issues/214)) ([933d71c](https://github.com/eslint/css/commit/933d71c61ca3ae5eb97474df8cc9f94a13a9a273))
+* make var() regex multiline-safe in `no-invalid-properties` ([#242](https://github.com/eslint/css/issues/242)) ([c123f6e](https://github.com/eslint/css/commit/c123f6e89bbeb512adb02237a3e81be20e607e46))
+
+
+### Bug Fixes
+
+* allow any type for `meta.docs.recommended` in custom rules ([#231](https://github.com/eslint/css/issues/231)) ([6ea61a5](https://github.com/eslint/css/commit/6ea61a5aef4582c9ae64f7428b50d9722a717acb))
+* bump `plugin-kit` to latest to resolve security vulnerabilities ([#209](https://github.com/eslint/css/issues/209)) ([32e02d6](https://github.com/eslint/css/commit/32e02d6c1425caefa83a98ef868364b734339241))
+* disallow extra properties in rule options ([#197](https://github.com/eslint/css/issues/197)) ([8fd755d](https://github.com/eslint/css/commit/8fd755d132b08105838ac032654a3be906fe44ca))
+* enforce strict syntax for `[@charset](https://github.com/charset)` in no-invalid-at-rules ([#192](https://github.com/eslint/css/issues/192)) ([4d3d140](https://github.com/eslint/css/commit/4d3d1401b71d9b39132c8ed4cd842372a23d1135))
+* make no-invalid-properties var() case-insensitive ([#232](https://github.com/eslint/css/issues/232)) ([ad0cbdb](https://github.com/eslint/css/commit/ad0cbdbde5bc9e3558789d7b47d70df93cd9964e))
+* make relative-font-units unit matching case-insensitive ([#222](https://github.com/eslint/css/issues/222)) ([7a2ecad](https://github.com/eslint/css/commit/7a2ecadddcfbe9e738f88a6c8ba9540b03c088a5))
+* prevent false positives for !important inside comments ([#218](https://github.com/eslint/css/issues/218)) ([3c6937a](https://github.com/eslint/css/commit/3c6937a63874e422a1cec46f601260a2ae06b188))
+* recursively resolve custom properties in no-invalid-properties ([#237](https://github.com/eslint/css/issues/237)) ([f2ee3fd](https://github.com/eslint/css/commit/f2ee3fd04d57105aa5ceb65fc57219ee382e235c))
+* treat at-rule names as case-insensitive across rules ([#233](https://github.com/eslint/css/issues/233)) ([9765135](https://github.com/eslint/css/commit/9765135f5e08ed039d56f408eabc6b6eec316753))
+* update baseline data ([8ee9da0](https://github.com/eslint/css/commit/8ee9da0c401d183e11f0fdaa7a82864c226689dc))
+* update baseline data ([#207](https://github.com/eslint/css/issues/207)) ([79e06c6](https://github.com/eslint/css/commit/79e06c6510aabeb121ef94d2b48047eb529fbff1))
+* update baseline data ([#213](https://github.com/eslint/css/issues/213)) ([30ca01c](https://github.com/eslint/css/commit/30ca01c0dbdc4bf13af9709a8057979dec4e35cf))
+* update baseline data ([#234](https://github.com/eslint/css/issues/234)) ([5f409d3](https://github.com/eslint/css/commit/5f409d35e0d47bbe8509bcd4f109a3958197b8c2))
+* update baseline data ([#238](https://github.com/eslint/css/issues/238)) ([d058f1c](https://github.com/eslint/css/commit/d058f1cd70e7e680b982f9845794aa4b4dc67f58))
+* update baseline data ([#241](https://github.com/eslint/css/issues/241)) ([330c326](https://github.com/eslint/css/commit/330c3269deb673421d9e47a5be7e3c991b99fbed))
+* Upgrade @eslint/css-tree ([#243](https://github.com/eslint/css/issues/243)) ([136e2ab](https://github.com/eslint/css/commit/136e2ab4c61dff686d4d3d3a1a0605d70a29a961))
+* var() with fallback value in `no-invalid-properties` ([#184](https://github.com/eslint/css/issues/184)) ([1db0b1a](https://github.com/eslint/css/commit/1db0b1ae3873f4efff0f17e95654ed0f744ec04d))
+
 ## [0.10.0](https://github.com/eslint/css/compare/css-v0.9.0...css-v0.10.0) (2025-07-11)
 
 

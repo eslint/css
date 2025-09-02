@@ -26,6 +26,27 @@ import { isSyntaxMatchError, isSyntaxReferenceError } from "../util.js";
 //-----------------------------------------------------------------------------
 
 /**
+ * Regex to match var() functional notation with optional fallback.
+ */
+const varFunctionPattern = /var\(\s*(--[^,\s)]+)\s*(?:,([\s\S]+))?\)/iu;
+
+/**
+ * Parses a var() function text and extracts the custom property name and fallback.
+ * @param {string} text
+ * @returns {{ name: string, fallbackText: string | null } | null}
+ */
+function parseVarFunction(text) {
+	const match = text.match(varFunctionPattern);
+	if (!match) {
+		return null;
+	}
+	return {
+		name: match[1].trim(),
+		fallbackText: match[2]?.trim(),
+	};
+}
+
+/**
  * Extracts the list of fallback value or variable name used in a `var()` that is used as fallback function.
  * For example, for `var(--my-color, var(--fallback-color, red));` it will return `["--fallback-color", "red"]`.
  * @param {string} value The fallback value that is used in `var()`.
@@ -36,31 +57,26 @@ function getVarFallbackList(value) {
 	let currentValue = value;
 
 	while (true) {
-		const match = currentValue.match(
-			/var\(\s*(--[^,\s)]+)\s*(?:,\s*(.+))?\)/iu,
-		);
+		const parsed = parseVarFunction(currentValue);
 
-		if (!match) {
+		if (!parsed) {
 			break;
 		}
 
-		const prop = match[1].trim();
-		const fallback = match[2]?.trim();
+		list.push(parsed.name);
 
-		list.push(prop);
-
-		if (!fallback) {
+		if (!parsed.fallbackText) {
 			break;
 		}
 
 		// If fallback is not another var(), we're done
-		if (!fallback.toLowerCase().includes("var(")) {
-			list.push(fallback);
+		if (!parsed.fallbackText.toLowerCase().includes("var(")) {
+			list.push(parsed.fallbackText);
 			break;
 		}
 
 		// Continue parsing from fallback
-		currentValue = fallback;
+		currentValue = parsed.fallbackText;
 	}
 
 	return list;
@@ -121,6 +137,7 @@ export default {
 		 *   valueSegmentLocs: Map<string,CssLocationRange>,
 		 *   skipValidation: boolean,
 		 *   hadVarSubstitution: boolean,
+		 *   resolvedCache:  Map<string,string>
 		 * }>}
 		 */
 		const declStack = [];
@@ -128,20 +145,136 @@ export default {
 		const [{ allowUnknownVariables }] = context.options;
 
 		/**
+		 * Iteratively resolves CSS variable references until a value is found.
+		 * @param {string} variableName The variable name to resolve
+		 * @param {Map<string, string>} cache Cache for memoization within a single resolution scope
+		 * @param {Set<string>} [seen] Set of already seen variables to detect cycles
+		 * @returns {string|null} The resolved value or null if not found
+		 */
+		function resolveVariable(variableName, cache, seen = new Set()) {
+			/** @type {Array<string>} */
+			const fallbackStack = [];
+			let currentVarName = variableName;
+
+			/*
+			 * Resolves a CSS variable by following its reference chain.
+			 *
+			 * Phase 1: Follow var() references
+			 * - Use `seen` to detect cycles
+			 * - Use `cache` for memoization
+			 * - If value is concrete: cache and return
+			 * - If value is another var(--next, <fallback>):
+			 *     push fallback to stack and continue with --next
+			 * - If variable unknown: proceed to Phase 2
+			 *
+			 * Phase 2: Try fallback values (if Phase 1 failed)
+			 * - Process fallbacks in reverse order (LIFO)
+			 * - Resolve each via resolveFallback()
+			 * - Return first successful resolution
+			 */
+			while (true) {
+				if (seen.has(currentVarName)) {
+					break;
+				}
+				seen.add(currentVarName);
+
+				if (cache.has(currentVarName)) {
+					return cache.get(currentVarName);
+				}
+
+				const valueNode = vars.get(currentVarName);
+				if (!valueNode) {
+					break;
+				}
+
+				const valueText = sourceCode.getText(valueNode).trim();
+				const parsed = parseVarFunction(valueText);
+
+				if (!parsed) {
+					cache.set(currentVarName, valueText);
+					return valueText;
+				}
+
+				if (parsed.fallbackText) {
+					fallbackStack.push(parsed.fallbackText);
+				}
+				currentVarName = parsed.name;
+			}
+
+			while (fallbackStack.length > 0) {
+				const fallbackText = fallbackStack.pop();
+				// eslint-disable-next-line no-use-before-define -- resolveFallback and resolveVariable are mutually recursive
+				const resolvedFallback = resolveFallback(
+					fallbackText,
+					cache,
+					seen,
+				);
+				if (resolvedFallback !== null) {
+					return resolvedFallback;
+				}
+			}
+
+			return null;
+		}
+
+		/**
+		 * Resolves a fallback text which can contain nested var() calls.
+		 * Returns the first resolvable value or null if none resolve.
+		 * @param {string} rawFallbackText
+		 * @param {Map<string, string>} cache Cache for memoization within a single resolution scope
+		 * @param {Set<string>} [seen] Set of already seen variables to detect cycles
+		 * @returns {string | null}
+		 */
+		function resolveFallback(rawFallbackText, cache, seen = new Set()) {
+			const fallbackVarList = getVarFallbackList(rawFallbackText);
+			if (fallbackVarList.length === 0) {
+				return rawFallbackText;
+			}
+
+			for (const fallbackCandidate of fallbackVarList) {
+				if (fallbackCandidate.startsWith("--")) {
+					const resolved = resolveVariable(
+						fallbackCandidate,
+						cache,
+						seen,
+					);
+					if (resolved !== null) {
+						return resolved;
+					}
+					continue;
+				}
+				return fallbackCandidate.trim();
+			}
+
+			return null;
+		}
+
+		/**
 		 * Process a var function node and add its resolved value to the value list
 		 * @param {Object} varNode The var() function node
 		 * @param {string[]} valueList Array to collect processed values
 		 * @param {Map<string,CssLocationRange>} valueSegmentLocs Map of rebuilt value segments to their locations
+		 * @param {Map<string, string>} resolvedCache Cache for resolved variable values to prevent redundant lookups
 		 * @returns {boolean} Whether processing was successful
 		 */
-		function processVarFunction(varNode, valueList, valueSegmentLocs) {
+		function processVarFunction(
+			varNode,
+			valueList,
+			valueSegmentLocs,
+			resolvedCache,
+		) {
 			const varValue = vars.get(varNode.children[0].name);
 
 			if (varValue) {
-				const varValueText = sourceCode.getText(varValue).trim();
-				valueList.push(varValueText);
-				valueSegmentLocs.set(varValueText, varNode.loc);
-				return true;
+				const resolvedValue = resolveVariable(
+					varNode.children[0].name,
+					resolvedCache,
+				);
+				if (resolvedValue) {
+					valueList.push(resolvedValue);
+					valueSegmentLocs.set(resolvedValue, varNode.loc);
+					return true;
+				}
 			}
 
 			// If the variable is not found and doesn't have a fallback value, report it
@@ -162,34 +295,15 @@ export default {
 				return true;
 			}
 
-			const fallbackVarList = getVarFallbackList(
-				varNode.children[2].value.trim(),
+			const fallbackValue = varNode.children[2].value.trim();
+			const resolvedFallbackValue = resolveFallback(
+				fallbackValue,
+				resolvedCache,
 			);
-
-			if (fallbackVarList.length === 0) {
-				const fallbackValue = varNode.children[2].value.trim();
-				valueList.push(fallbackValue);
-				valueSegmentLocs.set(fallbackValue, varNode.loc);
+			if (resolvedFallbackValue) {
+				valueList.push(resolvedFallbackValue);
+				valueSegmentLocs.set(resolvedFallbackValue, varNode.loc);
 				return true;
-			}
-
-			// Process fallback variables
-			for (const fallbackVar of fallbackVarList) {
-				if (fallbackVar.startsWith("--")) {
-					const fallbackVarValue = vars.get(fallbackVar);
-					if (fallbackVarValue) {
-						const fallbackValue = sourceCode
-							.getText(fallbackVarValue)
-							.trim();
-						valueList.push(fallbackValue);
-						valueSegmentLocs.set(fallbackValue, varNode.loc);
-						return true;
-					}
-				} else {
-					valueList.push(fallbackVar.trim());
-					valueSegmentLocs.set(fallbackVar.trim(), varNode.loc);
-					return true;
-				}
 			}
 
 			// No valid fallback found
@@ -213,6 +327,11 @@ export default {
 					valueSegmentLocs: new Map(),
 					skipValidation: false,
 					hadVarSubstitution: false,
+					/**
+					 * Cache for resolved variable values within this single declaration.
+					 * Prevents re-resolving the same variable and re-walking long `var()` chains.
+					 */
+					resolvedCache: new Map(),
 				});
 			},
 
@@ -249,6 +368,7 @@ export default {
 						node,
 						resolvedParts,
 						state.valueSegmentLocs,
+						state.resolvedCache,
 					);
 
 					if (!success) {
