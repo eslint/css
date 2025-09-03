@@ -29,6 +29,18 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
             from { opacity: 0; }
             to { opacity: 1; }
         }`,
+		dedent`@-webkit-keyframes test {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }`,
+		dedent`@-moz-keyframes test {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }`,
+		dedent`@-o-keyframes test {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }`,
 		dedent`@keyframes test {
             0% { opacity: 0; }
             100% { opacity: 1; }
@@ -69,6 +81,51 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 	invalid: [
 		{
 			code: dedent`@keyframes test {
+                0% { opacity: 0; }
+                0% { opacity: 1; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: dedent`@-webkit-keyframes test {
+                0% { opacity: 0; }
+                0% { opacity: 1; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: dedent`@-moz-keyframes test {
+                0% { opacity: 0; }
+                0% { opacity: 1; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: dedent`@-o-keyframes test {
                 0% { opacity: 0; }
                 0% { opacity: 1; }
             }`,
