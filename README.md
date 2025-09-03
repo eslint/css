@@ -78,6 +78,7 @@ export default defineConfig([
 | [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)                     | Disallow invalid properties                           |       yes       |
 | [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md)             | Enforce the use of logical properties                 |       no        |
 | [`relative-font-units`](./docs/rules/relative-font-units.md)                         | Enforce the use of relative font units                |       no        |
+| [`selector-complexity`](./docs/rules/selector-complexity.md)                         | Disallow and limit complex selectors                  |       no        |
 | [`use-baseline`](./docs/rules/use-baseline.md)                                       | Enforce the use of baseline features                  |       yes       |
 | [`use-layers`](./docs/rules/use-layers.md)                                           | Require use of layers                                 |       no        |
 
