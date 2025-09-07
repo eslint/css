@@ -1,5 +1,5 @@
 /**
- * @fileoverview Rule to limit selector complexity
+ * @fileoverview Rule to limit and disallow CSS selectors.
  * @author Tanuj Kanti
  */
 
@@ -16,7 +16,6 @@
  *     maxTypes?: number,
  *     maxAttributes?: number,
  *     maxPseudoClasses?: number,
- *     maxPseudoElements?: number,
  *     maxUniversals?: number,
  *     maxCompounds?: number,
  *     maxCombinators?: number,
@@ -32,10 +31,6 @@
 //-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
-
-// function getSelectors(selectors, selectorType) {
-//     return selectors.filter(child => child.type === selectorType);
-// }
 
 /**
  * Extract compounds from a CSS selector.
@@ -64,9 +59,75 @@ function getCompounds(selectors) {
 	return compounds;
 }
 
-// function isIncluded(selectorNames, disallowedNames) {
-//     return selectorNames.some(name => disallowedNames.includes(name));
-// }
+/**
+ * Get the location of a selector of a given name.
+ * @param {Array<Object>} allSelector All CSS selector nodes.
+ * @param {string} disallowedSelector The name of the disallowed selector.
+ * @returns {Object | undefined} The location of the disallowed selector, or undefined if not found.
+ */
+function getDisallowedSelectorsLocation(allSelector, disallowedSelector) {
+	return allSelector.find(selector => selector.name === disallowedSelector)
+		.loc;
+}
+
+/**
+ * An error for exceeding the maximum allowed selectors of a specific type.
+ * @param {Object} context The ESLint rule context object.
+ * @param {Array<Object>} selectorsList List of CSS selectors.
+ * @param {number} maxValue The max number of selectors that are allowed.
+ * @returns {void}
+ */
+function exceedLimitError(context, selectorsList, maxValue, selectorType) {
+	context.report({
+		loc: selectorsList[maxValue].loc,
+		messageId: "maxSelectors",
+		data: {
+			selector: selectorType,
+			limit: String(maxValue),
+		},
+	});
+}
+
+/**
+ * Gives an array of CSS selectors of a specific type.
+ * @param {Array<Object>} selectors All CSS selectors nodes.
+ * @param {string} selectorType The type of CSS selector to filter out.
+ * @returns {Array<Object>} Filtered selectors.
+ */
+function getSelectors(selectors, selectorType) {
+	return selectors.filter(selector => selector.type === selectorType);
+}
+
+/**
+ * Get the names of all CSS selectors.
+ * @param {Array<Object>} selectors All CSS selector nodes.
+ * @returns {Array<string>} Array of selector names.
+ */
+function getSelectorNames(selectors) {
+	return selectors.map(selector => selector.name);
+}
+
+/**
+ * Get the location of the attribute matcher or operator in a given attribute selector.
+ * @param {Array<Object>} selectors All CSS selector nodes.
+ * @param {number} index The index of the attribute selector in the selectors array.
+ * @returns {{ startLoc: Object | undefined, endLoc: Object | undefined }} The start and end locations of the operator.
+ */
+function getOperatorLocation(selectors, index) {
+	const selector = selectors[index];
+	let startLoc;
+	let endLoc;
+
+	if (selector.name.type === "Identifier") {
+		startLoc = selector.name.loc.end;
+	}
+
+	if (selector.value) {
+		endLoc = selector.value.loc.start;
+	}
+
+	return { startLoc, endLoc };
+}
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -78,7 +139,7 @@ export default {
 		type: "problem",
 
 		docs: {
-			description: "Disallow and limit complex selectors",
+			description: "Disallow and limit CSS selectors",
 			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/selector-complexity.md",
 		},
@@ -104,10 +165,6 @@ export default {
 						minimum: 0,
 					},
 					maxPseudoClasses: {
-						type: "integer",
-						minimum: 0,
-					},
-					maxPseudoElements: {
 						type: "integer",
 						minimum: 0,
 					},
@@ -169,7 +226,6 @@ export default {
 				maxTypes: Infinity,
 				maxAttributes: Infinity,
 				maxPseudoClasses: Infinity,
-				maxPseudoElements: Infinity,
 				maxUniversals: Infinity,
 				maxCompounds: Infinity,
 				maxCombinators: Infinity,
@@ -197,7 +253,6 @@ export default {
 				maxTypes,
 				maxAttributes,
 				maxPseudoClasses,
-				maxPseudoElements,
 				maxUniversals,
 				maxCompounds,
 				maxCombinators,
@@ -213,137 +268,101 @@ export default {
 			Selector(node) {
 				const selectors = node.children;
 
-				const idSelectors = selectors.filter(
-					child => child.type === "IdSelector",
-				);
-				const classSelectors = selectors.filter(
-					child => child.type === "ClassSelector",
-				);
+				const idSelectors = getSelectors(selectors, "IdSelector");
+				const classSelectors = getSelectors(selectors, "ClassSelector");
 				const typeSelectors = selectors.filter(
 					child =>
 						child.type === "TypeSelector" && child.name !== "*",
 				);
-				const attributeSelectors = selectors.filter(
-					child => child.type === "AttributeSelector",
+				const attributeSelectors = getSelectors(
+					selectors,
+					"AttributeSelector",
 				);
-				const pseudoClassSelectors = selectors.filter(
-					child => child.type === "PseudoClassSelector",
-				);
-				const pseudoElementSelectors = selectors.filter(
-					child => child.type === "PseudoElementSelector",
+				const pseudoClassSelectors = getSelectors(
+					selectors,
+					"PseudoClassSelector",
 				);
 				const universalSelectors = selectors.filter(
 					child =>
 						child.type === "TypeSelector" && child.name === "*",
 				);
-				const combinatorNodes = selectors.filter(
-					child => child.type === "Combinator",
-				);
+				const combinatorNodes = getSelectors(selectors, "Combinator");
 				const compounds = getCompounds(selectors);
 
-				const combinators = combinatorNodes.map(s => s.name);
-				const pseudoClassSelectorsNames = pseudoClassSelectors.map(
-					s => s.name,
+				const combinators = getSelectorNames(combinatorNodes);
+				const pseudoClassSelectorsNames =
+					getSelectorNames(pseudoClassSelectors);
+				const pseudoElementSelectors = getSelectors(
+					selectors,
+					"PseudoElementSelector",
 				);
-				const pseudoElementNames = pseudoElementSelectors.map(
-					s => s.name,
+				const pseudoElementNames = getSelectorNames(
+					pseudoElementSelectors,
 				);
 				const attributeNames = attributeSelectors.map(s => s.name.name);
 				const attributeMatchers = attributeSelectors
-					.map(s => s.matcher)
+					.map(child => child.matcher)
 					.filter(Boolean);
 
 				if (idSelectors.length > maxIds) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "id",
-							limit: String(maxIds),
-						},
-					});
+					exceedLimitError(context, idSelectors, maxIds, "id");
 				}
 
 				if (classSelectors.length > maxClasses) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "class",
-							limit: String(maxClasses),
-						},
-					});
+					exceedLimitError(
+						context,
+						classSelectors,
+						maxClasses,
+						"class",
+					);
 				}
 
 				if (typeSelectors.length > maxTypes) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "type",
-							limit: String(maxTypes),
-						},
-					});
+					exceedLimitError(context, typeSelectors, maxTypes, "type");
 				}
 
 				if (attributeSelectors.length > maxAttributes) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "attribute",
-							limit: String(maxAttributes),
-						},
-					});
+					exceedLimitError(
+						context,
+						attributeSelectors,
+						maxAttributes,
+						"attribute",
+					);
 				}
 
 				if (pseudoClassSelectors.length > maxPseudoClasses) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "pseudo-class",
-							limit: String(maxPseudoClasses),
-						},
-					});
-				}
-
-				if (pseudoElementSelectors.length > maxPseudoElements) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "pseudo-element",
-							limit: String(maxPseudoElements),
-						},
-					});
+					exceedLimitError(
+						context,
+						pseudoClassSelectors,
+						maxPseudoClasses,
+						"pseudo-class",
+					);
 				}
 
 				if (universalSelectors.length > maxUniversals) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "universal",
-							limit: String(maxUniversals),
-						},
-					});
+					exceedLimitError(
+						context,
+						universalSelectors,
+						maxUniversals,
+						"universal",
+					);
 				}
 
 				if (combinatorNodes.length > maxCombinators) {
-					context.report({
-						node,
-						messageId: "maxSelectors",
-						data: {
-							selector: "combinator",
-							limit: String(maxCombinators),
-						},
-					});
+					exceedLimitError(
+						context,
+						combinatorNodes,
+						maxCombinators,
+						"combinator",
+					);
 				}
 
 				if (compounds.length > maxCompounds) {
 					context.report({
-						node,
+						loc: {
+							start: compounds[maxCompounds][0].loc.start,
+							end: compounds.at(-1).at(-1).loc.end,
+						},
 						messageId: "maxSelectors",
 						data: {
 							selector: "compound",
@@ -353,10 +372,16 @@ export default {
 				}
 
 				if (disallowPseudoClasses.length > 0) {
+					let disallowedPseudoClassLocation;
 					for (const pseudoClassName of pseudoClassSelectorsNames) {
 						if (disallowPseudoClasses.includes(pseudoClassName)) {
+							disallowedPseudoClassLocation =
+								getDisallowedSelectorsLocation(
+									pseudoClassSelectors,
+									pseudoClassName,
+								);
 							context.report({
-								node,
+								loc: disallowedPseudoClassLocation,
 								messageId: "disallowedSelectors",
 								data: {
 									selectorName: pseudoClassName,
@@ -368,10 +393,16 @@ export default {
 				}
 
 				if (disallowCombinators.length > 0) {
+					let disallowedCombinatorLocation;
 					for (const combinator of combinators) {
 						if (disallowCombinators.includes(combinator)) {
+							disallowedCombinatorLocation =
+								getDisallowedSelectorsLocation(
+									combinatorNodes,
+									combinator,
+								);
 							context.report({
-								node,
+								loc: disallowedCombinatorLocation,
 								messageId: "disallowedSelectors",
 								data: {
 									selectorName: combinator,
@@ -383,10 +414,16 @@ export default {
 				}
 
 				if (disallowPseudoElements.length > 0) {
+					let disallowPseudoElementsLocation;
 					for (const pseudoElement of pseudoElementNames) {
 						if (disallowPseudoElements.includes(pseudoElement)) {
+							disallowPseudoElementsLocation =
+								getDisallowedSelectorsLocation(
+									pseudoElementSelectors,
+									pseudoElement,
+								);
 							context.report({
-								node,
+								loc: disallowPseudoElementsLocation,
 								messageId: "disallowedSelectors",
 								data: {
 									selectorName: pseudoElement,
@@ -398,10 +435,16 @@ export default {
 				}
 
 				if (disallowAttributes.length > 0) {
+					let disallowAttributesLocation;
 					for (const attributeName of attributeNames) {
 						if (disallowAttributes.includes(attributeName)) {
+							disallowAttributesLocation =
+								attributeSelectors.find(
+									selector =>
+										selector.name.name === attributeName,
+								).name.loc;
 							context.report({
-								node,
+								loc: disallowAttributesLocation,
 								messageId: "disallowedSelectors",
 								data: {
 									selectorName: attributeName,
@@ -413,12 +456,23 @@ export default {
 				}
 
 				if (disallowAttributeMatchers.length > 0) {
-					for (const attributeMatcher of attributeMatchers) {
+					for (const [
+						index,
+						attributeMatcher,
+					] of attributeMatchers.entries()) {
 						if (
 							disallowAttributeMatchers.includes(attributeMatcher)
 						) {
+							const { startLoc, endLoc } = getOperatorLocation(
+								attributeSelectors,
+								index,
+							);
+
 							context.report({
-								node,
+								loc: {
+									start: startLoc,
+									end: endLoc,
+								},
 								messageId: "disallowedSelectors",
 								data: {
 									selectorName: attributeMatcher,
