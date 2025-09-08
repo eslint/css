@@ -56,7 +56,7 @@ const blockCloserTokenTypes = new Map([
  * Used to make objects serializable for JSON output.
  *
  * @param {Record<string,any>} object The object to process.
- * @returns {Record<string,any>} A copy of the object with all functions replaced by true.
+ * @returns {Record<string,any>|unknown[]|unknown} A copy of the object with all functions replaced by true.
  */
 function replaceFunctions(object) {
 	if (typeof object !== "object" || object === null) {
@@ -164,11 +164,19 @@ export class CSSLanguage {
 		if (!languageOptions?.customSyntax) {
 			return languageOptions;
 		}
+		// Shallow copy
+		const clone = { ...languageOptions };
 
-		Object.defineProperty(languageOptions, "toJSON", {
+		Object.defineProperty(clone, "toJSON", {
 			value() {
-				// Shallow copy
-				const result = { ...languageOptions };
+				// another shallow copy
+				const result = { ...this };
+
+				// if there's no custom syntax, no changes are necessary
+				if (!this.customSyntax) {
+					return result;
+				}
+
 				result.customSyntax = { ...result.customSyntax };
 
 				if (result.customSyntax.node) {
@@ -195,7 +203,7 @@ export class CSSLanguage {
 			configurable: true,
 		});
 
-		return languageOptions;
+		return clone;
 	}
 
 	/**

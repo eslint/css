@@ -275,7 +275,7 @@ describe("CSSLanguage", () => {
 			const language = new CSSLanguage();
 			const options = { tolerant: true, customSyntax: { foo: "bar" } };
 			const result = language.normalizeLanguageOptions(options);
-			assert.strictEqual(result, options);
+			assert.deepStrictEqual(result, options);
 			assert.strictEqual(typeof result.toJSON, "function");
 		});
 
@@ -299,8 +299,8 @@ describe("CSSLanguage", () => {
 					},
 				},
 			};
-			language.normalizeLanguageOptions(options);
-			const json = options.toJSON();
+			const normalized = language.normalizeLanguageOptions(options);
+			const json = normalized.toJSON();
 			assert.deepStrictEqual(json, {
 				tolerant: false,
 				customSyntax: {
