@@ -176,25 +176,7 @@ export class CSSLanguage {
 				// another shallow copy
 				const result = { ...this };
 
-				result.customSyntax = { ...result.customSyntax };
-
-				if (result.customSyntax.node) {
-					result.customSyntax.node = replaceFunctions(
-						result.customSyntax.node,
-					);
-				}
-
-				if (result.customSyntax.scope) {
-					result.customSyntax.scope = replaceFunctions(
-						result.customSyntax.scope,
-					);
-				}
-
-				if (result.customSyntax.atrule) {
-					result.customSyntax.atrule = replaceFunctions(
-						result.customSyntax.atrule,
-					);
-				}
+				result.customSyntax = replaceFunctions(result.customSyntax);
 
 				return result;
 			},
