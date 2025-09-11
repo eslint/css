@@ -62,10 +62,13 @@ function replaceFunctions(object) {
 	if (typeof object !== "object" || object === null) {
 		return object;
 	}
+
 	if (Array.isArray(object)) {
 		return object.map(replaceFunctions);
 	}
+
 	const result = {};
+
 	for (const key of Object.keys(object)) {
 		const value = object[key];
 		if (typeof value === "function") {
@@ -76,6 +79,7 @@ function replaceFunctions(object) {
 			result[key] = value;
 		}
 	}
+
 	return result;
 }
 
@@ -171,11 +175,6 @@ export class CSSLanguage {
 			value() {
 				// another shallow copy
 				const result = { ...this };
-
-				// if there's no custom syntax, no changes are necessary
-				if (!this.customSyntax) {
-					return result;
-				}
 
 				result.customSyntax = { ...result.customSyntax };
 
