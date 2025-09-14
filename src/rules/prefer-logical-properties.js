@@ -186,6 +186,8 @@ export default {
 	},
 
 	create(context) {
+		const [{ allowProperties, allowUnits }] = context.options;
+
 		return {
 			Declaration(node) {
 				const parent = context.sourceCode.getParent(node);
@@ -193,7 +195,6 @@ export default {
 					return;
 				}
 
-				const allowProperties = context.options[0].allowProperties;
 				if (
 					propertiesReplacements.get(node.property) &&
 					!allowProperties.includes(node.property)
@@ -236,7 +237,6 @@ export default {
 				}
 			},
 			Dimension(node) {
-				const allowUnits = context.options[0].allowUnits;
 				if (
 					unitReplacements.get(node.unit) &&
 					!allowUnits.includes(node.unit)
