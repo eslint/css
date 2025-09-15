@@ -7,5 +7,5 @@
     "exactOptionalPropertyTypes": true
   },
   "files": [],
-  "include": [".", "../../dist"]
+  "include": ["**/*.test.{ts,cts}", "../../dist"]
 }
