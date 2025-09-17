@@ -70,7 +70,7 @@
     "lint": "eslint",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "test": "mocha tests/**/*.test.js",
+    "test": "mocha \"tests/**/*.test.js\"",
     "test:coverage": "c8 npm test",
     "test:jsr": "npx jsr@latest publish --dry-run",
     "test:types": "npm run build && tsc -p tests/types/tsconfig.json"
