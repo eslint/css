@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.11.1](https://github.com/eslint/css/compare/css-v0.11.0...css-v0.11.1) (2025-09-17)
+
+
+### Bug Fixes
+
+* detect prefixed [@keyframes](https://github.com/keyframes) in no-duplicate-keyframe-selectors ([11ae50f](https://github.com/eslint/css/commit/11ae50fb404d1620309921ebadec006498db4091))
+* detect prefixed `[@keyframes](https://github.com/keyframes)` in `no-duplicate-keyframe-selectors` ([#251](https://github.com/eslint/css/issues/251)) ([11ae50f](https://github.com/eslint/css/commit/11ae50fb404d1620309921ebadec006498db4091))
+* Ensure languageOptions.customSyntax is serializable ([#212](https://github.com/eslint/css/issues/212)) ([7f82110](https://github.com/eslint/css/commit/7f82110ea633e1524d083434468052a7942c7236))
+* update baseline data ([#245](https://github.com/eslint/css/issues/245)) ([a009bb7](https://github.com/eslint/css/commit/a009bb7ce58a29de9063bf4059ef217261449bd2))
+* update baseline data ([#254](https://github.com/eslint/css/issues/254)) ([ff77374](https://github.com/eslint/css/commit/ff773743c8397d509bf215aa743abb28b92b94f5))
+* update baseline data ([#257](https://github.com/eslint/css/issues/257)) ([b5414d3](https://github.com/eslint/css/commit/b5414d3e4bbcac9fd27bcc3c220d1b50aa86e8b3))
+
 ## [0.11.0](https://github.com/eslint/css/compare/css-v0.10.0...css-v0.11.0) (2025-08-28)
 
 
