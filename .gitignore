@@ -60,3 +60,6 @@ dist/
 
 src/build
 test.css
+
+# Automatically generated files by GitHub Actions workflow
+tools/update-readme.js
