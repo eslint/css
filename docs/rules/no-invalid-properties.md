@@ -44,9 +44,65 @@ body {
 }
 ```
 
-### Limitations
+## Options
 
-This rule uses the lexer from [CSSTree](https://github.com/csstree/csstree), which does not support validation of property values that contain variable references (i.e., `var(--bg-color)`). The lexer throws an error when it comes across a variable reference, and rather than displaying that error, this rule ignores it. This unfortunately means that this rule cannot properly validate properties values that contain variable references. We'll continue to work towards a solution for this.
+This rule accepts an option which is an object with the following property:
+
+- `allowUnknownVariables` (default: `false`) - Ignore variables that cannot be traced to custom properties in the current file.
+
+When a variable is used in a property value, such as `var(--my-color)`, the rule can only properly be validated if the parser has already encountered the `--my-color` custom property. With `{ allowUnknownVariables: false }`, unknown variables will result in a linting error. With `{ allowUnknownVariables: true }`, the property value will be ignored and only the property name will be validated.
+
+Examples of **incorrect** code with `{ allowUnknownVariables: false }` (the default):
+
+```css
+/* eslint css/no-invalid-properties: ["error", { allowUnknownVariables: false }] */
+
+a {
+	color: var(--my-color);
+}
+```
+
+This code uses `var(--my-color)` before `--my-color` is defined, or whether it is defined in another CSS file. Therefore, `color: var(--my-color)` cannot be properly validated.
+
+Examples of **correct** code with `{ allowUnknownVariables: false }`:
+
+```css
+/* eslint css/no-invalid-properties: ["error", { allowUnknownVariables: false }] */
+
+:root {
+	--my-color: red;
+}
+
+a {
+	color: var(--my-color);
+}
+```
+
+This code defines `--my-color` before it is used and therefore the rule can validate the `color` property. If `--my-color` was not defined before `var(--my-color)` was used, it results in a lint error because the validation cannot be completed.
+
+Examples of **incorrect** code with `{ allowUnknownVariables: true }`:
+
+```css
+/* eslint css/no-invalid-properties: ["error", { allowUnknownVariables: true }] */
+
+a {
+	ccolorr: var(--my-color);
+}
+```
+
+This code uses an unknown property `ccolorr`, which results in a validation error. The unknown reference to `var(--my-color)` is ignored.
+
+Examples of **correct** code with `{ allowUnknownVariables: true }`:
+
+```css
+/* eslint css/no-invalid-properties: ["error", { allowUnknownVariables: true }] */
+
+a {
+	color: var(--my-color);
+}
+```
+
+Even though `var(--my-color)` cannot be traced to a custom property definition, this code passes validation.
 
 ## When Not to Use It
 

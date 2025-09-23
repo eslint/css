@@ -33,7 +33,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 const commentParser = new ConfigCommentParser();
 
 const INLINE_CONFIG =
-	/^\s*(?:eslint(?:-enable|-disable(?:(?:-next)?-line)?)?)(?:\s|$)/u;
+	/^\s*eslint(?:-enable|-disable(?:(?:-next)?-line)?)?(?:\s|$)/u;
 
 /**
  * A class to represent a step in the traversal process.
@@ -151,7 +151,9 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	 *      that ESLint needs to further process the directives.
 	 */
 	getDisableDirectives() {
+		/** @type {Array<FileProblem>} */
 		const problems = [];
+		/** @type {Array<Directive>} */
 		const directives = [];
 
 		this.getInlineConfigNodes().forEach(comment => {
@@ -204,7 +206,9 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	 *      that ESLint needs to further process the rule configurations.
 	 */
 	applyInlineConfig() {
+		/** @type {Array<FileProblem>} */
 		const problems = [];
+		/** @type {Array<{config:{rules:RulesConfig},loc:SourceLocation}>} */
 		const configs = [];
 
 		this.getInlineConfigNodes().forEach(comment => {

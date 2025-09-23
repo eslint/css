@@ -9,7 +9,7 @@
 
 import rule from "../../src/rules/no-invalid-at-rules.js";
 import css from "../../src/index.js";
-import tailwindSyntax from "../../src/syntax/tailwind-syntax.js";
+import { tailwind3 } from "tailwind-csstree";
 import { RuleTester } from "eslint";
 
 //------------------------------------------------------------------------------
@@ -30,6 +30,8 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		"@keyframes slidein { from { transform: translateX(0%); } to { transform: translateX(100%); } }",
 		"@supports (display: grid) { .grid-container { display: grid; } }",
 		"@namespace url(http://www.w3.org/1999/xhtml);",
+		'@charset "UTF-8";',
+		'@charset "UTF-8"; @import url("foo.css");',
 		"@media screen and (max-width: 600px) { body { font-size: 12px; } }",
 		{
 			code: "@foobar url(foo.css) { body { font-size: 12px } }",
@@ -46,25 +48,25 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "@tailwind base; @tailwind components; @tailwind utilities;",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
 			code: "a { @apply text-red-500; }",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
 			code: "a { @apply text-red-500 bg-blue-500; }",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
 			code: "@config 'tailwind.config.js';",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 		},
 		{
@@ -96,15 +98,15 @@ ruleTester.run("no-invalid-at-rules", rule, {
 			],
 		},
 		{
-			code: '@charse "test";',
+			code: '@impor "foo.css";',
 			errors: [
 				{
 					messageId: "unknownAtRule",
-					data: { name: "charse" },
+					data: { name: "impor" },
 					line: 1,
 					column: 1,
 					endLine: 1,
-					endColumn: 8,
+					endColumn: 7,
 				},
 			],
 		},
@@ -240,7 +242,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "a { @apply; }",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 			errors: [
 				{
@@ -258,7 +260,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "@config;",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 			errors: [
 				{
@@ -276,7 +278,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		{
 			code: "@config foo;",
 			languageOptions: {
-				customSyntax: tailwindSyntax,
+				customSyntax: tailwind3,
 			},
 			errors: [
 				{
@@ -290,6 +292,219 @@ ruleTester.run("no-invalid-at-rules", rule, {
 					column: 9,
 					endLine: 1,
 					endColumn: 12,
+				},
+			],
+		},
+		{
+			code: '@CHARSET "UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "CHARSET" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: '@CharSet "UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "CharSet" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset;",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset ;",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: '@charset "";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 12,
+				},
+			],
+		},
+		{
+			code: '@charset "  ";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: "@charset 'UTF-8';",
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@charset UTF-8;",
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: '@charset"UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 16,
+				},
+			],
+		},
+		{
+			code: '@charset  "UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 18,
+				},
+			],
+		},
+		{
+			code: '@charset "UTF-8"',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: '@charset "UTF-8" ;',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: '@charset  "UTF-8";\n@impor "foo.css";',
+			output: '@charset "UTF-8";\n@impor "foo.css";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 18,
+				},
+				{
+					messageId: "unknownAtRule",
+					data: { name: "impor" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 7,
 				},
 			],
 		},

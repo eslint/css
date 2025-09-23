@@ -1,6 +1,6 @@
 {
   "name": "@eslint/css",
-  "version": "0.8.1",
+  "version": "0.11.1",
   "description": "CSS linting plugin for ESLint",
   "author": "Nicholas C. Zakas",
   "type": "module",
@@ -15,16 +15,6 @@
       "import": {
         "types": "./dist/esm/index.d.ts",
         "default": "./dist/esm/index.js"
-      }
-    },
-    "./syntax": {
-      "require": {
-        "types": "./dist/cjs/syntax/index.d.cts",
-        "default": "./dist/cjs/syntax/index.cjs"
-      },
-      "import": {
-        "types": "./dist/esm/syntax/index.d.ts",
-        "default": "./dist/esm/syntax/index.js"
       }
     },
     "./types": {
@@ -55,7 +45,7 @@
     ],
     "!(*.js)": "prettier --write --ignore-unknown",
     "{src/rules/*.js,tools/update-rules-docs.js}": [
-      "node tools/update-rules-docs.js",
+      "npm run build:update-rules-docs",
       "git add README.md"
     ]
   },
@@ -69,19 +59,20 @@
   "homepage": "https://github.com/eslint/css#readme",
   "scripts": {
     "build:dedupe-types": "node tools/dedupe-types.js dist/cjs/index.cjs dist/esm/index.js",
-    "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\"",
-    "build:syntax-cts": "node -e \"fs.copyFileSync('dist/esm/syntax/index.d.ts', 'dist/cjs/syntax/index.d.cts')\" && node tools/update-cts.js dist/cjs/types.cts dist/cjs/index.d.cts",
-    "build": "rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts && tsc -p tsconfig.syntax.json && npm run build:syntax-cts",
+    "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\" && node tools/update-cts.js dist/cjs/types.cts dist/cjs/index.d.cts",
+    "build:rules": "node tools/build-rules.js",
+    "build": "npm run build:rules && rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
     "build:readme": "node tools/update-readme.js",
     "build:update-rules-docs": "node tools/update-rules-docs.js",
     "build:baseline": "node tools/generate-baseline.js",
-    "test:jsr": "npx jsr@latest publish --dry-run",
+    "prepare": "npm run build",
     "pretest": "npm run build",
     "lint": "eslint",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "test": "mocha tests/**/*.js",
+    "test": "mocha \"tests/**/*.test.js\"",
     "test:coverage": "c8 npm test",
+    "test:jsr": "npx jsr@latest publish --dry-run",
     "test:types": "npm run build && tsc -p tests/types/tsconfig.json"
   },
   "keywords": [
@@ -93,29 +84,30 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "@eslint/core": "^0.14.0",
-    "@eslint/css-tree": "^3.3.3",
+    "@eslint/core": "^0.16.0",
+    "@eslint/css-tree": "^3.6.5",
     "@eslint/plugin-kit": "^0.4.0"
   },
   "devDependencies": {
-    "@eslint/json": "^0.5.0",
-    "c8": "^9.1.0",
-    "compute-baseline": "^0.3.1",
+    "@eslint/json": "^0.13.1",
+    "c8": "^10.1.3",
+    "compute-baseline": "^0.4.0",
     "dedent": "^1.5.3",
-    "eslint": "^9.27.0",
-    "eslint-config-eslint": "^11.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-eslint": "^13.0.0",
     "eslint-plugin-eslint-plugin": "^6.3.2",
     "got": "^14.4.2",
     "lint-staged": "^15.2.7",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.21.0",
-    "mocha": "^10.4.0",
-    "prettier": "^3.4.1",
-    "rollup": "^4.16.2",
+    "mdn-data": "^2.24.0",
+    "mocha": "^11.0.0",
+    "prettier": "^3.6.0",
+    "rollup": "4.51.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-delete": "^3.0.1",
-    "typescript": "^5.8.2",
-    "web-features": "^2.35.1",
+    "tailwind-csstree": "^0.1.0",
+    "typescript": "^5.9.2",
+    "web-features": "^3.0.0",
     "yorkie": "^2.0.0"
   },
   "engines": {

@@ -65,17 +65,21 @@ export default defineConfig([
 
 <!-- Rule Table Start -->
 
-| **Rule Name**                                                            | **Description**                        | **Recommended** |
-| :----------------------------------------------------------------------- | :------------------------------------- | :-------------: |
-| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)           | Disallow duplicate @import rules       |       yes       |
-| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)                     | Disallow empty blocks                  |       yes       |
-| [`no-important`](./docs/rules/no-important.md)                           | Disallow !important flags              |       yes       |
-| [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)             | Disallow invalid at-rules              |       yes       |
-| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)         | Disallow invalid properties            |       yes       |
-| [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md) | Enforce the use of logical properties  |       no        |
-| [`relative-font-units`](./docs/rules/relative-font-units.md)             | Enforce the use of relative font units |       no        |
-| [`use-baseline`](./docs/rules/use-baseline.md)                           | Enforce the use of baseline features   |       yes       |
-| [`use-layers`](./docs/rules/use-layers.md)                               | Require use of layers                  |       no        |
+| **Rule Name**                                                                        | **Description**                                       | **Recommended** |
+| :----------------------------------------------------------------------------------- | :---------------------------------------------------- | :-------------: |
+| [`font-family-fallbacks`](./docs/rules/font-family-fallbacks.md)                     | Enforce use of fallback fonts and a generic font last |       yes       |
+| [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)                       | Disallow duplicate @import rules                      |       yes       |
+| [`no-duplicate-keyframe-selectors`](./docs/rules/no-duplicate-keyframe-selectors.md) | Disallow duplicate selectors within keyframe blocks   |       yes       |
+| [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)                                 | Disallow empty blocks                                 |       yes       |
+| [`no-important`](./docs/rules/no-important.md)                                       | Disallow !important flags                             |       yes       |
+| [`no-invalid-at-rule-placement`](./docs/rules/no-invalid-at-rule-placement.md)       | Disallow invalid placement of at-rules                |       yes       |
+| [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)                         | Disallow invalid at-rules                             |       yes       |
+| [`no-invalid-named-grid-areas`](./docs/rules/no-invalid-named-grid-areas.md)         | Disallow invalid named grid areas                     |       yes       |
+| [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)                     | Disallow invalid properties                           |       yes       |
+| [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md)             | Enforce the use of logical properties                 |       no        |
+| [`relative-font-units`](./docs/rules/relative-font-units.md)                         | Enforce the use of relative font units                |       no        |
+| [`use-baseline`](./docs/rules/use-baseline.md)                                       | Enforce the use of baseline features                  |       yes       |
+| [`use-layers`](./docs/rules/use-layers.md)                                           | Require use of layers                                 |       no        |
 
 <!-- Rule Table End -->
 
@@ -218,13 +222,19 @@ export default defineConfig([
 
 #### Configuring Tailwind Syntax
 
-[Tailwind](https://tailwindcss.com) specifies some extensions to CSS that will otherwise be flagged as invalid by the rules in this plugin. You can configure most of the custom syntax for Tailwind using the builtin `tailwindSyntax` object, like this:
+[Tailwind](https://tailwindcss.com) specifies some extensions to CSS that will otherwise be flagged as invalid by the rules in this plugin. To properly parse Tailwind-specific syntax, install the [`tailwind-csstree`](https://npmjs.com/package/tailwind-csstree) package:
+
+```shell
+npm i tailwind-csstree --save-dev
+```
+
+Then include it in your configuration using `languageOptions.customSyntax`:
 
 ```js
 // eslint.config.js
 import { defineConfig } from "eslint/config";
 import css from "@eslint/css";
-import { tailwindSyntax } from "@eslint/css/syntax";
+import { tailwind4 } from "tailwind-csstree";
 
 export default defineConfig([
 	{
@@ -234,7 +244,7 @@ export default defineConfig([
 		},
 		language: "css/css",
 		languageOptions: {
-			customSyntax: tailwindSyntax,
+			customSyntax: tailwind4,
 		},
 		rules: {
 			"css/no-empty-blocks": "error",
@@ -242,8 +252,6 @@ export default defineConfig([
 	},
 ]);
 ```
-
-**Note:** The Tailwind syntax doesn't currently provide for the `theme()` function. This is a [limitation of CSSTree](https://github.com/csstree/csstree/issues/292) that we hope will be resolved soon.
 
 ## Editor and IDE Setup
 
@@ -279,12 +287,11 @@ Apache 2.0
 The following companies, organizations, and individuals support ESLint's ongoing maintenance and development. [Become a Sponsor](https://eslint.org/donate)
 to get your logo on our READMEs and [website](https://eslint.org/sponsors).
 
-<h3>Diamond Sponsors</h3>
-<p><a href="https://www.ag-grid.com/"><img src="https://images.opencollective.com/ag-grid/bec0580/logo.png" alt="AG Grid" height="128"></a></p><h3>Platinum Sponsors</h3>
+<h3>Platinum Sponsors</h3>
 <p><a href="https://automattic.com"><img src="https://images.opencollective.com/automattic/d0ef3e1/logo.png" alt="Automattic" height="128"></a> <a href="https://www.airbnb.com/"><img src="https://images.opencollective.com/airbnb/d327d66/logo.png" alt="Airbnb" height="128"></a></p><h3>Gold Sponsors</h3>
 <p><a href="https://qlty.sh/"><img src="https://images.opencollective.com/qltysh/33d157d/logo.png" alt="Qlty Software" height="96"></a> <a href="https://trunk.io/"><img src="https://images.opencollective.com/trunkio/fb92d60/avatar.png" alt="trunk.io" height="96"></a> <a href="https://shopify.engineering/"><img src="https://avatars.githubusercontent.com/u/8085" alt="Shopify" height="96"></a></p><h3>Silver Sponsors</h3>
 <p><a href="https://vite.dev/"><img src="https://images.opencollective.com/vite/e6d15e1/logo.png" alt="Vite" height="64"></a> <a href="https://liftoff.io/"><img src="https://images.opencollective.com/liftoff/5c4fa84/logo.png" alt="Liftoff" height="64"></a> <a href="https://americanexpress.io"><img src="https://avatars.githubusercontent.com/u/3853301" alt="American Express" height="64"></a> <a href="https://stackblitz.com"><img src="https://avatars.githubusercontent.com/u/28635252" alt="StackBlitz" height="64"></a></p><h3>Bronze Sponsors</h3>
-<p><a href="https://cybozu.co.jp/"><img src="https://images.opencollective.com/cybozu/933e46d/logo.png" alt="Cybozu" height="32"></a> <a href="https://www.crosswordsolver.org/anagram-solver/"><img src="https://images.opencollective.com/anagram-solver/2666271/logo.png" alt="Anagram Solver" height="32"></a> <a href="https://icons8.com/"><img src="https://images.opencollective.com/icons8/7fa1641/logo.png" alt="Icons8" height="32"></a> <a href="https://discord.com"><img src="https://images.opencollective.com/discordapp/f9645d9/logo.png" alt="Discord" height="32"></a> <a href="https://www.gitbook.com"><img src="https://avatars.githubusercontent.com/u/7111340" alt="GitBook" height="32"></a> <a href="https://nolebase.ayaka.io"><img src="https://avatars.githubusercontent.com/u/11081491" alt="Neko" height="32"></a> <a href="https://nx.dev"><img src="https://avatars.githubusercontent.com/u/23692104" alt="Nx" height="32"></a> <a href="https://opensource.mercedes-benz.com/"><img src="https://avatars.githubusercontent.com/u/34240465" alt="Mercedes-Benz Group" height="32"></a> <a href="https://herocoders.com"><img src="https://avatars.githubusercontent.com/u/37549774" alt="HeroCoders" height="32"></a> <a href="https://www.lambdatest.com"><img src="https://avatars.githubusercontent.com/u/171592363" alt="LambdaTest" height="32"></a></p>
+<p><a href="https://syntax.fm"><img src="https://github.com/syntaxfm.png" alt="Syntax" height="32"></a> <a href="https://cybozu.co.jp/"><img src="https://images.opencollective.com/cybozu/933e46d/logo.png" alt="Cybozu" height="32"></a> <a href="https://sentry.io"><img src="https://github.com/getsentry.png" alt="Sentry" height="32"></a> <a href="https://discord.com"><img src="https://images.opencollective.com/discordapp/f9645d9/logo.png" alt="Discord" height="32"></a> <a href="https://www.gitbook.com"><img src="https://avatars.githubusercontent.com/u/7111340" alt="GitBook" height="32"></a> <a href="https://nx.dev"><img src="https://avatars.githubusercontent.com/u/23692104" alt="Nx" height="32"></a> <a href="https://opensource.mercedes-benz.com/"><img src="https://avatars.githubusercontent.com/u/34240465" alt="Mercedes-Benz Group" height="32"></a> <a href="https://herocoders.com"><img src="https://avatars.githubusercontent.com/u/37549774" alt="HeroCoders" height="32"></a> <a href="https://www.lambdatest.com"><img src="https://avatars.githubusercontent.com/u/171592363" alt="LambdaTest" height="32"></a></p>
 <h3>Technology Sponsors</h3>
 Technology sponsors allow us to use their products and services for free as part of a contribution to the open source ecosystem and our work.
 <p><a href="https://netlify.com"><img src="https://raw.githubusercontent.com/eslint/eslint.org/main/src/assets/images/techsponsors/netlify-icon.svg" alt="Netlify" height="32"></a> <a href="https://algolia.com"><img src="https://raw.githubusercontent.com/eslint/eslint.org/main/src/assets/images/techsponsors/algolia-icon.svg" alt="Algolia" height="32"></a> <a href="https://1password.com"><img src="https://raw.githubusercontent.com/eslint/eslint.org/main/src/assets/images/techsponsors/1password-icon.svg" alt="1Password" height="32"></a></p>

@@ -36,6 +36,9 @@ ruleTester.run("use-baseline", rule, {
 		"@media (min-width: 800px) { a { color: red; } }",
 		"@media (foo) { a { color: red; } }",
 		"@media (prefers-color-scheme: dark) { a { color: red; } }",
+		"@MEDIA (min-width: 800px) { a { color: red; } }",
+		"@Media (foo) { a { color: red; } }",
+		"@MeDia (prefers-color-scheme: dark) { a { color: red; } }",
 		"@supports (accent-color: auto) { a { accent-color: auto; } }",
 		"@supports (accent-color: red) { a { accent-color: red; } }",
 		"@supports (accent-color: auto) { a { accent-color: red; } }",
@@ -45,6 +48,15 @@ ruleTester.run("use-baseline", rule, {
 		}`,
 		`@supports (accent-color: auto) {
 			@supports (backdrop-filter: auto) {
+				a { accent-color: auto; background-filter: auto }
+			}
+		}`,
+		"@SUPPORTS (clip-path: fill-box) { a { clip-path: fill-box; } }",
+		`@Supports (accent-color: auto) and (backdrop-filter: auto) {
+			a { accent-color: auto; background-filter: auto }
+		}`,
+		`@SUPPORTS (accent-color: auto) {
+			@SuPpOrTs (backdrop-filter: auto) {
 				a { accent-color: auto; background-filter: auto }
 			}
 		}`,
@@ -87,6 +99,29 @@ ruleTester.run("use-baseline", rule, {
 		{
 			code: ".box { backdrop-filter: blur(10px); }",
 			options: [{ available: 2024 }],
+		},
+		"@container (min-width: 800px) { a { color: red; } }",
+		"@media (color-gamut: srgb) { a { color: red; } }",
+		"@MEDIA (color-gamut: srgb) { a { color: red; } }",
+		{
+			code: "h1:has(+ h2) { margin: 0 0 0.25rem 0; }",
+			options: [{ allowSelectors: ["has"] }],
+		},
+		{
+			code: `label {
+				& input {
+					border: blue 2px dashed;
+				}
+			}`,
+			options: [{ available: 2022, allowSelectors: ["nesting"] }],
+		},
+		{
+			code: "@container (min-width: 800px) { a { color: red; } }",
+			options: [{ available: 2022, allowAtRules: ["container"] }],
+		},
+		{
+			code: "a { accent-color: bar; backdrop-filter: auto }",
+			options: [{ allowProperties: ["accent-color", "backdrop-filter"] }],
 		},
 	],
 	invalid: [
@@ -158,22 +193,6 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@container (min-width: 800px) { a { color: red; } }",
-			errors: [
-				{
-					messageId: "notBaselineAtRule",
-					data: {
-						atRule: "container",
-						availability: "widely",
-					},
-					line: 1,
-					column: 1,
-					endLine: 1,
-					endColumn: 11,
-				},
-			],
-		},
-		{
 			code: "@view-transition { from-view: a; to-view: b; }\n@container (min-width: 800px) { a { color: red; } }",
 			options: [{ available: "newly" }],
 			errors: [
@@ -181,6 +200,23 @@ ruleTester.run("use-baseline", rule, {
 					messageId: "notBaselineAtRule",
 					data: {
 						atRule: "view-transition",
+						availability: "newly",
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@VIEW-TRANSITION { from-view: a; to-view: b; }",
+			options: [{ available: "newly" }],
+			errors: [
+				{
+					messageId: "notBaselineAtRule",
+					data: {
+						atRule: "VIEW-TRANSITION",
 						availability: "newly",
 					},
 					line: 1,
@@ -213,7 +249,46 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
+			code: dedent`@SUPPORTS (accent-color: auto) {
+				@SuPpOrTs (backdrop-filter: auto) {
+					a { accent-color: red; }
+				}
+
+				a { backdrop-filter: auto; }
+			}`,
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "backdrop-filter",
+						availability: "widely",
+					},
+					line: 6,
+					column: 6,
+					endLine: 6,
+					endColumn: 21,
+				},
+			],
+		},
+		{
 			code: "@supports (clip-path: fill-box) { a { clip-path: stroke-box; } }",
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "clip-path",
+						value: "stroke-box",
+						availability: "widely",
+					},
+					line: 1,
+					column: 50,
+					endLine: 1,
+					endColumn: 60,
+				},
+			],
+		},
+		{
+			code: "@SUPPORTS (clip-path: fill-box) { a { clip-path: stroke-box; } }",
 			errors: [
 				{
 					messageId: "notBaselinePropertyValue",
@@ -294,18 +369,18 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@media (color-gamut: srgb) { a { color: red; } }",
+			code: "@media (inverted-colors: inverted) { a { color: red; } }",
 			errors: [
 				{
 					messageId: "notBaselineMediaCondition",
 					data: {
-						condition: "color-gamut",
+						condition: "inverted-colors",
 						availability: "widely",
 					},
 					line: 1,
 					column: 9,
 					endLine: 1,
-					endColumn: 20,
+					endColumn: 24,
 				},
 			],
 		},
@@ -327,18 +402,18 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@media (height: 600px) and (color-gamut: srgb) and (device-posture: folded) { a { color: red; } }",
+			code: "@media (height: 600px) and (inverted-colors: inverted) and (device-posture: folded) { a { color: red; } }",
 			errors: [
 				{
 					messageId: "notBaselineMediaCondition",
 					data: {
-						condition: "color-gamut",
+						condition: "inverted-colors",
 						availability: "widely",
 					},
 					line: 1,
 					column: 29,
 					endLine: 1,
-					endColumn: 40,
+					endColumn: 44,
 				},
 				{
 					messageId: "notBaselineMediaCondition",
@@ -347,25 +422,25 @@ ruleTester.run("use-baseline", rule, {
 						availability: "widely",
 					},
 					line: 1,
-					column: 53,
+					column: 61,
 					endLine: 1,
-					endColumn: 67,
+					endColumn: 75,
 				},
 			],
 		},
 		{
-			code: "@media (foo) and (color-gamut: srgb) { a { color: red; } }",
+			code: "@media (foo) and (inverted-colors: inverted) { a { color: red; } }",
 			errors: [
 				{
 					messageId: "notBaselineMediaCondition",
 					data: {
-						condition: "color-gamut",
+						condition: "inverted-colors",
 						availability: "widely",
 					},
 					line: 1,
 					column: 19,
 					endLine: 1,
-					endColumn: 30,
+					endColumn: 34,
 				},
 			],
 		},
@@ -475,6 +550,57 @@ ruleTester.run("use-baseline", rule, {
 					column: 5,
 					endLine: 2,
 					endColumn: 6,
+				},
+			],
+		},
+		{
+			code: "@view-transition { from-view: a; to-view: b; }\n@container (min-width: 800px) { a { color: red; } }",
+			options: [{ allowAtRules: ["container"] }],
+			errors: [
+				{
+					messageId: "notBaselineAtRule",
+					data: {
+						atRule: "view-transition",
+						availability: "widely",
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "a { accent-color: red; backdrop-filter: blur(10px); }",
+			options: [{ allowProperties: ["accent-color"] }],
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "backdrop-filter",
+						availability: "widely",
+					},
+					line: 1,
+					column: 24,
+					endLine: 1,
+					endColumn: 39,
+				},
+			],
+		},
+		{
+			code: "h1:has(+ h2) { margin: 0; }\nh1:fullscreen { color: red; }",
+			options: [{ allowSelectors: ["has"] }],
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "fullscreen",
+						availability: "widely",
+					},
+					line: 2,
+					column: 3,
+					endLine: 2,
+					endColumn: 14,
 				},
 			],
 		},

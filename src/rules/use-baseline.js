@@ -28,7 +28,10 @@ import { namedColors } from "../data/colors.js";
  * @import { Identifier, FunctionNodePlain } from "@eslint/css-tree"
  * @typedef {"notBaselineProperty" | "notBaselinePropertyValue" | "notBaselineAtRule" | "notBaselineType" | "notBaselineMediaCondition" | "notBaselineSelector"} UseBaselineMessageIds
  * @typedef {[{
- *     available?: "widely" | "newly" | number
+ *     available?: "widely" | "newly" | number,
+ *     allowAtRules?: string[],
+ *     allowProperties?: string[],
+ *     allowSelectors?: string[]
  * }]} UseBaselineOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: UseBaselineOptions, MessageIds: UseBaselineMessageIds }>} UseBaselineRuleDefinition
  */
@@ -430,6 +433,27 @@ export default {
 							},
 						],
 					},
+					allowAtRules: {
+						type: "array",
+						items: {
+							type: "string",
+						},
+						uniqueItems: true,
+					},
+					allowProperties: {
+						type: "array",
+						items: {
+							type: "string",
+						},
+						uniqueItems: true,
+					},
+					allowSelectors: {
+						type: "array",
+						items: {
+							type: "string",
+						},
+						uniqueItems: true,
+					},
 				},
 				additionalProperties: false,
 			},
@@ -438,6 +462,9 @@ export default {
 		defaultOptions: [
 			{
 				available: "widely",
+				allowAtRules: [],
+				allowProperties: [],
+				allowSelectors: [],
 			},
 		],
 
@@ -462,6 +489,9 @@ export default {
 			context.options[0].available,
 		);
 		const supportsRules = new SupportsRules();
+		const allowAtRules = new Set(context.options[0].allowAtRules);
+		const allowProperties = new Set(context.options[0].allowProperties);
+		const allowSelectors = new Set(context.options[0].allowSelectors);
 
 		/**
 		 * Checks a property value identifier to see if it's a baseline feature.
@@ -527,11 +557,11 @@ export default {
 		}
 
 		return {
-			"Atrule[name=supports]"() {
+			"Atrule[name=/^supports$/i]"() {
 				supportsRules.push(new SupportsRule());
 			},
 
-			"Atrule[name=supports] > AtrulePrelude > Condition"(node) {
+			"Atrule[name=/^supports$/i] > AtrulePrelude > Condition"(node) {
 				const supportsRule = supportsRules.last();
 
 				for (let i = 0; i < node.children.length; i++) {
@@ -584,6 +614,10 @@ export default {
 
 				// ignore unknown properties - no-invalid-properties already catches this
 				if (!properties.has(property)) {
+					return;
+				}
+
+				if (allowProperties.has(property)) {
 					return;
 				}
 
@@ -667,11 +701,11 @@ export default {
 				}
 			},
 
-			"Atrule[name=supports]:exit"() {
+			"Atrule[name=/^supports$/i]:exit"() {
 				supportsRules.pop();
 			},
 
-			"Atrule[name=media] > AtrulePrelude > MediaQueryList > MediaQuery > Condition"(
+			"Atrule[name=/^media$/i] > AtrulePrelude > MediaQueryList > MediaQuery > Condition"(
 				node,
 			) {
 				for (const child of node.children) {
@@ -719,11 +753,16 @@ export default {
 
 			Atrule(node) {
 				// ignore unknown at-rules - no-invalid-at-rules already catches this
-				if (!atRules.has(node.name)) {
+				const atRuleName = node.name.toLowerCase();
+				if (!atRules.has(atRuleName)) {
 					return;
 				}
 
-				const featureStatus = atRules.get(node.name);
+				if (allowAtRules.has(atRuleName)) {
+					return;
+				}
+
+				const featureStatus = atRules.get(atRuleName);
 
 				if (!baselineAvailability.isSupported(featureStatus)) {
 					const loc = node.loc;
@@ -753,6 +792,10 @@ export default {
 				const selector = node.name;
 
 				if (!selectors.has(selector)) {
+					return;
+				}
+
+				if (allowSelectors.has(selector)) {
 					return;
 				}
 
@@ -799,6 +842,11 @@ export default {
 			NestingSelector(node) {
 				// NestingSelector implies CSS nesting
 				const selector = "nesting";
+
+				if (allowSelectors.has(selector)) {
+					return;
+				}
+
 				const featureStatus = selectors.get(selector);
 				if (baselineAvailability.isSupported(featureStatus)) {
 					return;

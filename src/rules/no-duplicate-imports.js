@@ -24,6 +24,8 @@ export default {
 	meta: {
 		type: "problem",
 
+		fixable: "code",
+
 		docs: {
 			description: "Disallow duplicate @import rules",
 			recommended: true,
@@ -36,10 +38,11 @@ export default {
 	},
 
 	create(context) {
+		const { sourceCode } = context;
 		const imports = new Set();
 
 		return {
-			"Atrule[name=import]"(node) {
+			"Atrule[name=/^import$/i]"(node) {
 				const url = node.prelude.children[0].value;
 
 				if (imports.has(url)) {
@@ -47,6 +50,13 @@ export default {
 						loc: node.loc,
 						messageId: "duplicateImport",
 						data: { url },
+						fix(fixer) {
+							const [start, end] = sourceCode.getRange(node);
+							// Remove the node, and also remove a following newline if present
+							const removeEnd =
+								sourceCode.text[end] === "\n" ? end + 1 : end;
+							return fixer.removeRange([start, removeEnd]);
+						},
 					});
 				} else {
 					imports.add(url);

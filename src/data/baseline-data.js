@@ -96,11 +96,28 @@ export const properties = new Map([
 	["contain-intrinsic-inline-size", "5:2023"],
 	["contain-intrinsic-size", "5:2023"],
 	["contain-intrinsic-width", "5:2023"],
-	["container", "5:2023"],
-	["container-name", "5:2023"],
-	["container-type", "5:2023"],
+	["container", "10:2023"],
+	["container-name", "10:2023"],
+	["container-type", "10:2023"],
 	["content", "10:2015"],
 	["content-visibility", "5:2024"],
+	["corner-block-end-shape", "0:"],
+	["corner-block-start-shape", "0:"],
+	["corner-bottom-left-shape", "0:"],
+	["corner-bottom-right-shape", "0:"],
+	["corner-bottom-shape", "0:"],
+	["corner-end-end-shape", "0:"],
+	["corner-end-start-shape", "0:"],
+	["corner-inline-end-shape", "0:"],
+	["corner-inline-start-shape", "0:"],
+	["corner-left-shape", "0:"],
+	["corner-right-shape", "0:"],
+	["corner-shape", "0:"],
+	["corner-start-end-shape", "0:"],
+	["corner-start-start-shape", "0:"],
+	["corner-top-left-shape", "0:"],
+	["corner-top-right-shape", "0:"],
+	["corner-top-shape", "0:"],
 	["counter-set", "5:2023"],
 	["counter-increment", "10:2015"],
 	["counter-reset", "10:2015"],
@@ -132,7 +149,7 @@ export const properties = new Map([
 	["font-kerning", "10:2020"],
 	["font-language-override", "0:"],
 	["font-optical-sizing", "10:2020"],
-	["font-palette", "5:2022"],
+	["font-palette", "10:2022"],
 	["font", "10:2015"],
 	["font-size", "10:2015"],
 	["font-size-adjust", "5:2024"],
@@ -144,7 +161,7 @@ export const properties = new Map([
 	["font-synthesis-style", "5:2023"],
 	["font-synthesis-weight", "5:2023"],
 	["font-variant", "10:2015"],
-	["font-variant-alternates", "5:2023"],
+	["font-variant-alternates", "10:2023"],
 	["font-variant-caps", "10:2020"],
 	["font-variant-east-asian", "10:2020"],
 	["font-variant-emoji", "0:"],
@@ -185,6 +202,7 @@ export const properties = new Map([
 	["scale", "10:2022"],
 	["translate", "10:2022"],
 	["initial-letter", "0:"],
+	["interactivity", "0:"],
 	["interpolate-size", "0:"],
 	["isolation", "10:2020"],
 	["direction", "10:2015"],
@@ -244,8 +262,8 @@ export const properties = new Map([
 	["max-inline-size", "10:2020"],
 	["min-block-size", "10:2020"],
 	["min-inline-size", "10:2020"],
-	["overflow-block", "0:"],
-	["overflow-inline", "0:"],
+	["overflow-block", "5:2025"],
+	["overflow-inline", "5:2025"],
 	["padding-block", "10:2021"],
 	["padding-block-end", "10:2020"],
 	["padding-block-start", "10:2020"],
@@ -330,7 +348,7 @@ export const properties = new Map([
 	["break-after", "10:2019"],
 	["break-before", "10:2019"],
 	["break-inside", "10:2019"],
-	["page", "5:2023"],
+	["page", "10:2023"],
 	["paint-order", "5:2024"],
 	["bottom", "10:2015"],
 	["left", "10:2015"],
@@ -338,9 +356,10 @@ export const properties = new Map([
 	["top", "10:2015"],
 	["pointer-events", "10:2015"],
 	["position", "10:2015"],
-	["print-color-adjust", "0:"],
+	["print-color-adjust", "5:2025"],
 	["quotes", "10:2015"],
 	["reading-flow", "0:"],
+	["reading-order", "0:"],
 	["resize", "0:"],
 	["ruby-align", "5:2024"],
 	["ruby-overhang", "0:"],
@@ -405,8 +424,8 @@ export const properties = new Map([
 	["marker-mid", "10:2017"],
 	["marker-start", "10:2017"],
 	["r", "10:2020"],
-	["rx", "0:"],
-	["ry", "0:"],
+	["rx", "5:2024"],
+	["ry", "5:2024"],
 	["shape-rendering", "10:2020"],
 	["stop-color", "10:2017"],
 	["stop-opacity", "10:2017"],
@@ -505,12 +524,12 @@ export const atRules = new Map([
 	["keyframes", "10:2015"],
 	["layer", "10:2022"],
 	["charset", "10:2015"],
-	["container", "5:2023"],
+	["container", "10:2023"],
 	["counter-style", "5:2023"],
 	["view-transition", "0:"],
 	["font-face", "10:2015"],
-	["font-palette-values", "5:2022"],
-	["font-feature-values", "5:2023"],
+	["font-palette-values", "10:2022"],
+	["font-feature-values", "10:2023"],
 	["import", "10:2015"],
 	["media", "10:2015"],
 	["namespace", "10:2015"],
@@ -521,7 +540,7 @@ export const atRules = new Map([
 	["supports", "10:2015"],
 ]);
 export const mediaConditions = new Map([
-	["color-gamut", "5:2023"],
+	["color-gamut", "10:2023"],
 	["device-posture", "0:"],
 	["device-aspect-ratio", "0:"],
 	["device-height", "0:"],
@@ -559,20 +578,23 @@ export const mediaConditions = new Map([
 	["-webkit-transform-3d", "10:2016"],
 	["update", "5:2023"],
 	["video-dynamic-range", "0:"],
+	["horizontal-viewport-segments", "0:"],
+	["vertical-viewport-segments", "0:"],
 ]);
 export const types = new Map([
-	["abs", "0:"],
-	["sign", "0:"],
+	["abs", "5:2025"],
+	["sign", "5:2025"],
 	["anchor", "0:"],
 	["anchor-size", "0:"],
 	["color", "5:2023"],
 	["attr", "10:2015"],
 	["calc", "10:2015"],
 	["calc-size", "0:"],
-	["rect", "0:"],
+	["rect", "5:2024"],
 	["color-mix", "5:2023"],
 	["conic-gradient", "10:2020"],
 	["repeating-conic-gradient", "10:2020"],
+	["round", "5:2024"],
 	["counter", "10:2015"],
 	["counters", "10:2015"],
 	["cross-fade", "0:"],
@@ -616,13 +638,12 @@ export const types = new Map([
 	["rem", "5:2024"],
 	["rgb", "10:2015"],
 	["mod", "5:2024"],
-	["round", "5:2024"],
 	["env", "10:2020"],
 	["circle", "10:2020"],
 	["ellipse", "10:2020"],
 	["inset", "10:2020"],
 	["polygon", "10:2020"],
-	["xywh", "0:"],
+	["xywh", "5:2024"],
 	["steps", "10:2015"],
 	["matrix", "10:2015"],
 	["rotate", "10:2015"],
@@ -645,22 +666,23 @@ export const types = new Map([
 	["scaleZ", "10:2015"],
 	["translate3d", "10:2015"],
 	["translateZ", "10:2015"],
-	["acos", "5:2023"],
-	["asin", "5:2023"],
-	["atan", "5:2023"],
-	["atan2", "5:2023"],
-	["cos", "5:2023"],
-	["sin", "5:2023"],
-	["tan", "5:2023"],
+	["acos", "10:2023"],
+	["asin", "10:2023"],
+	["atan", "10:2023"],
+	["atan2", "10:2023"],
+	["cos", "10:2023"],
+	["sin", "10:2023"],
+	["tan", "10:2023"],
 ]);
 export const selectors = new Map([
 	["active-view-transition", "0:"],
 	["active-view-transition-type", "0:"],
-	["autofill", "5:2023"],
+	["autofill", "10:2023"],
 	["defined", "10:2020"],
 	["backdrop", "10:2022"],
 	["after", "10:2015"],
 	["before", "10:2015"],
+	["column", "0:"],
 	["checkmark", "0:"],
 	["picker", "0:"],
 	["picker-icon", "0:"],
@@ -682,6 +704,8 @@ export const selectors = new Map([
 	["fullscreen", "0:"],
 	["has", "5:2023"],
 	["has-slotted", "0:"],
+	["heading", "0:"],
+	["headingfunction", "0:"],
 	["highlight", "0:"],
 	["host", "10:2020"],
 	["hostfunction", "10:2020"],
@@ -717,7 +741,6 @@ export const selectors = new Map([
 	["nth-last-of-type", "10:2015"],
 	["nth-of-type", "10:2015"],
 	["only-of-type", "10:2015"],
-	["closed", "0:"],
 	["open", "0:"],
 	["first", "5:2023"],
 	["left", "0:"],
@@ -730,6 +753,7 @@ export const selectors = new Map([
 	["read-write", "10:2020"],
 	["root", "10:2015"],
 	["scope", "10:2020"],
+	["scroll-button", "0:"],
 	["scroll-marker", "0:"],
 	["scroll-marker-group", "0:"],
 	["selection", "0:"],
@@ -790,7 +814,15 @@ export const propertyValues = new Map([
 		]),
 	],
 	["align-items", new Map([["anchor-center", "0:"]])],
-	["align-self", new Map([["anchor-center", "0:"]])],
+	[
+		"align-self",
+		new Map([
+			["anchor-center", "0:"],
+			["auto", "10:2020"],
+			["normal", "10:2020"],
+			["stretch", "10:2020"],
+		]),
+	],
 	["anchor-name", new Map([["none", "0:"]])],
 	[
 		"anchor-scope",
@@ -892,8 +924,26 @@ export const propertyValues = new Map([
 			["auto", "10:2021"],
 		]),
 	],
-	["justify-items", new Map([["anchor-center", "0:"]])],
-	["justify-self", new Map([["anchor-center", "0:"]])],
+	[
+		"justify-items",
+		new Map([
+			["anchor-center", "0:"],
+			["left", "10:2020"],
+			["legacy", "10:2020"],
+			["right", "10:2020"],
+		]),
+	],
+	[
+		"justify-self",
+		new Map([
+			["anchor-center", "0:"],
+			["auto", "10:2020"],
+			["left", "10:2020"],
+			["normal", "10:2020"],
+			["right", "10:2020"],
+			["stretch", "10:2020"],
+		]),
+	],
 	[
 		"left",
 		new Map([
@@ -1327,6 +1377,7 @@ export const propertyValues = new Map([
 			["dark", "10:2022"],
 			["light", "10:2022"],
 			["normal", "10:2022"],
+			["only", "10:2022"],
 		]),
 	],
 	[
@@ -1336,7 +1387,7 @@ export const propertyValues = new Map([
 			["column", "0:"],
 			["always", "0:"],
 			["auto", "10:2020"],
-			["avoid", "10:2020"],
+			["avoid", "0:"],
 			["avoid-page", "0:"],
 			["left", "10:2020"],
 			["page", "10:2020"],
@@ -1352,7 +1403,7 @@ export const propertyValues = new Map([
 			["column", "0:"],
 			["always", "0:"],
 			["auto", "10:2020"],
-			["avoid", "10:2020"],
+			["avoid", "0:"],
 			["avoid-page", "0:"],
 			["left", "10:2020"],
 			["page", "10:2020"],
@@ -1402,13 +1453,13 @@ export const propertyValues = new Map([
 	["contain-intrinsic-inline-size", new Map([["none", "5:2023"]])],
 	["contain-intrinsic-size", new Map([["none", "5:2023"]])],
 	["contain-intrinsic-width", new Map([["none", "5:2023"]])],
-	["container-name", new Map([["none", "5:2023"]])],
+	["container-name", new Map([["none", "10:2023"]])],
 	[
 		"container-type",
 		new Map([
-			["inline-size", "5:2023"],
-			["normal", "5:2023"],
-			["size", "5:2023"],
+			["inline-size", "10:2023"],
+			["normal", "10:2023"],
+			["size", "10:2023"],
 			["scroll-state", "0:"],
 		]),
 	],
@@ -1425,7 +1476,7 @@ export const propertyValues = new Map([
 	[
 		"content-visibility",
 		new Map([
-			["auto", "0:"],
+			["auto", "5:2025"],
 			["hidden", "5:2024"],
 			["visible", "5:2024"],
 		]),
@@ -1502,6 +1553,15 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
+		"ruby-position",
+		new Map([
+			["alternate", "0:"],
+			["inter-character", "0:"],
+			["over", "5:2024"],
+			["under", "5:2024"],
+		]),
+	],
+	[
 		"dominant-baseline",
 		new Map([
 			["alphabetic", "10:2020"],
@@ -1520,6 +1580,7 @@ export const propertyValues = new Map([
 			["fixed", "0:"],
 		]),
 	],
+	["align-content", new Map([["normal", "10:2015"]])],
 	[
 		"flex-basis",
 		new Map([
@@ -1533,9 +1594,9 @@ export const propertyValues = new Map([
 	[
 		"flex-direction",
 		new Map([
-			["column", "10:2020"],
+			["column", "10:2015"],
 			["column-reverse", "10:2020"],
-			["row", "10:2020"],
+			["row", "10:2015"],
 			["row-reverse", "10:2020"],
 		]),
 	],
@@ -1547,7 +1608,15 @@ export const propertyValues = new Map([
 			["wrap-reverse", "10:2015"],
 		]),
 	],
-	["flex", new Map([["none", "10:2020"]])],
+	["flex", new Map([["none", "10:2015"]])],
+	[
+		"justify-content",
+		new Map([
+			["left", "10:2020"],
+			["normal", "10:2020"],
+			["right", "10:2020"],
+		]),
+	],
 	[
 		"clear",
 		new Map([
@@ -1581,6 +1650,14 @@ export const propertyValues = new Map([
 	],
 	["font-feature-settings", new Map([["normal", "10:2017"]])],
 	[
+		"font-kerning",
+		new Map([
+			["auto", "10:2020"],
+			["none", "10:2020"],
+			["normal", "10:2020"],
+		]),
+	],
+	[
 		"font-optical-sizing",
 		new Map([
 			["auto", "10:2020"],
@@ -1590,9 +1667,9 @@ export const propertyValues = new Map([
 	[
 		"font-palette",
 		new Map([
-			["dark", "5:2022"],
-			["light", "5:2022"],
-			["normal", "5:2022"],
+			["dark", "10:2022"],
+			["light", "10:2022"],
+			["normal", "10:2022"],
 		]),
 	],
 	[
@@ -1627,7 +1704,7 @@ export const propertyValues = new Map([
 		new Map([
 			["italic", "10:2015"],
 			["normal", "10:2015"],
-			["oblique-angle", "10:2020"],
+			["oblique-angle", "0:"],
 		]),
 	],
 	[
@@ -1670,23 +1747,23 @@ export const propertyValues = new Map([
 	[
 		"font-variant",
 		new Map([
-			["historical-forms", "5:2023"],
+			["historical-forms", "10:2023"],
 			["none", "10:2020"],
 			["normal", "10:2015"],
-			["sub", "5:2023"],
-			["super", "5:2023"],
+			["sub", "10:2023"],
+			["super", "10:2023"],
 		]),
 	],
 	[
 		"font-variant-alternates",
 		new Map([
-			["annotation", "5:2023"],
-			["historical-forms", "5:2023"],
-			["normal", "5:2023"],
-			["ornaments", "5:2023"],
-			["styleset", "5:2023"],
-			["stylistic", "5:2023"],
-			["swash", "5:2023"],
+			["annotation", "10:2023"],
+			["historical-forms", "10:2023"],
+			["normal", "10:2023"],
+			["ornaments", "10:2023"],
+			["styleset", "10:2023"],
+			["stylistic", "10:2023"],
+			["swash", "10:2023"],
 		]),
 	],
 	[
@@ -1794,6 +1871,7 @@ export const propertyValues = new Map([
 			["preserve-parent-color", "0:"],
 		]),
 	],
+	["gap", new Map([["normal", "10:2017"]])],
 	[
 		"grid-auto-flow",
 		new Map([
@@ -1834,6 +1912,7 @@ export const propertyValues = new Map([
 		]),
 	],
 	["grid-template", new Map([["none", "10:2020"]])],
+	["row-gap", new Map([["normal", "10:2017"]])],
 	[
 		"hanging-punctuation",
 		new Map([
@@ -1857,6 +1936,13 @@ export const propertyValues = new Map([
 	["scale", new Map([["none", "10:2022"]])],
 	["translate", new Map([["none", "10:2022"]])],
 	["initial-letter", new Map([["normal", "0:"]])],
+	[
+		"interactivity",
+		new Map([
+			["auto", "0:"],
+			["inert", "0:"],
+		]),
+	],
 	[
 		"interpolate-size",
 		new Map([
@@ -2091,6 +2177,7 @@ export const propertyValues = new Map([
 		]),
 	],
 	["column-count", new Map([["auto", "10:2017"]])],
+	["column-gap", new Map([["normal", "10:2015"]])],
 	["column-width", new Map([["auto", "10:2016"]])],
 	[
 		"object-fit",
@@ -2249,8 +2336,8 @@ export const propertyValues = new Map([
 	[
 		"print-color-adjust",
 		new Map([
-			["economy", "0:"],
-			["exact", "0:"],
+			["economy", "5:2025"],
+			["exact", "5:2025"],
 		]),
 	],
 	[
@@ -2258,6 +2345,18 @@ export const propertyValues = new Map([
 		new Map([
 			["auto", "10:2021"],
 			["none", "10:2015"],
+		]),
+	],
+	[
+		"reading-flow",
+		new Map([
+			["flex-flow", "0:"],
+			["flex-visual", "0:"],
+			["grid-columns", "0:"],
+			["grid-order", "0:"],
+			["grid-rows", "0:"],
+			["normal", "0:"],
+			["source-order", "0:"],
 		]),
 	],
 	[
@@ -2281,15 +2380,6 @@ export const propertyValues = new Map([
 		new Map([
 			["auto", "0:"],
 			["none", "0:"],
-		]),
-	],
-	[
-		"ruby-position",
-		new Map([
-			["alternate", "0:"],
-			["inter-character", "0:"],
-			["over", "5:2024"],
-			["under", "5:2024"],
 		]),
 	],
 	[
@@ -2493,6 +2583,20 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
+		"empty-cells",
+		new Map([
+			["hide", "10:2015"],
+			["show", "10:2015"],
+		]),
+	],
+	[
+		"table-layout",
+		new Map([
+			["auto", "10:2015"],
+			["fixed", "10:2015"],
+		]),
+	],
+	[
 		"text-align",
 		new Map([
 			["center", "10:2020"],
@@ -2511,8 +2615,11 @@ export const propertyValues = new Map([
 			["auto", "0:"],
 			["ideograph-alpha", "0:"],
 			["ideograph-numeric", "0:"],
+			["insert", "0:"],
 			["no-autospace", "0:"],
 			["normal", "0:"],
+			["punctuation", "0:"],
+			["replace", "0:"],
 		]),
 	],
 	["text-box-edge", new Map([["auto", "0:"]])],
@@ -2526,6 +2633,13 @@ export const propertyValues = new Map([
 		]),
 	],
 	["text-box", new Map([["normal", "0:"]])],
+	[
+		"text-combine-upright",
+		new Map([
+			["all", "10:2022"],
+			["none", "10:2022"],
+		]),
+	],
 	[
 		"text-decoration-line",
 		new Map([
@@ -2567,9 +2681,9 @@ export const propertyValues = new Map([
 		new Map([
 			["auto", "0:"],
 			["left", "10:2022"],
-			["over", "5:2022"],
+			["over", "10:2022"],
 			["right", "10:2022"],
-			["under", "5:2022"],
+			["under", "10:2022"],
 		]),
 	],
 	[
@@ -2635,6 +2749,7 @@ export const propertyValues = new Map([
 	[
 		"text-underline-position",
 		new Map([
+			["auto", "10:2020"],
 			["from-font", "10:2020"],
 			["left", "5:2024"],
 			["right", "5:2024"],
@@ -2745,7 +2860,13 @@ export const propertyValues = new Map([
 		]),
 	],
 	["view-transition-class", new Map([["none", "0:"]])],
-	["view-transition-name", new Map([["none", "0:"]])],
+	[
+		"view-transition-name",
+		new Map([
+			["match-element", "0:"],
+			["none", "0:"],
+		]),
+	],
 	[
 		"visibility",
 		new Map([

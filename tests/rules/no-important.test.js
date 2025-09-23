@@ -47,6 +47,9 @@ ruleTester.run("no-important", rule, {
 		"@keyframes important { from { margin: 1px; } }",
 		"@-webkit-keyframes important { from { margin: 1px; } }",
 		"@-WEBKIT-KEYFRAMES important { from { margin: 1px; } }",
+		"a { color: red /* !important */; }",
+		"a { color: /* !important */ red; }",
+		"a { color: red; /* !important */ background: blue; }",
 	],
 	invalid: [
 		{
@@ -58,6 +61,30 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 26,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red !important }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 26,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red }",
+						},
+					],
 				},
 			],
 		},
@@ -70,6 +97,12 @@ ruleTester.run("no-important", rule, {
 					column: 14,
 					endLine: 1,
 					endColumn: 24,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color:red; }",
+						},
+					],
 				},
 			],
 		},
@@ -82,6 +115,12 @@ ruleTester.run("no-important", rule, {
 					column: 34,
 					endLine: 1,
 					endColumn: 45,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { padding: 10px 20px 30px 40px; }",
+						},
+					],
 				},
 			],
 		},
@@ -94,6 +133,12 @@ ruleTester.run("no-important", rule, {
 					column: 15,
 					endLine: 1,
 					endColumn: 25,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { border: 0; }",
+						},
+					],
 				},
 			],
 		},
@@ -106,6 +151,12 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 26,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; margin: 0 ! important; }",
+						},
+					],
 				},
 				{
 					messageId: "unexpectedImportant",
@@ -113,6 +164,12 @@ ruleTester.run("no-important", rule, {
 					column: 38,
 					endLine: 1,
 					endColumn: 49,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red !important; margin: 0; }",
+						},
+					],
 				},
 			],
 		},
@@ -130,6 +187,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 13,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -147,6 +214,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 14,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -159,6 +236,12 @@ ruleTester.run("no-important", rule, {
 					column: 30,
 					endLine: 1,
 					endColumn: 40,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red /* comment */; }",
+						},
+					],
 				},
 			],
 		},
@@ -176,6 +259,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 13,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red /* comment */;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -188,6 +281,12 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 39,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
 				},
 			],
 		},
@@ -200,6 +299,12 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 41,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
 				},
 			],
 		},
@@ -217,6 +322,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 26,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -234,6 +349,16 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 28,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -253,6 +378,18 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 13,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+								margin: 0
+									! important;
+							}
+							`,
+						},
+					],
 				},
 				{
 					messageId: "unexpectedImportant",
@@ -260,6 +397,18 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 5,
 					endColumn: 14,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red
+									!important;
+								margin: 0;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},
@@ -272,6 +421,12 @@ ruleTester.run("no-important", rule, {
 					column: 43,
 					endLine: 1,
 					endColumn: 53,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "@keyframes important { from { margin: 1px; } }",
+						},
+					],
 				},
 			],
 		},
@@ -284,6 +439,12 @@ ruleTester.run("no-important", rule, {
 					column: 51,
 					endLine: 1,
 					endColumn: 61,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "@-webkit-keyframes important { from { margin: 1px; } }",
+						},
+					],
 				},
 			],
 		},
@@ -296,6 +457,12 @@ ruleTester.run("no-important", rule, {
 					column: 51,
 					endLine: 1,
 					endColumn: 61,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "@-WEBKIT-KEYFRAMES important { from { margin: 1px; } }",
+						},
+					],
 				},
 			],
 		},
@@ -308,6 +475,12 @@ ruleTester.run("no-important", rule, {
 					column: 42,
 					endLine: 1,
 					endColumn: 52,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "@keyframes important { from { margin: 1px; } }",
+						},
+					],
 				},
 			],
 		},
@@ -320,6 +493,12 @@ ruleTester.run("no-important", rule, {
 					column: 43,
 					endLine: 1,
 					endColumn: 54,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "@keyframes important { from { margin: 1px; } }",
+						},
+					],
 				},
 			],
 		},
@@ -332,6 +511,12 @@ ruleTester.run("no-important", rule, {
 					column: 43,
 					endLine: 1,
 					endColumn: 53,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "@kEyFrAmEs important { from { margin: 1px; } }",
+						},
+					],
 				},
 			],
 		},
@@ -344,6 +529,238 @@ ruleTester.run("no-important", rule, {
 					column: 43,
 					endLine: 1,
 					endColumn: 53,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "@KEYFRAMES important { from { margin: 1px; } }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red /* !important */ !important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 43,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red /* !important */; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red /* !important */
+						!important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 13,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red /* !important */;
+							}
+							`,
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red !/* !important */important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 42,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red ! /* !important */ important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 44,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red
+						!/* !important */important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 29,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red
+						! /* !important */ important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 31,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red /* !important */ /* !important */ !important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 50,
+					endLine: 1,
+					endColumn: 60,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red /* !important */ /* !important */; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red /* !important */ /* !important
+					*/ !important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 15,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red /* !important */ /* !important
+								*/;
+							}
+							`,
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red ! /* !important */ /* another comment */ /* a third comment */important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 87,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red ! /* !important */ /* another
+					comment */ /* a third comment */important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 2,
+					column: 13,
+					endLine: 3,
+					endColumn: 43,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
 				},
 			],
 		},

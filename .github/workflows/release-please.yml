@@ -15,9 +15,9 @@ jobs:
         steps:
             - uses: googleapis/release-please-action@v4
               id: release
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               if: ${{ steps.release.outputs.release_created }}
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v5
               with:
                   node-version: lts/*
                   registry-url: https://registry.npmjs.org
@@ -26,7 +26,6 @@ jobs:
             - name: Publish to npm
               run: |
                   npm install
-                  npm run build --if-present
                   npm publish --provenance
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

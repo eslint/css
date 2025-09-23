@@ -1,9 +1,8 @@
 {
   "name": "@eslint/css",
-  "version": "0.8.1",
+  "version": "0.11.1",
   "exports": {
-    ".": "./dist/esm/index.js",
-    "./syntax": "./dist/esm/syntax/index.js"
+    ".": "./dist/esm/index.js"
   },
   "publish": {
     "include": [

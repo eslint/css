@@ -6,9 +6,11 @@
     "allowJs": true,
     "checkJs": true,
     "outDir": "dist/esm",
+    "skipLibCheck": true,
     "target": "ES2022",
     "lib": ["ES2022"],
     "moduleResolution": "NodeNext",
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "types": []
   }
 }
