@@ -321,8 +321,6 @@ export class CSSLanguage {
 		return new CSSSourceCode({
 			text: /** @type {string} */ (file.body),
 			ast: parseResult.ast,
-			lineStart: this.lineStart,
-			columnStart: this.columnStart,
 			comments: parseResult.comments,
 			lexer: parseResult.lexer,
 		});
