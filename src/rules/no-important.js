@@ -8,7 +8,7 @@
 // Imports
 //-----------------------------------------------------------------------------
 
-import { findOffsets } from "../util.js";
+import { findOffsets } from "../util.js"; // TODO
 
 //-----------------------------------------------------------------------------
 // Type Definitions
@@ -66,7 +66,7 @@ export default {
 					const {
 						lineOffset: startLineOffset,
 						columnOffset: startColumnOffset,
-					} = findOffsets(declarationText, importantMatch.index);
+					} = findOffsets(declarationText, importantMatch.index); // TODO
 
 					const {
 						lineOffset: endLineOffset,
@@ -74,7 +74,7 @@ export default {
 					} = findOffsets(
 						declarationText,
 						importantMatch.index + importantMatch[0].length,
-					);
+					); // TODO
 
 					const nodeStartLine = node.loc.start.line;
 					const nodeStartColumn = node.loc.start.column;

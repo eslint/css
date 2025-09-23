@@ -40,6 +40,7 @@ export function isSyntaxReferenceError(error) {
  * @returns {{lineOffset:number,columnOffset:number}} The location of the offset.
  */
 export function findOffsets(text, offset) {
+	// TODO
 	let lineOffset = 0;
 	let columnOffset = 0;
 
