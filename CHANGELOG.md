@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.12.0](https://github.com/eslint/css/compare/css-v0.11.1...css-v0.12.0) (2025-09-24)
+
+
+### Features
+
+* add support for `getLocFromIndex` and `getIndexFromLoc` ([#167](https://github.com/eslint/css/issues/167)) ([3baeacf](https://github.com/eslint/css/commit/3baeacfe806a39763bbb63106a2fd750d2e407a1))
+
+
+### Bug Fixes
+
+* no-invalid-properties false positives for var() in functions ([#227](https://github.com/eslint/css/issues/227)) ([268c7f0](https://github.com/eslint/css/commit/268c7f03b981025e97c1489848212b5e9a27a9ab))
+
 ## [0.11.1](https://github.com/eslint/css/compare/css-v0.11.0...css-v0.11.1) (2025-09-22)
 
 
