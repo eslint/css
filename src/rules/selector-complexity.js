@@ -73,13 +73,13 @@ function getDisallowedSelectorsLocation(allSelector, disallowedSelector) {
 /**
  * An error for exceeding the maximum allowed selectors of a specific type.
  * @param {Object} context The ESLint rule context object.
- * @param {Array<Object>} selectorsList List of CSS selectors.
+ * @param {Object} selectorLoc The location of the selector.
  * @param {number} maxValue The max number of selectors that are allowed.
  * @returns {void}
  */
-function exceedLimitError(context, selectorsList, maxValue, selectorType) {
+function exceedLimitError(context, selectorLoc, maxValue, selectorType) {
 	context.report({
-		loc: selectorsList[maxValue].loc,
+		loc: selectorLoc,
 		messageId: "maxSelectors",
 		data: {
 			selector: selectorType,
@@ -267,6 +267,7 @@ export default {
 		return {
 			Selector(node) {
 				const selectors = node.children;
+				const selectorLoc = node.loc;
 
 				const idSelectors = getSelectors(selectors, "IdSelector");
 				const classSelectors = getSelectors(selectors, "ClassSelector");
@@ -305,26 +306,21 @@ export default {
 					.filter(Boolean);
 
 				if (idSelectors.length > maxIds) {
-					exceedLimitError(context, idSelectors, maxIds, "id");
+					exceedLimitError(context, selectorLoc, maxIds, "id");
 				}
 
 				if (classSelectors.length > maxClasses) {
-					exceedLimitError(
-						context,
-						classSelectors,
-						maxClasses,
-						"class",
-					);
+					exceedLimitError(context, selectorLoc, maxClasses, "class");
 				}
 
 				if (typeSelectors.length > maxTypes) {
-					exceedLimitError(context, typeSelectors, maxTypes, "type");
+					exceedLimitError(context, selectorLoc, maxTypes, "type");
 				}
 
 				if (attributeSelectors.length > maxAttributes) {
 					exceedLimitError(
 						context,
-						attributeSelectors,
+						selectorLoc,
 						maxAttributes,
 						"attribute",
 					);
@@ -333,7 +329,7 @@ export default {
 				if (pseudoClassSelectors.length > maxPseudoClasses) {
 					exceedLimitError(
 						context,
-						pseudoClassSelectors,
+						selectorLoc,
 						maxPseudoClasses,
 						"pseudo-class",
 					);
@@ -342,7 +338,7 @@ export default {
 				if (universalSelectors.length > maxUniversals) {
 					exceedLimitError(
 						context,
-						universalSelectors,
+						selectorLoc,
 						maxUniversals,
 						"universal",
 					);
@@ -351,24 +347,19 @@ export default {
 				if (combinatorNodes.length > maxCombinators) {
 					exceedLimitError(
 						context,
-						combinatorNodes,
+						selectorLoc,
 						maxCombinators,
 						"combinator",
 					);
 				}
 
 				if (compounds.length > maxCompounds) {
-					context.report({
-						loc: {
-							start: compounds[maxCompounds][0].loc.start,
-							end: compounds.at(-1).at(-1).loc.end,
-						},
-						messageId: "maxSelectors",
-						data: {
-							selector: "compound",
-							limit: String(maxCompounds),
-						},
-					});
+					exceedLimitError(
+						context,
+						selectorLoc,
+						maxCompounds,
+						"compound",
+					);
 				}
 
 				if (disallowPseudoClasses.length > 0) {
