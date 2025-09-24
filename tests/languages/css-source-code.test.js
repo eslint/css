@@ -205,126 +205,126 @@ describe("CSSSourceCode", () => {
 				ast: parseResult.ast,
 			});
 
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 1,
 					column: 1,
 				}),
 				0,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 1,
 					column: 2,
 				}),
 				1,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 1,
 					column: 3,
 				}),
 				2,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 1,
 					column: 4,
 				}),
 				3,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 1,
 				}),
 				4,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 2,
 				}),
 				5,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 3,
 				}),
 				6,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 4,
 				}),
 				7,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 5,
 				}),
 				8,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 6,
 				}),
 				9,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 7,
 				}),
 				10,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 8,
 				}),
 				11,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 9,
 				}),
 				12,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 10,
 				}),
 				13,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 11,
 				}),
 				14,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 2,
 					column: 12,
 				}),
 				15,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 3,
 					column: 1,
 				}),
 				16,
 			);
-			assert.deepStrictEqual(
+			assert.strictEqual(
 				sourceCode.getIndexFromLoc({
 					line: 3,
 					column: 2,
