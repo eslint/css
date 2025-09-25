@@ -5,12 +5,6 @@
  */
 
 //-----------------------------------------------------------------------------
-// Imports
-//-----------------------------------------------------------------------------
-
-import { findOffsets } from "../util.js"; // TODO
-
-//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
@@ -52,51 +46,29 @@ export default {
 	},
 
 	create(context) {
+		const { sourceCode } = context;
+
 		return {
 			Declaration(node) {
 				if (node.important) {
-					const declarationText = context.sourceCode.getText(node);
+					const declarationText = sourceCode.getText(node);
 					const textWithoutComments = declarationText.replace(
 						commentPattern,
 						match => match.replace(/[^\n]/gu, " "),
 					);
 					const importantMatch =
 						importantPattern.exec(textWithoutComments);
-
-					const {
-						lineOffset: startLineOffset,
-						columnOffset: startColumnOffset,
-					} = findOffsets(declarationText, importantMatch.index); // TODO
-
-					const {
-						lineOffset: endLineOffset,
-						columnOffset: endColumnOffset,
-					} = findOffsets(
-						declarationText,
-						importantMatch.index + importantMatch[0].length,
-					); // TODO
-
-					const nodeStartLine = node.loc.start.line;
-					const nodeStartColumn = node.loc.start.column;
-					const startLine = nodeStartLine + startLineOffset;
-					const endLine = nodeStartLine + endLineOffset;
-					const startColumn =
-						(startLine === nodeStartLine ? nodeStartColumn : 1) +
-						startColumnOffset;
-					const endColumn =
-						(endLine === nodeStartLine ? nodeStartColumn : 1) +
-						endColumnOffset;
+					const importantStartOffset =
+						node.loc.start.offset + importantMatch.index;
+					const importantEndOffset =
+						importantStartOffset + importantMatch[0].length;
 
 					context.report({
 						loc: {
-							start: {
-								line: startLine,
-								column: startColumn,
-							},
-							end: {
-								line: endLine,
-								column: endColumn,
-							},
+							start: sourceCode.getLocFromIndex(
+								importantStartOffset,
+							),
+							end: sourceCode.getLocFromIndex(importantEndOffset),
 						},
 						messageId: "unexpectedImportant",
 						suggest: [
@@ -104,9 +76,6 @@ export default {
 								messageId: "removeImportant",
 								fix(fixer) {
 									const importantStart = importantMatch.index;
-									const importantEnd =
-										importantStart +
-										importantMatch[0].length;
 
 									// Find any trailing whitespace before the !important
 									const valuePart = declarationText.slice(
@@ -119,10 +88,11 @@ export default {
 
 									const start =
 										node.loc.start.offset + whitespaceEnd;
-									const end =
-										node.loc.start.offset + importantEnd;
 
-									return fixer.removeRange([start, end]);
+									return fixer.removeRange([
+										start,
+										importantEndOffset,
+									]);
 								},
 							},
 						],
