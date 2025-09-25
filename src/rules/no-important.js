@@ -18,7 +18,7 @@
 // Helpers
 //-----------------------------------------------------------------------------
 
-const importantPattern = /!\s*important/iu;
+const importantPattern = /(?<important>!\s*important)/diu;
 const commentPattern = /\/\*[\s\S]*?\*\//gu;
 const trailingWhitespacePattern = /\s*$/u;
 
@@ -58,40 +58,32 @@ export default {
 					);
 					const importantMatch =
 						importantPattern.exec(textWithoutComments);
-					const importantStartOffset =
-						node.loc.start.offset + importantMatch.index;
-					const importantEndOffset =
-						importantStartOffset + importantMatch[0].length;
+					const [importantStartOffset, importantEndOffset] =
+						importantMatch.indices.groups.important;
+					const nodeStartOffset = node.loc.start.offset;
 
 					context.report({
 						loc: {
 							start: sourceCode.getLocFromIndex(
-								importantStartOffset,
+								nodeStartOffset + importantStartOffset,
 							),
-							end: sourceCode.getLocFromIndex(importantEndOffset),
+							end: sourceCode.getLocFromIndex(
+								nodeStartOffset + importantEndOffset,
+							),
 						},
 						messageId: "unexpectedImportant",
 						suggest: [
 							{
 								messageId: "removeImportant",
 								fix(fixer) {
-									const importantStart = importantMatch.index;
-
-									// Find any trailing whitespace before the !important
-									const valuePart = declarationText.slice(
-										0,
-										importantStart,
-									);
-									const whitespaceEnd = valuePart.search(
-										trailingWhitespacePattern,
-									);
-
-									const start =
-										node.loc.start.offset + whitespaceEnd;
+									// Find any trailing whitespace before the `!important`
+									const whitespaceEndOffset = declarationText
+										.slice(0, importantStartOffset)
+										.search(trailingWhitespacePattern);
 
 									return fixer.removeRange([
-										start,
-										importantEndOffset,
+										nodeStartOffset + whitespaceEndOffset,
+										nodeStartOffset + importantEndOffset,
 									]);
 								},
 							},
