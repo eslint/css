@@ -113,7 +113,7 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	 * @param {Lexer} options.lexer The lexer used to parse the source code.
 	 */
 	constructor({ text, ast, comments, lexer }) {
-		super({ text, ast });
+		super({ text, ast, lineEndingPattern: /\r\n|[\r\n\f]/u });
 		this.ast = ast;
 		this.comments = comments;
 		this.lexer = lexer;
