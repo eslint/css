@@ -107,7 +107,7 @@ describe("CSSSourceCode", () => {
 	describe("getLocFromIndex()", () => {
 		it("should convert index to location correctly", () => {
 			const file = {
-				body: "a {\n  /*test*/\r\n}",
+				body: "a {\n  /*test*/\r\n/*test*/\r/*test*/\f/*test*/}",
 				path: "test.css",
 			};
 			const language = new CSSLanguage();
@@ -189,13 +189,33 @@ describe("CSSSourceCode", () => {
 				line: 3,
 				column: 2,
 			});
+			assert.deepStrictEqual(sourceCode.getLocFromIndex(25), {
+				line: 4,
+				column: 1,
+			});
+			assert.deepStrictEqual(sourceCode.getLocFromIndex(26), {
+				line: 4,
+				column: 2,
+			});
+			assert.deepStrictEqual(sourceCode.getLocFromIndex(34), {
+				line: 5,
+				column: 1,
+			});
+			assert.deepStrictEqual(sourceCode.getLocFromIndex(35), {
+				line: 5,
+				column: 2,
+			});
+			assert.deepStrictEqual(sourceCode.getLocFromIndex(43), {
+				line: 5,
+				column: 10,
+			});
 		});
 	});
 
 	describe("getIndexFromLoc()", () => {
 		it("should convert location to index correctly", () => {
 			const file = {
-				body: "a {\n  /*test*/\r\n}",
+				body: "a {\n  /*test*/\r\n/*test*/\r/*test*/\f/*test*/}",
 				path: "test.css",
 			};
 			const language = new CSSLanguage();
@@ -331,6 +351,41 @@ describe("CSSSourceCode", () => {
 				}),
 				17,
 			);
+			assert.strictEqual(
+				sourceCode.getIndexFromLoc({
+					line: 4,
+					column: 1,
+				}),
+				25,
+			);
+			assert.strictEqual(
+				sourceCode.getIndexFromLoc({
+					line: 4,
+					column: 2,
+				}),
+				26,
+			);
+			assert.strictEqual(
+				sourceCode.getIndexFromLoc({
+					line: 5,
+					column: 1,
+				}),
+				34,
+			);
+			assert.strictEqual(
+				sourceCode.getIndexFromLoc({
+					line: 5,
+					column: 2,
+				}),
+				35,
+			);
+			assert.strictEqual(
+				sourceCode.getIndexFromLoc({
+					line: 5,
+					column: 10,
+				}),
+				43,
+			);
 		});
 	});
 
@@ -402,7 +457,7 @@ describe("CSSSourceCode", () => {
 	});
 
 	describe("lines", () => {
-		it("should return an array of lines", () => {
+		it("should split lines on LF line endings", () => {
 			const file = { body: "a {\n/*test*/\n}", path: "test.css" };
 			const language = new CSSLanguage();
 			const parseResult = language.parse(file);
@@ -412,6 +467,63 @@ describe("CSSSourceCode", () => {
 			});
 
 			assert.deepStrictEqual(sourceCode.lines, ["a {", "/*test*/", "}"]);
+		});
+
+		it("should split lines on CR line endings", () => {
+			const file = { body: "a {\r/*test*/\r}", path: "test.css" };
+			const language = new CSSLanguage();
+			const parseResult = language.parse(file);
+			const sourceCode = new CSSSourceCode({
+				text: file.body,
+				ast: parseResult.ast,
+			});
+
+			assert.deepStrictEqual(sourceCode.lines, ["a {", "/*test*/", "}"]);
+		});
+
+		it("should split lines on FF line endings", () => {
+			const file = { body: "a {\f/*test*/\f}", path: "test.css" };
+			const language = new CSSLanguage();
+			const parseResult = language.parse(file);
+			const sourceCode = new CSSSourceCode({
+				text: file.body,
+				ast: parseResult.ast,
+			});
+
+			assert.deepStrictEqual(sourceCode.lines, ["a {", "/*test*/", "}"]);
+		});
+
+		it("should split lines on CRLF line endings", () => {
+			const file = { body: "a {\r\n/*test*/\r\n}", path: "test.css" };
+			const language = new CSSLanguage();
+			const parseResult = language.parse(file);
+			const sourceCode = new CSSSourceCode({
+				text: file.body,
+				ast: parseResult.ast,
+			});
+
+			assert.deepStrictEqual(sourceCode.lines, ["a {", "/*test*/", "}"]);
+		});
+
+		it("should split lines with mixed line endings (LF, CRLF, CR, FF)", () => {
+			const file = {
+				body: "a {\n/*one*/\r\n/*two*/\r/*three*/\f}",
+				path: "test.css",
+			};
+			const language = new CSSLanguage();
+			const parseResult = language.parse(file);
+			const sourceCode = new CSSSourceCode({
+				text: file.body,
+				ast: parseResult.ast,
+			});
+
+			assert.deepStrictEqual(sourceCode.lines, [
+				"a {",
+				"/*one*/",
+				"/*two*/",
+				"/*three*/",
+				"}",
+			]);
 		});
 	});
 
