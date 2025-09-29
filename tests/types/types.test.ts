@@ -1,5 +1,5 @@
 import css, { CSSSourceCode } from "@eslint/css";
-import { ESLint } from "eslint";
+import type { ESLint } from "eslint";
 import type { SourceLocation, SourceRange } from "@eslint/core";
 import type {
 	AnPlusB,
@@ -82,6 +82,11 @@ css.configs.recommended.plugins satisfies object;
 
 		function testVisitor<NodeType extends CssNodePlain>(node: NodeType) {
 			sourceCode.getLoc(node) satisfies SourceLocation;
+			sourceCode.getLocFromIndex(0) satisfies {
+				line: number;
+				column: number;
+			};
+			sourceCode.getIndexFromLoc({ line: 1, column: 1 }) satisfies number;
 			sourceCode.getRange(node) satisfies SourceRange;
 			sourceCode.getParent(node) satisfies CssNodePlain | undefined;
 			sourceCode.getAncestors(node) satisfies CssNodePlain[];
