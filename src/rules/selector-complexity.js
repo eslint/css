@@ -129,6 +129,51 @@ function getOperatorLocation(selectors, index) {
 	return { startLoc, endLoc };
 }
 
+/**
+ * Get the location of a given disallowed combinator.
+ * @param {Array<Object>} selectors All CSS selector nodes.
+ * @param {Array<Object>} combinatorNodes All combinator nodes.
+ * @param {string} combinator Name of combinator.
+ * @param {number} index The index of the given combinator.
+ * @returns {Object | undefined} The location of the disallowed combinator, or undefined if not found.
+ */
+function getDisallowedCombinatorsLocation(
+	selectors,
+	combinatorNodes,
+	combinator,
+	index,
+) {
+	let location;
+
+	if (combinator === " ") {
+		const selectorsArr = [];
+		let selectorsGroup = [];
+
+		selectors.forEach(selector => {
+			if (selector.type === "Combinator") {
+				selectorsArr.push(selectorsGroup);
+				selectorsGroup = [];
+			} else {
+				selectorsGroup.push(selector);
+			}
+		});
+
+		if (selectorsGroup.length > 0) {
+			selectorsArr.push(selectorsGroup);
+		}
+
+		location = {
+			start: selectorsArr[index].at(-1).loc.end,
+			end: selectorsArr[index + 1][0].loc.start,
+		};
+	} else {
+		const currentCombinatorNode = combinatorNodes[index];
+		location = currentCombinatorNode.loc;
+	}
+
+	return location;
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -385,12 +430,14 @@ export default {
 
 				if (disallowCombinators.length > 0) {
 					let disallowedCombinatorLocation;
-					for (const combinator of combinators) {
+					for (const [index, combinator] of combinators.entries()) {
 						if (disallowCombinators.includes(combinator)) {
 							disallowedCombinatorLocation =
-								getDisallowedSelectorsLocation(
+								getDisallowedCombinatorsLocation(
+									selectors,
 									combinatorNodes,
 									combinator,
+									index,
 								);
 							context.report({
 								loc: disallowedCombinatorLocation,

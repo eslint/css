@@ -82,6 +82,14 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ maxTypes: 2 }],
 		},
 		{
+			code: "div * a {}",
+			options: [{ maxTypes: 2 }],
+		},
+		{
+			code: "* * {}",
+			options: [{ maxTypes: 1 }],
+		},
+		{
 			code: "[class*='foo'] {}",
 			options: [{ maxAttributes: 1 }],
 		},
@@ -103,6 +111,10 @@ ruleTester.run("selector-complexity", rule, {
 		},
 		{
 			code: "* {}",
+			options: [{ maxUniversals: 1 }],
+		},
+		{
+			code: "div p a {}",
 			options: [{ maxUniversals: 1 }],
 		},
 		{
@@ -510,6 +522,79 @@ ruleTester.run("selector-complexity", rule, {
 					column: 14,
 					endLine: 1,
 					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: "div h1 {}",
+			options: [{ disallowCombinators: [" "] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: " ",
+						selector: "combinator",
+					},
+					line: 1,
+					column: 4,
+					endLine: 1,
+					endColumn: 5,
+				},
+			],
+		},
+		{
+			code: "foo bar baz {}",
+			options: [{ disallowCombinators: [" "] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: " ",
+						selector: "combinator",
+					},
+					line: 1,
+					column: 4,
+					endLine: 1,
+					endColumn: 5,
+				},
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: " ",
+						selector: "combinator",
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "foo + bar + baz {}",
+			options: [{ disallowCombinators: ["+"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "+",
+						selector: "combinator",
+					},
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 6,
+				},
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "+",
+						selector: "combinator",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 12,
 				},
 			],
 		},
