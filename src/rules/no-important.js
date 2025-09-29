@@ -18,7 +18,7 @@
 // Helpers
 //-----------------------------------------------------------------------------
 
-const importantPattern = /(?<important>!\s*important)/diu;
+const importantPattern = /!\s*important/iu;
 const commentPattern = /\/\*[\s\S]*?\*\//gu;
 const trailingWhitespacePattern = /\s*$/u;
 
@@ -58,8 +58,9 @@ export default {
 					);
 					const importantMatch =
 						importantPattern.exec(textWithoutComments);
-					const [importantStartOffset, importantEndOffset] =
-						importantMatch.indices.groups.important;
+					const importantStartOffset = importantMatch.index;
+					const importantEndOffset =
+						importantStartOffset + importantMatch[0].length;
 					const nodeStartOffset = node.loc.start.offset;
 
 					context.report({
