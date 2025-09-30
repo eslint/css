@@ -54,7 +54,7 @@ export default {
 					const declarationText = sourceCode.getText(node);
 					const textWithoutComments = declarationText.replace(
 						commentPattern,
-						match => match.replace(/[^\n]/gu, " "),
+						match => match.replace(/[^\r\n\f]/gu, " "),
 					);
 					const importantMatch =
 						importantPattern.exec(textWithoutComments);

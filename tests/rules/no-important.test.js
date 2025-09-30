@@ -201,6 +201,60 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
+			code: "a { color: red\r\n!important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 11,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red\r!important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 11,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red\f!important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 11,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: dedent`
 				a {
 					color: red
