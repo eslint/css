@@ -728,5 +728,22 @@ ruleTester.run("selector-complexity", rule, {
 				},
 			],
 		},
+		{
+			code: "[foo] [bar*='baz'] {}",
+			options: [{ disallowAttributeMatchers: ["*="] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "*=",
+						selector: "attribute-matcher",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 13,
+				},
+			],
+		},
 	],
 });

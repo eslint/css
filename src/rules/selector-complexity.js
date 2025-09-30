@@ -502,7 +502,7 @@ export default {
 							disallowAttributeMatchers.includes(attributeMatcher)
 						) {
 							const { startLoc, endLoc } = getOperatorLocation(
-								attributeSelectors,
+								attributeSelectors.filter(s => s.matcher),
 								index,
 							);
 
