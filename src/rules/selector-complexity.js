@@ -33,37 +33,10 @@
 //-----------------------------------------------------------------------------
 
 /**
- * Extract compounds from a CSS selector.
- * @param {Array<Object>} selectors All CSS selector nodes.
- * @returns {Array<Array<Object>>} Array of compounds (each compound is an array of selector nodes).
- */
-function getCompounds(selectors) {
-	const compounds = [];
-	let compound = [];
-
-	selectors.forEach(selector => {
-		if (selector.type === "Combinator") {
-			if (compound.length > 0) {
-				compounds.push(compound);
-				compound = [];
-			}
-		} else {
-			compound.push(selector);
-		}
-	});
-
-	if (compound.length > 0) {
-		compounds.push(compound);
-	}
-
-	return compounds;
-}
-
-/**
  * Get the location of a selector of a given name.
  * @param {Array<Object>} allSelector All CSS selector nodes.
  * @param {string} disallowedSelector The name of the disallowed selector.
- * @returns {Object | undefined} The location of the disallowed selector, or undefined if not found.
+ * @returns {Object} The location of the disallowed selector.
  */
 function getDisallowedSelectorsLocation(allSelector, disallowedSelector) {
 	return allSelector.find(selector => selector.name === disallowedSelector)
@@ -75,6 +48,7 @@ function getDisallowedSelectorsLocation(allSelector, disallowedSelector) {
  * @param {Object} context The ESLint rule context object.
  * @param {Object} selectorLoc The location of the selector.
  * @param {number} maxValue The max number of selectors that are allowed.
+ * @param {string} selectorType The type of CSS selector.
  * @returns {void}
  */
 function exceedLimitError(context, selectorLoc, maxValue, selectorType) {
@@ -111,7 +85,7 @@ function getSelectorNames(selectors) {
  * Get the location of the attribute matcher or operator in a given attribute selector.
  * @param {Array<Object>} selectors All CSS selector nodes.
  * @param {number} index The index of the attribute selector in the selectors array.
- * @returns {{ startLoc: Object | undefined, endLoc: Object | undefined }} The start and end locations of the operator.
+ * @returns {{ startLoc: Object, endLoc: Object }} The start and end locations of the operator.
  */
 function getOperatorLocation(selectors, index) {
 	const selector = selectors[index];
@@ -135,7 +109,7 @@ function getOperatorLocation(selectors, index) {
  * @param {Array<Object>} combinatorNodes All combinator nodes.
  * @param {string} combinator Name of combinator.
  * @param {number} index The index of the given combinator.
- * @returns {Object | undefined} The location of the disallowed combinator, or undefined if not found.
+ * @returns {Object} The location of the disallowed combinator.
  */
 function getDisallowedCombinatorsLocation(
 	selectors,
@@ -333,7 +307,6 @@ export default {
 						child.type === "TypeSelector" && child.name === "*",
 				);
 				const combinatorNodes = getSelectors(selectors, "Combinator");
-				const compounds = getCompounds(selectors);
 
 				const combinators = getSelectorNames(combinatorNodes);
 				const pseudoClassSelectorsNames =
@@ -398,7 +371,7 @@ export default {
 					);
 				}
 
-				if (compounds.length > maxCompounds) {
+				if (combinatorNodes.length + 1 > maxCompounds) {
 					exceedLimitError(
 						context,
 						selectorLoc,
