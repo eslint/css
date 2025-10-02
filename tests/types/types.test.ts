@@ -51,6 +51,7 @@ import type {
 	ValuePlain,
 	WhiteSpace,
 	CssNodePlain,
+	CssLocationRange,
 } from "@eslint/css-tree";
 import type { CSSRuleDefinition, CSSRuleVisitor } from "@eslint/css/types";
 
@@ -73,6 +74,19 @@ css.configs.recommended.plugins satisfies object;
 	null as AssertAllNamesIn<RecommendedRuleName, RuleName>;
 }
 
+{
+	type ApplyInlineConfigLoc = ReturnType<
+		CSSSourceCode["applyInlineConfig"]
+	>["configs"][0]["loc"];
+
+	// Check that `applyInlineConfig`'s return type includes correct `loc` structure.
+	const loc: ApplyInlineConfigLoc = {
+		source: "source",
+		start: { line: 1, column: 1, offset: 0 },
+		end: { line: 1, column: 1, offset: 0 },
+	};
+}
+
 (): CSSRuleDefinition => ({
 	create({ sourceCode }): CSSRuleVisitor {
 		sourceCode satisfies CSSSourceCode;
@@ -91,6 +105,12 @@ css.configs.recommended.plugins satisfies object;
 			sourceCode.getParent(node) satisfies CssNodePlain | undefined;
 			sourceCode.getAncestors(node) satisfies CssNodePlain[];
 			sourceCode.getText(node) satisfies string;
+			sourceCode.applyInlineConfig().configs[0].loc
+				.source satisfies CssLocationRange["source"];
+			sourceCode.applyInlineConfig().configs[0].loc.start
+				.offset satisfies CssLocationRange["start"]["offset"];
+			sourceCode.applyInlineConfig().configs[0].loc.end
+				.offset satisfies CssLocationRange["end"]["offset"];
 		}
 
 		return {
