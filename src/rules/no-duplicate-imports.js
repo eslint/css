@@ -52,9 +52,19 @@ export default {
 						data: { url },
 						fix(fixer) {
 							const [start, end] = sourceCode.getRange(node);
+							const text = sourceCode.text;
 							// Remove the node, and also remove a following newline if present
-							const removeEnd =
-								sourceCode.text[end] === "\n" ? end + 1 : end;
+							let removeEnd = end;
+							if (text[removeEnd] === "\r") {
+								removeEnd +=
+									text[removeEnd + 1] === "\n" ? 2 : 1;
+							} else if (
+								text[removeEnd] === "\n" ||
+								text[removeEnd] === "\f"
+							) {
+								removeEnd += 1;
+							}
+
 							return fixer.removeRange([start, removeEnd]);
 						},
 					});
