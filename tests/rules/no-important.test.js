@@ -246,6 +246,24 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
+			code: "a { color: red /* comment with surrogate pairs: 👍🚀 */ !important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 57,
+					endLine: 1,
+					endColumn: 67,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red /* comment with surrogate pairs: 👍🚀 */; }",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: dedent`
 				a {
 					color: red /* comment */
@@ -273,6 +291,33 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
+			code: dedent`
+				a {
+					color: red /* comment with surrogate pairs: 👍🚀 */
+						!important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 13,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red /* comment with surrogate pairs: 👍🚀 */;
+							}
+							`,
+						},
+					],
+				},
+			],
+		},
+		{
 			code: "a { color: red !/* comment */important; }",
 			errors: [
 				{
@@ -281,6 +326,24 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 39,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red !/* comment with surrogate pairs: 👍🚀 */important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 66,
 					suggestions: [
 						{
 							messageId: "removeImportant",
@@ -322,6 +385,33 @@ ruleTester.run("no-important", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 26,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: dedent`
+							a {
+								color: red;
+							}
+							`,
+						},
+					],
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					color: red
+						!/* comment with surrogate pairs: 👍🚀 */important;
+				}
+			`,
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 3,
+					endLine: 3,
+					endColumn: 53,
 					suggestions: [
 						{
 							messageId: "removeImportant",
