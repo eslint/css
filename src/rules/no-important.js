@@ -54,7 +54,10 @@ export default {
 					const declarationText = sourceCode.getText(node);
 					const textWithoutComments = declarationText.replace(
 						commentPattern,
-						match => match.replace(/[^\n]/gu, " "),
+						/* eslint-disable-next-line require-unicode-regexp
+							-- we want to replace each code unit with a space
+						*/
+						match => match.replace(/[^\n]/g, " "),
 					);
 					const importantMatch =
 						importantPattern.exec(textWithoutComments);
