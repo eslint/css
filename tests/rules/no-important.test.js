@@ -782,5 +782,23 @@ ruleTester.run("no-important", rule, {
 				},
 			],
 		},
+		{
+			code: "a { color: red !/* comment👍🚀🙇‍♂️ */important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 48,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
 	],
 });
