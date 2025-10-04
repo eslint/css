@@ -20,8 +20,8 @@ import { visitorKeys } from "./css-visitor-keys.js";
 //-----------------------------------------------------------------------------
 
 /**
- * @import { CssNode, CssNodePlain, Comment, Lexer, StyleSheetPlain } from "@eslint/css-tree"
- * @import { SourceRange, SourceLocation, FileProblem, DirectiveType, RulesConfig } from "@eslint/core"
+ * @import { CssNode, CssNodePlain, CssLocationRange, Comment, Lexer, StyleSheetPlain } from "@eslint/css-tree"
+ * @import { SourceRange, FileProblem, DirectiveType, RulesConfig } from "@eslint/core"
  * @import { CSSSyntaxElement } from "../types.js"
  * @import { CSSLanguageOptions } from "./css-language.js"
  */
@@ -202,13 +202,13 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	/**
 	 * Returns inline rule configurations along with any problems
 	 * encountered while parsing the configurations.
-	 * @returns {{problems:Array<FileProblem>,configs:Array<{config:{rules:RulesConfig},loc:SourceLocation}>}} Information
+	 * @returns {{problems:Array<FileProblem>,configs:Array<{config:{rules:RulesConfig},loc:CssLocationRange}>}} Information
 	 *      that ESLint needs to further process the rule configurations.
 	 */
 	applyInlineConfig() {
 		/** @type {Array<FileProblem>} */
 		const problems = [];
-		/** @type {Array<{config:{rules:RulesConfig},loc:SourceLocation}>} */
+		/** @type {Array<{config:{rules:RulesConfig},loc:CssLocationRange}>} */
 		const configs = [];
 
 		this.getInlineConfigNodes().forEach(comment => {
