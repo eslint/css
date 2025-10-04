@@ -291,27 +291,19 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
-			code: dedent`
-				a {
-					color: red /* comment with surrogate pairs: 👍🚀 */
-						!important;
-				}
-			`,
+			// NOTE: dedent`` converts 👍🚀 to \u{1f44d}\u{1f680} in Bun, causing unexpected report locations
+			code: "a {\ncolor: red /* comment with surrogate pairs: 👍🚀 */\n!important;\n}",
 			errors: [
 				{
 					messageId: "unexpectedImportant",
 					line: 3,
-					column: 3,
+					column: 1,
 					endLine: 3,
-					endColumn: 13,
+					endColumn: 11,
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: dedent`
-							a {
-								color: red /* comment with surrogate pairs: 👍🚀 */;
-							}
-							`,
+							output: "a {\ncolor: red /* comment with surrogate pairs: 👍🚀 */;\n}",
 						},
 					],
 				},
@@ -399,27 +391,19 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
-			code: dedent`
-				a {
-					color: red
-						!/* comment with surrogate pairs: 👍🚀 */important;
-				}
-			`,
+			// NOTE: dedent`` converts 👍🚀 to \u{1f44d}\u{1f680} in Bun, causing unexpected report locations
+			code: "a {\ncolor: red\n!/* comment with surrogate pairs: 👍🚀 */important;\n}",
 			errors: [
 				{
 					messageId: "unexpectedImportant",
 					line: 3,
-					column: 3,
+					column: 1,
 					endLine: 3,
-					endColumn: 53,
+					endColumn: 51,
 					suggestions: [
 						{
 							messageId: "removeImportant",
-							output: dedent`
-							a {
-								color: red;
-							}
-							`,
+							output: "a {\ncolor: red;\n}",
 						},
 					],
 				},
