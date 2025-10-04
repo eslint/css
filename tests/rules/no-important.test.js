@@ -765,6 +765,7 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
+			// NOTE: 👍's length is 2, 🚀's length is 2.
 			code: "a { color: red !/* comment👍🚀 */important; }",
 			errors: [
 				{
@@ -783,6 +784,7 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
+			// NOTE: 👍's length is 2, 🚀's length is 2, 🙇‍♂️'s length is 5.
 			code: "a { color: red !/* comment👍🚀🙇‍♂️ */important; }",
 			errors: [
 				{
