@@ -300,6 +300,24 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
+			code: "a { color: red /* comment with surrogate pairs: 👍🚀 */ !important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 57,
+					endLine: 1,
+					endColumn: 67,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red /* comment with surrogate pairs: 👍🚀 */; }",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: dedent`
 				a {
 					color: red /* comment */
@@ -327,6 +345,25 @@ ruleTester.run("no-important", rule, {
 			],
 		},
 		{
+			// NOTE: dedent`` converts 👍🚀 to \u{1f44d}\u{1f680} in Bun, causing unexpected report locations
+			code: "a {\ncolor: red /* comment with surrogate pairs: 👍🚀 */\n!important;\n}",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 1,
+					endLine: 3,
+					endColumn: 11,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a {\ncolor: red /* comment with surrogate pairs: 👍🚀 */;\n}",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: "a { color: red !/* comment */important; }",
 			errors: [
 				{
@@ -335,6 +372,24 @@ ruleTester.run("no-important", rule, {
 					column: 16,
 					endLine: 1,
 					endColumn: 39,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { color: red; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { color: red !/* comment with surrogate pairs: 👍🚀 */important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 66,
 					suggestions: [
 						{
 							messageId: "removeImportant",
@@ -384,6 +439,25 @@ ruleTester.run("no-important", rule, {
 								color: red;
 							}
 							`,
+						},
+					],
+				},
+			],
+		},
+		{
+			// NOTE: dedent`` converts 👍🚀 to \u{1f44d}\u{1f680} in Bun, causing unexpected report locations
+			code: "a {\ncolor: red\n!/* comment with surrogate pairs: 👍🚀 */important;\n}",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 3,
+					column: 1,
+					endLine: 3,
+					endColumn: 51,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a {\ncolor: red;\n}",
 						},
 					],
 				},
