@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.12.0](https://github.com/eslint/css/compare/css-v0.11.1...css-v0.12.0) (2025-10-06)
+
+
+### Features
+
+* add support for `getLocFromIndex` and `getIndexFromLoc` ([#167](https://github.com/eslint/css/issues/167)) ([3baeacf](https://github.com/eslint/css/commit/3baeacfe806a39763bbb63106a2fd750d2e407a1))
+
+
+### Bug Fixes
+
+* correct location reporting for `!important` in `no-important` rule ([#286](https://github.com/eslint/css/issues/286)) ([33ea905](https://github.com/eslint/css/commit/33ea9056be5946894be35616cb95662ec6aad4b2))
+* correct the return type of `applyInlineConfig` ([#281](https://github.com/eslint/css/issues/281)) ([386f42a](https://github.com/eslint/css/commit/386f42a1f40c1abb59090d48750d18ffe72917fe))
+* handle all CSS newline types in `CSSSourceCode` ([#275](https://github.com/eslint/css/issues/275)) ([2d0eec6](https://github.com/eslint/css/commit/2d0eec6ae06bd8561ed27d5912066278f763ad01))
+* handle all CSS newlines in rules ([#280](https://github.com/eslint/css/issues/280)) ([ed0c0f1](https://github.com/eslint/css/commit/ed0c0f135540781439bd12216583f5cd7d1ff0e4))
+* no-invalid-properties false positives for var() in functions ([#227](https://github.com/eslint/css/issues/227)) ([268c7f0](https://github.com/eslint/css/commit/268c7f03b981025e97c1489848212b5e9a27a9ab))
+* update baseline data ([fb65800](https://github.com/eslint/css/commit/fb658009ef6d92e1ad11c0ae9d57ba5c20e67f55))
+* update baseline data ([#287](https://github.com/eslint/css/issues/287)) ([73734bb](https://github.com/eslint/css/commit/73734bb9f6b756d5f993b5b0b13c455d9e39f70d))
+
 ## [0.11.1](https://github.com/eslint/css/compare/css-v0.11.0...css-v0.11.1) (2025-09-22)
 
 
