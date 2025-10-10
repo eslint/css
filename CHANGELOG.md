@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.13.0](https://github.com/eslint/css/compare/css-v0.12.0...css-v0.13.0) (2025-10-10)
+
+
+### Features
+
+* add `selector-complexity` rule ([#252](https://github.com/eslint/css/issues/252)) ([2bd29c4](https://github.com/eslint/css/commit/2bd29c4ff0dcd145e0f5c0a63a64d70f31ab90df))
+
+
+### Bug Fixes
+
+* handle missing declaration state in `no-invalid-properties` ([#290](https://github.com/eslint/css/issues/290)) ([4120774](https://github.com/eslint/css/commit/4120774e7e641ea8f6d34a70a39c0969c71ba33d))
+
 ## [0.12.0](https://github.com/eslint/css/compare/css-v0.11.1...css-v0.12.0) (2025-10-06)
 
 
