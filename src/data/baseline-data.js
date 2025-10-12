@@ -1597,6 +1597,21 @@ export const propertyValues = new Map([
 			["fixed", "0:"],
 		]),
 	],
+	[
+		"filter",
+		new Map([
+			["blur", "10:2016"],
+			["brightness", "10:2016"],
+			["contrast", "10:2016"],
+			["drop-shadow", "10:2016"],
+			["grayscale", "10:2016"],
+			["hue-rotate", "10:2016"],
+			["invert", "10:2016"],
+			["opacity", "10:2016"],
+			["saturate", "10:2016"],
+			["sepia", "10:2016"],
+		]),
+	],
 	["align-content", new Map([["normal", "10:2015"]])],
 	[
 		"flex-basis",
