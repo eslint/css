@@ -76,6 +76,7 @@ export default defineConfig([
 | [`no-invalid-at-rules`](./docs/rules/no-invalid-at-rules.md)                         | Disallow invalid at-rules                             |       yes       |
 | [`no-invalid-named-grid-areas`](./docs/rules/no-invalid-named-grid-areas.md)         | Disallow invalid named grid areas                     |       yes       |
 | [`no-invalid-properties`](./docs/rules/no-invalid-properties.md)                     | Disallow invalid properties                           |       yes       |
+| [`no-unmatchable-selectors`](./docs/rules/no-unmatchable-selectors.md)               | Disallow unmatchable selectors                        |       yes       |
 | [`prefer-logical-properties`](./docs/rules/prefer-logical-properties.md)             | Enforce the use of logical properties                 |       no        |
 | [`relative-font-units`](./docs/rules/relative-font-units.md)                         | Enforce the use of relative font units                |       no        |
 | [`selector-complexity`](./docs/rules/selector-complexity.md)                         | Disallow and limit CSS selectors                      |       no        |
