@@ -582,7 +582,7 @@ export const mediaConditions = new Map([
 	["horizontal-viewport-segments", "0:"],
 	["vertical-viewport-segments", "0:"],
 ]);
-export const types = new Map([
+export const functions = new Map([
 	["abs", "5:2025"],
 	["sign", "5:2025"],
 	["anchor", "0:"],
@@ -1595,6 +1595,21 @@ export const propertyValues = new Map([
 		new Map([
 			["content", "0:"],
 			["fixed", "0:"],
+		]),
+	],
+	[
+		"filter",
+		new Map([
+			["blur", "10:2016"],
+			["brightness", "10:2016"],
+			["contrast", "10:2016"],
+			["drop-shadow", "10:2016"],
+			["grayscale", "10:2016"],
+			["hue-rotate", "10:2016"],
+			["invert", "10:2016"],
+			["opacity", "10:2016"],
+			["saturate", "10:2016"],
+			["sepia", "10:2016"],
 		]),
 	],
 	["align-content", new Map([["normal", "10:2015"]])],
