@@ -235,6 +235,7 @@ export default {
 						uniqueItems: true,
 					},
 				},
+				additionalProperties: false,
 			},
 		],
 
