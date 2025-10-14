@@ -582,7 +582,7 @@ export const mediaConditions = new Map([
 	["horizontal-viewport-segments", "0:"],
 	["vertical-viewport-segments", "0:"],
 ]);
-export const types = new Map([
+export const functions = new Map([
 	["abs", "5:2025"],
 	["sign", "5:2025"],
 	["anchor", "0:"],

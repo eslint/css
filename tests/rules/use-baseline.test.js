@@ -308,9 +308,9 @@ ruleTester.run("use-baseline", rule, {
 			code: "@supports (accent-color: auto) { a { accent-color: abs(20% - 10px); } }",
 			errors: [
 				{
-					messageId: "notBaselineType",
+					messageId: "notBaselineFunction",
 					data: {
-						type: "abs",
+						function: "abs",
 						availability: "widely",
 					},
 					line: 1,
@@ -340,9 +340,9 @@ ruleTester.run("use-baseline", rule, {
 			code: "a { width: abs(20% - 100px); }",
 			errors: [
 				{
-					messageId: "notBaselineType",
+					messageId: "notBaselineFunction",
 					data: {
-						type: "abs",
+						function: "abs",
 						availability: "widely",
 					},
 					line: 1,
@@ -356,9 +356,9 @@ ruleTester.run("use-baseline", rule, {
 			code: "a { color: color-mix(in hsl, hsl(200 50 80), coral 80%); }",
 			errors: [
 				{
-					messageId: "notBaselineType",
+					messageId: "notBaselineFunction",
 					data: {
-						type: "color-mix",
+						function: "color-mix",
 						availability: "widely",
 					},
 					line: 1,

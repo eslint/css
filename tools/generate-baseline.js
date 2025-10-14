@@ -109,7 +109,7 @@ function extractCSSFeatures(features) {
 	const propertyValues = {};
 	const atRules = {};
 	const mediaConditions = {};
-	const types = {};
+	const functions = {};
 	const selectors = {};
 
 	for (const [key, featureId] of Object.entries(features)) {
@@ -152,13 +152,13 @@ function extractCSSFeatures(features) {
 			continue;
 		}
 
-		// types
+		// functions
 		if ((match = cssTypePattern.exec(key)) !== null) {
 			const type = match.groups.type;
 			if (!(`${type}()` in mdnData.css.functions)) {
 				continue;
 			}
-			types[type] = mapFeatureStatus(status);
+			functions[type] = mapFeatureStatus(status);
 			continue;
 		}
 
@@ -174,7 +174,7 @@ function extractCSSFeatures(features) {
 		propertyValues,
 		atRules,
 		mediaConditions,
-		types,
+		functions,
 		selectors,
 	};
 }
@@ -210,7 +210,7 @@ export const BASELINE_FALSE = ${BASELINE_FALSE};
 export const properties = new Map(${JSON.stringify(Object.entries(cssFeatures.properties), null, "\t")});
 export const atRules = new Map(${JSON.stringify(Object.entries(cssFeatures.atRules), null, "\t")});
 export const mediaConditions = new Map(${JSON.stringify(Object.entries(cssFeatures.mediaConditions), null, "\t")});
-export const types = new Map(${JSON.stringify(Object.entries(cssFeatures.types), null, "\t")});
+export const functions = new Map(${JSON.stringify(Object.entries(cssFeatures.functions), null, "\t")});
 export const selectors = new Map(${JSON.stringify(Object.entries(cssFeatures.selectors), null, "\t")});
 export const propertyValues = new Map([${Object.entries(
 	cssFeatures.propertyValues,

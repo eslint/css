@@ -14,7 +14,7 @@ import {
 	propertyValues,
 	atRules,
 	mediaConditions,
-	types,
+	functions,
 	selectors,
 } from "../data/baseline-data.js";
 import { namedColors } from "../data/colors.js";
@@ -26,7 +26,7 @@ import { namedColors } from "../data/colors.js";
 /**
  * @import { CSSRuleDefinition } from "../types.js"
  * @import { Identifier, FunctionNodePlain } from "@eslint/css-tree"
- * @typedef {"notBaselineProperty" | "notBaselinePropertyValue" | "notBaselineAtRule" | "notBaselineType" | "notBaselineMediaCondition" | "notBaselineSelector"} UseBaselineMessageIds
+ * @typedef {"notBaselineProperty" | "notBaselinePropertyValue" | "notBaselineAtRule" | "notBaselineFunction" | "notBaselineMediaCondition" | "notBaselineSelector"} UseBaselineMessageIds
  * @typedef {[{
  *     available?: "widely" | "newly" | number,
  *     allowAtRules?: string[],
@@ -475,8 +475,8 @@ export default {
 				"Value '{{value}}' of property '{{property}}' is not a {{availability}} available baseline feature.",
 			notBaselineAtRule:
 				"At-rule '@{{atRule}}' is not a {{availability}} available baseline feature.",
-			notBaselineType:
-				"Type '{{type}}' is not a {{availability}} available baseline feature.",
+			notBaselineFunction:
+				"Function '{{function}}' is not a {{availability}} available baseline feature.",
 			notBaselineMediaCondition:
 				"Media condition '{{condition}}' is not a {{availability}} available baseline feature.",
 			notBaselineSelector:
@@ -537,7 +537,7 @@ export default {
 		 * @returns {void}
 		 **/
 		function checkPropertyValueFunction(child) {
-			const featureStatus = types.get(child.name);
+			const featureStatus = functions.get(child.name);
 
 			// if we don't know of any possible property values, just skip it
 			if (featureStatus === undefined) {
@@ -547,9 +547,9 @@ export default {
 			if (!baselineAvailability.isSupported(featureStatus)) {
 				context.report({
 					loc: child.loc,
-					messageId: "notBaselineType",
+					messageId: "notBaselineFunction",
 					data: {
-						type: child.name,
+						function: child.name,
 						availability: String(baselineAvailability.availability),
 					},
 				});
