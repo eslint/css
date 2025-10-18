@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.1](https://github.com/eslint/css/compare/css-v0.13.0...css-v0.13.1) (2025-10-18)
+
+
+### Bug Fixes
+
+* disallow extra properties in rule options ([#299](https://github.com/eslint/css/issues/299)) ([baf36e2](https://github.com/eslint/css/commit/baf36e26728b512b32a6220f50183757ebbc9056))
+* update baseline data ([#296](https://github.com/eslint/css/issues/296)) ([0f6725f](https://github.com/eslint/css/commit/0f6725f17a97273b97ca62b2d25cee5ca212df83))
+
 ## [0.13.0](https://github.com/eslint/css/compare/css-v0.12.0...css-v0.13.0) (2025-10-10)
 
 
