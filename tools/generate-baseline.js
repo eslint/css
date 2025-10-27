@@ -9,7 +9,6 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { getStatus as getBaselineStatus } from "compute-baseline";
 import { features as webFeatures } from "web-features";
 import mdnData from "mdn-data";
 import prettier from "prettier";
@@ -113,7 +112,8 @@ function extractCSSFeatures(features) {
 	const selectors = {};
 
 	for (const [key, featureId] of Object.entries(features)) {
-		const status = getBaselineStatus(featureId, key);
+		const feature = webFeatures[featureId];
+		const status = feature.status.by_compat_key[key];
 		let match;
 
 		// property names
