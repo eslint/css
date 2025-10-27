@@ -38,6 +38,30 @@ This rule accepts an option object with the following properties:
 - `allowProperties` (default: `[]`) - Specify an array of physical properties that are allowed to be used.
 - `allowUnits` (default: `[]`) - Specify an array of physical units that are allowed to be used.
 
+#### `allowProperties`
+
+Examples of **correct** code with `{ allowProperties: ["margin-left"] }`:
+
+```css
+/* eslint css/prefer-logical-properties: ["error", { allowProperties: ["margin-left"] }] */
+
+a {
+	margin-left: 10px;
+}
+```
+
+#### `allowUnits`
+
+Examples of **correct** code with `{ allowUnits: ["vw"] }`:
+
+```css
+/* eslint css/prefer-logical-properties: ["error", { allowUnits: ["vw"] }] */
+
+a {
+	margin: 10vw;
+}
+```
+
 ## When Not to Use It
 
 If you aren't concerned with the use of logical properties, then you can safely disable this rule.

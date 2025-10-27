@@ -69,8 +69,8 @@ export default {
 						type: "array",
 						items: {
 							enum: relativeFontUnits,
-							uniqueItems: true,
 						},
+						uniqueItems: true,
 					},
 				},
 				additionalProperties: false,

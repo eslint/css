@@ -152,14 +152,14 @@ export default {
 					allowProperties: {
 						type: "array",
 						items: {
-							type: "string",
+							enum: Array.from(propertiesReplacements.keys()),
 						},
 						uniqueItems: true,
 					},
 					allowUnits: {
 						type: "array",
 						items: {
-							type: "string",
+							enum: Array.from(unitReplacements.keys()),
 						},
 						uniqueItems: true,
 					},
