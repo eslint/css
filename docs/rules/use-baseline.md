@@ -105,7 +105,10 @@ This rule accepts an options object with the following properties:
     - change to `"newly"` to allow features that are at the Baseline newly available stage: features that have been supported on all core browsers for less than 30 months
     - set to a numeric baseline year, such as `2023`, to allow features that became Baseline newly available that year, or earlier
 - `allowAtRules` (default: `[]`) - Specify an array of at-rules that are allowed to be used.
+- `allowFunctions` (default: `[]`) - Specify an array of functions that are allowed to be used.
+- `allowMediaConditions` (default: `[]`) - Specify an array of media conditions inside `@media` that are allowed to be used.
 - `allowProperties` (default: `[]`) - Specify an array of properties that are allowed to be used.
+- `allowPropertyValues` (default: `{}`) - Specify an object mapping properties to an array of allowed identifier values for that property.
 - `allowSelectors` (default: `[]`) - Specify an array of selectors that are allowed to be used.
 
 #### `allowAtRules`
@@ -122,6 +125,32 @@ Examples of **correct** code with `{ allowAtRules: ["container"] }`:
 }
 ```
 
+#### `allowFunctions`
+
+Examples of **correct** code with `{ allowFunctions: ["color-mix"] }`:
+
+```css
+/* eslint css/use-baseline: ["error", { allowFunctions: ["color-mix"] }] */
+
+.selector {
+	color: color-mix(in srgb, plum, #123456);
+}
+```
+
+#### `allowMediaConditions`
+
+Examples of **correct** code with `{ allowMediaConditions: ["scripting"] }`:
+
+```css
+/* eslint css/use-baseline: ["error", { allowMediaConditions: ["scripting"] }] */
+
+@media (scripting: none) {
+	.selector {
+		color: red;
+	}
+}
+```
+
 #### `allowProperties`
 
 Examples of **correct** code with `{ allowProperties: ["user-select"] }`:
@@ -131,6 +160,18 @@ Examples of **correct** code with `{ allowProperties: ["user-select"] }`:
 
 .unselectable {
 	user-select: none;
+}
+```
+
+#### `allowPropertyValues`
+
+Examples of **correct** code with `{ allowPropertyValues: { "clip-path": ["fill-box"] } }`:
+
+```css
+/* eslint css/use-baseline: ["error", { allowPropertyValues: { "clip-path": ["fill-box"] } }] */
+
+.selector {
+	clip-path: fill-box;
 }
 ```
 

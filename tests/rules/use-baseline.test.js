@@ -123,6 +123,29 @@ ruleTester.run("use-baseline", rule, {
 			code: "a { accent-color: bar; backdrop-filter: auto }",
 			options: [{ allowProperties: ["accent-color", "backdrop-filter"] }],
 		},
+		{
+			code: "a { color: color-mix(in srgb, plum, #123456); }",
+			options: [{ allowFunctions: ["color-mix"] }],
+		},
+		{
+			code: "@media (scripting: none) { a { color: red; } }",
+			options: [{ allowMediaConditions: ["scripting"] }],
+		},
+		{
+			code: "a { clip-path: fill-box; }",
+			options: [{ allowPropertyValues: { "clip-path": ["fill-box"] } }],
+		},
+		{
+			code: ".a { clip-path: fill-box; }\n.b { clip-path: stroke-box; }\n.c { max-height: stretch; }",
+			options: [
+				{
+					allowPropertyValues: {
+						"clip-path": ["fill-box", "stroke-box"],
+						"max-height": ["stretch"],
+					},
+				},
+			],
+		},
 	],
 	invalid: [
 		{
@@ -601,6 +624,88 @@ ruleTester.run("use-baseline", rule, {
 					column: 3,
 					endLine: 2,
 					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: "a { width: abs(20% - 100px); }",
+			options: [{ allowFunctions: ["color-mix"] }],
+			errors: [
+				{
+					messageId: "notBaselineFunction",
+					data: {
+						function: "abs",
+						availability: "widely",
+					},
+					line: 1,
+					column: 12,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: "@media (inverted-colors: inverted) { a { color: red; } }",
+			options: [{ allowMediaConditions: ["scripting"] }],
+			errors: [
+				{
+					messageId: "notBaselineMediaCondition",
+					data: {
+						condition: "inverted-colors",
+						availability: "widely",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: "@supports (clip-path: fill-box) { a { clip-path: stroke-box; } }",
+			options: [{ allowPropertyValues: { "clip-path": ["fill-box"] } }],
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "clip-path",
+						value: "stroke-box",
+						availability: "widely",
+					},
+					line: 1,
+					column: 50,
+					endLine: 1,
+					endColumn: 60,
+				},
+			],
+		},
+		{
+			code: ".a { clip-path: fill-box; }\n.b { clip-path: stroke-box; }\n.c { max-height: stretch; }",
+			options: [{ allowPropertyValues: { "clip-path": ["fill-box"] } }],
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "clip-path",
+						value: "stroke-box",
+						availability: "widely",
+					},
+					line: 2,
+					column: 17,
+					endLine: 2,
+					endColumn: 27,
+				},
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "max-height",
+						value: "stretch",
+						availability: "widely",
+					},
+					line: 3,
+					column: 18,
+					endLine: 3,
+					endColumn: 25,
 				},
 			],
 		},
