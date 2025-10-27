@@ -39,6 +39,8 @@ export default {
 
 		return {
 			AnPlusB(node) {
+				// Either node.a or node.b can be null; Number(null) === 0.
+				// This coercion is intentional so that omitted coefficients are treated as 0.
 				const a = Number(node.a);
 				const b = Number(node.b);
 

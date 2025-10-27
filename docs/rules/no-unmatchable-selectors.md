@@ -6,6 +6,11 @@ Disallow unmatchable selectors.
 
 An unmatchable selector is one that can never match any element in any document. These are effectively dead code and usually indicate mistakes.
 
+For example:
+
+- `a:nth-child(0)` — the `An+B` formula never produces a positive position (≥ 1).
+- `a:nth-child(-n)` — a negative step with no offset never yields a positive position.
+
 ## Rule Details
 
 This rule reports selectors that can never match any element.
