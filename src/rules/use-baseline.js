@@ -439,45 +439,53 @@ export default {
 					allowAtRules: {
 						type: "array",
 						items: {
-							type: "string",
+							enum: Array.from(atRules.keys()),
 						},
 						uniqueItems: true,
 					},
 					allowFunctions: {
 						type: "array",
 						items: {
-							type: "string",
+							enum: Array.from(functions.keys()),
 						},
 						uniqueItems: true,
 					},
 					allowMediaConditions: {
 						type: "array",
 						items: {
-							type: "string",
+							enum: Array.from(mediaConditions.keys()),
 						},
 						uniqueItems: true,
 					},
 					allowProperties: {
 						type: "array",
 						items: {
-							type: "string",
+							enum: Array.from(properties.keys()),
 						},
 						uniqueItems: true,
 					},
 					allowPropertyValues: {
 						type: "object",
-						additionalProperties: {
-							type: "array",
-							items: {
-								type: "string",
-							},
-							uniqueItems: true,
-						},
+						properties: Object.fromEntries(
+							Array.from(propertyValues.entries()).map(
+								([prop, valuesMap]) => [
+									prop,
+									{
+										type: "array",
+										items: {
+											enum: Array.from(valuesMap.keys()),
+										},
+										uniqueItems: true,
+									},
+								],
+							),
+						),
+						additionalProperties: false,
 					},
 					allowSelectors: {
 						type: "array",
 						items: {
-							type: "string",
+							enum: Array.from(selectors.keys()),
 						},
 						uniqueItems: true,
 					},
