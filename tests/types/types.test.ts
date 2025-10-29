@@ -94,7 +94,10 @@ css.configs.recommended.plugins satisfies object;
 		sourceCode.lines satisfies string[];
 		sourceCode.text satisfies string;
 
-		function testVisitor<NodeType extends CssNodePlain>(node: NodeType) {
+		function testVisitor<NodeType extends CssNodePlain>(
+			node: NodeType,
+			parent?: CssNodePlain,
+		) {
 			sourceCode.getLoc(node) satisfies SourceLocation;
 			sourceCode.getLocFromIndex(0) satisfies {
 				line: number;
@@ -114,115 +117,137 @@ css.configs.recommended.plugins satisfies object;
 		}
 
 		return {
-			AnPlusB: node => testVisitor<AnPlusB>(node),
-			"AnPlusB:exit": node => testVisitor<AnPlusB>(node),
-			Atrule: node => testVisitor<AtrulePlain>(node),
-			"Atrule:exit": node => testVisitor<AtrulePlain>(node),
-			AtrulePrelude: node => testVisitor<AtrulePreludePlain>(node),
-			"AtrulePrelude:exit": node => testVisitor<AtrulePreludePlain>(node),
-			AttributeSelector: node => testVisitor<AttributeSelector>(node),
-			"AttributeSelector:exit": node =>
-				testVisitor<AttributeSelector>(node),
-			Block: node => testVisitor<BlockPlain>(node),
-			"Block:exit": node => testVisitor<BlockPlain>(node),
-			Brackets: node => testVisitor<BracketsPlain>(node),
-			"Brackets:exit": node => testVisitor<BracketsPlain>(node),
-			CDC: node => testVisitor<CDC>(node),
-			"CDC:exit": node => testVisitor<CDC>(node),
-			CDO: node => testVisitor<CDO>(node),
-			"CDO:exit": node => testVisitor<CDO>(node),
-			ClassSelector: node => testVisitor<ClassSelector>(node),
-			"ClassSelector:exit": node => testVisitor<ClassSelector>(node),
-			Combinator: node => testVisitor<Combinator>(node),
-			"Combinator:exit": node => testVisitor<Combinator>(node),
-			Comment: node => testVisitor<Comment>(node),
-			"Comment:exit": node => testVisitor<Comment>(node),
-			Condition: node => testVisitor<ConditionPlain>(node),
-			"Condition:exit": node => testVisitor<ConditionPlain>(node),
-			Declaration: node => testVisitor<DeclarationPlain>(node),
-			"Declaration:exit": node => testVisitor<DeclarationPlain>(node),
-			DeclarationList: node => testVisitor<DeclarationListPlain>(node),
-			"DeclarationList:exit": node =>
-				testVisitor<DeclarationListPlain>(node),
-			Dimension: node => testVisitor<Dimension>(node),
-			"Dimension:exit": node => testVisitor<Dimension>(node),
-			Feature: node => testVisitor<Feature>(node),
-			"Feature:exit": node => testVisitor<Feature>(node),
-			FeatureFunction: node => testVisitor<FeatureFunctionPlain>(node),
-			"FeatureFunction:exit": node =>
-				testVisitor<FeatureFunctionPlain>(node),
-			FeatureRange: node => testVisitor<FeatureRange>(node),
-			"FeatureRange:exit": node => testVisitor<FeatureRange>(node),
-			Function: node => testVisitor<FunctionNodePlain>(node),
-			"Function:exit": node => testVisitor<FunctionNodePlain>(node),
-			GeneralEnclosed: node => testVisitor<any>(node),
-			"GeneralEnclosed:exit": node => testVisitor<any>(node),
-			Hash: node => testVisitor<Hash>(node),
-			"Hash:exit": node => testVisitor<Hash>(node),
-			IdSelector: node => testVisitor<IdSelector>(node),
-			"IdSelector:exit": node => testVisitor<IdSelector>(node),
-			Identifier: node => testVisitor<Identifier>(node),
-			"Identifier:exit": node => testVisitor<Identifier>(node),
-			Layer: node => testVisitor<Layer>(node),
-			"Layer:exit": node => testVisitor<Layer>(node),
-			LayerList: node => testVisitor<LayerListPlain>(node),
-			"LayerList:exit": node => testVisitor<LayerListPlain>(node),
-			MediaFeature: node => testVisitor<MediaFeature>(node),
-			"MediaFeature:exit": node => testVisitor<MediaFeature>(node),
-			MediaQuery: node => testVisitor<MediaQueryPlain>(node),
-			"MediaQuery:exit": node => testVisitor<MediaQueryPlain>(node),
-			MediaQueryList: node => testVisitor<MediaQueryListPlain>(node),
-			"MediaQueryList:exit": node =>
-				testVisitor<MediaQueryListPlain>(node),
-			NestingSelector: node => testVisitor<NestingSelector>(node),
-			"NestingSelector:exit": node => testVisitor<NestingSelector>(node),
-			Nth: node => testVisitor<NthPlain>(node),
-			"Nth:exit": node => testVisitor<NthPlain>(node),
-			Number: node => testVisitor<NumberNode>(node),
-			"Number:exit": node => testVisitor<NumberNode>(node),
-			Operator: node => testVisitor<Operator>(node),
-			"Operator:exit": node => testVisitor<Operator>(node),
-			Parentheses: node => testVisitor<ParenthesesPlain>(node),
-			"Parentheses:exit": node => testVisitor<ParenthesesPlain>(node),
-			Percentage: node => testVisitor<Percentage>(node),
-			"Percentage:exit": node => testVisitor<Percentage>(node),
-			PseudoClassSelector: node =>
-				testVisitor<PseudoClassSelectorPlain>(node),
-			"PseudoClassSelector:exit": node =>
-				testVisitor<PseudoClassSelectorPlain>(node),
-			PseudoElementSelector: node =>
-				testVisitor<PseudoElementSelectorPlain>(node),
-			"PseudoElementSelector:exit": node =>
-				testVisitor<PseudoElementSelectorPlain>(node),
-			Ratio: node => testVisitor<Ratio>(node),
-			"Ratio:exit": node => testVisitor<Ratio>(node),
-			Raw: node => testVisitor<Raw>(node),
-			"Raw:exit": node => testVisitor<Raw>(node),
-			Rule: node => testVisitor<RulePlain>(node),
-			"Rule:exit": node => testVisitor<RulePlain>(node),
-			Scope: node => testVisitor<any>(node),
-			"Scope:exit": node => testVisitor<any>(node),
-			Selector: node => testVisitor<SelectorPlain>(node),
-			"Selector:exit": node => testVisitor<SelectorPlain>(node),
-			SelectorList: node => testVisitor<SelectorListPlain>(node),
-			"SelectorList:exit": node => testVisitor<SelectorListPlain>(node),
-			String: node => testVisitor<StringNode>(node),
-			"String:exit": node => testVisitor<StringNode>(node),
-			StyleSheet: node => testVisitor<StyleSheetPlain>(node),
-			"StyleSheet:exit": node => testVisitor<StyleSheetPlain>(node),
-			SupportsDeclaration: node => testVisitor<SupportsDeclaration>(node),
-			"SupportsDeclaration:exit": node =>
-				testVisitor<SupportsDeclaration>(node),
-			TypeSelector: node => testVisitor<TypeSelector>(node),
-			"TypeSelector:exit": node => testVisitor<TypeSelector>(node),
-			UnicodeRange: node => testVisitor<UnicodeRange>(node),
-			"UnicodeRange:exit": node => testVisitor<UnicodeRange>(node),
-			Url: node => testVisitor<Url>(node),
-			"Url:exit": node => testVisitor<Url>(node),
-			Value: node => testVisitor<ValuePlain>(node),
-			"Value:exit": node => testVisitor<ValuePlain>(node),
-			WhiteSpace: node => testVisitor<WhiteSpace>(node),
-			"WhiteSpace:exit": node => testVisitor<WhiteSpace>(node),
+			AnPlusB: (...args) => testVisitor<AnPlusB>(...args),
+			"AnPlusB:exit": (...args) => testVisitor<AnPlusB>(...args),
+			Atrule: (...args) => testVisitor<AtrulePlain>(...args),
+			"Atrule:exit": (...args) => testVisitor<AtrulePlain>(...args),
+			AtrulePrelude: (...args) =>
+				testVisitor<AtrulePreludePlain>(...args),
+			"AtrulePrelude:exit": (...args) =>
+				testVisitor<AtrulePreludePlain>(...args),
+			AttributeSelector: (...args) =>
+				testVisitor<AttributeSelector>(...args),
+			"AttributeSelector:exit": (...args) =>
+				testVisitor<AttributeSelector>(...args),
+			Block: (...args) => testVisitor<BlockPlain>(...args),
+			"Block:exit": (...args) => testVisitor<BlockPlain>(...args),
+			Brackets: (...args) => testVisitor<BracketsPlain>(...args),
+			"Brackets:exit": (...args) => testVisitor<BracketsPlain>(...args),
+			CDC: (...args) => testVisitor<CDC>(...args),
+			"CDC:exit": (...args) => testVisitor<CDC>(...args),
+			CDO: (...args) => testVisitor<CDO>(...args),
+			"CDO:exit": (...args) => testVisitor<CDO>(...args),
+			ClassSelector: (...args) => testVisitor<ClassSelector>(...args),
+			"ClassSelector:exit": (...args) =>
+				testVisitor<ClassSelector>(...args),
+			Combinator: (...args) => testVisitor<Combinator>(...args),
+			"Combinator:exit": (...args) => testVisitor<Combinator>(...args),
+			Comment: (...args) => testVisitor<Comment>(...args),
+			"Comment:exit": (...args) => testVisitor<Comment>(...args),
+			Condition: (...args) => testVisitor<ConditionPlain>(...args),
+			"Condition:exit": (...args) => testVisitor<ConditionPlain>(...args),
+			Declaration: (...args) => testVisitor<DeclarationPlain>(...args),
+			"Declaration:exit": (...args) =>
+				testVisitor<DeclarationPlain>(...args),
+			DeclarationList: (...args) =>
+				testVisitor<DeclarationListPlain>(...args),
+			"DeclarationList:exit": (...args) =>
+				testVisitor<DeclarationListPlain>(...args),
+			Dimension: (...args) => testVisitor<Dimension>(...args),
+			"Dimension:exit": (...args) => testVisitor<Dimension>(...args),
+			Feature: (...args) => testVisitor<Feature>(...args),
+			"Feature:exit": (...args) => testVisitor<Feature>(...args),
+			FeatureFunction: (...args) =>
+				testVisitor<FeatureFunctionPlain>(...args),
+			"FeatureFunction:exit": (...args) =>
+				testVisitor<FeatureFunctionPlain>(...args),
+			FeatureRange: (...args) => testVisitor<FeatureRange>(...args),
+			"FeatureRange:exit": (...args) =>
+				testVisitor<FeatureRange>(...args),
+			Function: (...args) => testVisitor<FunctionNodePlain>(...args),
+			"Function:exit": (...args) =>
+				testVisitor<FunctionNodePlain>(...args),
+			GeneralEnclosed: (...args) => testVisitor<any>(...args),
+			"GeneralEnclosed:exit": (...args) => testVisitor<any>(...args),
+			Hash: (...args) => testVisitor<Hash>(...args),
+			"Hash:exit": (...args) => testVisitor<Hash>(...args),
+			IdSelector: (...args) => testVisitor<IdSelector>(...args),
+			"IdSelector:exit": (...args) => testVisitor<IdSelector>(...args),
+			Identifier: (...args) => testVisitor<Identifier>(...args),
+			"Identifier:exit": (...args) => testVisitor<Identifier>(...args),
+			Layer: (...args) => testVisitor<Layer>(...args),
+			"Layer:exit": (...args) => testVisitor<Layer>(...args),
+			LayerList: (...args) => testVisitor<LayerListPlain>(...args),
+			"LayerList:exit": (...args) => testVisitor<LayerListPlain>(...args),
+			MediaFeature: (...args) => testVisitor<MediaFeature>(...args),
+			"MediaFeature:exit": (...args) =>
+				testVisitor<MediaFeature>(...args),
+			MediaQuery: (...args) => testVisitor<MediaQueryPlain>(...args),
+			"MediaQuery:exit": (...args) =>
+				testVisitor<MediaQueryPlain>(...args),
+			MediaQueryList: (...args) =>
+				testVisitor<MediaQueryListPlain>(...args),
+			"MediaQueryList:exit": (...args) =>
+				testVisitor<MediaQueryListPlain>(...args),
+			NestingSelector: (...args) => testVisitor<NestingSelector>(...args),
+			"NestingSelector:exit": (...args) =>
+				testVisitor<NestingSelector>(...args),
+			Nth: (...args) => testVisitor<NthPlain>(...args),
+			"Nth:exit": (...args) => testVisitor<NthPlain>(...args),
+			Number: (...args) => testVisitor<NumberNode>(...args),
+			"Number:exit": (...args) => testVisitor<NumberNode>(...args),
+			Operator: (...args) => testVisitor<Operator>(...args),
+			"Operator:exit": (...args) => testVisitor<Operator>(...args),
+			Parentheses: (...args) => testVisitor<ParenthesesPlain>(...args),
+			"Parentheses:exit": (...args) =>
+				testVisitor<ParenthesesPlain>(...args),
+			Percentage: (...args) => testVisitor<Percentage>(...args),
+			"Percentage:exit": (...args) => testVisitor<Percentage>(...args),
+			PseudoClassSelector: (...args) =>
+				testVisitor<PseudoClassSelectorPlain>(...args),
+			"PseudoClassSelector:exit": (...args) =>
+				testVisitor<PseudoClassSelectorPlain>(...args),
+			PseudoElementSelector: (...args) =>
+				testVisitor<PseudoElementSelectorPlain>(...args),
+			"PseudoElementSelector:exit": (...args) =>
+				testVisitor<PseudoElementSelectorPlain>(...args),
+			Ratio: (...args) => testVisitor<Ratio>(...args),
+			"Ratio:exit": (...args) => testVisitor<Ratio>(...args),
+			Raw: (...args) => testVisitor<Raw>(...args),
+			"Raw:exit": (...args) => testVisitor<Raw>(...args),
+			Rule: (...args) => testVisitor<RulePlain>(...args),
+			"Rule:exit": (...args) => testVisitor<RulePlain>(...args),
+			Scope: (...args) => testVisitor<any>(...args),
+			"Scope:exit": (...args) => testVisitor<any>(...args),
+			Selector: (...args) => testVisitor<SelectorPlain>(...args),
+			"Selector:exit": (...args) => testVisitor<SelectorPlain>(...args),
+			SelectorList: (...args) => testVisitor<SelectorListPlain>(...args),
+			"SelectorList:exit": (...args) =>
+				testVisitor<SelectorListPlain>(...args),
+			String: (...args) => testVisitor<StringNode>(...args),
+			"String:exit": (...args) => testVisitor<StringNode>(...args),
+			StyleSheet: (...args) => testVisitor<StyleSheetPlain>(...args),
+			"StyleSheet:exit": (...args) =>
+				testVisitor<StyleSheetPlain>(...args),
+			SupportsDeclaration: (...args) =>
+				testVisitor<SupportsDeclaration>(...args),
+			"SupportsDeclaration:exit": (...args) =>
+				testVisitor<SupportsDeclaration>(...args),
+			TypeSelector: (...args) => testVisitor<TypeSelector>(...args),
+			"TypeSelector:exit": (...args) =>
+				testVisitor<TypeSelector>(...args),
+			UnicodeRange: (...args) => testVisitor<UnicodeRange>(...args),
+			"UnicodeRange:exit": (...args) =>
+				testVisitor<UnicodeRange>(...args),
+			Url: (...args) => testVisitor<Url>(...args),
+			"Url:exit": (...args) => testVisitor<Url>(...args),
+			Value: (...args) => testVisitor<ValuePlain>(...args),
+			"Value:exit": (...args) => testVisitor<ValuePlain>(...args),
+			WhiteSpace: (...args) => testVisitor<WhiteSpace>(...args),
+			"WhiteSpace:exit": (...args) => testVisitor<WhiteSpace>(...args),
+
+			// Unknown selectors allowed
+			"Atrule[name=import]"(node: AtrulePlain, parent: CssNodePlain) {},
 		};
 	},
 });

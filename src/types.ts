@@ -13,7 +13,7 @@ import type {
 	RuleVisitor,
 } from "@eslint/core";
 
-import type { CssNodePlain, CssNodeNames } from "@eslint/css-tree";
+import type { CssNodePlain, StyleSheetPlain } from "@eslint/css-tree";
 
 import type { CSSLanguageOptions, CSSSourceCode } from "./index.js";
 
@@ -38,9 +38,9 @@ type WithExit<RuleVisitorType extends RuleVisitor> = {
 export type CSSSyntaxElement = CssNodePlain;
 
 type CSSNodeVisitor = {
-	[Type in CssNodeNames]: (
-		node: Extract<CssNodePlain, { type: Type }>,
-	) => void;
+	[Node in CssNodePlain as Node["type"]]: Node extends StyleSheetPlain
+		? ((node: Node) => void) | undefined
+		: ((node: Node, parent: CssNodePlain) => void) | undefined;
 };
 
 /**
@@ -62,7 +62,7 @@ export type CSSRuleDefinition<
 		LangOptions: CSSLanguageOptions;
 		Code: CSSSourceCode;
 		Visitor: CSSRuleVisitor;
-		Node: CssNodePlain;
+		Node: CSSSyntaxElement;
 	},
 	Options
 >;
