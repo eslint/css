@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.14.0](https://github.com/eslint/css/compare/css-v0.13.0...css-v0.14.0) (2025-10-29)
+
+
+### Features
+
+* add `allow*` options to `use-baseline` rule ([#310](https://github.com/eslint/css/issues/310)) ([e8dc57d](https://github.com/eslint/css/commit/e8dc57d91828150f8221de48065993c6478e02ca))
+* add `no-unmatchable-selectors` rule ([#301](https://github.com/eslint/css/issues/301)) ([adaa397](https://github.com/eslint/css/commit/adaa397db27c518d04bc2218f8a44dc088e06ddb))
+
+
+### Bug Fixes
+
+* correct message for functions in `use-baseline` rule ([#297](https://github.com/eslint/css/issues/297)) ([cc0dff7](https://github.com/eslint/css/commit/cc0dff76da0eb1e6c05c31cd8aecf3b6afa5bd0d))
+* disallow extra properties in rule options ([#299](https://github.com/eslint/css/issues/299)) ([baf36e2](https://github.com/eslint/css/commit/baf36e26728b512b32a6220f50183757ebbc9056))
+* enforce valid `allow*` values in `prefer-logical-properties` rule ([#311](https://github.com/eslint/css/issues/311)) ([23caee3](https://github.com/eslint/css/commit/23caee38eef8231e2bbdd4c2c651e0645440b85a))
+* update baseline data ([#296](https://github.com/eslint/css/issues/296)) ([0f6725f](https://github.com/eslint/css/commit/0f6725f17a97273b97ca62b2d25cee5ca212df83))
+* update baseline data ([#306](https://github.com/eslint/css/issues/306)) ([2f44739](https://github.com/eslint/css/commit/2f4473972a64eb18e64ae997cff8e45718a81b18))
+
 ## [0.13.0](https://github.com/eslint/css/compare/css-v0.12.0...css-v0.13.0) (2025-10-10)
 
 
