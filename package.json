@@ -97,7 +97,7 @@
     "eslint-plugin-eslint-plugin": "^6.3.2",
     "lint-staged": "^15.2.7",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.24.0",
+    "mdn-data": "^2.25.0",
     "mocha": "^11.0.0",
     "prettier": "^3.6.0",
     "rollup": "^4.52.3",
