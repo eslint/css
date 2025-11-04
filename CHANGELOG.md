@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.1](https://github.com/eslint/css/compare/css-v0.14.0...css-v0.14.1) (2025-11-04)
+
+
+### Bug Fixes
+
+* update baseline data ([61480f0](https://github.com/eslint/css/commit/61480f00ffe2e7812be183ec1642134154bfb105))
+
 ## [0.14.0](https://github.com/eslint/css/compare/css-v0.13.0...css-v0.14.0) (2025-10-29)
 
 
