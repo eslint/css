@@ -100,6 +100,7 @@ export default {
 		 * - Ensures the rule has a prelude
 		 * - Validates the prelude matches the expected pattern
 		 * @param {AtrulePlain} node The node representing the rule.
+		 * @returns {void}
 		 */
 		function validateCharsetRule(node) {
 			const { name, prelude, loc } = node;

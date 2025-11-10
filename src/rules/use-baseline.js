@@ -589,7 +589,7 @@ export default {
 		 * Checks a property value function to see if it's a baseline feature.
 		 * @param {FunctionNodePlain} child The node to check.
 		 * @returns {void}
-		 **/
+		 */
 		function checkPropertyValueFunction(child) {
 			if (allowFunctions.has(child.name)) {
 				return;

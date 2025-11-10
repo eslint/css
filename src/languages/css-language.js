@@ -54,7 +54,6 @@ const blockCloserTokenTypes = new Map([
 /**
  * Recursively replaces all function values in an object with boolean true.
  * Used to make objects serializable for JSON output.
- *
  * @param {Record<string,any>|unknown[]|unknown} object The object to process.
  * @returns {Record<string,any>|unknown[]|unknown} A copy of the object with all functions replaced by true.
  */

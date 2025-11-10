@@ -32,8 +32,8 @@ const varFunctionPattern = /var\(\s*(--[^,\s)]+)\s*(?:,([\s\S]+))?\)/iu;
 
 /**
  * Parses a var() function text and extracts the custom property name and fallback.
- * @param {string} text
- * @returns {{ name: string, fallbackText: string | null } | null}
+ * @param {string} text The text containing a var() function.
+ * @returns {{ name: string, fallbackText: string | null } | null} The parsed variable name and optional fallback, or null if not a var().
  */
 function parseVarFunction(text) {
 	const match = text.match(varFunctionPattern);
@@ -50,7 +50,7 @@ function parseVarFunction(text) {
  * Extracts the list of fallback value or variable name used in a `var()` that is used as fallback function.
  * For example, for `var(--my-color, var(--fallback-color, red));` it will return `["--fallback-color", "red"]`.
  * @param {string} value The fallback value that is used in `var()`.
- * @return {Array<string>} The list of variable names of fallback value.
+ * @returns {Array<string>} The list of variable names of fallback value.
  */
 function getVarFallbackList(value) {
 	const list = [];
@@ -220,10 +220,10 @@ export default {
 		/**
 		 * Resolves a fallback text which can contain nested var() calls.
 		 * Returns the first resolvable value or null if none resolve.
-		 * @param {string} rawFallbackText
-		 * @param {Map<string, string>} cache Cache for memoization within a single resolution scope
-		 * @param {Set<string>} [seen] Set of already seen variables to detect cycles
-		 * @returns {string | null}
+		 * @param {string} rawFallbackText The raw fallback text to resolve.
+		 * @param {Map<string, string>} cache Cache for memoization within a single resolution scope.
+		 * @param {Set<string>} [seen] Set of already seen variables to detect cycles.
+		 * @returns {string | null} The resolved fallback value, or null if none can be resolved.
 		 */
 		function resolveFallback(rawFallbackText, cache, seen = new Set()) {
 			const fallbackVarList = getVarFallbackList(rawFallbackText);
