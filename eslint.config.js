@@ -27,7 +27,7 @@ const eslintPluginTestsRecommendedConfig =
 //-----------------------------------------------------------------------------
 
 export default defineConfig([
-	globalIgnores(["dist/", "src/build/"], "css/global-ignores"),
+	globalIgnores(["coverage/", "dist/", "src/build/"], "css/global-ignores"),
 	{
 		name: "css/js",
 		files: ["**/*.js"],
