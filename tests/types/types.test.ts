@@ -167,8 +167,10 @@ css.configs.recommended.plugins satisfies object;
 			Function: (...args) => testVisitor<FunctionNodePlain>(...args),
 			"Function:exit": (...args) =>
 				testVisitor<FunctionNodePlain>(...args),
-			GeneralEnclosed: (...args) => testVisitor<any>(...args),
-			"GeneralEnclosed:exit": (...args) => testVisitor<any>(...args),
+			GeneralEnclosed: (node: any, parent: CssNodePlain) =>
+				testVisitor<any>(node, parent),
+			"GeneralEnclosed:exit": (node: any, parent: CssNodePlain) =>
+				testVisitor<any>(node, parent),
 			Hash: (...args) => testVisitor<Hash>(...args),
 			"Hash:exit": (...args) => testVisitor<Hash>(...args),
 			IdSelector: (...args) => testVisitor<IdSelector>(...args),
@@ -217,8 +219,10 @@ css.configs.recommended.plugins satisfies object;
 			"Raw:exit": (...args) => testVisitor<Raw>(...args),
 			Rule: (...args) => testVisitor<RulePlain>(...args),
 			"Rule:exit": (...args) => testVisitor<RulePlain>(...args),
-			Scope: (...args) => testVisitor<any>(...args),
-			"Scope:exit": (...args) => testVisitor<any>(...args),
+			Scope: (node: any, parent: CssNodePlain) =>
+				testVisitor<any>(node, parent),
+			"Scope:exit": (node: any, parent: CssNodePlain) =>
+				testVisitor<any>(node, parent),
 			Selector: (...args) => testVisitor<SelectorPlain>(...args),
 			"Selector:exit": (...args) => testVisitor<SelectorPlain>(...args),
 			SelectorList: (...args) => testVisitor<SelectorListPlain>(...args),
@@ -246,8 +250,18 @@ css.configs.recommended.plugins satisfies object;
 			WhiteSpace: (...args) => testVisitor<WhiteSpace>(...args),
 			"WhiteSpace:exit": (...args) => testVisitor<WhiteSpace>(...args),
 
-			// Unknown selectors allowed
+			// Combined selectors allowed
 			"Atrule[name=import]"(node: AtrulePlain, parent: CssNodePlain) {},
+			"*"(node: CssNodePlain) {},
+			"Selector:first-child"(node: SelectorPlain) {},
+			"Selector:last-child"(node: SelectorPlain) {},
+			"Value Number"(node: NumberNode) {},
+			"String, Number"(node: StringNode | NumberNode) {},
+
+			// Unknown selectors allowed
+			ForStatement(node) {},
+			Unknown(node) {},
+			ValueNode(node) {},
 		};
 	},
 });
