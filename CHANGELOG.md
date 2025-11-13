@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.14.2](https://github.com/eslint/css/compare/css-v0.14.1...css-v0.14.2) (2025-11-13)
+
+
+### Bug Fixes
+
+* correct parent typing for rule visitors ([#313](https://github.com/eslint/css/issues/313)) ([17046d0](https://github.com/eslint/css/commit/17046d0178272e2b12291d32176bcbc9326795a5))
+* update baseline data ([#321](https://github.com/eslint/css/issues/321)) ([61090f9](https://github.com/eslint/css/commit/61090f9243ee3dbb74ff53ce3db405ff31ad0ea1))
+
 ## [0.14.1](https://github.com/eslint/css/compare/css-v0.14.0...css-v0.14.1) (2025-11-04)
 
 
