@@ -6,21 +6,8 @@ on:
 
 jobs:
     update-baseline:
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
         runs-on: ubuntu-latest
         steps:
-            # We are using our GitHub Bot App to create the PR.
-            # This ensures that other workflows triggered by
-            # PR creation will run as expected.
-            # The GitHub Bot App is configured in the organization settings.
-            - uses: actions/create-github-app-token@v2
-              id: generate-token
-              with:
-                  app-id: ${{ vars.BOT_APP_ID }}
-                  private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
-
             - uses: actions/checkout@v5
             - name: Setup Node.js
               uses: actions/setup-node@v6
@@ -39,7 +26,7 @@ jobs:
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v7
               with:
-                  token: ${{ steps.generate-token.outputs.token }}
+                  token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}
                   commit-message: "fix: update baseline data"
                   title: "fix: update baseline data"
                   branch: update-baseline-data
