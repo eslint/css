@@ -528,6 +528,7 @@ export const atRules = new Map([
 	["container", "10:2023"],
 	["counter-style", "5:2023"],
 	["view-transition", "0:"],
+	["custom-media", "0:"],
 	["font-face", "10:2015"],
 	["font-palette-values", "10:2022"],
 	["font-feature-values", "10:2023"],
@@ -932,6 +933,7 @@ export const propertyValues = new Map([
 		"justify-items",
 		new Map([
 			["anchor-center", "0:"],
+			["center", "10:2020"],
 			["left", "10:2020"],
 			["legacy", "10:2020"],
 			["right", "10:2020"],

@@ -106,7 +106,7 @@
     "rollup-plugin-delete": "^3.0.1",
     "tailwind-csstree": "^0.1.0",
     "typescript": "^5.9.2",
-    "web-features": "^3.9.1",
+    "web-features": "^3.9.2",
     "yorkie": "^2.0.0"
   },
   "engines": {
