@@ -187,6 +187,58 @@ ruleTester.run("no-invalid-properties", rule, {
 		// 		},
 		// 	},
 		// },
+
+		"a { color: rgb(from currentColor r g b / 0.1) }",
+		"a { color: rgb(from green r g b / 0.5) }",
+		"a { color: rgb(from #123456 calc(r + 40) calc(g + 40) b) }",
+		"a { color: rgb(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
+		"a { color: rgb(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgb(from hsl(0 100% 50% / 0.8) r g b / alpha) }",
+		"a { color: rgb(from hsl(0 100% 50% / 0.8) r g b / 0.5) }",
+		"a { color: rgb(from hsl(0 100% 50%) calc(r/2) calc(g + 25) calc(b + 175) / calc(alpha - 0.1)) }",
+
+		"a { color: rgba(from green r g b / 0.5) }",
+		"a { color: rgba(from #123456 calc(r + 40) calc(g + 40) b) }",
+		"a { color: rgba(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
+		"a { color: rgba(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgba(from hsl(0 100% 50% / 0.8) r g b / alpha) }",
+		"a { color: rgba(from hsl(0 100% 50%) calc(r/2) calc(g + 25) calc(b + 175) / calc(alpha - 0.1)) }",
+
+		// Allow 'none' in relative color channels and alpha
+
+		// Legacy/modern rgb/rgba with 'none' channels and alpha
+		"a { color: rgb(255 none 0) }",
+		"a { color: rgb(10% 20% none / none) }",
+		"a { color: rgb(none none none / none) }",
+		"a { color: rgb(10 20 30 / none) }",
+
+		// Additional relative rgb/rgba sources
+
+		"a { color: rgba(from oklab(0.5 0.1 -0.1) r g b / alpha) }",
+
+		// Relative colors for HSL/HSLA
+		"a { color: hsl(from currentColor h s l) }",
+		"a { color: hsl(from #123456 h s l / alpha) }",
+		"a { color: hsl(from rgb(10 20 30 / 0.6) h s l / 0.5) }",
+		"a { color: hsla(from green h s l / none) }",
+
+		// Relative colors for HWB
+		"a { color: hwb(from hsl(0 100% 50%) h w b) }",
+		"a { color: hwb(from #123456 h w b / 0.5) }",
+		"a { color: hwb(from currentColor h none b / none) }",
+
+		// Relative colors for Lab/LCH
+		"a { color: lab(from hsl(0 100% 50%) l a b) }",
+		"a { color: lch(from currentColor l c h / alpha) }",
+		"a { color: lch(from #123456 l c h) }",
+
+		// Relative colors for OKLab/OKLCH
+		"a { color: oklab(from #123456 l a b / 0.8) }",
+		"a { color: oklab(from currentColor l a b) }",
+		"a { color: oklch(from currentColor l c h / alpha) }",
+
+		// color() with alpha none allowed
+		"a { color: color(display-p3 1 0.5 0.25 / none) }",
 	],
 	invalid: [
 		{
