@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.0.0](https://github.com/eslint/css/compare/css-v0.14.1...css-v1.0.0) (2025-11-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* Bump to v1.0.0
+* Require Node.js ^20.19.0 || ^22.13.0 || >=24 ([#302](https://github.com/eslint/css/issues/302))
+
+### Features
+
+* Bump to v1.0.0 ([050bde3](https://github.com/eslint/css/commit/050bde330dcee1c4b9877dfe610c7e7cc9933cb6))
+* Require Node.js ^20.19.0 || ^22.13.0 || &gt;=24 ([#302](https://github.com/eslint/css/issues/302)) ([a1eb7f5](https://github.com/eslint/css/commit/a1eb7f588d791a0d484ca76d7305941d93e98462))
+
+
+### Bug Fixes
+
+* correct parent typing for rule visitors ([#313](https://github.com/eslint/css/issues/313)) ([17046d0](https://github.com/eslint/css/commit/17046d0178272e2b12291d32176bcbc9326795a5))
+* update baseline data ([#321](https://github.com/eslint/css/issues/321)) ([61090f9](https://github.com/eslint/css/commit/61090f9243ee3dbb74ff53ce3db405ff31ad0ea1))
+* update baseline data ([#326](https://github.com/eslint/css/issues/326)) ([cddbf92](https://github.com/eslint/css/commit/cddbf92dc3d66b392234bcff40224aab89e09d26))
+* update baseline data ([#332](https://github.com/eslint/css/issues/332)) ([85254d4](https://github.com/eslint/css/commit/85254d4b2d2a17d7acc24e35f21f4e6227fd95f9))
+
+
+### Miscellaneous Chores
+
+* Fix release version ([2325732](https://github.com/eslint/css/commit/23257323727f2b3c34c9b4ac2b438e11b36b716e))
+
 ## [0.14.1](https://github.com/eslint/css/compare/css-v0.14.0...css-v0.14.1) (2025-11-04)
 
 
