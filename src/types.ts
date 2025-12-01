@@ -47,8 +47,7 @@ type CSSNodeVisitor = {
  * A visitor for CSS nodes.
  */
 export interface CSSRuleVisitor
-	extends RuleVisitor,
-		Partial<WithExit<CSSNodeVisitor>> {}
+	extends RuleVisitor, Partial<WithExit<CSSNodeVisitor>> {}
 
 export type CSSRuleDefinitionTypeOptions = CustomRuleTypeDefinitions;
 
