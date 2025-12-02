@@ -27,6 +27,7 @@ const plugin = {
 	rules,
 	configs: {
 		recommended: {
+			name: "@eslint/css/recommended",
 			plugins: {},
 			rules: recommendedRules,
 		},

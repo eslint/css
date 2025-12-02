@@ -36,6 +36,10 @@ describe("Package exports", () => {
 		]);
 	});
 
+	it("has a `configs.recommended.name` property", () => {
+		assert.ok(exports.default.configs.recommended.name);
+	});
+
 	it("has all available rules exported in the ESLint plugin", async () => {
 		const allRules = (await fs.readdir(rulesDir))
 			.filter(name => name.endsWith(".js"))
