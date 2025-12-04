@@ -188,57 +188,84 @@ ruleTester.run("no-invalid-properties", rule, {
 		// 	},
 		// },
 
-		"a { color: rgb(from currentColor r g b / 0.1) }",
-		"a { color: rgb(from green r g b / 0.5) }",
+		// relative rgb() values
+		"a { color: rgb(25 25 25 / 50%) }",
+		"a { color: rgb(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgb(from hsl(0 100% 50%) 132 132 224) }",
 		"a { color: rgb(from #123456 calc(r + 40) calc(g + 40) b) }",
 		"a { color: rgb(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
-		"a { color: rgb(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgb(from hsl(0 100% 50%) r 80 80) }",
 		"a { color: rgb(from hsl(0 100% 50% / 0.8) r g b / alpha) }",
 		"a { color: rgb(from hsl(0 100% 50% / 0.8) r g b / 0.5) }",
 		"a { color: rgb(from hsl(0 100% 50%) calc(r/2) calc(g + 25) calc(b + 175) / calc(alpha - 0.1)) }",
 
-		"a { color: rgba(from green r g b / 0.5) }",
+		// relative rgba() values
+		"a { color: rgba(25 25 25 / 50%) }",
+		"a { color: rgba(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgba(from hsl(0 100% 50%) 132 132 224) }",
 		"a { color: rgba(from #123456 calc(r + 40) calc(g + 40) b) }",
 		"a { color: rgba(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
-		"a { color: rgba(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgba(from hsl(0 100% 50%) r 80 80) }",
 		"a { color: rgba(from hsl(0 100% 50% / 0.8) r g b / alpha) }",
+		"a { color: rgba(from hsl(0 100% 50% / 0.8) r g b / 0.5) }",
 		"a { color: rgba(from hsl(0 100% 50%) calc(r/2) calc(g + 25) calc(b + 175) / calc(alpha - 0.1)) }",
 
-		// Allow 'none' in relative color channels and alpha
+		// relative hsl() values
+		"a { color: hsl(50 80% 40%) }",
+		"a { color: hsl(150deg 30% 60%) }",
+		"a { color: hsl(0.3turn 60% 45% / 0.7) }",
+		"a { color: hsl(0 80% 50% / 25%) }",
+		"a { color: hsl(none 75% 25%) }",
+		"a { color: hsl(from green h s l / 0.5) }",
+		"a { color: hsl(from #123456 h s calc(l + 20)) }",
+		"a { color: hsl(from rgb(200 0 0) calc(h + 30) s calc(l + 30)) }",
 
-		// Legacy/modern rgb/rgba with 'none' channels and alpha
-		"a { color: rgb(255 none 0) }",
-		"a { color: rgb(10% 20% none / none) }",
-		"a { color: rgb(none none none / none) }",
-		"a { color: rgb(10 20 30 / none) }",
+		// relative hsla() values
+		"a { color: hsla(50 80% 40%) }",
+		"a { color: hsla(150deg 30% 60%) }",
+		"a { color: hsla(0.3turn 60% 45% / 0.7) }",
+		"a { color: hsla(0 80% 50% / 25%) }",
+		"a { color: hsla(none 75% 25%) }",
+		"a { color: hsla(from green h s l / 0.5) }",
+		"a { color: hsla(from #123456 h s calc(l + 20)) }",
+		"a { color: hsla(from rgb(200 0 0) calc(h + 30) s calc(l + 30)) }",
 
-		// Additional relative rgb/rgba sources
+		// relative hwb() values
+		"a { color: hwb(12 50% 0%) }",
+		"a { color: hwb(50deg 30% 40%) }",
+		"a { color: hwb(0.5turn 10% 0% / 0.5) }",
+		"a { color: hwb(0 100% 0% / 50%) }",
+		"a { color: hwb(from green h w b / 0.5) }",
+		"a { color: hwb(from #123456 h calc(w + 30) b) }",
+		"a { color: hwb(from lch(40% 70 240deg) h w calc(b - 30)) }",
 
-		"a { color: rgba(from oklab(0.5 0.1 -0.1) r g b / alpha) }",
+		// relative lab() values
+		"a { color: lab(29.2345% 39.3825 20.0664) }",
+		"a { color: lab(52.2345% 40.1645 59.9971 / .5) }",
+		"a { color: lab(from green l a b / 0.5) }",
+		"a { color: lab(from #123456 calc(l + 10) a b) }",
+		"a { color: lab(from hsl(180 100% 50%) calc(l - 10) a b) }",
 
-		// Relative colors for HSL/HSLA
-		"a { color: hsl(from currentColor h s l) }",
-		"a { color: hsl(from #123456 h s l / alpha) }",
-		"a { color: hsl(from rgb(10 20 30 / 0.6) h s l / 0.5) }",
-		"a { color: hsla(from green h s l / none) }",
+		// relative oklab() values
+		"a { color: oklab(29.2345% 39.3825 20.0664) }",
+		"a { color: oklab(52.2345% 40.1645 59.9971 / .5) }",
+		"a { color: oklab(from green l a b / 0.5) }",
+		"a { color: oklab(from #123456 calc(l + 10) a b) }",
+		"a { color: oklab(from hsl(180 100% 50%) calc(l - 10) a b) }",
 
-		// Relative colors for HWB
-		"a { color: hwb(from hsl(0 100% 50%) h w b) }",
-		"a { color: hwb(from #123456 h w b / 0.5) }",
-		"a { color: hwb(from currentColor h none b / none) }",
+		// relative lch() values
+		"a { color: lch(29.2345% 44.2 27) }",
+		"a { color: lch(52.2345% 72.2 56.2 / .5) }",
+		"a { color: lch(from green l c h / 0.5) }",
+		"a { color: lch(from #123456 calc(l + 10) c h) }",
+		"a { color: lch(from hsl(180 100% 50%) calc(l - 10) c h) }",
 
-		// Relative colors for Lab/LCH
-		"a { color: lab(from hsl(0 100% 50%) l a b) }",
-		"a { color: lch(from currentColor l c h / alpha) }",
-		"a { color: lch(from #123456 l c h) }",
-
-		// Relative colors for OKLab/OKLCH
-		"a { color: oklab(from #123456 l a b / 0.8) }",
-		"a { color: oklab(from currentColor l a b) }",
-		"a { color: oklch(from currentColor l c h / alpha) }",
-
-		// color() with alpha none allowed
-		"a { color: color(display-p3 1 0.5 0.25 / none) }",
+		// relative oklch() values
+		"a { color: oklch(29.2345% 44.2 27) }",
+		"a { color: oklch(52.2345% 72.2 56.2 / .5) }",
+		"a { color: oklch(from green l c h / 0.5) }",
+		"a { color: oklch(from #123456 calc(l + 10) c h) }",
+		"a { color: oklch(from hsl(180 100% 50%) calc(l - 10) c h) }",
 	],
 	invalid: [
 		{
