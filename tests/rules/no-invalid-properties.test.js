@@ -187,6 +187,85 @@ ruleTester.run("no-invalid-properties", rule, {
 		// 		},
 		// 	},
 		// },
+
+		// relative rgb() values
+		"a { color: rgb(25 25 25 / 50%) }",
+		"a { color: rgb(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgb(from hsl(0 100% 50%) 132 132 224) }",
+		"a { color: rgb(from #123456 calc(r + 40) calc(g + 40) b) }",
+		"a { color: rgb(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
+		"a { color: rgb(from hsl(0 100% 50%) r 80 80) }",
+		"a { color: rgb(from hsl(0 100% 50% / 0.8) r g b / alpha) }",
+		"a { color: rgb(from hsl(0 100% 50% / 0.8) r g b / 0.5) }",
+		"a { color: rgb(from hsl(0 100% 50%) calc(r/2) calc(g + 25) calc(b + 175) / calc(alpha - 0.1)) }",
+
+		// relative rgba() values
+		"a { color: rgba(25 25 25 / 50%) }",
+		"a { color: rgba(from hsl(0 100% 50%) r g b) }",
+		"a { color: rgba(from hsl(0 100% 50%) 132 132 224) }",
+		"a { color: rgba(from #123456 calc(r + 40) calc(g + 40) b) }",
+		"a { color: rgba(from hwb(120deg 10% 20%) r g calc(b + 200)) }",
+		"a { color: rgba(from hsl(0 100% 50%) r 80 80) }",
+		"a { color: rgba(from hsl(0 100% 50% / 0.8) r g b / alpha) }",
+		"a { color: rgba(from hsl(0 100% 50% / 0.8) r g b / 0.5) }",
+		"a { color: rgba(from hsl(0 100% 50%) calc(r/2) calc(g + 25) calc(b + 175) / calc(alpha - 0.1)) }",
+
+		// relative hsl() values
+		"a { color: hsl(50 80% 40%) }",
+		"a { color: hsl(150deg 30% 60%) }",
+		"a { color: hsl(0.3turn 60% 45% / 0.7) }",
+		"a { color: hsl(0 80% 50% / 25%) }",
+		"a { color: hsl(none 75% 25%) }",
+		"a { color: hsl(from green h s l / 0.5) }",
+		"a { color: hsl(from #123456 h s calc(l + 20)) }",
+		"a { color: hsl(from rgb(200 0 0) calc(h + 30) s calc(l + 30)) }",
+
+		// relative hsla() values
+		"a { color: hsla(50 80% 40%) }",
+		"a { color: hsla(150deg 30% 60%) }",
+		"a { color: hsla(0.3turn 60% 45% / 0.7) }",
+		"a { color: hsla(0 80% 50% / 25%) }",
+		"a { color: hsla(none 75% 25%) }",
+		"a { color: hsla(from green h s l / 0.5) }",
+		"a { color: hsla(from #123456 h s calc(l + 20)) }",
+		"a { color: hsla(from rgb(200 0 0) calc(h + 30) s calc(l + 30)) }",
+
+		// relative hwb() values
+		"a { color: hwb(12 50% 0%) }",
+		"a { color: hwb(50deg 30% 40%) }",
+		"a { color: hwb(0.5turn 10% 0% / 0.5) }",
+		"a { color: hwb(0 100% 0% / 50%) }",
+		"a { color: hwb(from green h w b / 0.5) }",
+		"a { color: hwb(from #123456 h calc(w + 30) b) }",
+		"a { color: hwb(from lch(40% 70 240deg) h w calc(b - 30)) }",
+
+		// relative lab() values
+		"a { color: lab(29.2345% 39.3825 20.0664) }",
+		"a { color: lab(52.2345% 40.1645 59.9971 / .5) }",
+		"a { color: lab(from green l a b / 0.5) }",
+		"a { color: lab(from #123456 calc(l + 10) a b) }",
+		"a { color: lab(from hsl(180 100% 50%) calc(l - 10) a b) }",
+
+		// relative oklab() values
+		"a { color: oklab(29.2345% 39.3825 20.0664) }",
+		"a { color: oklab(52.2345% 40.1645 59.9971 / .5) }",
+		"a { color: oklab(from green l a b / 0.5) }",
+		"a { color: oklab(from #123456 calc(l + 10) a b) }",
+		"a { color: oklab(from hsl(180 100% 50%) calc(l - 10) a b) }",
+
+		// relative lch() values
+		"a { color: lch(29.2345% 44.2 27) }",
+		"a { color: lch(52.2345% 72.2 56.2 / .5) }",
+		"a { color: lch(from green l c h / 0.5) }",
+		"a { color: lch(from #123456 calc(l + 10) c h) }",
+		"a { color: lch(from hsl(180 100% 50%) calc(l - 10) c h) }",
+
+		// relative oklch() values
+		"a { color: oklch(29.2345% 44.2 27) }",
+		"a { color: oklch(52.2345% 72.2 56.2 / .5) }",
+		"a { color: oklch(from green l c h / 0.5) }",
+		"a { color: oklch(from #123456 calc(l + 10) c h) }",
+		"a { color: oklch(from hsl(180 100% 50%) calc(l - 10) c h) }",
 	],
 	invalid: [
 		{
