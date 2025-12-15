@@ -10,6 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             id-token: write
+            models: read
         steps:
             - uses: googleapis/release-please-action@v4
               id: release
