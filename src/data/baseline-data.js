@@ -294,7 +294,7 @@ export const properties = new Map([
 	["mask-repeat", "5:2023"],
 	["mask-size", "5:2023"],
 	["math-depth", "0:"],
-	["math-shift", "0:"],
+	["math-shift", "5:2025"],
 	["math-style", "5:2023"],
 	["max-height", "10:2015"],
 	["max-width", "10:2015"],
@@ -405,7 +405,8 @@ export const properties = new Map([
 	["scroll-snap-align", "10:2020"],
 	["scroll-snap-stop", "10:2022"],
 	["scroll-snap-type", "10:2022"],
-	["scrollbar-color", "0:"],
+	["scroll-target-group", "0:"],
+	["scrollbar-color", "5:2025"],
 	["scrollbar-gutter", "5:2024"],
 	["scrollbar-width", "5:2024"],
 	["shape-image-threshold", "10:2020"],
@@ -757,6 +758,9 @@ export const selectors = new Map([
 	["root", "10:2015"],
 	["scope", "10:2020"],
 	["scroll-button", "0:"],
+	["target-after", "0:"],
+	["target-before", "0:"],
+	["target-current", "0:"],
 	["scroll-marker", "0:"],
 	["scroll-marker-group", "0:"],
 	["selection", "0:"],
@@ -1081,7 +1085,13 @@ export const propertyValues = new Map([
 	],
 	["place-items", new Map([["anchor-center", "0:"]])],
 	["place-self", new Map([["anchor-center", "0:"]])],
-	["position-anchor", new Map([["auto", "0:"]])],
+	[
+		"position-anchor",
+		new Map([
+			["auto", "0:"],
+			["none", "0:"],
+		]),
+	],
 	[
 		"position-area",
 		new Map([
@@ -1112,6 +1122,8 @@ export const propertyValues = new Map([
 			["span-end", "0:"],
 			["span-inline-end", "0:"],
 			["span-inline-start", "0:"],
+			["span-left", "0:"],
+			["span-right", "0:"],
 			["span-self-block-end", "0:"],
 			["span-self-block-start", "0:"],
 			["span-self-end", "0:"],
@@ -1144,6 +1156,14 @@ export const propertyValues = new Map([
 			["flip-start", "0:"],
 			["none", "0:"],
 			["position-area", "0:"],
+			["self-x-end", "0:"],
+			["self-x-start", "0:"],
+			["self-y-end", "0:"],
+			["self-y-start", "0:"],
+			["span-self-x-end", "0:"],
+			["span-self-x-start", "0:"],
+			["span-self-y-end", "0:"],
+			["span-self-y-start", "0:"],
 		]),
 	],
 	[
@@ -1154,6 +1174,19 @@ export const propertyValues = new Map([
 			["most-inline-size", "0:"],
 			["most-width", "0:"],
 			["normal", "0:"],
+		]),
+	],
+	[
+		"position-try",
+		new Map([
+			["self-x-end", "0:"],
+			["self-x-start", "0:"],
+			["self-y-end", "0:"],
+			["self-y-start", "0:"],
+			["span-self-x-end", "0:"],
+			["span-self-x-start", "0:"],
+			["span-self-y-end", "0:"],
+			["span-self-y-start", "0:"],
 		]),
 	],
 	[
@@ -1739,16 +1772,17 @@ export const propertyValues = new Map([
 	["contain-intrinsic-inline-size", new Map([["none", "5:2023"]])],
 	["contain-intrinsic-size", new Map([["none", "5:2023"]])],
 	["contain-intrinsic-width", new Map([["none", "5:2023"]])],
-	["container-name", new Map([["none", "10:2023"]])],
 	[
 		"container-type",
 		new Map([
+			["anchored", "0:"],
 			["inline-size", "10:2023"],
 			["normal", "10:2023"],
 			["size", "10:2023"],
 			["scroll-state", "0:"],
 		]),
 	],
+	["container-name", new Map([["none", "10:2023"]])],
 	[
 		"content",
 		new Map([
@@ -2867,7 +2901,14 @@ export const propertyValues = new Map([
 			["y", "10:2022"],
 		]),
 	],
-	["scrollbar-color", new Map([["auto", "0:"]])],
+	[
+		"scroll-target-group",
+		new Map([
+			["auto", "0:"],
+			["none", "0:"],
+		]),
+	],
+	["scrollbar-color", new Map([["auto", "5:2025"]])],
 	[
 		"scrollbar-gutter",
 		new Map([
@@ -3067,11 +3108,11 @@ export const propertyValues = new Map([
 	[
 		"text-decoration-line",
 		new Map([
-			["grammar-error", "0:"],
+			["grammar-error", "5:2025"],
 			["line-through", "10:2020"],
 			["none", "10:2020"],
 			["overline", "10:2020"],
-			["spelling-error", "0:"],
+			["spelling-error", "5:2025"],
 			["underline", "10:2020"],
 			["blink", "0:"],
 		]),
