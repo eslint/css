@@ -269,6 +269,8 @@ ruleTester.run("no-invalid-properties", rule, {
 
 		// https://github.com/eslint/css/issues/250
 		"main { p:first-of-type { margin-top: 0; } }",
+		"main { p:hover { color: red; } }",
+		"main { p:nth-child(2n) { color: red; } }",
 	],
 	invalid: [
 		{
