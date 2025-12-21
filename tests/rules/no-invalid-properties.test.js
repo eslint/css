@@ -266,6 +266,9 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { color: oklch(from green l c h / 0.5) }",
 		"a { color: oklch(from #123456 calc(l + 10) c h) }",
 		"a { color: oklch(from hsl(180 100% 50%) calc(l - 10) c h) }",
+
+		// https://github.com/eslint/css/issues/250
+		"main { p:first-of-type { margin-top: 0; } }",
 	],
 	invalid: [
 		{
