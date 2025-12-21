@@ -12,6 +12,7 @@ import eslintPlugin from "eslint-plugin-eslint-plugin";
 import globals from "globals";
 import json from "@eslint/json";
 import { defineConfig, globalIgnores } from "eslint/config";
+import css from "./src/index.js";
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -103,5 +104,12 @@ export default defineConfig([
 		files: ["**/*.json", ".c8rc"],
 		language: "json/json",
 		extends: ["json/recommended"],
+	},
+	{
+		name: "css/css",
+		files: ["**/*.css"],
+		language: "css/css",
+		plugins: { css },
+		extends: ["css/recommended"],
 	},
 ]);
