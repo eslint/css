@@ -71,7 +71,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@eslint/core": "^1.0.1",
-    "@eslint/css-tree": "^3.6.8",
+    "@eslint/css-tree": "https://github.com/SwetaTanwar/csstree/tree/nested-parsing",
     "@eslint/plugin-kit": "^0.5.1"
   },
   "devDependencies": {
