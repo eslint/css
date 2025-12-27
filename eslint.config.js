@@ -105,11 +105,12 @@ export default defineConfig([
 		language: "json/json",
 		extends: ["json/recommended"],
 	},
+        // This CSS configuration is mainly used to validate the `test.css` file for local testing.
 	{
 		name: "css/css",
+		plugins: { css },
 		files: ["**/*.css"],
 		language: "css/css",
-		plugins: { css },
 		extends: ["css/recommended"],
 	},
 ]);
