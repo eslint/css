@@ -12,6 +12,7 @@ import eslintPlugin from "eslint-plugin-eslint-plugin";
 import globals from "globals";
 import json from "@eslint/json";
 import { defineConfig, globalIgnores } from "eslint/config";
+import css from "./src/index.js";
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -103,5 +104,13 @@ export default defineConfig([
 		files: ["**/*.json", ".c8rc"],
 		language: "json/json",
 		extends: ["json/recommended"],
+	},
+	// This CSS configuration is mainly used to validate the `test.css` file for local testing.
+	{
+		name: "css/css",
+		plugins: { css },
+		files: ["**/*.css"],
+		language: "css/css",
+		extends: ["css/recommended"],
 	},
 ]);
