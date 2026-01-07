@@ -228,15 +228,12 @@ export class CSSLanguage {
 		const errors = [];
 
 		const { tolerant } = languageOptions;
-
-		// Convert function-based customSyntax to object if needed
-		let customSyntax = languageOptions.customSyntax;
-		if (typeof customSyntax === "function") {
-			customSyntax = customSyntax(defaultSyntax);
-		}
-
-		const { parse, lexer } = customSyntax
-			? fork(customSyntax)
+		const { parse, lexer } = languageOptions.customSyntax
+			? fork(
+					/** @type {Partial<SyntaxConfig>} */ (
+						languageOptions.customSyntax
+					),
+				)
 			: { parse: originalParse, lexer: originalLexer };
 
 		/*

@@ -105,12 +105,23 @@ describe("CSSLanguage", () => {
 
 		it("should use function-based custom syntax when provided", () => {
 			const language = new CSSLanguage();
-			const customSyntaxFn = (defaultSyntax) => ({
-				...defaultSyntax,
-				properties: {
-					...defaultSyntax.properties,
-					"-custom-prop": "<length>",
-				},
+			/**
+			 * Test helper function to create custom syntax.
+			 * @param {Object} defaultSyntax The default syntax configuration.
+			 * @returns {Object} Extended syntax configuration.
+			 */
+			function customSyntaxFn(defaultSyntax) {
+				return {
+					...defaultSyntax,
+					properties: {
+						...defaultSyntax.properties,
+						"-custom-prop": "<length>",
+					},
+				};
+			}
+
+			const languageOptions = language.normalizeLanguageOptions({
+				customSyntax: customSyntaxFn,
 			});
 
 			const result = language.parse(
@@ -118,7 +129,7 @@ describe("CSSLanguage", () => {
 					body: "a { -custom-prop: 5px; }",
 					path: "test.css",
 				},
-				{ languageOptions: { customSyntax: customSyntaxFn } },
+				{ languageOptions },
 			);
 
 			assert.strictEqual(result.ok, true);
@@ -354,13 +365,20 @@ describe("CSSLanguage", () => {
 
 		it("should convert function-based customSyntax to object", () => {
 			const language = new CSSLanguage();
-			const customSyntaxFn = (defaultSyntax) => ({
-				...defaultSyntax,
-				properties: {
-					...defaultSyntax.properties,
-					"-custom-prop": "<length>",
-				},
-			});
+			/**
+			 * Test helper function to create custom syntax.
+			 * @param {Object} defaultSyntax The default syntax configuration.
+			 * @returns {Object} Extended syntax configuration.
+			 */
+			function customSyntaxFn(defaultSyntax) {
+				return {
+					...defaultSyntax,
+					properties: {
+						...defaultSyntax.properties,
+						"-custom-prop": "<length>",
+					},
+				};
+			}
 			const options = { tolerant: false, customSyntax: customSyntaxFn };
 			const normalized = language.normalizeLanguageOptions(options);
 
@@ -375,18 +393,25 @@ describe("CSSLanguage", () => {
 
 		it("should serialize function-based customSyntax correctly", () => {
 			const language = new CSSLanguage();
-			const customSyntaxFn = (defaultSyntax) => ({
-				...defaultSyntax,
-				properties: {
-					...defaultSyntax.properties,
-					"-custom-prop": "<length>",
-				},
-				node: {
-					CustomNode: {
-						parse() {},
+			/**
+			 * Test helper function to create custom syntax with nodes.
+			 * @param {Object} defaultSyntax The default syntax configuration.
+			 * @returns {Object} Extended syntax configuration with custom node.
+			 */
+			function customSyntaxFn(defaultSyntax) {
+				return {
+					...defaultSyntax,
+					properties: {
+						...defaultSyntax.properties,
+						"-custom-prop": "<length>",
 					},
-				},
-			});
+					node: {
+						CustomNode: {
+							parse() {},
+						},
+					},
+				};
+			}
 			const options = { tolerant: false, customSyntax: customSyntaxFn };
 			const normalized = language.normalizeLanguageOptions(options);
 			const json = normalized.toJSON();
