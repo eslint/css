@@ -239,7 +239,7 @@ export default defineConfig([
 		},
 		language: "css/css",
 		languageOptions: {
-			customSyntax: (defaultSyntax) => ({
+			customSyntax: defaultSyntax => ({
 				...defaultSyntax,
 				properties: {
 					...defaultSyntax.properties,
