@@ -186,7 +186,9 @@ Setting `tolerant` to `true` is necessary if you are using custom syntax, such a
 
 The CSS lexer comes prebuilt with a set of known syntax for CSS that is used in rules like `no-invalid-properties` to validate CSS code. While this works for most cases, there may be cases when you want to define your own extensions to CSS, and this can be done using the `customSyntax` language option.
 
-The `customSyntax` option is an object that uses the [CSSTree format](https://github.com/csstree/csstree/blob/master/data/patch.json) for defining custom syntax, which allows you to specify at-rules, properties, and some types. For example, suppose you'd like to define a custom at-rule that looks like this:
+The `customSyntax` option accepts either an object or a function:
+
+**Object-based syntax**: An object that uses the [CSSTree format](https://github.com/csstree/csstree/blob/master/data/patch.json) for defining custom syntax, which allows you to specify at-rules, properties, and some types. For example, suppose you'd like to define a custom at-rule that looks like this:
 
 ```css
 @my-at-rule "hello world!";
@@ -214,6 +216,37 @@ export default defineConfig([
 					},
 				},
 			},
+		},
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
+]);
+```
+
+**Function-based syntax**: A function that receives the default CSS syntax data and returns a custom syntax configuration. This is useful when you want to extend the base syntax rather than replace it. For example:
+
+```js
+// eslint.config.js
+import { defineConfig } from "eslint/config";
+import css from "@eslint/css";
+
+export default defineConfig([
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		languageOptions: {
+			customSyntax: (defaultSyntax) => ({
+				...defaultSyntax,
+				properties: {
+					...defaultSyntax.properties,
+					"-webkit-custom": "<length>",
+					"-moz-custom": "<color>",
+				},
+			}),
 		},
 		rules: {
 			"css/no-empty-blocks": "error",
