@@ -366,7 +366,6 @@ describe("CSSLanguage", () => {
 
 			// Should convert the function to an object
 			assert.strictEqual(typeof normalized.customSyntax, "object");
-			assert.notStrictEqual(typeof normalized.customSyntax, "function");
 			assert.ok(normalized.customSyntax.properties);
 			assert.strictEqual(
 				normalized.customSyntax.properties["-custom-prop"],

@@ -30,6 +30,8 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /** @typedef {OkParseResult<StyleSheetPlain> & { comments: Comment[], lexer: Lexer }} CSSOkParseResult */
 /** @typedef {ParseResult<StyleSheetPlain>} CSSParseResult */
 /**
+ * DefaultSyntaxConfig type representing the structure returned by @eslint/css-tree/definition-syntax-data.
+ * This type is defined inline because it's not exported from the main @eslint/css-tree package.
  * @typedef {Pick<SyntaxConfig, "atrules" | "types" | "properties">} DefaultSyntaxConfig
  */
 /**
