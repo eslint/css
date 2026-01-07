@@ -100,7 +100,38 @@ describe("CSSLanguage", () => {
 
 			assert.throws(() => {
 				language.validateLanguageOptions({ customSyntax: null });
-			}, /Expected an object value for 'customSyntax' option/u);
+			}, /Expected an object or function value for 'customSyntax' option/u);
+		});
+
+		it("should use function-based custom syntax when provided", () => {
+			const language = new CSSLanguage();
+			const customSyntaxFn = (defaultSyntax) => ({
+				...defaultSyntax,
+				properties: {
+					...defaultSyntax.properties,
+					"-custom-prop": "<length>",
+				},
+			});
+
+			const result = language.parse(
+				{
+					body: "a { -custom-prop: 5px; }",
+					path: "test.css",
+				},
+				{ languageOptions: { customSyntax: customSyntaxFn } },
+			);
+
+			assert.strictEqual(result.ok, true);
+			assert.strictEqual(result.ast.type, "StyleSheet");
+			assert.strictEqual(result.ast.children[0].type, "Rule");
+		});
+
+		it("should error when invalid custom syntax type is provided", () => {
+			const language = new CSSLanguage();
+
+			assert.throws(() => {
+				language.validateLanguageOptions({ customSyntax: "string" });
+			}, /Expected an object or function value for 'customSyntax' option/u);
 		});
 
 		it("should return an error when EOF is discovered before block close", () => {
@@ -319,6 +350,56 @@ describe("CSSLanguage", () => {
 					},
 				},
 			});
+		});
+
+		it("should convert function-based customSyntax to object", () => {
+			const language = new CSSLanguage();
+			const customSyntaxFn = (defaultSyntax) => ({
+				...defaultSyntax,
+				properties: {
+					...defaultSyntax.properties,
+					"-custom-prop": "<length>",
+				},
+			});
+			const options = { tolerant: false, customSyntax: customSyntaxFn };
+			const normalized = language.normalizeLanguageOptions(options);
+
+			// Should convert the function to an object
+			assert.strictEqual(typeof normalized.customSyntax, "object");
+			assert.notStrictEqual(typeof normalized.customSyntax, "function");
+			assert.ok(normalized.customSyntax.properties);
+			assert.strictEqual(
+				normalized.customSyntax.properties["-custom-prop"],
+				"<length>",
+			);
+		});
+
+		it("should serialize function-based customSyntax correctly", () => {
+			const language = new CSSLanguage();
+			const customSyntaxFn = (defaultSyntax) => ({
+				...defaultSyntax,
+				properties: {
+					...defaultSyntax.properties,
+					"-custom-prop": "<length>",
+				},
+				node: {
+					CustomNode: {
+						parse() {},
+					},
+				},
+			});
+			const options = { tolerant: false, customSyntax: customSyntaxFn };
+			const normalized = language.normalizeLanguageOptions(options);
+			const json = normalized.toJSON();
+
+			// Should have converted function to object and functions inside to true
+			assert.strictEqual(typeof json.customSyntax, "object");
+			assert.ok(json.customSyntax.properties);
+			assert.strictEqual(
+				json.customSyntax.properties["-custom-prop"],
+				"<length>",
+			);
+			assert.strictEqual(json.customSyntax.node.CustomNode.parse, true);
 		});
 	});
 });
