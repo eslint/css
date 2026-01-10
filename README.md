@@ -186,7 +186,9 @@ Setting `tolerant` to `true` is necessary if you are using custom syntax, such a
 
 The CSS lexer comes prebuilt with a set of known syntax for CSS that is used in rules like `no-invalid-properties` to validate CSS code. While this works for most cases, there may be cases when you want to define your own extensions to CSS, and this can be done using the `customSyntax` language option.
 
-The `customSyntax` option is an object that uses the [CSSTree format](https://github.com/csstree/csstree/blob/master/data/patch.json) for defining custom syntax, which allows you to specify at-rules, properties, and some types. For example, suppose you'd like to define a custom at-rule that looks like this:
+The `customSyntax` option accepts either an object or a function:
+
+**Object-based syntax**: An object that uses the [CSSTree format](https://github.com/csstree/csstree/blob/master/data/patch.json) for defining custom syntax, which allows you to specify at-rules, properties, and some types. For example, suppose you'd like to define a custom at-rule that looks like this:
 
 ```css
 @my-at-rule "hello world!";
@@ -214,6 +216,37 @@ export default defineConfig([
 					},
 				},
 			},
+		},
+		rules: {
+			"css/no-empty-blocks": "error",
+		},
+	},
+]);
+```
+
+**Function-based syntax**: A function that receives the default CSS syntax data and returns a custom syntax configuration. This is useful when you want to extend the base syntax rather than replace it. For example:
+
+```js
+// eslint.config.js
+import { defineConfig } from "eslint/config";
+import css from "@eslint/css";
+
+export default defineConfig([
+	{
+		files: ["**/*.css"],
+		plugins: {
+			css,
+		},
+		language: "css/css",
+		languageOptions: {
+			customSyntax: defaultSyntax => ({
+				...defaultSyntax,
+				properties: {
+					...defaultSyntax.properties,
+					"-webkit-custom": "<length>",
+					"-moz-custom": "<color>",
+				},
+			}),
 		},
 		rules: {
 			"css/no-empty-blocks": "error",
@@ -290,7 +323,7 @@ The following companies, organizations, and individuals support ESLint's ongoing
 to get your logo on our READMEs and [website](https://eslint.org/sponsors).
 
 <h3>Platinum Sponsors</h3>
-<p><a href="https://automattic.com"><img src="https://images.opencollective.com/automattic/d0ef3e1/logo.png" alt="Automattic" height="128"></a> <a href="https://www.airbnb.com/"><img src="https://images.opencollective.com/airbnb/d327d66/logo.png" alt="Airbnb" height="128"></a></p><h3>Gold Sponsors</h3>
+<p><a href="https://automattic.com"><img src="https://images.opencollective.com/automattic/d0ef3e1/logo.png" alt="Automattic" height="128"></a></p><h3>Gold Sponsors</h3>
 <p><a href="https://qlty.sh/"><img src="https://images.opencollective.com/qltysh/33d157d/logo.png" alt="Qlty Software" height="96"></a> <a href="https://shopify.engineering/"><img src="https://avatars.githubusercontent.com/u/8085" alt="Shopify" height="96"></a></p><h3>Silver Sponsors</h3>
 <p><a href="https://vite.dev/"><img src="https://images.opencollective.com/vite/e6d15e1/logo.png" alt="Vite" height="64"></a> <a href="https://liftoff.io/"><img src="https://images.opencollective.com/liftoff/2d6c3b6/logo.png" alt="Liftoff" height="64"></a> <a href="https://americanexpress.io"><img src="https://avatars.githubusercontent.com/u/3853301" alt="American Express" height="64"></a> <a href="https://stackblitz.com"><img src="https://avatars.githubusercontent.com/u/28635252" alt="StackBlitz" height="64"></a></p><h3>Bronze Sponsors</h3>
 <p><a href="https://cybozu.co.jp/"><img src="https://images.opencollective.com/cybozu/933e46d/logo.png" alt="Cybozu" height="32"></a> <a href="https://www.crawljobs.com/"><img src="https://images.opencollective.com/crawljobs-poland/fa43a17/logo.png" alt="CrawlJobs" height="32"></a> <a href="https://syntax.fm"><img src="https://github.com/syntaxfm.png" alt="Syntax" height="32"></a> <a href="https://www.n-ix.com/"><img src="https://images.opencollective.com/n-ix-ltd/575a7a5/logo.png" alt="N-iX Ltd" height="32"></a> <a href="https://icons8.com/"><img src="https://images.opencollective.com/icons8/7fa1641/logo.png" alt="Icons8" height="32"></a> <a href="https://discord.com"><img src="https://images.opencollective.com/discordapp/f9645d9/logo.png" alt="Discord" height="32"></a> <a href="https://www.gitbook.com"><img src="https://avatars.githubusercontent.com/u/7111340" alt="GitBook" height="32"></a> <a href="https://nx.dev"><img src="https://avatars.githubusercontent.com/u/23692104" alt="Nx" height="32"></a> <a href="https://herocoders.com"><img src="https://avatars.githubusercontent.com/u/37549774" alt="HeroCoders" height="32"></a> <a href="https://www.lambdatest.com"><img src="https://avatars.githubusercontent.com/u/171592363" alt="LambdaTest" height="32"></a></p>
