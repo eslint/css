@@ -33,6 +33,19 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		'@charset "UTF-8";',
 		'@charset "UTF-8"; @import url("foo.css");',
 		"@media screen and (max-width: 600px) { body { font-size: 12px; } }",
+		".foo { @media (max-width: 800px) { color: red; } }",
+		".foo { @media (max-width: 800px) { color: red; background: blue; font-size: 16px; } }",
+		".foo { @supports (display: grid) { display: grid; grid-template-columns: 1fr 1fr; } }",
+		// TODO: Uncomment once https://github.com/eslint/csstree/issues/106 is fixed
+		// ".foo { @layer base { color: red; } }",
+		".foo { @scope (.card) { color: red; } }",
+		".foo { @container (min-width: 700px) { color: red; } }",
+		".foo { @starting-style { opacity: 0; transform: translateY(-10px); } }",
+		".foo { @media (min-width: 768px) { color: red; @media (orientation: landscape) { background: blue; @supports (display: flex) { display: flex; } } } }",
+		"@property --my-color { syntax: '<color>'; inherits: false; initial-value: #c0ffee; }",
+		"@media (max-width: 800px) { .foo { color: red; } }",
+		".foo { @media (max-width: 800px) { & .bar { color: red; } &:hover { background: blue; } } }",
+		"@layer base { .foo { color: red; } }",
 		{
 			code: "@foobar url(foo.css) { body { font-size: 12px } }",
 			languageOptions: {
@@ -170,6 +183,19 @@ ruleTester.run("no-invalid-at-rules", rule, {
 					column: 19,
 					endLine: 1,
 					endColumn: 22,
+				},
+			],
+		},
+		{
+			code: "@font-face { color: red; }",
+			errors: [
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "font-face", descriptor: "color" },
+					line: 1,
+					column: 14,
+					endLine: 1,
+					endColumn: 19,
 				},
 			],
 		},

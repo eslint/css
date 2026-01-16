@@ -14,6 +14,7 @@ import {
 	toPlainObject,
 	tokenTypes,
 } from "@eslint/css-tree";
+import defaultSyntax from "@eslint/css-tree/definition-syntax-data";
 import { CSSSourceCode } from "./css-source-code.js";
 import { visitorKeys } from "./css-visitor-keys.js";
 
@@ -29,9 +30,17 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /** @typedef {OkParseResult<StyleSheetPlain> & { comments: Comment[], lexer: Lexer }} CSSOkParseResult */
 /** @typedef {ParseResult<StyleSheetPlain>} CSSParseResult */
 /**
+ * DefaultSyntaxConfig type representing the structure returned by @eslint/css-tree/definition-syntax-data.
+ * This type is defined inline because it's not exported from the main @eslint/css-tree package.
+ * @typedef {Pick<SyntaxConfig, "atrules" | "types" | "properties">} DefaultSyntaxConfig
+ */
+/**
+ * @typedef {(defaultSyntax: DefaultSyntaxConfig) => Partial<SyntaxConfig>} SyntaxExtensionCallback
+ */
+/**
  * @typedef {Object} CSSLanguageOptions
  * @property {boolean} [tolerant] Whether to be tolerant of recoverable parsing errors.
- * @property {SyntaxConfig} [customSyntax] Custom syntax to use for parsing.
+ * @property {Partial<SyntaxConfig> | SyntaxExtensionCallback} [customSyntax] Custom syntax to use for parsing.
  */
 
 //-----------------------------------------------------------------------------
@@ -147,11 +156,20 @@ export class CSSLanguage {
 
 		if ("customSyntax" in languageOptions) {
 			if (
-				typeof languageOptions.customSyntax !== "object" ||
+				typeof languageOptions.customSyntax !== "object" &&
+				typeof languageOptions.customSyntax !== "function"
+			) {
+				throw new TypeError(
+					"Expected an object or function value for 'customSyntax' option.",
+				);
+			}
+
+			if (
+				typeof languageOptions.customSyntax === "object" &&
 				languageOptions.customSyntax === null
 			) {
 				throw new TypeError(
-					"Expected an object value for 'customSyntax' option.",
+					"Expected an object or function value for 'customSyntax' option.",
 				);
 			}
 		}
@@ -167,8 +185,14 @@ export class CSSLanguage {
 		if (!languageOptions?.customSyntax) {
 			return languageOptions;
 		}
+
 		// Shallow copy
 		const clone = { ...languageOptions };
+
+		// If customSyntax is a function, call it with the default syntax to get the config object
+		if (typeof languageOptions.customSyntax === "function") {
+			clone.customSyntax = languageOptions.customSyntax(defaultSyntax);
+		}
 
 		Object.defineProperty(clone, "toJSON", {
 			value() {
@@ -205,7 +229,11 @@ export class CSSLanguage {
 
 		const { tolerant } = languageOptions;
 		const { parse, lexer } = languageOptions.customSyntax
-			? fork(languageOptions.customSyntax)
+			? fork(
+					/** @type {Partial<SyntaxConfig>} */ (
+						languageOptions.customSyntax
+					),
+				)
 			: { parse: originalParse, lexer: originalLexer };
 
 		/*

@@ -4,26 +4,15 @@
   "description": "CSS linting plugin for ESLint",
   "author": "Nicholas C. Zakas",
   "type": "module",
-  "main": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "require": {
-        "types": "./dist/cjs/index.d.cts",
-        "default": "./dist/cjs/index.cjs"
-      },
-      "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
-      }
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./types": {
-      "require": {
-        "types": "./dist/cjs/types.cts"
-      },
-      "import": {
-        "types": "./dist/esm/types.d.ts"
-      }
+      "types": "./dist/types.d.ts"
     }
   },
   "files": [
@@ -40,11 +29,8 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "README.md": [
-      "npm run build:update-rules-docs"
-    ],
     "!(*.js)": "prettier --write --ignore-unknown",
-    "{src/rules/*.js,tools/update-rules-docs.js}": [
+    "{src/rules/*.js,tools/update-rules-docs.js,README.md}": [
       "npm run build:update-rules-docs",
       "git add README.md"
     ]
@@ -58,21 +44,21 @@
   },
   "homepage": "https://github.com/eslint/css#readme",
   "scripts": {
-    "build:dedupe-types": "node tools/dedupe-types.js dist/cjs/index.cjs dist/esm/index.js",
-    "build:cts": "node -e \"fs.copyFileSync('dist/esm/index.d.ts', 'dist/cjs/index.d.cts')\" && node tools/update-cts.js dist/cjs/types.cts dist/cjs/index.d.cts",
-    "build:rules": "node tools/build-rules.js",
-    "build": "npm run build:rules && rollup -c && npm run build:dedupe-types && tsc -p tsconfig.esm.json && npm run build:cts",
-    "build:update-rules-docs": "node tools/update-rules-docs.js",
+    "build": "npm run build:rules && npm run build:types && npm run build:update-rules-docs",
     "build:baseline": "node tools/generate-baseline.js",
+    "build:rules": "node tools/build-rules.js",
+    "build:types": "tsc",
+    "build:update-rules-docs": "node tools/update-rules-docs.js",
     "prepare": "npm run build",
     "pretest": "npm run build",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "lint:types": "attw --pack --profile esm-only",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "test": "mocha \"tests/**/*.test.js\"",
     "test:coverage": "c8 npm test",
-    "test:jsr": "npx jsr@latest publish --dry-run",
+    "test:jsr": "npx -y jsr@latest publish --dry-run",
     "test:types": "npm run build && tsc -p tests/types/tsconfig.json"
   },
   "keywords": [
@@ -84,29 +70,27 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "@eslint/core": "^0.17.0",
+    "@eslint/core": "^1.0.1",
     "@eslint/css-tree": "^3.6.8",
-    "@eslint/plugin-kit": "^0.5.0"
+    "@eslint/plugin-kit": "^0.5.1"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@eslint/json": "^0.14.0",
     "c8": "^10.1.3",
     "dedent": "^1.5.3",
-    "eslint": "^9.36.0",
+    "eslint": "^9.39.2",
     "eslint-config-eslint": "^13.0.0",
     "eslint-plugin-eslint-plugin": "^6.3.2",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "lint-staged": "^16.0.0",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.25.0",
+    "mdn-data": "^2.26.0",
     "mocha": "^11.0.0",
     "prettier": "^3.7.3",
-    "rollup": "^4.52.3",
-    "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-delete": "^3.0.1",
     "tailwind-csstree": "^0.1.0",
     "typescript": "^5.9.2",
-    "web-features": "^3.12.0",
+    "web-features": "^3.13.0",
     "yorkie": "^2.0.0"
   },
   "engines": {

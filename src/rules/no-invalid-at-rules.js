@@ -25,6 +25,19 @@ import { isSyntaxMatchError } from "../util.js";
 //-----------------------------------------------------------------------------
 
 /**
+ * Set of at-rules that can be nested inside style rules.
+ * @see https://www.w3.org/TR/css-nesting-1/#conditionals
+ */
+const nestableAtRules = new Set([
+	"media",
+	"supports",
+	"layer",
+	"scope",
+	"container",
+	"starting-style",
+]);
+
+/**
  * A valid `@charset` rule must:
  * - Enclose the encoding name in double quotes
  * - Include exactly one space character after `@charset`
@@ -228,6 +241,10 @@ export default {
 				const atRule = /** @type {AtrulePlain} */ (
 					sourceCode.getParent(sourceCode.getParent(node))
 				);
+
+				if (nestableAtRules.has(atRule.name.toLowerCase())) {
+					return;
+				}
 
 				const { error } = lexer.matchAtruleDescriptor(
 					atRule.name,
