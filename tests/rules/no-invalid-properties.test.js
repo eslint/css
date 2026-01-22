@@ -271,6 +271,9 @@ ruleTester.run("no-invalid-properties", rule, {
 		"main { p:first-of-type { margin-top: 0; } }",
 		"main { p:hover { color: red; } }",
 		"main { p:nth-child(2n) { color: red; } }",
+		"main { p:has(.child) { color: red; } }",
+		"main { p:has(.child:hover) { color: red; } }",
+		"main { p:first-of-type, span { color: red; } }",
 	],
 	invalid: [
 		{
