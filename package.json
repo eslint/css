@@ -84,10 +84,10 @@
     "mdast-util-from-markdown": "^2.0.2",
     "mdn-data": "^2.26.0",
     "mocha": "^11.0.0",
-    "prettier": "^3.7.3",
+    "prettier": "3.8.0",
     "tailwind-csstree": "^0.1.0",
     "typescript": "^5.9.2",
-    "web-features": "^3.13.0",
+    "web-features": "^3.14.0",
     "yorkie": "^2.0.0"
   },
   "engines": {
