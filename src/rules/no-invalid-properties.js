@@ -320,7 +320,7 @@ export default {
 		}
 
 		return {
-			"Rule > Block > Declaration"() {
+			"Rule > Block Declaration"() {
 				declStack.push({
 					valueParts: [],
 					functionPartsStack: [],
@@ -335,7 +335,7 @@ export default {
 				});
 			},
 
-			"Rule > Block > Declaration > Value > *:not(Function)"(node) {
+			"Rule > Block Declaration > Value > *:not(Function)"(node) {
 				const state = declStack.at(-1);
 				const text = sourceCode.getText(node).trim();
 				state.valueParts.push(text);
@@ -401,7 +401,7 @@ export default {
 				}
 			},
 
-			"Rule > Block > Declaration:exit"(node) {
+			"Rule > Block Declaration:exit"(node) {
 				const state = declStack.pop();
 				if (node.property.startsWith("--")) {
 					// store the custom property name and value to validate later
