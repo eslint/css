@@ -7,26 +7,14 @@
 // Imports
 //------------------------------------------------------------------------------
 
+import type { RuleVisitor } from "@eslint/core";
+import type { CssNodePlain, StyleSheetPlain } from "@eslint/css-tree";
 import type {
 	CustomRuleDefinitionType,
 	CustomRuleTypeDefinitions,
-	RuleVisitor,
-} from "@eslint/core";
-
-import type { CssNodePlain, StyleSheetPlain } from "@eslint/css-tree";
-
+	CustomRuleVisitorWithExit,
+} from "@eslint/plugin-kit";
 import type { CSSLanguageOptions, CSSSourceCode } from "./index.js";
-
-//------------------------------------------------------------------------------
-// Helpers
-//------------------------------------------------------------------------------
-
-/** Adds matching `:exit` selectors for all properties of a `RuleVisitor`. */
-type WithExit<RuleVisitorType extends RuleVisitor> = {
-	[Key in keyof RuleVisitorType as
-		| Key
-		| `${Key & string}:exit`]: RuleVisitorType[Key];
-};
 
 //------------------------------------------------------------------------------
 // Types
@@ -47,7 +35,7 @@ type CSSNodeVisitor = {
  * A visitor for CSS nodes.
  */
 export interface CSSRuleVisitor
-	extends RuleVisitor, Partial<WithExit<CSSNodeVisitor>> {}
+	extends RuleVisitor, Partial<CustomRuleVisitorWithExit<CSSNodeVisitor>> {}
 
 export type CSSRuleDefinitionTypeOptions = CustomRuleTypeDefinitions;
 
