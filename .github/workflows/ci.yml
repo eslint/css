@@ -28,11 +28,14 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
+                eslint: [9.15.0, 9.x, ^10.0.0-rc.0]
                 node: [25.x, 24.x, 22.x, 20.x, "20.19.0"]
                 include:
                     - os: windows-latest
+                      eslint: "latest"
                       node: "lts/*"
                     - os: macOS-latest
+                      eslint: "latest"
                       node: "lts/*"
         runs-on: ${{ matrix.os }}
         steps:
@@ -42,6 +45,8 @@ jobs:
                   node-version: ${{ matrix.node }}
             - name: Install dependencies
               run: npm install
+            - name: Install ESLint@${{ matrix.eslint }}
+              run: npm install -D eslint@${{ matrix.eslint }}
             - name: Run tests
               run: npm run test
     test_types:
@@ -57,6 +62,19 @@ jobs:
               run: npm install
             - name: Check Types
               run: npm run test:types
+    are_the_types_wrong:
+        name: Are the types wrong?
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                  node-version: "lts/*"
+            - name: Install Packages
+              run: npm install
+            - name: Check validity of type definitions
+              run: npm run lint:types
     jsr_test:
         name: Verify JSR Publish
         runs-on: ubuntu-latest

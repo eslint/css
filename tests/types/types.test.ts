@@ -1,6 +1,10 @@
-import css, { CSSSourceCode } from "@eslint/css";
-import type { ESLint } from "eslint";
-import type { SourceLocation, SourceRange } from "@eslint/core";
+import css from "@eslint/css";
+import type {
+	CSSRuleDefinition,
+	CSSRuleVisitor,
+	CSSSourceCode,
+} from "@eslint/css";
+import type { Plugin, SourceLocation, SourceRange } from "@eslint/core";
 import type {
 	AnPlusB,
 	AtrulePlain,
@@ -53,9 +57,8 @@ import type {
 	CssNodePlain,
 	CssLocationRange,
 } from "@eslint/css-tree";
-import type { CSSRuleDefinition, CSSRuleVisitor } from "@eslint/css/types";
 
-css satisfies ESLint.Plugin;
+css satisfies Plugin;
 css.meta.name satisfies string;
 css.meta.version satisfies string;
 
