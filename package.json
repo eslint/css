@@ -82,7 +82,7 @@
     "globals": "^17.0.0",
     "lint-staged": "^16.0.0",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.26.0",
+    "mdn-data": "^2.27.0",
     "mocha": "^11.0.0",
     "prettier": "3.8.1",
     "tailwind-csstree": "^0.1.0",
