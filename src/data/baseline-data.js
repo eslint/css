@@ -168,7 +168,7 @@ export const properties = new Map([
 	["font-variant-emoji", "0:"],
 	["font-variant-ligatures", "10:2020"],
 	["font-variant-numeric", "10:2020"],
-	["font-variant-position", "0:"],
+	["font-variant-position", "5:2023"],
 	["font-variation-settings", "10:2018"],
 	["font-weight", "10:2015"],
 	["font-width", "0:"],
@@ -549,7 +549,7 @@ export const mediaConditions = new Map([
 	["device-aspect-ratio", "0:"],
 	["device-height", "0:"],
 	["device-width", "0:"],
-	["display-mode", "5:2023"],
+	["display-mode", "10:2020"],
 	["dynamic-range", "10:2022"],
 	["forced-colors", "10:2022"],
 	["any-hover", "10:2018"],
@@ -681,7 +681,7 @@ export const functions = new Map([
 export const selectors = new Map([
 	["active-view-transition", "5:2025"],
 	["active-view-transition-type", "5:2026"],
-	["autofill", "10:2023"],
+	["autofill", "0:"],
 	["defined", "10:2020"],
 	["backdrop", "10:2022"],
 	["after", "10:2015"],
@@ -1328,7 +1328,7 @@ export const propertyValues = new Map([
 	[
 		"background-attachment",
 		new Map([
-			["fixed", "10:2022"],
+			["fixed", "0:"],
 			["local", "10:2022"],
 			["scroll", "10:2015"],
 		]),
@@ -2198,7 +2198,7 @@ export const propertyValues = new Map([
 	[
 		"font-variant-position",
 		new Map([
-			["normal", "0:"],
+			["normal", "5:2023"],
 			["sub", "0:"],
 			["super", "0:"],
 		]),
