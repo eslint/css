@@ -10,9 +10,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./types": {
-      "types": "./dist/types.d.ts"
     }
   },
   "files": [
@@ -71,9 +68,9 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "@eslint/core": "^1.0.1",
-    "@eslint/css-tree": "^3.6.8",
-    "@eslint/plugin-kit": "^0.5.1"
+    "@eslint/core": "^1.1.0",
+    "@eslint/css-tree": "^3.6.9",
+    "@eslint/plugin-kit": "^0.6.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
@@ -88,12 +85,12 @@
     "knip": "^5.82.1",
     "lint-staged": "^16.0.0",
     "mdast-util-from-markdown": "^2.0.2",
-    "mdn-data": "^2.26.0",
+    "mdn-data": "^2.27.1",
     "mocha": "^11.0.0",
     "prettier": "3.8.1",
     "tailwind-csstree": "^0.1.0",
     "typescript": "^5.9.3",
-    "web-features": "^3.14.0",
+    "web-features": "^3.16.0",
     "yorkie": "^2.0.0"
   },
   "engines": {
