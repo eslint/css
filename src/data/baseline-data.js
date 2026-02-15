@@ -746,7 +746,7 @@ export const selectors = new Map([
 	["nth-of-type", "10:2015"],
 	["only-of-type", "10:2015"],
 	["open", "0:"],
-	["first", "5:2023"],
+	["first", "10:2023"],
 	["left", "0:"],
 	["right", "0:"],
 	["picture-in-picture", "0:"],
