@@ -1,4 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["tests/**/*.{cts,js,ts}"]
+  "entry": ["tests/**/*.{cts,js,ts}"],
+  "ignore": ["src/types.ts"]
 }
