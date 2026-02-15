@@ -1335,5 +1335,124 @@ ruleTester.run("no-invalid-properties", rule, {
 				},
 			],
 		},
+		{
+			code: ".responsive { width: red; @media (max-width: 800px) { width: red; } }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "width",
+						value: "red",
+						expected:
+							"auto | <length-percentage [0,∞]> | min-content | max-content | fit-content | fit-content( <length-percentage [0,∞]> ) | <calc-size()> | <anchor-size()> | stretch | <-non-standard-size>",
+					},
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 25,
+				},
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "width",
+						value: "red",
+						expected:
+							"auto | <length-percentage [0,∞]> | min-content | max-content | fit-content | fit-content( <length-percentage [0,∞]> ) | <calc-size()> | <anchor-size()> | stretch | <-non-standard-size>",
+					},
+					line: 1,
+					column: 62,
+					endLine: 1,
+					endColumn: 65,
+				},
+			],
+		},
+		{
+			code: ".responsive { width: 10px; @media (max-width: 800px) { width: red; } }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "width",
+						value: "red",
+						expected:
+							"auto | <length-percentage [0,∞]> | min-content | max-content | fit-content | fit-content( <length-percentage [0,∞]> ) | <calc-size()> | <anchor-size()> | stretch | <-non-standard-size>",
+					},
+					line: 1,
+					column: 63,
+					endLine: 1,
+					endColumn: 66,
+				},
+			],
+		},
+		{
+			code: ".responsive { width: red; @media (max-width: 800px) { width: 10px; } }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "width",
+						value: "red",
+						expected:
+							"auto | <length-percentage [0,∞]> | min-content | max-content | fit-content | fit-content( <length-percentage [0,∞]> ) | <calc-size()> | <anchor-size()> | stretch | <-non-standard-size>",
+					},
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 25,
+				},
+			],
+		},
+		{
+			code: "@layer theme { .responsive { width: red; } }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "width",
+						value: "red",
+						expected:
+							"auto | <length-percentage [0,∞]> | min-content | max-content | fit-content | fit-content( <length-percentage [0,∞]> ) | <calc-size()> | <anchor-size()> | stretch | <-non-standard-size>",
+					},
+					line: 1,
+					column: 37,
+					endLine: 1,
+					endColumn: 40,
+				},
+			],
+		},
+		{
+			code: "a { @media screen { color: red-ish; } }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "red-ish",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 35,
+				},
+			],
+		},
+		{
+			code: "a { @media screen { @supports (display: grid) { color: red-ish; } } }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "red-ish",
+						expected: "<color>",
+					},
+					line: 1,
+					column: 56,
+					endLine: 1,
+					endColumn: 63,
+				},
+			],
+		},
 	],
 });
