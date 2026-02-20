@@ -36,8 +36,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		".foo { @media (max-width: 800px) { color: red; } }",
 		".foo { @media (max-width: 800px) { color: red; background: blue; font-size: 16px; } }",
 		".foo { @supports (display: grid) { display: grid; grid-template-columns: 1fr 1fr; } }",
-		// TODO: Uncomment once https://github.com/eslint/csstree/issues/106 is fixed
-		// ".foo { @layer base { color: red; } }",
+		".foo { @layer base { color: red; } }",
 		".foo { @scope (.card) { color: red; } }",
 		".foo { @container (min-width: 700px) { color: red; } }",
 		".foo { @starting-style { opacity: 0; transform: translateY(-10px); } }",
