@@ -3236,16 +3236,6 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
-		"text-wrap",
-		new Map([
-			["wrap", "5:2024"],
-			["balance", "5:2024"],
-			["nowrap", "5:2024"],
-			["pretty", "0:"],
-			["stable", "5:2024"],
-		]),
-	],
-	[
 		"text-wrap-mode",
 		new Map([
 			["nowrap", "5:2024"],
@@ -3256,9 +3246,19 @@ export const propertyValues = new Map([
 		"text-wrap-style",
 		new Map([
 			["auto", "5:2024"],
+			["stable", "5:2024"],
 			["balance", "5:2024"],
 			["pretty", "0:"],
+		]),
+	],
+	[
+		"text-wrap",
+		new Map([
+			["nowrap", "5:2024"],
 			["stable", "5:2024"],
+			["wrap", "5:2024"],
+			["balance", "5:2024"],
+			["pretty", "0:"],
 		]),
 	],
 	[
