@@ -20,6 +20,8 @@ jobs:
               run: npm install
             - name: Lint files
               run: npm run lint
+            - name: Lint Files, Dependencies, & Exports
+              run: npm run lint:unused
             - name: Check Formatting
               run: npm run fmt:check
     test:
