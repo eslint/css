@@ -73,7 +73,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
-    "@eslint/json": "^0.14.0",
+    "@eslint/json": "^1.0.1",
     "c8": "^11.0.0",
     "dedent": "^1.5.3",
     "eslint": "^9.39.2",
