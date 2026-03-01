@@ -1,6 +1,6 @@
 {
   "name": "@eslint/css",
-  "version": "0.14.1",
+  "version": "1.0.0",
   "description": "CSS linting plugin for ESLint",
   "author": "Nicholas C. Zakas",
   "type": "module",

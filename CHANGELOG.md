@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.0.0](https://github.com/eslint/css/compare/css-v0.14.1...css-v1.0.0) (2026-03-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* export types from main entry and remove `/types` export ([#353](https://github.com/eslint/css/issues/353))
+* remove `rollup`, extraneous types and migrate to ESM-only ([#352](https://github.com/eslint/css/issues/352))
+* Bump to v1.0.0
+* Require Node.js ^20.19.0 || ^22.13.0 || >=24 ([#302](https://github.com/eslint/css/issues/302))
+
+### Features
+
+* Allow function-based customSyntax options ([#357](https://github.com/eslint/css/issues/357)) ([3479200](https://github.com/eslint/css/commit/34792001bb31412aec6dbcba6e652429118d2221))
+* Bump to v1.0.0 ([050bde3](https://github.com/eslint/css/commit/050bde330dcee1c4b9877dfe610c7e7cc9933cb6))
+* export types from main entry and remove `/types` export ([#353](https://github.com/eslint/css/issues/353)) ([bb390d6](https://github.com/eslint/css/commit/bb390d64c7e50231b168f1f051c844627e9e5ea1))
+* Require Node.js ^20.19.0 || ^22.13.0 || &gt;=24 ([#302](https://github.com/eslint/css/issues/302)) ([a1eb7f5](https://github.com/eslint/css/commit/a1eb7f588d791a0d484ca76d7305941d93e98462))
+
+
+### Bug Fixes
+
+* add missing `name` property to `recommended` config ([#336](https://github.com/eslint/css/issues/336)) ([f115c3f](https://github.com/eslint/css/commit/f115c3fea440aebe9aee1ef7a7ba94366d5c8afa))
+* correct parent typing for rule visitors ([#313](https://github.com/eslint/css/issues/313)) ([17046d0](https://github.com/eslint/css/commit/17046d0178272e2b12291d32176bcbc9326795a5))
+* remove `rollup`, extraneous types and migrate to ESM-only ([#352](https://github.com/eslint/css/issues/352)) ([321d470](https://github.com/eslint/css/commit/321d4705e396f0838e7960de45c8dd5947e2ecf1))
+* report invalid properties inside nested at-rules ([#369](https://github.com/eslint/css/issues/369)) ([6f77115](https://github.com/eslint/css/commit/6f7711571fbf960b0a8948912308ee0465ba2759))
+* skip descriptor validation for nestable at-rules ([#362](https://github.com/eslint/css/issues/362)) ([50ff5c1](https://github.com/eslint/css/commit/50ff5c125a8ec300af06cf0c2eedf48a40417bb8))
+* update `@eslint/core` to `v1.0.0` and adjust tests ([#337](https://github.com/eslint/css/issues/337)) ([c94ea92](https://github.com/eslint/css/commit/c94ea920bbf9b7fb09ca0f1764ee931b7e0e78b9))
+* update baseline data ([d93ecd4](https://github.com/eslint/css/commit/d93ecd48a5389a43936c6414fede3355e161d2ae))
+* update baseline data ([105102e](https://github.com/eslint/css/commit/105102ea4a2351bb752939b477e77c250b296a3a))
+* update baseline data ([85ed786](https://github.com/eslint/css/commit/85ed786674983cfcfcaa2ac0d89e91c63cf8cb6f))
+* update baseline data ([#321](https://github.com/eslint/css/issues/321)) ([61090f9](https://github.com/eslint/css/commit/61090f9243ee3dbb74ff53ce3db405ff31ad0ea1))
+* update baseline data ([#326](https://github.com/eslint/css/issues/326)) ([cddbf92](https://github.com/eslint/css/commit/cddbf92dc3d66b392234bcff40224aab89e09d26))
+* update baseline data ([#332](https://github.com/eslint/css/issues/332)) ([85254d4](https://github.com/eslint/css/commit/85254d4b2d2a17d7acc24e35f21f4e6227fd95f9))
+* update baseline data ([#343](https://github.com/eslint/css/issues/343)) ([f2ef187](https://github.com/eslint/css/commit/f2ef187c2f1c92806193e7bd6af833ab167e6859))
+* update baseline data ([#347](https://github.com/eslint/css/issues/347)) ([17746f9](https://github.com/eslint/css/commit/17746f9fa316d7eacef37bef8c94c8e82f646cf4))
+* update baseline data ([#359](https://github.com/eslint/css/issues/359)) ([688782b](https://github.com/eslint/css/commit/688782bf733d4ee8a8748e08bf9edc1081e0a59d))
+* update baseline data ([#368](https://github.com/eslint/css/issues/368)) ([8e3cae4](https://github.com/eslint/css/commit/8e3cae473b7037e0b00ffc758a3ecc1260ba3cf4))
+* update baseline data ([#373](https://github.com/eslint/css/issues/373)) ([668d81d](https://github.com/eslint/css/commit/668d81d24841bff8f31b43123de4b9b69b350c6c))
+* update baseline data ([#375](https://github.com/eslint/css/issues/375)) ([9953c9c](https://github.com/eslint/css/commit/9953c9c5919fa2d5e9e110b8652249289c6ed31b))
+* update baseline data ([#379](https://github.com/eslint/css/issues/379)) ([9bf7ceb](https://github.com/eslint/css/commit/9bf7cebf90be233c670ac21ecebd503f967f51b9))
+* update baseline data ([#383](https://github.com/eslint/css/issues/383)) ([233dee2](https://github.com/eslint/css/commit/233dee2017f7979ad75bef71f7df96d95f204317))
+* update dependency @eslint/css-tree to ^3.6.9 ([#378](https://github.com/eslint/css/issues/378)) ([0999dbf](https://github.com/eslint/css/commit/0999dbf53fb9042c7dec9b32387f0563a686692d))
+* update dependency @eslint/plugin-kit to ^0.5.1 ([#358](https://github.com/eslint/css/issues/358)) ([ac57dc8](https://github.com/eslint/css/commit/ac57dc86961d5086871d85a638904682e4e7d37a))
+* update eslint ([#372](https://github.com/eslint/css/issues/372)) ([eaabed6](https://github.com/eslint/css/commit/eaabed6df5acbfb82f0c4d3d8ad9592b147c3cd6))
+
+
+### Miscellaneous Chores
+
+* Fix release version ([2325732](https://github.com/eslint/css/commit/23257323727f2b3c34c9b4ac2b438e11b36b716e))
+
 ## [0.14.1](https://github.com/eslint/css/compare/css-v0.14.0...css-v0.14.1) (2025-11-04)
 
 
