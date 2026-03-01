@@ -127,9 +127,6 @@ export default {
 		const sourceCode = context.sourceCode;
 		const lexer = sourceCode.lexer;
 
-		/** @type {Map<string,ValuePlain>} */
-		const vars = new Map();
-
 		/**
 		 * @type {Array<{
 		 *   valueParts: string[],
@@ -146,6 +143,9 @@ export default {
 
 		/**
 		 * Iteratively resolves CSS variable references until a value is found.
+		 * Uses `sourceCode.getVariableValues()` to look up all possible values
+		 * for a custom property (including declarations that appear after the
+		 * reference), which naturally handles variable hoisting.
 		 * @param {string} variableName The variable name to resolve
 		 * @param {Map<string, string>} cache Cache for memoization within a single resolution scope
 		 * @param {Set<string>} [seen] Set of already seen variables to detect cycles
@@ -182,12 +182,13 @@ export default {
 					return cache.get(currentVarName);
 				}
 
-				const valueNode = vars.get(currentVarName);
-				if (!valueNode) {
+				const closestValue =
+					sourceCode.getClosestVariableValue(currentVarName);
+				if (!closestValue) {
 					break;
 				}
 
-				const valueText = sourceCode.getText(valueNode).trim();
+				const valueText = sourceCode.getText(closestValue).trim();
 				const parsed = parseVarFunction(valueText);
 
 				if (!parsed) {
@@ -250,7 +251,9 @@ export default {
 		}
 
 		/**
-		 * Process a var function node and add its resolved value to the value list
+		 * Process a var function node and add its resolved value to the value list.
+		 * Uses `sourceCode.getVariableValues()` to check all possible values
+		 * in the file, which enables support for variable hoisting.
 		 * @param {Object} varNode The var() function node
 		 * @param {string[]} valueList Array to collect processed values
 		 * @param {Map<string,CssLocationRange>} valueSegmentLocs Map of rebuilt value segments to their locations
@@ -263,13 +266,12 @@ export default {
 			valueSegmentLocs,
 			resolvedCache,
 		) {
-			const varValue = vars.get(varNode.children[0].name);
+			const varName = varNode.children[0].name;
+			const allValues = sourceCode.getVariableValues(varNode);
+			const hasKnownDeclaration = allValues.length > 0;
 
-			if (varValue) {
-				const resolvedValue = resolveVariable(
-					varNode.children[0].name,
-					resolvedCache,
-				);
+			if (hasKnownDeclaration) {
+				const resolvedValue = resolveVariable(varName, resolvedCache);
 				if (resolvedValue) {
 					valueList.push(resolvedValue);
 					valueSegmentLocs.set(resolvedValue, varNode.loc);
@@ -283,7 +285,7 @@ export default {
 					context.report({
 						loc: varNode.children[0].loc,
 						messageId: "unknownVar",
-						data: { var: varNode.children[0].name },
+						data: { var: varName },
 					});
 					return false;
 				}
@@ -311,7 +313,7 @@ export default {
 				context.report({
 					loc: varNode.children[0].loc,
 					messageId: "unknownVar",
-					data: { var: varNode.children[0].name },
+					data: { var: varName },
 				});
 				return false;
 			}
@@ -404,9 +406,6 @@ export default {
 			"Rule > Block Declaration:exit"(node) {
 				const state = declStack.pop();
 				if (node.property.startsWith("--")) {
-					// store the custom property name and value to validate later
-					vars.set(node.property, node.value);
-
 					// don't validate custom properties
 					return;
 				}
