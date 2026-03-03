@@ -579,7 +579,7 @@ export default {
 					data: {
 						property,
 						value: child.name,
-						availability: String(baselineAvailability.availability),
+						availability: baselineAvailability.availability,
 					},
 				});
 			}
@@ -608,7 +608,7 @@ export default {
 					messageId: "notBaselineFunction",
 					data: {
 						function: child.name,
-						availability: String(baselineAvailability.availability),
+						availability: baselineAvailability.availability,
 					},
 				});
 			}
@@ -702,9 +702,7 @@ export default {
 							messageId: "notBaselineProperty",
 							data: {
 								property,
-								availability: String(
-									baselineAvailability.availability,
-								),
+								availability: baselineAvailability.availability,
 							},
 						});
 
@@ -804,9 +802,7 @@ export default {
 							messageId: "notBaselineMediaCondition",
 							data: {
 								condition: child.name,
-								availability: String(
-									baselineAvailability.availability,
-								),
+								availability: baselineAvailability.availability,
 							},
 						});
 					}
@@ -842,9 +838,7 @@ export default {
 						messageId: "notBaselineAtRule",
 						data: {
 							atRule: node.name,
-							availability: String(
-								baselineAvailability.availability,
-							),
+							availability: baselineAvailability.availability,
 						},
 					});
 				}
@@ -893,9 +887,7 @@ export default {
 						messageId: "notBaselineSelector",
 						data: {
 							selector,
-							availability: String(
-								baselineAvailability.availability,
-							),
+							availability: baselineAvailability.availability,
 						},
 					});
 				}
@@ -919,7 +911,7 @@ export default {
 					messageId: "notBaselineSelector",
 					data: {
 						selector,
-						availability: String(baselineAvailability.availability),
+						availability: baselineAvailability.availability,
 					},
 				});
 			},
