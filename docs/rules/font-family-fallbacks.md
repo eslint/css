@@ -12,7 +12,7 @@ It is a best practice to use a fallback font and a generic font last in the `fon
 
 ## Rule Details
 
-This rule enforces the use of fallback fonts and a generic font last in `font-family` and `font` property.
+This rule enforces the use of fallback fonts and a generic font last in `font-family` and `font` property. Global values (`inherit`, `initial`, `revert`, `revert-layer`, `unset`) are always allowed.
 
 Example of **incorrect** code:
 
