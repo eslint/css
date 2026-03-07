@@ -35,6 +35,10 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { --my-color: red; color: var(--my-color) }",
 		":root { --my-color: red; }\na { color: var(--my-color) }",
 		":root { --my-color: red; }\na { color: var(   --my-color   ) }",
+
+		// variable hoisting: definition after usage (#199)
+		"a { color: var(--my-color) }\n:root { --my-color: red; }",
+		".test { color: var(--myColor); }\n:root { --myColor: blue; }",
 		":root { --my-color: red;\n.foo { color: var(--my-color) }\n}",
 		".fluidHeading {font-size: clamp(2.1rem, calc(7.2vw - 0.2rem), 2.5rem);}",
 		"a { color: var(--my-color, red) }",
