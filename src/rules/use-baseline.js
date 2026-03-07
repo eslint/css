@@ -44,7 +44,7 @@ import { namedColors } from "../data/colors.js";
 //-----------------------------------------------------------------------------
 
 /**
- * Represents a property that is supported via @supports.
+ * Represents a property that is supported via `@supports`.
  */
 class SupportedProperty {
 	/**
