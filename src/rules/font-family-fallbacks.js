@@ -33,6 +33,32 @@ const genericFonts = new Set([
 	"fangsong",
 ]);
 
+const cssWideKeywords = new Set([
+	"inherit",
+	"initial",
+	"unset",
+	"revert",
+	"revert-layer",
+]);
+
+/**
+ * Check if the value is a CSS-wide keyword.
+ * @param {string} value The value to check.
+ * @returns {boolean} True if the value is a CSS-wide keyword, false otherwise.
+ */
+function isCSSWideKeyword(value) {
+	return cssWideKeywords.has(value.trim().toLowerCase());
+}
+
+/**
+ * Check if the node is an identifier with a CSS-wide keyword.
+ * @param {Object} node The node to check.
+ * @returns {boolean} True if the node is a CSS-wide keyword identifier, false otherwise.
+ */
+function isCSSWideKeywordIdentifier(node) {
+	return node.type === "Identifier" && isCSSWideKeyword(node.name);
+}
+
 /**
  * Check if the node is a CSS variable function.
  * @param {Object} node The node to check.
@@ -55,6 +81,10 @@ function reportFontWithoutFallbacksInFontProperty(
 	context,
 	node,
 ) {
+	if (isCSSWideKeyword(fontPropertyValues)) {
+		return;
+	}
+
 	const valueList = fontPropertyValues.split(",").map(v => v.trim());
 
 	if (valueList.length === 1) {
@@ -120,6 +150,10 @@ export default {
 				const valueArr = node.children;
 
 				if (valueArr.length === 1) {
+					if (isCSSWideKeywordIdentifier(valueArr[0])) {
+						return;
+					}
+
 					if (
 						valueArr[0].type === "Function" &&
 						valueArr[0].name === "var"
@@ -130,6 +164,10 @@ export default {
 						const variableValue = variableMap.get(variableName);
 
 						if (!variableValue) {
+							return;
+						}
+
+						if (isCSSWideKeyword(variableValue)) {
 							return;
 						}
 

@@ -12,7 +12,7 @@ It is a best practice to use a fallback font and a generic font last in the `fon
 
 ## Rule Details
 
-This rule enforces the use of fallback fonts and a generic font last in `font-family` and `font` property.
+This rule enforces the use of fallback fonts and a generic font last in `font-family` and `font` property. Global values (`inherit`, `initial`, `revert`, `revert-layer`, `unset`) are always allowed.
 
 Example of **incorrect** code:
 
@@ -56,9 +56,13 @@ b {
 .foo {
 	font-family: var(--my-font);
 }
+
+.bar {
+	font-family: inherit;
+}
 ```
 
-Fonts can also be specified using the `font` property, which acts as a shorthand for several font-related properties, including `font-family`. You must specify both the `font-size` and `font-family` when using `font` property.
+Fonts can also be specified using the `font` property, which acts as a shorthand for several font-related properties, including `font-family`. You must specify both the `font-size` and `font-family` when using `font` property, unless you are using a CSS-wide keyword.
 
 Example of **incorrect** code:
 
@@ -115,6 +119,10 @@ b {
 	font:
 		1em var(--font),
 		monospace;
+}
+
+.baz {
+	font: unset;
 }
 ```
 
