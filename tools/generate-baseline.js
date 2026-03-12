@@ -205,7 +205,6 @@ const code = `/**
 
 export const BASELINE_HIGH = ${BASELINE_HIGH};
 export const BASELINE_LOW = ${BASELINE_LOW};
-export const BASELINE_FALSE = ${BASELINE_FALSE};
 
 export const properties = new Map(${JSON.stringify(Object.entries(cssFeatures.properties), null, "\t")});
 export const atRules = new Map(${JSON.stringify(Object.entries(cssFeatures.atRules), null, "\t")});

@@ -7,7 +7,6 @@
 
 export const BASELINE_HIGH = 10;
 export const BASELINE_LOW = 5;
-export const BASELINE_FALSE = 0;
 
 export const properties = new Map([
 	["accent-color", "0:"],
