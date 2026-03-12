@@ -19,9 +19,9 @@ import css from "./src/index.js";
 //-----------------------------------------------------------------------------
 
 const eslintPluginRulesRecommendedConfig =
-	eslintPlugin.configs["flat/rules-recommended"];
+	eslintPlugin.configs["rules-recommended"];
 const eslintPluginTestsRecommendedConfig =
-	eslintPlugin.configs["flat/tests-recommended"];
+	eslintPlugin.configs["tests-recommended"];
 
 //-----------------------------------------------------------------------------
 // Configuration
@@ -61,6 +61,7 @@ export default defineConfig([
 		extends: [eslintPluginRulesRecommendedConfig],
 		rules: {
 			"eslint-plugin/require-meta-schema": "off", // `schema` defaults to []
+			"eslint-plugin/require-meta-schema-description": "off",
 			"eslint-plugin/prefer-placeholders": "error",
 			"eslint-plugin/prefer-replace-text": "error",
 			"eslint-plugin/report-message-format": ["error", "^[^a-z].*\\.$"],

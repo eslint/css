@@ -57,7 +57,7 @@ function exceedLimitError(context, selectorLoc, maxValue, selectorType) {
 		messageId: "maxSelectors",
 		data: {
 			selector: selectorType,
-			limit: String(maxValue),
+			limit: maxValue,
 		},
 	});
 }
