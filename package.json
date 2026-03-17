@@ -82,7 +82,7 @@
     "eslint-config-eslint": "^14.0.0",
     "eslint-plugin-eslint-plugin": "^7.3.2",
     "globals": "^17.0.0",
-    "knip": "^5.82.1",
+    "knip": "^5.87.0",
     "lint-staged": "^16.0.0",
     "mdast-util-from-markdown": "^2.0.2",
     "mdn-data": "^2.27.1",
