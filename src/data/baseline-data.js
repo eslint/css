@@ -294,7 +294,7 @@ export const properties = new Map([
 	["mask-size", "5:2023"],
 	["math-depth", "0:"],
 	["math-shift", "5:2025"],
-	["math-style", "5:2023"],
+	["math-style", "10:2023"],
 	["max-height", "10:2015"],
 	["max-width", "10:2015"],
 	["min-height", "10:2015"],
@@ -464,9 +464,9 @@ export const properties = new Map([
 	["text-decoration-color", "10:2020"],
 	["text-decoration-line", "10:2020"],
 	["text-decoration-skip", "0:"],
-	["text-decoration-skip-ink", "10:2022"],
 	["text-decoration-style", "10:2020"],
 	["text-decoration-thickness", "10:2021"],
+	["text-decoration-skip-ink", "10:2022"],
 	["text-emphasis", "10:2022"],
 	["text-emphasis-color", "10:2022"],
 	["text-emphasis-position", "10:2022"],
@@ -3123,21 +3123,13 @@ export const propertyValues = new Map([
 	[
 		"text-decoration-line",
 		new Map([
-			["grammar-error", "5:2025"],
 			["line-through", "10:2020"],
 			["none", "10:2020"],
 			["overline", "10:2020"],
-			["spelling-error", "5:2025"],
 			["underline", "10:2020"],
 			["blink", "0:"],
-		]),
-	],
-	[
-		"text-decoration-skip-ink",
-		new Map([
-			["all", "0:"],
-			["auto", "10:2022"],
-			["none", "10:2022"],
+			["grammar-error", "5:2025"],
+			["spelling-error", "5:2025"],
 		]),
 	],
 	[
@@ -3154,6 +3146,14 @@ export const propertyValues = new Map([
 			["auto", "10:2021"],
 			["from-font", "10:2021"],
 			["percentage", "5:2024"],
+		]),
+	],
+	[
+		"text-decoration-skip-ink",
+		new Map([
+			["auto", "10:2022"],
+			["none", "10:2022"],
+			["all", "0:"],
 		]),
 	],
 	[
