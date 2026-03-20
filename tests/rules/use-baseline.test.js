@@ -150,6 +150,19 @@ ruleTester.run("use-baseline", rule, {
 			code: "@supports (clip-path: fill-box) { .a { clip-path: fill-box; }\n.b { clip-path: stroke-box; } }",
 			options: [{ allowPropertyValues: { "clip-path": ["stroke-box"] } }],
 		},
+		"a { height: 100vh; }",
+		"a { width: 50vw; }",
+		"a { height: 100svh; }",
+		"a { height: 100px; }",
+		"@supports (height: 100svh) { a { height: 100svh; } }",
+		{
+			code: "a { height: 100svh; }",
+			options: [{ allowUnits: ["svh"] }],
+		},
+		{
+			code: "a { height: 100svh; }",
+			options: [{ available: 2022 }],
+		},
 	],
 	invalid: [
 		{
@@ -710,6 +723,57 @@ ruleTester.run("use-baseline", rule, {
 					column: 18,
 					endLine: 3,
 					endColumn: 25,
+				},
+			],
+		},
+		{
+			code: "a { height: 100svh; }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselineUnit",
+					data: {
+						unit: "svh",
+						availability: 2021,
+					},
+					line: 1,
+					column: 13,
+					endLine: 1,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: "a { height: 100dvh; }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselineUnit",
+					data: {
+						unit: "dvh",
+						availability: 2021,
+					},
+					line: 1,
+					column: 13,
+					endLine: 1,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: "@supports (height: 100svh) { a { height: 100dvh; } }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselineUnit",
+					data: {
+						unit: "dvh",
+						availability: 2021,
+					},
+					line: 1,
+					column: 42,
+					endLine: 1,
+					endColumn: 48,
 				},
 			],
 		},

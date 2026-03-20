@@ -25,6 +25,39 @@ import fs from "node:fs";
 
 const WIDE_SUPPORT_PROPERTIES = new Set(["cursor"]);
 
+/**
+ * Mapping from grouped BCD keys to individual CSS unit names.
+ * These keys use underscores to describe a group of related units.
+ * https://github.com/mdn/browser-compat-data/blob/main/css/types/length.json
+ */
+const groupedUnitMappings = {
+	viewportPercentageUnitsSmall: [
+		"svb",
+		"svh",
+		"svi",
+		"svmax",
+		"svmin",
+		"svw",
+	],
+	viewportPercentageUnitsLarge: [
+		"lvb",
+		"lvh",
+		"lvi",
+		"lvmax",
+		"lvmin",
+		"lvw",
+	],
+	viewportPercentageUnitsDynamic: [
+		"dvb",
+		"dvh",
+		"dvi",
+		"dvmax",
+		"dvmin",
+		"dvw",
+	],
+	containerQueryLengthUnits: ["cqw", "cqh", "cqi", "cqb", "cqmin", "cqmax"],
+};
+
 const BASELINE_HIGH = 10;
 const BASELINE_LOW = 5;
 const BASELINE_FALSE = 0;
@@ -102,6 +135,7 @@ function extractCSSFeatures(features) {
 	const cssMediaConditionPattern =
 		/^css\.at-rules\.media\.(?<condition>[a-zA-Z$\d-]+)$/u;
 	const cssTypePattern = /^css\.types\.(?:.*?\.)?(?<type>[a-zA-Z\d-]+)$/u;
+	const cssUnitPattern = /^css\.types\.length\.(?<unit>[\w-]+)$/u;
 	const cssSelectorPattern = /^css\.selectors\.(?<selector>[a-zA-Z$\d-]+)$/u;
 
 	const properties = {};
@@ -109,12 +143,47 @@ function extractCSSFeatures(features) {
 	const atRules = {};
 	const mediaConditions = {};
 	const functions = {};
+	const units = {};
 	const selectors = {};
 
 	for (const [key, featureId] of Object.entries(features)) {
 		const feature = webFeatures[featureId];
-		const status = feature.status.by_compat_key[key];
 		let match;
+
+		// Handle CSS units before the by_compat_key check, since some unit
+		// features (e.g., viewport-unit-variants) don't have by_compat_key.
+		if ((match = cssUnitPattern.exec(key)) !== null) {
+			const unitStatus =
+				feature.status.by_compat_key?.[key] ?? feature.status;
+
+			if (unitStatus.baseline === undefined) {
+				continue;
+			}
+
+			const unitKey = match.groups.unit;
+			const encoded = mapFeatureStatus(unitStatus);
+
+			// Grouped keys (with underscores) map to multiple unit names
+			// Convert BCD underscore keys to camelCase for lookup
+			const camelKey = unitKey.replace(/_([a-z])/gu, (_, c) =>
+				c.toUpperCase(),
+			);
+			if (groupedUnitMappings[camelKey]) {
+				for (const unit of groupedUnitMappings[camelKey]) {
+					units[unit] = encoded;
+				}
+			} else {
+				// Simple unit names like "vb", "vi"
+				units[unitKey] = encoded;
+			}
+
+			continue;
+		}
+
+		const status = feature.status.by_compat_key?.[key];
+		if (!status) {
+			continue;
+		}
 
 		// property names
 		if (
@@ -175,6 +244,7 @@ function extractCSSFeatures(features) {
 		atRules,
 		mediaConditions,
 		functions,
+		units,
 		selectors,
 	};
 }
@@ -210,6 +280,7 @@ export const properties = new Map(${JSON.stringify(Object.entries(cssFeatures.pr
 export const atRules = new Map(${JSON.stringify(Object.entries(cssFeatures.atRules), null, "\t")});
 export const mediaConditions = new Map(${JSON.stringify(Object.entries(cssFeatures.mediaConditions), null, "\t")});
 export const functions = new Map(${JSON.stringify(Object.entries(cssFeatures.functions), null, "\t")});
+export const units = new Map(${JSON.stringify(Object.entries(cssFeatures.units), null, "\t")});
 export const selectors = new Map(${JSON.stringify(Object.entries(cssFeatures.selectors), null, "\t")});
 export const propertyValues = new Map([${Object.entries(
 	cssFeatures.propertyValues,
