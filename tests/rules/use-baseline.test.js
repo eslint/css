@@ -409,6 +409,22 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
+			code: 'a { background-image: image("foo.png", red); }',
+			errors: [
+				{
+					messageId: "notBaselineFunction",
+					data: {
+						function: "image",
+						availability: "widely",
+					},
+					line: 1,
+					column: 23,
+					endLine: 1,
+					endColumn: 44,
+				},
+			],
+		},
+		{
 			code: "@media (inverted-colors: inverted) { a { color: red; } }",
 			errors: [
 				{
