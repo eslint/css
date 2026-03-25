@@ -150,7 +150,6 @@ ruleTester.run("use-baseline", rule, {
 			code: "@supports (clip-path: fill-box) { .a { clip-path: fill-box; }\n.b { clip-path: stroke-box; } }",
 			options: [{ allowPropertyValues: { "clip-path": ["stroke-box"] } }],
 		},
-		// units
 		"a { height: 100vh; }",
 		"a { width: 50vw; }",
 		"a { height: 100svh; }",
