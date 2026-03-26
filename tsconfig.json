@@ -10,6 +10,9 @@
     "lib": ["ES2022"],
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
+    "rootDir": "./src",
+    "strictNullChecks": false,
+    "useUnknownInCatchVariables": false,
     "types": []
   }
 }
