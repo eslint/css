@@ -82,6 +82,33 @@ function getVarFallbackList(value) {
 	return list;
 }
 
+/**
+ * Walks an AST node and its children, calling a visitor for each node.
+ * @param {Object} node The AST node to walk.
+ * @param {Function} visitor The visitor function to call for each node.
+ * @returns {void}
+ */
+function walkAST(node, visitor) {
+	if (!node || typeof node !== "object" || !node.type) {
+		return;
+	}
+	visitor(node);
+	for (const key of Object.keys(node)) {
+		if (key === "loc" || key === "type") {
+			continue;
+		}
+		const child = node[key];
+
+		if (Array.isArray(child)) {
+			for (const item of child) {
+				walkAST(item, visitor);
+			}
+		} else if (child && typeof child === "object" && child.type) {
+			walkAST(child, visitor);
+		}
+	}
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -127,7 +154,11 @@ export default {
 		const sourceCode = context.sourceCode;
 		const lexer = sourceCode.lexer;
 
-		/** @type {Map<string,ValuePlain>} */
+		/**
+		 * Map of custom property names to their value nodes, pre-populated
+		 * from the entire AST to support variable hoisting.
+		 * @type {Map<string,ValuePlain>}
+		 */
 		const vars = new Map();
 
 		/**
@@ -146,6 +177,7 @@ export default {
 
 		/**
 		 * Iteratively resolves CSS variable references until a value is found.
+		 * Used for chain resolution when a variable's value contains another var().
 		 * @param {string} variableName The variable name to resolve
 		 * @param {Map<string, string>} cache Cache for memoization within a single resolution scope
 		 * @param {Set<string>} [seen] Set of already seen variables to detect cycles
@@ -250,7 +282,9 @@ export default {
 		}
 
 		/**
-		 * Process a var function node and add its resolved value to the value list
+		 * Process a var function node and add its resolved value to the value list.
+		 * Uses sourceCode.getClosestVariableValue() for primary resolution and
+		 * falls back to chain resolution for nested var() references.
 		 * @param {Object} varNode The var() function node
 		 * @param {string[]} valueList Array to collect processed values
 		 * @param {Map<string,CssLocationRange>} valueSegmentLocs Map of rebuilt value segments to their locations
@@ -263,50 +297,80 @@ export default {
 			valueSegmentLocs,
 			resolvedCache,
 		) {
-			const varValue = vars.get(varNode.children[0].name);
+			const closestValue =
+				sourceCode.getClosestVariableValue(varNode);
 
-			if (varValue) {
+			if (closestValue) {
+				const valueText = sourceCode.getText(closestValue).trim();
+				const parsed = parseVarFunction(valueText);
+
+				if (!parsed) {
+					// Concrete value (not a var() reference)
+					valueList.push(valueText);
+					valueSegmentLocs.set(valueText, varNode.loc);
+					return true;
+				}
+
+				// Value contains var() - resolve the chain
 				const resolvedValue = resolveVariable(
-					varNode.children[0].name,
+					parsed.name,
 					resolvedCache,
 				);
+
 				if (resolvedValue) {
 					valueList.push(resolvedValue);
 					valueSegmentLocs.set(resolvedValue, varNode.loc);
 					return true;
 				}
-			}
 
-			// If the variable is not found and doesn't have a fallback value, report it
-			if (varNode.children.length === 1) {
+				// Chain resolution failed - try fallback from the chain
+				if (parsed.fallbackText) {
+					const resolvedFallback = resolveFallback(
+						parsed.fallbackText,
+						resolvedCache,
+					);
+
+					if (resolvedFallback) {
+						valueList.push(resolvedFallback);
+						valueSegmentLocs.set(
+							resolvedFallback,
+							varNode.loc,
+						);
+						return true;
+					}
+				}
+
+				/*
+				 * Closest value couldn't be fully resolved (e.g., the
+				 * fallback contained unresolvable var() references).
+				 * Try resolving the original variable directly through
+				 * declared values as a last resort.
+				 */
+				const varName = varNode.children[0].name;
+				const directResolved = resolveVariable(
+					varName,
+					resolvedCache,
+				);
+
+				if (directResolved) {
+					valueList.push(directResolved);
+					valueSegmentLocs.set(directResolved, varNode.loc);
+					return true;
+				}
+
+				// Couldn't resolve at all
 				if (!allowUnknownVariables) {
 					context.report({
 						loc: varNode.children[0].loc,
 						messageId: "unknownVar",
-						data: { var: varNode.children[0].name },
+						data: { var: varName },
 					});
 					return false;
 				}
 				return true;
 			}
 
-			// Handle fallback values
-			if (varNode.children[2].type !== "Raw") {
-				return true;
-			}
-
-			const fallbackValue = varNode.children[2].value.trim();
-			const resolvedFallbackValue = resolveFallback(
-				fallbackValue,
-				resolvedCache,
-			);
-			if (resolvedFallbackValue) {
-				valueList.push(resolvedFallbackValue);
-				valueSegmentLocs.set(resolvedFallbackValue, varNode.loc);
-				return true;
-			}
-
-			// No valid fallback found
+			// No closest value found at all
 			if (!allowUnknownVariables) {
 				context.report({
 					loc: varNode.children[0].loc,
@@ -320,6 +384,18 @@ export default {
 		}
 
 		return {
+			StyleSheet() {
+				// Pre-populate vars map from the entire AST to support hoisting
+				walkAST(sourceCode.ast, node => {
+					if (
+						node.type === "Declaration" &&
+						node.property.startsWith("--")
+					) {
+						vars.set(node.property, node.value);
+					}
+				});
+			},
+
 			"Rule > Block Declaration"() {
 				declStack.push({
 					valueParts: [],
@@ -404,9 +480,6 @@ export default {
 			"Rule > Block Declaration:exit"(node) {
 				const state = declStack.pop();
 				if (node.property.startsWith("--")) {
-					// store the custom property name and value to validate later
-					vars.set(node.property, node.value);
-
 					// don't validate custom properties
 					return;
 				}

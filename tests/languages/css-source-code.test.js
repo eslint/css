@@ -932,4 +932,380 @@ describe("CSSSourceCode", () => {
 			]);
 		});
 	});
+
+	describe("getDeclarationVariables()", () => {
+		/**
+		 * Helper to create a CSSSourceCode from CSS text and trigger traversal.
+		 * @param {string} css The CSS text.
+		 * @returns {import("../../src/languages/css-source-code.js").CSSSourceCode} The source code instance.
+		 */
+		function createSourceCode(css) {
+			const sourceCode = new CSSSourceCode({
+				text: css,
+				ast: toPlainObject(parse(css, { positions: true })),
+			});
+
+			// trigger traversal to populate custom properties data
+			sourceCode.traverse();
+			return sourceCode;
+		}
+
+		it("should return empty array for a declaration without var()", () => {
+			const css = "a { color: red; }";
+			const sourceCode = createSourceCode(css);
+			const decl = sourceCode.ast.children[0].block.children[0];
+
+			assert.deepStrictEqual(
+				sourceCode.getDeclarationVariables(decl),
+				[],
+			);
+		});
+
+		it("should return var() function nodes in a declaration", () => {
+			const css = "a { color: var(--my-color); }";
+			const sourceCode = createSourceCode(css);
+			const decl = sourceCode.ast.children[0].block.children[0];
+			const vars = sourceCode.getDeclarationVariables(decl);
+
+			assert.strictEqual(vars.length, 1);
+			assert.strictEqual(vars[0].type, "Function");
+			assert.strictEqual(vars[0].name, "var");
+			assert.strictEqual(vars[0].children[0].name, "--my-color");
+		});
+
+		it("should return multiple var() function nodes", () => {
+			const css =
+				"a { border: var(--width) solid var(--color); }";
+			const sourceCode = createSourceCode(css);
+			const decl = sourceCode.ast.children[0].block.children[0];
+			const vars = sourceCode.getDeclarationVariables(decl);
+
+			assert.strictEqual(vars.length, 2);
+			assert.strictEqual(vars[0].children[0].name, "--width");
+			assert.strictEqual(vars[1].children[0].name, "--color");
+		});
+
+		it("should not track var() from other declarations", () => {
+			const css =
+				"a { color: var(--color); padding: var(--padding); }";
+			const sourceCode = createSourceCode(css);
+			const colorDecl =
+				sourceCode.ast.children[0].block.children[0];
+			const paddingDecl =
+				sourceCode.ast.children[0].block.children[1];
+
+			const colorVars =
+				sourceCode.getDeclarationVariables(colorDecl);
+			const paddingVars =
+				sourceCode.getDeclarationVariables(paddingDecl);
+
+			assert.strictEqual(colorVars.length, 1);
+			assert.strictEqual(
+				colorVars[0].children[0].name,
+				"--color",
+			);
+
+			assert.strictEqual(paddingVars.length, 1);
+			assert.strictEqual(
+				paddingVars[0].children[0].name,
+				"--padding",
+			);
+		});
+	});
+
+	describe("getClosestVariableValue()", () => {
+		/**
+		 * Helper to create a CSSSourceCode from CSS text and trigger traversal.
+		 * @param {string} css The CSS text.
+		 * @returns {import("../../src/languages/css-source-code.js").CSSSourceCode} The source code instance.
+		 */
+		function createSourceCode(css) {
+			const sourceCode = new CSSSourceCode({
+				text: css,
+				ast: toPlainObject(parse(css, { positions: true })),
+			});
+
+			sourceCode.traverse();
+			return sourceCode;
+		}
+
+		/**
+		 * Helper to find the first var() Function node in the AST.
+		 * @param {Object} node The node to search.
+		 * @returns {Object|null} The var() function node, or null.
+		 */
+		function findVarFunc(node) {
+			if (
+				node.type === "Function" &&
+				node.name.toLowerCase() === "var"
+			) {
+				return node;
+			}
+			for (const key of Object.keys(node)) {
+				if (key === "loc" || key === "type") {
+					continue;
+				}
+				const child = node[key];
+
+				if (Array.isArray(child)) {
+					for (const item of child) {
+						if (item && typeof item === "object" && item.type) {
+							const result = findVarFunc(item);
+
+							if (result) {
+								return result;
+							}
+						}
+					}
+				} else if (
+					child &&
+					typeof child === "object" &&
+					child.type
+				) {
+					const result = findVarFunc(child);
+
+					if (result) {
+						return result;
+					}
+				}
+			}
+			return null;
+		}
+
+		it("should return value from same-block declaration", () => {
+			const css = "a { --my-color: red; color: var(--my-color); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.ok(result);
+			assert.strictEqual(
+				sourceCode.getText(result).trim(),
+				"red",
+			);
+		});
+
+		it("should return fallback when no same-block declaration exists", () => {
+			const css = "a { color: var(--my-color, blue); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.ok(result);
+			assert.strictEqual(result.type, "Raw");
+			assert.strictEqual(result.value.trim(), "blue");
+		});
+
+		it("should return value from previous rule when no fallback", () => {
+			const css =
+				":root { --my-color: red; }\na { color: var(--my-color); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.ok(result);
+			assert.strictEqual(
+				sourceCode.getText(result).trim(),
+				"red",
+			);
+		});
+
+		it("should return fallback before other-block declaration", () => {
+			const css =
+				":root { --my-color: red; }\na { color: var(--my-color, blue); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.ok(result);
+			assert.strictEqual(result.type, "Raw");
+			assert.strictEqual(result.value.trim(), "blue");
+		});
+
+		it("should return hoisted declaration value when no fallback", () => {
+			const css =
+				"a { color: var(--my-color); }\n:root { --my-color: red; }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.ok(result);
+			assert.strictEqual(
+				sourceCode.getText(result).trim(),
+				"red",
+			);
+		});
+
+		it("should return @property initial-value when no declarations", () => {
+			const css =
+				'@property --my-color { syntax: "<color>"; inherits: false; initial-value: green; }\na { color: var(--my-color); }';
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.ok(result);
+			assert.strictEqual(
+				sourceCode.getText(result).trim(),
+				"green",
+			);
+		});
+
+		it("should return undefined when variable is not defined", () => {
+			const css = "a { color: var(--unknown); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.strictEqual(result, undefined);
+		});
+
+		it("should return last same-block declaration value", () => {
+			const css =
+				"a { --x: red; --x: blue; color: var(--x); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const result = sourceCode.getClosestVariableValue(varFunc);
+
+			assert.ok(result);
+			assert.strictEqual(
+				sourceCode.getText(result).trim(),
+				"blue",
+			);
+		});
+	});
+
+	describe("getVariableValues()", () => {
+		/**
+		 * Helper to create a CSSSourceCode from CSS text and trigger traversal.
+		 * @param {string} css The CSS text.
+		 * @returns {import("../../src/languages/css-source-code.js").CSSSourceCode} The source code instance.
+		 */
+		function createSourceCode(css) {
+			const sourceCode = new CSSSourceCode({
+				text: css,
+				ast: toPlainObject(parse(css, { positions: true })),
+			});
+
+			sourceCode.traverse();
+			return sourceCode;
+		}
+
+		/**
+		 * Helper to find the first var() Function node in the AST.
+		 * @param {Object} node The node to search.
+		 * @returns {Object|null} The var() function node, or null.
+		 */
+		function findVarFunc(node) {
+			if (
+				node.type === "Function" &&
+				node.name.toLowerCase() === "var"
+			) {
+				return node;
+			}
+			for (const key of Object.keys(node)) {
+				if (key === "loc" || key === "type") {
+					continue;
+				}
+				const child = node[key];
+
+				if (Array.isArray(child)) {
+					for (const item of child) {
+						if (item && typeof item === "object" && item.type) {
+							const result = findVarFunc(item);
+
+							if (result) {
+								return result;
+							}
+						}
+					}
+				} else if (
+					child &&
+					typeof child === "object" &&
+					child.type
+				) {
+					const result = findVarFunc(child);
+
+					if (result) {
+						return result;
+					}
+				}
+			}
+			return null;
+		}
+
+		it("should return empty array for unknown variable without fallback", () => {
+			const css = "a { color: var(--unknown); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const values = sourceCode.getVariableValues(varFunc);
+
+			assert.deepStrictEqual(values, []);
+		});
+
+		it("should return fallback only when no declarations", () => {
+			const css = "a { color: var(--unknown, red); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const values = sourceCode.getVariableValues(varFunc);
+
+			assert.strictEqual(values.length, 1);
+			assert.strictEqual(values[0].type, "Raw");
+			assert.strictEqual(values[0].value.trim(), "red");
+		});
+
+		it("should return declaration values in source order", () => {
+			const css =
+				":root { --x: red; }\na { --x: blue; }\nb { color: var(--x); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const values = sourceCode.getVariableValues(varFunc);
+
+			assert.strictEqual(values.length, 2);
+			assert.strictEqual(
+				sourceCode.getText(values[0]).trim(),
+				"red",
+			);
+			assert.strictEqual(
+				sourceCode.getText(values[1]).trim(),
+				"blue",
+			);
+		});
+
+		it("should return @property initial-value first, then declarations, then fallback", () => {
+			const css =
+				'@property --x { syntax: "<color>"; inherits: false; initial-value: green; }\n:root { --x: red; }\na { color: var(--x, blue); }';
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const values = sourceCode.getVariableValues(varFunc);
+
+			assert.strictEqual(values.length, 3);
+			// First: @property initial-value
+			assert.strictEqual(
+				sourceCode.getText(values[0]).trim(),
+				"green",
+			);
+			// Second: declaration value
+			assert.strictEqual(
+				sourceCode.getText(values[1]).trim(),
+				"red",
+			);
+			// Third: fallback
+			assert.strictEqual(values[2].type, "Raw");
+			assert.strictEqual(values[2].value.trim(), "blue");
+		});
+
+		it("should return only declaration value when no @property or fallback", () => {
+			const css =
+				":root { --x: red; }\na { color: var(--x); }";
+			const sourceCode = createSourceCode(css);
+			const varFunc = findVarFunc(sourceCode.ast);
+			const values = sourceCode.getVariableValues(varFunc);
+
+			assert.strictEqual(values.length, 1);
+			assert.strictEqual(
+				sourceCode.getText(values[0]).trim(),
+				"red",
+			);
+		});
+	});
 });
