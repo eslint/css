@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/eslint/css/compare/css-v1.0.0...css-v1.1.0) (2026-03-29)
+
+
+### Features
+
+* add CSS unit baseline checking ([#403](https://github.com/eslint/css/issues/403)) ([51f24f4](https://github.com/eslint/css/commit/51f24f494860ccd9852f876040de8bcf86013e34))
+
+
+### Bug Fixes
+
+* correctly extract baseline support for CSS functions ([#401](https://github.com/eslint/css/issues/401)) ([a1b5c6f](https://github.com/eslint/css/commit/a1b5c6f5e96d2b63d1804f686bfe30180d483966))
+* update baseline data ([#399](https://github.com/eslint/css/issues/399)) ([235f451](https://github.com/eslint/css/commit/235f451d4ce4af1467ad0a0413ef3b2cf006527d))
+* update baseline data ([#405](https://github.com/eslint/css/issues/405)) ([616558e](https://github.com/eslint/css/commit/616558e87e6cbc1e36cbaa8b13e498203eab2fc2))
+* update baseline data ([#412](https://github.com/eslint/css/issues/412)) ([6f8c083](https://github.com/eslint/css/commit/6f8c083765e827dbec82b41b3feedb76be1cb7bc))
+
 ## [1.0.0](https://github.com/eslint/css/compare/css-v0.14.1...css-v1.0.0) (2026-03-08)
 
 
