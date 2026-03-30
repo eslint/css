@@ -82,33 +82,6 @@ function getVarFallbackList(value) {
 	return list;
 }
 
-/**
- * Walks an AST node and its children, calling a visitor for each node.
- * @param {Object} node The AST node to walk.
- * @param {Function} visitor The visitor function to call for each node.
- * @returns {void}
- */
-function walkAST(node, visitor) {
-	if (!node || typeof node !== "object" || !node.type) {
-		return;
-	}
-	visitor(node);
-	for (const key of Object.keys(node)) {
-		if (key === "loc" || key === "type") {
-			continue;
-		}
-		const child = node[key];
-
-		if (Array.isArray(child)) {
-			for (const item of child) {
-				walkAST(item, visitor);
-			}
-		} else if (child && typeof child === "object" && child.type) {
-			walkAST(child, visitor);
-		}
-	}
-}
-
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -155,8 +128,9 @@ export default {
 		const lexer = sourceCode.lexer;
 
 		/**
-		 * Map of custom property names to their value nodes, pre-populated
-		 * from the entire AST to support variable hoisting.
+		 * Map of custom property names to their value nodes, populated
+		 * incrementally as declarations are visited. Used for chain
+		 * resolution when a variable's value references another var().
 		 * @type {Map<string,ValuePlain>}
 		 */
 		const vars = new Map();
@@ -384,18 +358,6 @@ export default {
 		}
 
 		return {
-			StyleSheet() {
-				// Pre-populate vars map from the entire AST to support hoisting
-				walkAST(sourceCode.ast, node => {
-					if (
-						node.type === "Declaration" &&
-						node.property.startsWith("--")
-					) {
-						vars.set(node.property, node.value);
-					}
-				});
-			},
-
 			"Rule > Block Declaration"() {
 				declStack.push({
 					valueParts: [],
@@ -480,6 +442,9 @@ export default {
 			"Rule > Block Declaration:exit"(node) {
 				const state = declStack.pop();
 				if (node.property.startsWith("--")) {
+					// store the custom property name and value to validate later
+					vars.set(node.property, node.value);
+
 					// don't validate custom properties
 					return;
 				}
