@@ -271,8 +271,7 @@ export default {
 			valueSegmentLocs,
 			resolvedCache,
 		) {
-			const closestValue =
-				sourceCode.getClosestVariableValue(varNode);
+			const closestValue = sourceCode.getClosestVariableValue(varNode);
 
 			if (closestValue) {
 				const valueText = sourceCode.getText(closestValue).trim();
@@ -306,10 +305,7 @@ export default {
 
 					if (resolvedFallback) {
 						valueList.push(resolvedFallback);
-						valueSegmentLocs.set(
-							resolvedFallback,
-							varNode.loc,
-						);
+						valueSegmentLocs.set(resolvedFallback, varNode.loc);
 						return true;
 					}
 				}
@@ -321,10 +317,7 @@ export default {
 				 * declared values as a last resort.
 				 */
 				const varName = varNode.children[0].name;
-				const directResolved = resolveVariable(
-					varName,
-					resolvedCache,
-				);
+				const directResolved = resolveVariable(varName, resolvedCache);
 
 				if (directResolved) {
 					valueList.push(directResolved);

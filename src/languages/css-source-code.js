@@ -426,10 +426,7 @@ export class CSSSourceCode extends TextSourceCodeBase {
 			this.#parents.set(node, parent);
 
 			// Track custom property declarations (e.g., --my-color: red)
-			if (
-				node.type === "Declaration" &&
-				node.property.startsWith("--")
-			) {
+			if (node.type === "Declaration" && node.property.startsWith("--")) {
 				const varName = node.property;
 				let uses = this.#customProperties.get(varName);
 
@@ -499,15 +496,11 @@ export class CSSSourceCode extends TextSourceCodeBase {
 				const currentDecl = declarationStack.at(-1);
 
 				if (currentDecl) {
-					let varRefs =
-						this.#declarationVariables.get(currentDecl);
+					let varRefs = this.#declarationVariables.get(currentDecl);
 
 					if (!varRefs) {
 						varRefs = [];
-						this.#declarationVariables.set(
-							currentDecl,
-							varRefs,
-						);
+						this.#declarationVariables.set(currentDecl, varRefs);
 					}
 					varRefs.push(node);
 				}
