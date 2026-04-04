@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/eslint/css/compare/css-v1.1.0...css-v1.1.1) (2026-04-04)
+
+
+### Bug Fixes
+
+* update dependency @eslint/css-tree to v4 ([#416](https://github.com/eslint/css/issues/416)) ([30ddb0f](https://github.com/eslint/css/commit/30ddb0f98c6b45e651e373a29dcce58037de377b))
+* update eslint ([#414](https://github.com/eslint/css/issues/414)) ([eeff2e2](https://github.com/eslint/css/commit/eeff2e27288305e4ec59d1e02c685f25b27ab6cb))
+
 ## [1.1.0](https://github.com/eslint/css/compare/css-v1.0.0...css-v1.1.0) (2026-03-29)
 
 
