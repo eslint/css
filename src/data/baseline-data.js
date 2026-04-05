@@ -10,7 +10,7 @@ export const BASELINE_LOW = 5;
 
 export const properties = new Map([
 	["accent-color", "0:"],
-	["alignment-baseline", "0:"],
+	["alignment-baseline", "5:2026"],
 	["all", "10:2020"],
 	["anchor-name", "5:2026"],
 	["anchor-scope", "5:2026"],
@@ -45,7 +45,7 @@ export const properties = new Map([
 	["background-position-y", "10:2016"],
 	["background-repeat", "10:2015"],
 	["background-size", "10:2015"],
-	["baseline-shift", "0:"],
+	["baseline-shift", "5:2026"],
 	["baseline-source", "0:"],
 	["border-image", "10:2015"],
 	["border-image-outset", "10:2015"],
@@ -292,7 +292,7 @@ export const properties = new Map([
 	["mask-position", "5:2023"],
 	["mask-repeat", "5:2023"],
 	["mask-size", "5:2023"],
-	["math-depth", "0:"],
+	["math-depth", "5:2026"],
 	["math-shift", "5:2025"],
 	["math-style", "10:2023"],
 	["max-height", "10:2015"],
@@ -859,11 +859,11 @@ export const propertyValues = new Map([
 		"alignment-baseline",
 		new Map([
 			["alphabetic", "0:"],
-			["baseline", "0:"],
+			["baseline", "5:2026"],
 			["central", "0:"],
 			["ideographic", "0:"],
 			["mathematical", "0:"],
-			["middle", "0:"],
+			["middle", "5:2026"],
 			["text-after-edge", "0:"],
 			["text-before-edge", "0:"],
 		]),
@@ -1441,8 +1441,8 @@ export const propertyValues = new Map([
 		"baseline-shift",
 		new Map([
 			["baseline", "0:"],
-			["sub", "0:"],
-			["super", "0:"],
+			["sub", "5:2026"],
+			["super", "5:2026"],
 		]),
 	],
 	[
@@ -2035,7 +2035,7 @@ export const propertyValues = new Map([
 			["nastaliq", "10:2015"],
 			["sans-serif", "10:2015"],
 			["serif", "10:2015"],
-			["math", "0:"],
+			["math", "5:2026"],
 			["system-ui", "10:2021"],
 			["ui-monospace", "0:"],
 			["ui-rounded", "0:"],
@@ -2082,7 +2082,7 @@ export const propertyValues = new Map([
 		"font-size",
 		new Map([
 			["xxx-large", "10:2023"],
-			["math", "0:"],
+			["math", "5:2026"],
 		]),
 	],
 	[
