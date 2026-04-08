@@ -29,6 +29,7 @@ This rule warns when it finds any of the following:
 - A media condition inside `@media` that isn't widely available.
 - A CSS property value that isn't widely available or otherwise isn't enclosed in a `@supports` block (currently limited to identifiers only).
 - A CSS property function that isn't widely available.
+- A CSS unit that isn't widely available or otherwise isn't enclosed in a `@supports` block.
 - A CSS pseudo-element or pseudo-class selector that isn't widely available.
 
 The data is provided via the [web-features](https://npmjs.com/package/web-features) package.
@@ -46,6 +47,12 @@ a {
 /* invalid - abs is not widely available */
 .box {
 	width: abs(20% - 100px);
+}
+
+/* invalid - svh is not available before 2022 */
+/* eslint css/use-baseline: ["error", { available: 2021 }] */
+a {
+	height: 100svh;
 }
 
 /* invalid - :has() is not widely available */
@@ -110,6 +117,7 @@ This rule accepts an options object with the following properties:
 - `allowProperties` (default: `[]`) - Specify an array of properties that are allowed to be used.
 - `allowPropertyValues` (default: `{}`) - Specify an object mapping properties to an array of allowed identifier values for that property.
 - `allowSelectors` (default: `[]`) - Specify an array of selectors that are allowed to be used.
+- `allowUnits` (default: `[]`) - Specify an array of CSS units that are allowed to be used.
 
 #### `allowAtRules`
 
@@ -198,6 +206,18 @@ Examples of **correct** code with `{ allowSelectors: ["has"] }`:
 
 h1:has(+ h2) {
 	margin: 0 0 0.25rem 0;
+}
+```
+
+#### `allowUnits`
+
+Examples of **correct** code with `{ allowUnits: ["svh"] }`:
+
+```css
+/* eslint css/use-baseline: ["error", { available: 2021, allowUnits: ["svh"] }] */
+
+a {
+	height: 100svh;
 }
 ```
 

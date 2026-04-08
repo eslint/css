@@ -15,6 +15,7 @@ import {
 	atRules,
 	mediaConditions,
 	functions,
+	units,
 	selectors,
 } from "../data/baseline-data.js";
 import { namedColors } from "../data/colors.js";
@@ -25,8 +26,8 @@ import { namedColors } from "../data/colors.js";
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @import { Identifier, FunctionNodePlain } from "@eslint/css-tree"
- * @typedef {"notBaselineProperty" | "notBaselinePropertyValue" | "notBaselineAtRule" | "notBaselineFunction" | "notBaselineMediaCondition" | "notBaselineSelector"} UseBaselineMessageIds
+ * @import { Identifier, FunctionNodePlain, Dimension } from "@eslint/css-tree"
+ * @typedef {"notBaselineProperty" | "notBaselinePropertyValue" | "notBaselineAtRule" | "notBaselineFunction" | "notBaselineMediaCondition" | "notBaselineSelector" | "notBaselineUnit"} UseBaselineMessageIds
  * @typedef {[{
  *     available?: "widely" | "newly" | number,
  *     allowAtRules?: string[],
@@ -34,7 +35,8 @@ import { namedColors } from "../data/colors.js";
  *     allowMediaConditions?: string[],
  *     allowProperties?: string[],
  *     allowPropertyValues?: { [property: string]: string[] },
- *     allowSelectors?: string[]
+ *     allowSelectors?: string[],
+ *     allowUnits?: string[]
  * }]} UseBaselineOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: UseBaselineOptions, MessageIds: UseBaselineMessageIds }>} UseBaselineRuleDefinition
  */
@@ -44,7 +46,7 @@ import { namedColors } from "../data/colors.js";
 //-----------------------------------------------------------------------------
 
 /**
- * Represents a property that is supported via @supports.
+ * Represents a property that is supported via `@supports`.
  */
 class SupportedProperty {
 	/**
@@ -58,6 +60,12 @@ class SupportedProperty {
 	 * @type {Set<string>}
 	 */
 	#identifiers = new Set();
+
+	/**
+	 * Supported units.
+	 * @type {Set<string>}
+	 */
+	#units = new Set();
 
 	/**
 	 * Supported function types.
@@ -97,6 +105,32 @@ class SupportedProperty {
 	 */
 	hasIdentifiers() {
 		return this.#identifiers.size > 0;
+	}
+
+	/**
+	 * Adds a unit to the list of supported units.
+	 * @param {string} unit The unit to add.
+	 * @returns {void}
+	 */
+	addUnit(unit) {
+		this.#units.add(unit);
+	}
+
+	/**
+	 * Determines if a unit is supported.
+	 * @param {string} unit The unit to check.
+	 * @returns {boolean} `true` if the unit is supported, `false` if not.
+	 */
+	hasUnit(unit) {
+		return this.#units.has(unit);
+	}
+
+	/**
+	 * Determines if any units are supported.
+	 * @returns {boolean} `true` if any units are supported, `false` if not.
+	 */
+	hasUnits() {
+		return this.#units.size > 0;
 	}
 
 	/**
@@ -239,6 +273,37 @@ class SupportsRule {
 	}
 
 	/**
+	 * Determines if the rule supports a unit.
+	 * @param {string} property The name of the property.
+	 * @param {string} unit The unit to check.
+	 * @returns {boolean} `true` if the unit is supported, `false` if not.
+	 */
+	hasPropertyUnit(property, unit) {
+		const supportedProperty = this.#properties.get(property);
+
+		if (!supportedProperty) {
+			return false;
+		}
+
+		return supportedProperty.hasUnit(unit);
+	}
+
+	/**
+	 * Determines if the rule supports any units.
+	 * @param {string} property The name of the property.
+	 * @returns {boolean} `true` if any units are supported, `false` if not.
+	 */
+	hasPropertyUnits(property) {
+		const supportedProperty = this.#properties.get(property);
+
+		if (!supportedProperty) {
+			return false;
+		}
+
+		return supportedProperty.hasUnits();
+	}
+
+	/**
 	 * Adds a selector to the rule.
 	 * @param {string} selector The name of the selector.
 	 * @returns {void}
@@ -339,6 +404,16 @@ class SupportsRules {
 	 */
 	hasPropertyFunctions(property) {
 		return this.#rules.some(rule => rule.hasFunctions(property));
+	}
+
+	/**
+	 * Determines if any rule supports a unit.
+	 * @param {string} property The name of the property.
+	 * @param {string} unit The unit to check.
+	 * @returns {boolean} `true` if any rule supports the unit, `false` if not.
+	 */
+	hasPropertyUnit(property, unit) {
+		return this.#rules.some(rule => rule.hasPropertyUnit(property, unit));
 	}
 
 	/**
@@ -489,6 +564,13 @@ export default {
 						},
 						uniqueItems: true,
 					},
+					allowUnits: {
+						type: "array",
+						items: {
+							enum: Array.from(units.keys()),
+						},
+						uniqueItems: true,
+					},
 				},
 				additionalProperties: false,
 			},
@@ -503,6 +585,7 @@ export default {
 				allowProperties: [],
 				allowPropertyValues: {},
 				allowSelectors: [],
+				allowUnits: [],
 			},
 		],
 
@@ -519,6 +602,8 @@ export default {
 				"Media condition '{{condition}}' is not a {{availability}} available baseline feature.",
 			notBaselineSelector:
 				"Selector '{{selector}}' is not a {{availability}} available baseline feature.",
+			notBaselineUnit:
+				"Unit '{{unit}}' is not a {{availability}} available baseline feature.",
 		},
 	},
 
@@ -534,6 +619,7 @@ export default {
 		const allowMediaConditions = new Set(
 			context.options[0].allowMediaConditions,
 		);
+		const allowUnits = new Set(context.options[0].allowUnits);
 		const allowPropertyValuesMap = new Map();
 		for (const [prop, values] of Object.entries(
 			context.options[0].allowPropertyValues,
@@ -614,6 +700,36 @@ export default {
 			}
 		}
 
+		/**
+		 * Checks a property value unit to see if it's a baseline feature.
+		 * @param {string} property The name of the property.
+		 * @param {Dimension} child The node to check.
+		 * @returns {void}
+		 */
+		function checkPropertyValueUnit(property, child) {
+			if (allowUnits.has(child.unit)) {
+				return;
+			}
+
+			const featureStatus = units.get(child.unit);
+
+			// if we don't know of this unit, just skip it
+			if (featureStatus === undefined) {
+				return;
+			}
+
+			if (!baselineAvailability.isSupported(featureStatus)) {
+				context.report({
+					loc: child.loc,
+					messageId: "notBaselineUnit",
+					data: {
+						unit: child.unit,
+						availability: baselineAvailability.availability,
+					},
+				});
+			}
+		}
+
 		return {
 			"Atrule[name=/^supports$/i]"() {
 				supportsRules.push(new SupportsRule());
@@ -644,6 +760,11 @@ export default {
 						declaration.value.children.forEach(child => {
 							if (child.type === "Identifier") {
 								supportedProperty.addIdentifier(child.name);
+								return;
+							}
+
+							if (child.type === "Dimension") {
+								supportedProperty.addUnit(child.unit);
 								return;
 							}
 
@@ -739,6 +860,16 @@ export default {
 							)
 						) {
 							checkPropertyValueIdentifier(property, child);
+						}
+
+						continue;
+					}
+
+					if (child.type === "Dimension") {
+						if (
+							!supportsRules.hasPropertyUnit(property, child.unit)
+						) {
+							checkPropertyValueUnit(property, child);
 						}
 
 						continue;
