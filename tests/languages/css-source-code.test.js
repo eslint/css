@@ -17,6 +17,58 @@ import dedent from "dedent";
 // Tests
 //-----------------------------------------------------------------------------
 
+/**
+ * Helper to create a CSSSourceCode from CSS text and trigger traversal.
+ * @param {string} css The CSS text.
+ * @returns {import("../../src/languages/css-source-code.js").CSSSourceCode} The source code instance.
+ */
+function createSourceCode(css) {
+	const sourceCode = new CSSSourceCode({
+		text: css,
+		ast: toPlainObject(parse(css, { positions: true })),
+	});
+
+	// trigger traversal to populate custom properties data
+	sourceCode.traverse();
+	return sourceCode;
+}
+
+/**
+ * Helper to find the first var() Function node in the AST.
+ * @param {Object} node The node to search.
+ * @returns {Object|null} The var() function node, or null.
+ */
+function findVarFunc(node) {
+	if (node.type === "Function" && node.name.toLowerCase() === "var") {
+		return node;
+	}
+	for (const key of Object.keys(node)) {
+		if (key === "loc" || key === "type") {
+			continue;
+		}
+		const child = node[key];
+
+		if (Array.isArray(child)) {
+			for (const item of child) {
+				if (item && typeof item === "object" && item.type) {
+					const result = findVarFunc(item);
+
+					if (result) {
+						return result;
+					}
+				}
+			}
+		} else if (child && typeof child === "object" && child.type) {
+			const result = findVarFunc(child);
+
+			if (result) {
+				return result;
+			}
+		}
+	}
+	return null;
+}
+
 describe("CSSSourceCode", () => {
 	describe("constructor", () => {
 		it("should create a CSSSourceCode instance", () => {
@@ -934,22 +986,6 @@ describe("CSSSourceCode", () => {
 	});
 
 	describe("getDeclarationVariables()", () => {
-		/**
-		 * Helper to create a CSSSourceCode from CSS text and trigger traversal.
-		 * @param {string} css The CSS text.
-		 * @returns {import("../../src/languages/css-source-code.js").CSSSourceCode} The source code instance.
-		 */
-		function createSourceCode(css) {
-			const sourceCode = new CSSSourceCode({
-				text: css,
-				ast: toPlainObject(parse(css, { positions: true })),
-			});
-
-			// trigger traversal to populate custom properties data
-			sourceCode.traverse();
-			return sourceCode;
-		}
-
 		it("should return empty array for a declaration without var()", () => {
 			const css = "a { color: red; }";
 			const sourceCode = createSourceCode(css);
@@ -999,60 +1035,32 @@ describe("CSSSourceCode", () => {
 			assert.strictEqual(paddingVars.length, 1);
 			assert.strictEqual(paddingVars[0].children[0].name, "--padding");
 		});
+
+		it("should return nested var() function nodes from fallback", () => {
+			const css = "a { color: var(--my-color-1, var(--my-color-2)); }";
+			const sourceCode = createSourceCode(css);
+			const decl = sourceCode.ast.children[0].block.children[0];
+			const vars = sourceCode.getDeclarationVariables(decl);
+
+			assert.strictEqual(vars.length, 2);
+			assert.strictEqual(vars[0].children[0].name, "--my-color-1");
+			assert.strictEqual(vars[1].children[0].name, "--my-color-2");
+		});
+
+		it("should return deeply nested var() function nodes", () => {
+			const css = "a { color: var(--a, var(--b, var(--c))); }";
+			const sourceCode = createSourceCode(css);
+			const decl = sourceCode.ast.children[0].block.children[0];
+			const vars = sourceCode.getDeclarationVariables(decl);
+
+			assert.strictEqual(vars.length, 3);
+			assert.strictEqual(vars[0].children[0].name, "--a");
+			assert.strictEqual(vars[1].children[0].name, "--b");
+			assert.strictEqual(vars[2].children[0].name, "--c");
+		});
 	});
 
 	describe("getClosestVariableValue()", () => {
-		/**
-		 * Helper to create a CSSSourceCode from CSS text and trigger traversal.
-		 * @param {string} css The CSS text.
-		 * @returns {import("../../src/languages/css-source-code.js").CSSSourceCode} The source code instance.
-		 */
-		function createSourceCode(css) {
-			const sourceCode = new CSSSourceCode({
-				text: css,
-				ast: toPlainObject(parse(css, { positions: true })),
-			});
-
-			sourceCode.traverse();
-			return sourceCode;
-		}
-
-		/**
-		 * Helper to find the first var() Function node in the AST.
-		 * @param {Object} node The node to search.
-		 * @returns {Object|null} The var() function node, or null.
-		 */
-		function findVarFunc(node) {
-			if (node.type === "Function" && node.name.toLowerCase() === "var") {
-				return node;
-			}
-			for (const key of Object.keys(node)) {
-				if (key === "loc" || key === "type") {
-					continue;
-				}
-				const child = node[key];
-
-				if (Array.isArray(child)) {
-					for (const item of child) {
-						if (item && typeof item === "object" && item.type) {
-							const result = findVarFunc(item);
-
-							if (result) {
-								return result;
-							}
-						}
-					}
-				} else if (child && typeof child === "object" && child.type) {
-					const result = findVarFunc(child);
-
-					if (result) {
-						return result;
-					}
-				}
-			}
-			return null;
-		}
-
 		it("should return value from same-block declaration", () => {
 			const css = "a { --my-color: red; color: var(--my-color); }";
 			const sourceCode = createSourceCode(css);
@@ -1140,57 +1148,6 @@ describe("CSSSourceCode", () => {
 	});
 
 	describe("getVariableValues()", () => {
-		/**
-		 * Helper to create a CSSSourceCode from CSS text and trigger traversal.
-		 * @param {string} css The CSS text.
-		 * @returns {import("../../src/languages/css-source-code.js").CSSSourceCode} The source code instance.
-		 */
-		function createSourceCode(css) {
-			const sourceCode = new CSSSourceCode({
-				text: css,
-				ast: toPlainObject(parse(css, { positions: true })),
-			});
-
-			sourceCode.traverse();
-			return sourceCode;
-		}
-
-		/**
-		 * Helper to find the first var() Function node in the AST.
-		 * @param {Object} node The node to search.
-		 * @returns {Object|null} The var() function node, or null.
-		 */
-		function findVarFunc(node) {
-			if (node.type === "Function" && node.name.toLowerCase() === "var") {
-				return node;
-			}
-			for (const key of Object.keys(node)) {
-				if (key === "loc" || key === "type") {
-					continue;
-				}
-				const child = node[key];
-
-				if (Array.isArray(child)) {
-					for (const item of child) {
-						if (item && typeof item === "object" && item.type) {
-							const result = findVarFunc(item);
-
-							if (result) {
-								return result;
-							}
-						}
-					}
-				} else if (child && typeof child === "object" && child.type) {
-					const result = findVarFunc(child);
-
-					if (result) {
-						return result;
-					}
-				}
-			}
-			return null;
-		}
-
 		it("should return empty array for unknown variable without fallback", () => {
 			const css = "a { color: var(--unknown); }";
 			const sourceCode = createSourceCode(css);
