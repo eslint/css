@@ -48,6 +48,14 @@ ruleTester.run("font-family-fallbacks", rule, {
 		"a { font: var(--font-size) 'Open Sans', var(--my-font); }",
 		":root { --my-font: Verdana, Arial, Helvetica; } a { font: var(--font-size) 'Open Sans', var(--my-font), serif; }",
 		":root { --my-font: sans-serif; } a { font: var(--font-weight) var(--font-size)/var(--line-height) var(--font-family); }",
+		{
+			code: "a { font-family: custom-inherit; }",
+			languageOptions: {
+				customSyntax: {
+					cssWideKeywords: ["custom-inherit"],
+				},
+			},
+		},
 	],
 	invalid: [
 		{
