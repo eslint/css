@@ -13,7 +13,6 @@ import {
 	ConfigCommentParser,
 	Directive,
 } from "@eslint/plugin-kit";
-import { parse as cssParse, toPlainObject } from "@eslint/css-tree";
 import { visitorKeys } from "./css-visitor-keys.js";
 
 //-----------------------------------------------------------------------------
@@ -35,61 +34,6 @@ const commentParser = new ConfigCommentParser();
 
 const INLINE_CONFIG =
 	/^\s*eslint(?:-enable|-disable(?:(?:-next)?-line)?)?(?:\s|$)/u;
-
-/**
- * Adjusts a parsed location relative to a Raw node's position in the
- * original source. When a Raw fallback value is re-parsed, the resulting
- * AST has offsets starting from 0. This function maps them back to the
- * original source positions.
- * @param {CssLocationRange} parsedLoc The location from the re-parsed AST.
- * @param {CssLocationRange} rawLoc The location of the Raw node in the original source.
- * @returns {CssLocationRange} The adjusted location.
- */
-function adjustLoc(parsedLoc, rawLoc) {
-	return {
-		source: rawLoc.source,
-		start: {
-			offset: rawLoc.start.offset + parsedLoc.start.offset,
-			line: rawLoc.start.line + parsedLoc.start.line - 1,
-			column:
-				parsedLoc.start.line === 1
-					? rawLoc.start.column + parsedLoc.start.column - 1
-					: parsedLoc.start.column,
-		},
-		end: {
-			offset: rawLoc.start.offset + parsedLoc.end.offset,
-			line: rawLoc.start.line + parsedLoc.end.line - 1,
-			column:
-				parsedLoc.end.line === 1
-					? rawLoc.start.column + parsedLoc.end.column - 1
-					: parsedLoc.end.column,
-		},
-	};
-}
-
-/**
- * Recursively adjusts all `loc` properties in a parsed AST node tree
- * relative to a Raw node's location.
- * @param {Object} node The parsed AST node.
- * @param {CssLocationRange} rawLoc The location of the Raw node in the original source.
- * @returns {void}
- */
-function adjustAllLocs(node, rawLoc) {
-	if (node.loc) {
-		node.loc = adjustLoc(node.loc, rawLoc);
-	}
-	for (const key of visitorKeys[node.type] || []) {
-		const child = node[key];
-
-		if (child) {
-			if (Array.isArray(child)) {
-				child.forEach(item => adjustAllLocs(item, rawLoc));
-			} else {
-				adjustAllLocs(child, rawLoc);
-			}
-		}
-	}
-}
 
 /**
  * A class to represent a step in the traversal process.
@@ -456,111 +400,6 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	}
 
 	/**
-	 * Extracts nested var() references from a Raw fallback node by
-	 * re-parsing its text content. The CSS parser represents fallback
-	 * values as Raw text nodes, so nested var() calls like
-	 * `var(--a, var(--b))` are not parsed into Function nodes.
-	 * This method re-parses the raw text and tracks any var()
-	 * references found.
-	 * @param {FunctionNodePlain} varFuncNode The var() Function node containing the Raw fallback.
-	 * @param {Array<DeclarationPlain>} declarationStack Stack tracking the current declaration.
-	 * @returns {void}
-	 */
-	#extractNestedVarRefs(varFuncNode, declarationStack) {
-		if (
-			varFuncNode.children.length < 3 ||
-			!varFuncNode.children[2] ||
-			varFuncNode.children[2].type !== "Raw"
-		) {
-			return;
-		}
-
-		const rawNode = varFuncNode.children[2];
-		const rawText = rawNode.value;
-
-		if (!rawText.toLowerCase().includes("var(")) {
-			return;
-		}
-
-		let parsed;
-
-		try {
-			parsed = toPlainObject(
-				cssParse(rawText, { context: "value", positions: true }),
-			);
-		} catch {
-			return;
-		}
-
-		// Adjust all locations in the re-parsed tree to reflect original source positions
-		adjustAllLocs(parsed, rawNode.loc);
-
-		// Walk the re-parsed tree to find var() Function nodes
-		const visit = node => {
-			if (
-				node.type === "Function" &&
-				node.name.toLowerCase() === "var" &&
-				node.children &&
-				node.children.length > 0 &&
-				node.children[0].type === "Identifier"
-			) {
-				// Set parent to the outer var() function so the parent chain connects
-				this.#parents.set(node, varFuncNode);
-
-				// Set parents for children
-				for (const child of node.children) {
-					this.#parents.set(child, node);
-				}
-
-				// Track reference in #customProperties
-				const nestedVarName = node.children[0].name;
-				let uses = this.#customProperties.get(nestedVarName);
-
-				if (!uses) {
-					uses = {
-						declarations: [],
-						definitions: [],
-						references: [],
-					};
-					this.#customProperties.set(nestedVarName, uses);
-				}
-				uses.references.push(node);
-
-				// Track in #declarationVariables for the current declaration
-				const currentDecl = declarationStack.at(-1);
-
-				if (currentDecl) {
-					let varRefs = this.#declarationVariables.get(currentDecl);
-
-					if (!varRefs) {
-						varRefs = [];
-						this.#declarationVariables.set(currentDecl, varRefs);
-					}
-					varRefs.push(node);
-				}
-
-				// Recursively extract deeper nested var() references
-				this.#extractNestedVarRefs(node, declarationStack);
-			}
-
-			// Continue walking children
-			for (const key of visitorKeys[node.type] || []) {
-				const child = node[key];
-
-				if (child) {
-					if (Array.isArray(child)) {
-						child.forEach(item => visit(item));
-					} else {
-						visit(child);
-					}
-				}
-			}
-		};
-
-		visit(parsed);
-	}
-
-	/**
 	 * Traverse the source code and return the steps that were taken.
 	 * @returns {Iterable<CSSTraversalStep>} The steps that were taken while traversing the source code.
 	 */
@@ -665,9 +504,6 @@ export class CSSSourceCode extends TextSourceCodeBase {
 					}
 					varRefs.push(node);
 				}
-
-				// Extract nested var() references from Raw fallback text
-				this.#extractNestedVarRefs(node, declarationStack);
 			}
 
 			// then add the step

@@ -1035,29 +1035,6 @@ describe("CSSSourceCode", () => {
 			assert.strictEqual(paddingVars.length, 1);
 			assert.strictEqual(paddingVars[0].children[0].name, "--padding");
 		});
-
-		it("should return nested var() function nodes from fallback", () => {
-			const css = "a { color: var(--my-color-1, var(--my-color-2)); }";
-			const sourceCode = createSourceCode(css);
-			const decl = sourceCode.ast.children[0].block.children[0];
-			const vars = sourceCode.getDeclarationVariables(decl);
-
-			assert.strictEqual(vars.length, 2);
-			assert.strictEqual(vars[0].children[0].name, "--my-color-1");
-			assert.strictEqual(vars[1].children[0].name, "--my-color-2");
-		});
-
-		it("should return deeply nested var() function nodes", () => {
-			const css = "a { color: var(--a, var(--b, var(--c))); }";
-			const sourceCode = createSourceCode(css);
-			const decl = sourceCode.ast.children[0].block.children[0];
-			const vars = sourceCode.getDeclarationVariables(decl);
-
-			assert.strictEqual(vars.length, 3);
-			assert.strictEqual(vars[0].children[0].name, "--a");
-			assert.strictEqual(vars[1].children[0].name, "--b");
-			assert.strictEqual(vars[2].children[0].name, "--c");
-		});
 	});
 
 	describe("getClosestVariableValue()", () => {
