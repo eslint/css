@@ -87,7 +87,7 @@
     "mdast-util-from-markdown": "^2.0.2",
     "mdn-data": "^2.27.1",
     "mocha": "^11.0.0",
-    "prettier": "3.8.1",
+    "prettier": "3.8.2",
     "tailwind-csstree": "^0.3.0",
     "typescript": "^5.9.3",
     "web-features": "^3.23.0",
