@@ -69,7 +69,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@eslint/core": "^1.2.1",
-    "@eslint/css-tree": "^4.0.1",
+    "@eslint/css-tree": "^4.0.2",
     "@eslint/plugin-kit": "^0.7.1"
   },
   "devDependencies": {
@@ -87,10 +87,10 @@
     "lint-staged": "^16.0.0",
     "mdast-util-from-markdown": "^2.0.2",
     "mocha": "^11.0.0",
-    "prettier": "3.8.1",
+    "prettier": "3.8.2",
     "tailwind-csstree": "^0.3.0",
     "typescript": "^5.9.3",
-    "web-features": "^3.22.1",
+    "web-features": "^3.23.1",
     "yorkie": "^2.0.0"
   },
   "engines": {

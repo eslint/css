@@ -58,6 +58,7 @@ export const properties = new Map([
 	["border-radius", "10:2015"],
 	["border-top-left-radius", "10:2015"],
 	["border-top-right-radius", "10:2015"],
+	["border-shape", "0:"],
 	["border", "10:2015"],
 	["border-bottom", "10:2015"],
 	["border-bottom-color", "10:2015"],
@@ -124,6 +125,7 @@ export const properties = new Map([
 	["custom-property", "10:2017"],
 	["display", "10:2015"],
 	["dominant-baseline", "10:2020"],
+	["dynamic-range-limit", "0:"],
 	["field-sizing", "0:"],
 	["filter", "10:2016"],
 	["align-content", "10:2015"],
@@ -1491,6 +1493,7 @@ export const propertyValues = new Map([
 	["border-radius", new Map([["percentages", "10:2015"]])],
 	["border-top-left-radius", new Map([["percentages", "10:2015"]])],
 	["border-top-right-radius", new Map([["percentages", "10:2015"]])],
+	["border-shape", new Map([["none", "0:"]])],
 	["border-bottom-color", new Map([["transparent", "10:2015"]])],
 	[
 		"border-bottom-style",
@@ -1952,6 +1955,14 @@ export const propertyValues = new Map([
 			["ideographic", "10:2020"],
 			["mathematical", "10:2020"],
 			["middle", "10:2020"],
+		]),
+	],
+	[
+		"dynamic-range-limit",
+		new Map([
+			["constrained", "0:"],
+			["no-limit", "0:"],
+			["standard", "0:"],
 		]),
 	],
 	[
