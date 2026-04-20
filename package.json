@@ -57,7 +57,10 @@
     "test": "mocha \"tests/**/*.test.js\"",
     "test:coverage": "c8 npm test",
     "test:jsr": "npx -y jsr@latest publish --dry-run",
-    "test:types": "npm run build && tsc -p tests/types/tsconfig.json"
+    "test:types": "npm run build && tsc -p tests/types/tsconfig.json",
+    "test:types:5.x": "npx -p typescript@5.x -y -- tsc -p tests/types/tsconfig.json",
+    "test:types:5.3": "npx -p typescript@5.3 -y -- tsc -p tests/types/tsconfig.json",
+    "test:types:all": "npm run test:types && npm run test:types:5.x && npm run test:types:5.3"
   },
   "keywords": [
     "eslint",
@@ -89,7 +92,7 @@
     "mocha": "^11.0.0",
     "prettier": "3.8.2",
     "tailwind-csstree": "^0.3.0",
-    "typescript": "^6.0.2",
+    "typescript": "^6.0.3",
     "web-features": "^3.23.1",
     "yorkie": "^2.0.0"
   },

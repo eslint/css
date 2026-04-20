@@ -1,11 +1,14 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "allowJs": false,
+    "checkJs": false,
     "noEmit": true,
     "rootDir": "../..",
     "strict": true,
     "strictNullChecks": true,
     "useUnknownInCatchVariables": true,
+    "noImplicitAny": true,
     "exactOptionalPropertyTypes": true
   },
   "files": [],

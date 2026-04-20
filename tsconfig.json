@@ -13,6 +13,7 @@
     "rootDir": "./src",
     "strictNullChecks": false,
     "useUnknownInCatchVariables": false,
+    "noImplicitAny": false,
     "types": []
   }
 }
