@@ -34,6 +34,29 @@ const genericFonts = new Set([
 ]);
 
 /**
+ * Check if the value is a CSS-wide keyword.
+ * @param {string} value The value to check.
+ * @param {Set<string>} cssWideKeywords The CSS-wide keywords to check against.
+ * @returns {boolean} True if the value is a CSS-wide keyword, false otherwise.
+ */
+function isCSSWideKeyword(value, cssWideKeywords) {
+	return cssWideKeywords.has(value.trim().toLowerCase());
+}
+
+/**
+ * Check if the node is an identifier with a CSS-wide keyword.
+ * @param {Object} node The node to check.
+ * @param {Set<string>} cssWideKeywords The CSS-wide keywords to check against.
+ * @returns {boolean} True if the node is a CSS-wide keyword identifier, false otherwise.
+ */
+function isCSSWideKeywordIdentifier(node, cssWideKeywords) {
+	return (
+		node.type === "Identifier" &&
+		isCSSWideKeyword(node.name, cssWideKeywords)
+	);
+}
+
+/**
  * Check if the node is a CSS variable function.
  * @param {Object} node The node to check.
  * @returns {boolean} True if the node is a variable function, false otherwise.
@@ -47,6 +70,7 @@ function isVarFunction(node) {
  * @param {string} fontPropertyValues The font property values to check.
  * @param {Object} context The ESLint context object.
  * @param {Object} node The CSS node being checked.
+ * @param {Set<string>} cssWideKeywords The CSS-wide keywords to check against.
  * @returns {void}
  * @private
  */
@@ -54,7 +78,12 @@ function reportFontWithoutFallbacksInFontProperty(
 	fontPropertyValues,
 	context,
 	node,
+	cssWideKeywords,
 ) {
+	if (isCSSWideKeyword(fontPropertyValues, cssWideKeywords)) {
+		return;
+	}
+
 	const valueList = fontPropertyValues.split(",").map(v => v.trim());
 
 	if (valueList.length === 1) {
@@ -104,6 +133,11 @@ export default {
 
 	create(context) {
 		const sourceCode = context.sourceCode;
+		const cssWideKeywords = new Set(
+			sourceCode.lexer.cssWideKeywords.map(keyword =>
+				keyword.toLowerCase(),
+			),
+		);
 		const variableMap = new Map();
 
 		return {
@@ -121,6 +155,12 @@ export default {
 
 				if (valueArr.length === 1) {
 					if (
+						isCSSWideKeywordIdentifier(valueArr[0], cssWideKeywords)
+					) {
+						return;
+					}
+
+					if (
 						valueArr[0].type === "Function" &&
 						valueArr[0].name === "var"
 					) {
@@ -130,6 +170,10 @@ export default {
 						const variableValue = variableMap.get(variableName);
 
 						if (!variableValue) {
+							return;
+						}
+
+						if (isCSSWideKeyword(variableValue, cssWideKeywords)) {
 							return;
 						}
 
@@ -272,6 +316,7 @@ export default {
 							variableValue,
 							context,
 							node,
+							cssWideKeywords,
 						);
 					}
 				} else {
@@ -397,6 +442,7 @@ export default {
 									variableValue,
 									context,
 									node,
+									cssWideKeywords,
 								);
 							} else {
 								if (
@@ -421,6 +467,7 @@ export default {
 								fontPropertyValues,
 								context,
 								node,
+								cssWideKeywords,
 							);
 						}
 					}

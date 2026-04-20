@@ -10,8 +10,20 @@ const ruleTester = new RuleTester({ plugins: { css }, language: "css/css" });
 
 ruleTester.run("font-family-fallbacks", rule, {
 	valid: [
+		"a { font-family: inherit; }",
+		"a { font-family: initial; }",
+		"a { font-family: revert; }",
+		"a { font-family: revert-layer; }",
+		"a { font-family: unset; }",
+		"a { font: inherit; }",
+		"a { font: initial; }",
+		"a { font: revert; }",
+		"a { font: revert-layer; }",
+		"a { font: unset; }",
 		":root { --my-font: sans-serif; } a { font-family: var(--my-font); }",
 		":root { --foo: 3rem; } a { font-family: var(--my-font); }",
+		":root { --my-font: inherit; } a { font-family: var(--my-font); }",
+		":root { --my-font-value: inherit; } a { font: var(--my-font-value); }",
 		":root { --my-font: 'Arial', sans-serif; } a { font-family: var(--my-font); }",
 		":root { --my-font: 'Arial', 'Segoe UI Emoji', serif; } a { font-family: var(--my-font); }",
 		"a { font-family: serif; }",
@@ -36,6 +48,14 @@ ruleTester.run("font-family-fallbacks", rule, {
 		"a { font: var(--font-size) 'Open Sans', var(--my-font); }",
 		":root { --my-font: Verdana, Arial, Helvetica; } a { font: var(--font-size) 'Open Sans', var(--my-font), serif; }",
 		":root { --my-font: sans-serif; } a { font: var(--font-weight) var(--font-size)/var(--line-height) var(--font-family); }",
+		{
+			code: "a { font-family: custom-inherit; }",
+			languageOptions: {
+				customSyntax: {
+					cssWideKeywords: ["custom-inherit"],
+				},
+			},
+		},
 	],
 	invalid: [
 		{
