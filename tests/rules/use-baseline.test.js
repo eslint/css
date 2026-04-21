@@ -31,6 +31,7 @@ ruleTester.run("use-baseline", rule, {
 		"body { --custom-property: red; }",
 		"body { padding: 0; }",
 		"::before { content: attr(foo); }",
+		"::before { content: string(foo); }",
 		"a { color: red; -moz-transition: bar }",
 		"@font-face { font-weight: 100 400 }",
 		"@media (min-width: 800px) { a { color: red; } }",
