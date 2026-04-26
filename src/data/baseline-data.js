@@ -607,6 +607,7 @@ export const functions = new Map([
 	["cross-fade", "0:"],
 	["cubic-bezier", "10:2015"],
 	["var", "10:2017"],
+	["dynamic-range-limit-mix", "0:"],
 	["element", "0:"],
 	["exp", "5:2023"],
 	["hypot", "5:2023"],
@@ -689,6 +690,8 @@ export const functions = new Map([
 	["cos", "10:2023"],
 	["sin", "10:2023"],
 	["tan", "10:2023"],
+	["cross-origin", "0:"],
+	["referrer-policy", "0:"],
 ]);
 export const units = new Map([
 	["cap", "5:2023"],
@@ -767,7 +770,7 @@ export const selectors = new Map([
 	["has-slotted", "0:"],
 	["heading", "0:"],
 	["headingfunction", "0:"],
-	["highlight", "0:"],
+	["highlight", "5:2026"],
 	["host", "10:2020"],
 	["hostfunction", "10:2020"],
 	["host-context", "0:"],
@@ -2031,8 +2034,8 @@ export const propertyValues = new Map([
 			["left", "10:2015"],
 			["none", "10:2015"],
 			["right", "10:2015"],
-			["inline-end", "5:2023"],
-			["inline-start", "5:2023"],
+			["inline-end", "10:2023"],
+			["inline-start", "10:2023"],
 		]),
 	],
 	[
@@ -2041,8 +2044,8 @@ export const propertyValues = new Map([
 			["left", "10:2015"],
 			["none", "10:2015"],
 			["right", "10:2015"],
-			["inline-end", "5:2023"],
-			["inline-start", "5:2023"],
+			["inline-end", "10:2023"],
+			["inline-start", "10:2023"],
 		]),
 	],
 	[
@@ -2350,6 +2353,7 @@ export const propertyValues = new Map([
 		new Map([
 			["allow-end", "0:"],
 			["first", "0:"],
+			["force-end", "0:"],
 			["last", "0:"],
 			["none", "0:"],
 		]),
@@ -3339,7 +3343,7 @@ export const propertyValues = new Map([
 	[
 		"transform-box",
 		new Map([
-			["border-box", "5:2023"],
+			["border-box", "10:2023"],
 			["content-box", "5:2024"],
 			["fill-box", "10:2020"],
 			["stroke-box", "5:2024"],
