@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 import { features as webFeatures } from "web-features";
-import mdnData from "mdn-data";
+import webrefCss from "@webref/css";
 import prettier from "prettier";
 import fs from "node:fs";
 
@@ -63,7 +63,7 @@ const groupedUnitMappings = {
  * instead of functions. For example, `css.types.image` refers to `<image>`,
  * not `image()`.
  */
-const UNGROUPED_NON_FUNCTION_TYPES = new Set(["color", "image"]);
+const UNGROUPED_NON_FUNCTION_TYPES = new Set(["color", "image", "string"]);
 
 const BASELINE_HIGH = 10;
 const BASELINE_LOW = 5;
@@ -73,6 +73,8 @@ const baselineIds = new Map([
 	["low", BASELINE_LOW],
 	[false, BASELINE_FALSE],
 ]);
+const { functions: webrefFunctions } = await webrefCss.listAll();
+const knownCSSFunctions = new Set(webrefFunctions.map(({ name }) => name));
 
 /*
  * The following regular expressions are used to match the keys in the
@@ -130,12 +132,12 @@ function mapFeatureStatus(status) {
 }
 
 /**
- * Determines if a name matches a known CSS function in MDN data.
+ * Determines if a name matches a known CSS function in `@webref/css`.
  * @param {string} functionName The function name without trailing parentheses.
- * @returns {boolean} True if the function exists in MDN data.
+ * @returns {boolean} True if the function exists in `@webref/css`.
  */
 function isKnownCSSFunction(functionName) {
-	return `${functionName}()` in mdnData.css.functions;
+	return knownCSSFunctions.has(`${functionName}()`);
 }
 
 /**
