@@ -106,6 +106,14 @@ export default defineConfig([
 		language: "json/json",
 		extends: ["json/recommended"],
 	},
+	{
+		name: "css/jsonc",
+		plugins: { json },
+		files: ["**/*.jsonc", "**/tsconfig*.json"],
+		language: "json/jsonc",
+		languageOptions: { allowTrailingCommas: true },
+		extends: ["json/recommended"],
+	},
 	// This CSS configuration is mainly used to validate the `test.css` file for local testing.
 	{
 		name: "css/css",

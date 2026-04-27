@@ -10,8 +10,8 @@
     "useUnknownInCatchVariables": true,
     "noImplicitAny": true,
     "exactOptionalPropertyTypes": true,
-    "verbatimModuleSyntax": true,
-    "erasableSyntaxOnly": true
+    "verbatimModuleSyntax": true
+    // "erasableSyntaxOnly" is not supported in TypeScript < 5.8.
   },
   "files": [],
   "include": [".", "../../dist"]
