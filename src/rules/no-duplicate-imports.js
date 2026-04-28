@@ -33,7 +33,7 @@ export default {
 		},
 
 		messages: {
-			duplicateImport: "Unexpected duplicate @import rule for {{url}}.",
+			duplicateImport: "Unexpected duplicate @import rule for '{{url}}'.",
 		},
 	},
 
