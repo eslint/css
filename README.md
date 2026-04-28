@@ -6,7 +6,7 @@ This package contains a plugin that allows you to natively lint CSS files using 
 
 **Important:** This plugin requires ESLint v9.15.0 or higher and you must be using the [new configuration system](https://eslint.org/docs/latest/use/configure/configuration-files).
 
-## Prequisites
+## Prerequisites
 
 In order to use the ESLint CSS plugin, you must have the following installed:
 
@@ -108,7 +108,7 @@ export default defineConfig([
 ]);
 ```
 
-You can individually config, disable, and enable rules in CSS using comments, such as:
+You can individually configure, disable, and enable rules in CSS using comments, such as:
 
 <!-- prettier-ignore -->
 ```css
