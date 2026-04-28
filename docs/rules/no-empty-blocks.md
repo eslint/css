@@ -29,10 +29,10 @@ a {
 }
 
 a {
+	/* a comment */
 }
 
 .class-name {
-	/* a comment */
 }
 
 .class-name {
