@@ -1,5 +1,6 @@
 {
   "bump-minor-pre-major": true,
+  "extra-label": "triage:no",
   "packages": {
     ".": {
       "release-type": "node",
