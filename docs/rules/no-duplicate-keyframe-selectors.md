@@ -54,7 +54,11 @@ Examples of **incorrect** code for this rule:
 		opacity: 0;
 	}
 
-	from {
+	to {
+		opacity: 0.5;
+	}
+
+	to {
 		opacity: 1;
 	}
 }
