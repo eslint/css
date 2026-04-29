@@ -55,11 +55,11 @@ Examples of **incorrect** code for this rule:
 	}
 
 	to {
-		opacity: 1;
+		opacity: 0.5;
 	}
 
 	to {
-		opacity: 2;
+		opacity: 1;
 	}
 }
 ```
