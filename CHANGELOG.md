@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.2.0](https://github.com/eslint/css/compare/css-v1.1.0...css-v1.2.0) (2026-04-30)
+
+
+### Features
+
+* add quotes in url in error message for `no-duplicate-imports` ([#430](https://github.com/eslint/css/issues/430)) ([903de97](https://github.com/eslint/css/commit/903de971e46a17d6522f17f6c7453ea77d9e28d5))
+* update error massage ([903de97](https://github.com/eslint/css/commit/903de971e46a17d6522f17f6c7453ea77d9e28d5))
+
+
+### Bug Fixes
+
+* allow CSS-wide keywords in font-family-fallbacks ([#391](https://github.com/eslint/css/issues/391)) ([638c6ee](https://github.com/eslint/css/commit/638c6ee5f71a2d2af983f250633e968859791b6b))
+* migrate baseline generation to @webref/css ([#419](https://github.com/eslint/css/issues/419)) ([a96f873](https://github.com/eslint/css/commit/a96f8738e3ca1c93eac18116a2f9cb73ce9203d8))
+* typos in README.md ([#432](https://github.com/eslint/css/issues/432)) ([6892d7a](https://github.com/eslint/css/commit/6892d7a5bf33ba5cb856973c6ecd6f881ef1f157))
+* update baseline data ([6160de7](https://github.com/eslint/css/commit/6160de7e586183af20b2f4d0528d0d764df15bb9))
+* update baseline data ([#417](https://github.com/eslint/css/issues/417)) ([5c1c625](https://github.com/eslint/css/commit/5c1c6251a359d26d117171de3a1e258e2c15ded9))
+* update baseline data ([#421](https://github.com/eslint/css/issues/421)) ([77ab636](https://github.com/eslint/css/commit/77ab636d79bba9dcc4c0223fcfcd5368a6bd4656))
+* update baseline data ([#428](https://github.com/eslint/css/issues/428)) ([ad7a261](https://github.com/eslint/css/commit/ad7a261dc0693af8fd936b3373c31d3e72acaccc))
+* update dependency @eslint/css-tree to ^4.0.2 ([#423](https://github.com/eslint/css/issues/423)) ([25651d0](https://github.com/eslint/css/commit/25651d0524e50c17a3e3a7ddcd1a77a48c4ba4bd))
+* update dependency @eslint/css-tree to v4 ([#416](https://github.com/eslint/css/issues/416)) ([30ddb0f](https://github.com/eslint/css/commit/30ddb0f98c6b45e651e373a29dcce58037de377b))
+* update eslint ([#414](https://github.com/eslint/css/issues/414)) ([eeff2e2](https://github.com/eslint/css/commit/eeff2e27288305e4ec59d1e02c685f25b27ab6cb))
+* update eslint ([#418](https://github.com/eslint/css/issues/418)) ([d2be7ce](https://github.com/eslint/css/commit/d2be7ceb51b05bccdde1a7cf6f1d99f2f6a353dd))
+
 ## [1.1.0](https://github.com/eslint/css/compare/css-v1.0.0...css-v1.1.0) (2026-03-29)
 
 
