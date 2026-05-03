@@ -79,7 +79,7 @@
     "@arethetypeswrong/cli": "^0.18.2",
     "@eslint/json": "^1.2.0",
     "@types/node": "^20.19.0",
-    "@webref/css": "^8.5.3",
+    "@webref/css": "^8.5.4",
     "c8": "^11.0.0",
     "dedent": "^1.5.3",
     "eslint": "^10.0.0",
@@ -93,7 +93,7 @@
     "prettier": "3.8.3",
     "tailwind-csstree": "^0.3.0",
     "typescript": "^6.0.3",
-    "web-features": "^3.24.0",
+    "web-features": "^3.26.0",
     "yorkie": "^2.0.0"
   },
   "engines": {
