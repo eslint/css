@@ -94,7 +94,7 @@ ruleTester.run("use-baseline", rule, {
 			},
 		},
 		{
-			code: ".messages { overscroll-behavior: contain; }",
+			code: ".messages { text-align-last: center; }",
 			options: [{ available: 2022 }],
 		},
 		{
