@@ -28,12 +28,8 @@ function getImportEnd(text, end) {
 
 	// Remove the node, and also remove a following newline if present
 	if (text[removeEnd] === "\r") {
-		removeEnd +=
-		text[removeEnd + 1] === "\n" ? 2 : 1;
-	} else if (
-		text[removeEnd] === "\n" ||
-		text[removeEnd] === "\f"
-	) {
+		removeEnd += text[removeEnd + 1] === "\n" ? 2 : 1;
+	} else if (text[removeEnd] === "\n" || text[removeEnd] === "\f") {
 		removeEnd += 1;
 	}
 
@@ -83,8 +79,10 @@ export default {
 
 		messages: {
 			duplicateImport: "Unexpected duplicate @import rule for '{{url}}'.",
-			removeDuplicateImportWithConditions: "Remove duplicate @import rule with condition(s) - {{conditions}}.",
-			removeDuplicateImportWithoutConditions: "Remove duplicate @import rule without conditions.",
+			removeDuplicateImportWithConditions:
+				"Remove duplicate @import rule with condition(s) - {{conditions}}.",
+			removeDuplicateImportWithoutConditions:
+				"Remove duplicate @import rule without conditions.",
 		},
 	},
 
@@ -95,14 +93,41 @@ export default {
 		return {
 			"Atrule[name=/^import$/i]"(node) {
 				const url = node.prelude.children[0].value;
-				const hasImport = [...imports].some(importNode => importNode.prelude.children[0].value === url);
+				const hasImport = [...imports].some(
+					importNode => importNode.prelude.children[0].value === url,
+				);
 
 				if (hasImport) {
-					const firstImportNode = [...imports].find(importNode => importNode.prelude.children[0].value === url);
-					const [firstImportStart, firstImportEnd] = sourceCode.getRange(firstImportNode);
+					const firstImportNode = [...imports].find(
+						importNode =>
+							importNode.prelude.children[0].value === url,
+					);
+					const [firstImportStart, firstImportEnd] =
+						sourceCode.getRange(firstImportNode);
+
+					const firstImporthHasConditions =
+						firstImportNode.prelude.children.length > 1;
+					const nodeHasConditions = node.prelude.children.length > 1;
 
 					const [start, end] = sourceCode.getRange(node);
 					const text = sourceCode.text;
+
+					const firstImportConditions = getImportConditions(
+						firstImportNode,
+						sourceCode,
+					);
+					const duplicateImportConditions = getImportConditions(
+						node,
+						sourceCode,
+					);
+
+					const hasSameConditions =
+						firstImportConditions.length ===
+							duplicateImportConditions.length &&
+						firstImportConditions.every(
+							(condition, index) =>
+								condition === duplicateImportConditions[index],
+						);
 
 					context.report({
 						loc: node.loc,
@@ -111,7 +136,11 @@ export default {
 						fix(fixer) {
 							const removeEnd = getImportEnd(text, end);
 
-							if ((firstImportNode && firstImportNode.prelude.children.length === 1) && node.prelude.children.length === 1) {
+							if (
+								(!firstImporthHasConditions &&
+									!nodeHasConditions) ||
+								hasSameConditions
+							) {
 								return fixer.removeRange([start, removeEnd]);
 							}
 
@@ -119,30 +148,57 @@ export default {
 						},
 						suggest: [
 							{
-								messageId: getImportConditions(firstImportNode, sourceCode).length > 0 ? "removeDuplicateImportWithConditions" : "removeDuplicateImportWithoutConditions",
-								data: { conditions: getImportConditions(firstImportNode, sourceCode).join(", ") },
+								messageId: firstImporthHasConditions
+									? "removeDuplicateImportWithConditions"
+									: "removeDuplicateImportWithoutConditions",
+								data: {
+									conditions:
+										firstImportConditions.join(", "),
+								},
 								fix(fixer) {
-									const removeEnd = getImportEnd(text, firstImportEnd);
+									const removeEnd = getImportEnd(
+										text,
+										firstImportEnd,
+									);
 
-									if ((firstImportNode && firstImportNode.prelude.children.length > 1) || node.prelude.children.length > 1) {
-										return fixer.removeRange([firstImportStart, removeEnd]);
+									if (
+										(firstImporthHasConditions ||
+											nodeHasConditions) &&
+										!hasSameConditions
+									) {
+										return fixer.removeRange([
+											firstImportStart,
+											removeEnd,
+										]);
 									}
 
 									return null;
-								}
+								},
 							},
 							{
-								messageId: getImportConditions(node, sourceCode).length > 0 ? "removeDuplicateImportWithConditions" : "removeDuplicateImportWithoutConditions",
-								data: { conditions: getImportConditions(node, sourceCode).join(", ") },
+								messageId: nodeHasConditions
+									? "removeDuplicateImportWithConditions"
+									: "removeDuplicateImportWithoutConditions",
+								data: {
+									conditions:
+										duplicateImportConditions.join(", "),
+								},
 								fix(fixer) {
 									const removeEnd = getImportEnd(text, end);
 
-									if ((firstImportNode && firstImportNode.prelude.children.length > 1) || node.prelude.children.length > 1) {
-										return fixer.removeRange([start, removeEnd]);
+									if (
+										(firstImporthHasConditions ||
+											nodeHasConditions) &&
+										!hasSameConditions
+									) {
+										return fixer.removeRange([
+											start,
+											removeEnd,
+										]);
 									}
 
 									return null;
-								}
+								},
 							},
 						],
 					});
