@@ -137,11 +137,13 @@ const unitReplacements = new Map([
 export default {
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		fixable: "code",
 
 		docs: {
 			description: "Enforce the use of logical properties",
+			dialects: ["CSS"],
 			url: "https://github.com/eslint/css/blob/main/docs/rules/prefer-logical-properties.md",
 		},
 

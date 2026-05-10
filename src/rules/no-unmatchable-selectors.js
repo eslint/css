@@ -21,9 +21,11 @@
 export default {
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow unmatchable selectors",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-unmatchable-selectors.md",
 		},

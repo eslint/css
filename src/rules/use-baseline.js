@@ -487,9 +487,11 @@ class BaselineAvailability {
 export default {
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Enforce the use of baseline features",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/use-baseline.md",
 		},

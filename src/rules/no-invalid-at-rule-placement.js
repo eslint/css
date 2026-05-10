@@ -21,9 +21,11 @@
 export default {
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow invalid placement of at-rules",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-at-rule-placement.md",
 		},
