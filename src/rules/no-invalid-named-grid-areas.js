@@ -83,9 +83,11 @@ const validProps = new Set(["grid-template-areas", "grid-template", "grid"]);
 export default {
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow invalid named grid areas",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-named-grid-areas.md",
 		},

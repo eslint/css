@@ -90,9 +90,11 @@ function getVarFallbackList(value) {
 export default {
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow invalid properties",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-properties.md",
 		},

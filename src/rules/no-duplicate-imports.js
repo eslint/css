@@ -23,11 +23,13 @@
 export default {
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		fixable: "code",
 
 		docs: {
 			description: "Disallow duplicate @import rules",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-duplicate-imports.md",
 		},
