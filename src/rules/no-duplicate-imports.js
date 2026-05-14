@@ -57,6 +57,25 @@ function getImportConditions(importNode, sourceCode) {
 	return importConditions;
 }
 
+/**
+ * Get the fix for a duplicate import statement.
+ * @param {Object} fixer The fixer object.
+ * @param {string} text The full text of the source code.
+ * @param {number} start The start index of the import statement to fix.
+ * @param {number} end The end index of the import statement to fix.
+ * @param {boolean} condition A boolean indicating whether the import statement has conditions that differ from the original import.
+ * @returns {Object|null} A fix object if a fix is applicable, or null if no fix should be applied.
+ */
+function getFixForImport(fixer, text, start, end, condition) {
+	const removeEnd = getImportEnd(text, end);
+
+	if (condition) {
+		return fixer.removeRange([start, removeEnd]);
+	}
+
+	return null;
+}
+
 //-----------------------------------------------------------------------------
 // Rule
 //-----------------------------------------------------------------------------
@@ -88,17 +107,17 @@ export default {
 
 	create(context) {
 		const { sourceCode } = context;
-		const imports = new Set();
+		const imports = [];
 
 		return {
 			"Atrule[name=/^import$/i]"(node) {
 				const url = node.prelude.children[0].value;
-				const hasImport = [...imports].some(
+				const hasImport = imports.some(
 					importNode => importNode.prelude.children[0].value === url,
 				);
 
 				if (hasImport) {
-					const firstImportNode = [...imports].find(
+					const firstImportNode = imports.find(
 						importNode =>
 							importNode.prelude.children[0].value === url,
 					);
@@ -134,17 +153,18 @@ export default {
 						messageId: "duplicateImport",
 						data: { url },
 						fix(fixer) {
-							const removeEnd = getImportEnd(text, end);
-
-							if (
+							const condition =
 								(!firstImporthHasConditions &&
 									!nodeHasConditions) ||
-								hasSameConditions
-							) {
-								return fixer.removeRange([start, removeEnd]);
-							}
+								hasSameConditions;
 
-							return null;
+							return getFixForImport(
+								fixer,
+								text,
+								start,
+								end,
+								condition,
+							);
 						},
 						suggest: [
 							{
@@ -152,27 +172,21 @@ export default {
 									? "removeDuplicateImportWithConditions"
 									: "removeDuplicateImportWithoutConditions",
 								data: {
-									conditions:
-										firstImportConditions.join(", "),
+									conditions: firstImportConditions.join(" "),
 								},
 								fix(fixer) {
-									const removeEnd = getImportEnd(
-										text,
-										firstImportEnd,
-									);
-
-									if (
+									const condition =
 										(firstImporthHasConditions ||
 											nodeHasConditions) &&
-										!hasSameConditions
-									) {
-										return fixer.removeRange([
-											firstImportStart,
-											removeEnd,
-										]);
-									}
+										!hasSameConditions;
 
-									return null;
+									return getFixForImport(
+										fixer,
+										text,
+										firstImportStart,
+										firstImportEnd,
+										condition,
+									);
 								},
 							},
 							{
@@ -181,29 +195,27 @@ export default {
 									: "removeDuplicateImportWithoutConditions",
 								data: {
 									conditions:
-										duplicateImportConditions.join(", "),
+										duplicateImportConditions.join(" "),
 								},
 								fix(fixer) {
-									const removeEnd = getImportEnd(text, end);
-
-									if (
+									const condition =
 										(firstImporthHasConditions ||
 											nodeHasConditions) &&
-										!hasSameConditions
-									) {
-										return fixer.removeRange([
-											start,
-											removeEnd,
-										]);
-									}
+										!hasSameConditions;
 
-									return null;
+									return getFixForImport(
+										fixer,
+										text,
+										start,
+										end,
+										condition,
+									);
 								},
 							},
 						],
 					});
 				} else {
-					imports.add(node);
+					imports.push(node);
 				}
 			},
 		};
