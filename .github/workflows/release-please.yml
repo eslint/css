@@ -1,0 +1,66 @@
+on:
+    push:
+        branches:
+            - main
+
+name: release-please
+
+jobs:
+    release-please:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+            models: read
+        steps:
+            - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
+              id: release
+              with:
+                  token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}
+
+            - uses: actions/checkout@v6
+              if: ${{ steps.release.outputs.release_created }}
+
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: lts/*
+                  registry-url: https://registry.npmjs.org
+              if: ${{ steps.release.outputs.release_created }}
+
+              # npm 11.5.1 or later is required so update to latest to be sure
+            - name: Update npm
+              run: npm install -g npm@latest
+              if: ${{ steps.release.outputs.release_created }}
+
+            - name: Publish to npm
+              run: |
+                  npm install
+                  npm publish --provenance
+              if: ${{ steps.release.outputs.release_created }}
+
+            - name: Publish to JSR
+              run: |
+                  npm run build --if-present
+                  npx -y jsr publish
+              if: ${{ steps.release.outputs.release_created }}
+
+            # Generates the social media post
+            - run: npx @humanwhocodes/social-changelog --org ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --tag ${{ steps.release.outputs.tag_name }} > social-post.txt
+              if: ${{ steps.release.outputs.release_created }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Post release announcement
+              run: npx @humanwhocodes/crosspost -t -b -m --discord-webhook --file social-post.txt
+              if: ${{ steps.release.outputs.release_created }}
+              env:
+                  TWITTER_API_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+                  TWITTER_API_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+                  TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
+                  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+                  MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+                  MASTODON_HOST: ${{ secrets.MASTODON_HOST }}
+                  BLUESKY_IDENTIFIER: ${{ vars.BLUESKY_IDENTIFIER }}
+                  BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+                  BLUESKY_HOST: ${{ vars.BLUESKY_HOST }}
+                  DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

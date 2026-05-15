@@ -1,0 +1,17 @@
+name: ci-bun
+
+on:
+    push:
+        branches:
+            - main
+
+    pull_request:
+        branches:
+            - main
+
+permissions:
+    contents: read
+
+jobs:
+    ci-bun:
+        uses: eslint/workflows/.github/workflows/ci-bun.yml@main

@@ -1,0 +1,537 @@
+/**
+ * @fileoverview Tests for no-invalid-at-rules rule.
+ * @author Nicholas C. Zakas
+ */
+
+//------------------------------------------------------------------------------
+// Imports
+//------------------------------------------------------------------------------
+
+import rule from "../../src/rules/no-invalid-at-rules.js";
+import css from "../../src/index.js";
+import { tailwind3 } from "tailwind-csstree";
+import { RuleTester } from "eslint";
+
+//------------------------------------------------------------------------------
+// Tests
+//------------------------------------------------------------------------------
+
+const ruleTester = new RuleTester({
+	plugins: {
+		css,
+	},
+	language: "css/css",
+});
+
+ruleTester.run("no-invalid-at-rules", rule, {
+	valid: [
+		"@import url('styles.css');",
+		"@font-face { font-family: 'MyFont'; src: url('myfont.woff2') format('woff2'); }",
+		"@keyframes slidein { from { transform: translateX(0%); } to { transform: translateX(100%); } }",
+		"@supports (display: grid) { .grid-container { display: grid; } }",
+		"@namespace url(http://www.w3.org/1999/xhtml);",
+		'@charset "UTF-8";',
+		'@charset "UTF-8"; @import url("foo.css");',
+		"@media screen and (max-width: 600px) { body { font-size: 12px; } }",
+		".foo { @media (max-width: 800px) { color: red; } }",
+		".foo { @media (max-width: 800px) { color: red; background: blue; font-size: 16px; } }",
+		".foo { @supports (display: grid) { display: grid; grid-template-columns: 1fr 1fr; } }",
+		".foo { @layer base { color: red; } }",
+		".foo { @scope (.card) { color: red; } }",
+		".foo { @container (min-width: 700px) { color: red; } }",
+		".foo { @starting-style { opacity: 0; transform: translateY(-10px); } }",
+		".foo { @media (min-width: 768px) { color: red; @media (orientation: landscape) { background: blue; @supports (display: flex) { display: flex; } } } }",
+		"@property --my-color { syntax: '<color>'; inherits: false; initial-value: #c0ffee; }",
+		"@media (max-width: 800px) { .foo { color: red; } }",
+		".foo { @media (max-width: 800px) { & .bar { color: red; } &:hover { background: blue; } } }",
+		"@layer base { .foo { color: red; } }",
+		{
+			code: "@foobar url(foo.css) { body { font-size: 12px } }",
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						foobar: {
+							prelude: "<url>",
+						},
+					},
+				},
+			},
+		},
+		{
+			code: "@tailwind base; @tailwind components; @tailwind utilities;",
+			languageOptions: {
+				customSyntax: tailwind3,
+			},
+		},
+		{
+			code: "a { @apply text-red-500; }",
+			languageOptions: {
+				customSyntax: tailwind3,
+			},
+		},
+		{
+			code: "a { @apply text-red-500 bg-blue-500; }",
+			languageOptions: {
+				customSyntax: tailwind3,
+			},
+		},
+		{
+			code: "@config 'tailwind.config.js';",
+			languageOptions: {
+				customSyntax: tailwind3,
+			},
+		},
+		{
+			code: `@custom-rule {
+				--foo: red;
+				--bar: blue;
+			}`,
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						"custom-rule": {},
+					},
+				},
+			},
+		},
+	],
+	invalid: [
+		{
+			code: "@foobar { }",
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "foobar" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: '@impor "foo.css";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "impor" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: "@foobaz { }",
+			errors: [
+				{
+					message: "Unknown at-rule '@foobaz' found.",
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "@unknownrule { } @anotherunknown { }",
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "unknownrule" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 13,
+				},
+				{
+					messageId: "unknownAtRule",
+					data: { name: "anotherunknown" },
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: "@property foo {  }",
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "property",
+						prelude: "foo",
+						expected: "<custom-property-name>",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: "@property --foo { baz: red; }",
+			errors: [
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "property", descriptor: "baz" },
+					line: 1,
+					column: 19,
+					endLine: 1,
+					endColumn: 22,
+				},
+			],
+		},
+		{
+			code: "@font-face { color: red; }",
+			errors: [
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "font-face", descriptor: "color" },
+					line: 1,
+					column: 14,
+					endLine: 1,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: "@property --foo { syntax: red; }",
+			errors: [
+				{
+					messageId: "invalidDescriptor",
+					line: 1,
+					data: {
+						name: "property",
+						descriptor: "syntax",
+						value: "red",
+						expected: "<string>",
+					},
+					column: 27,
+					endLine: 1,
+					endColumn: 30,
+				},
+			],
+		},
+		{
+			code: "@supports { a {} }",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "supports" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 10,
+				},
+			],
+		},
+		{
+			code: "@font-face foo { }",
+			errors: [
+				{
+					messageId: "invalidExtraPrelude",
+					data: { name: "font-face" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "@foobar { body { font-size: 12px } }",
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						foobar: {
+							prelude: "<url>",
+						},
+					},
+				},
+			},
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "foobar" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "a { @apply; }",
+			languageOptions: {
+				customSyntax: tailwind3,
+			},
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: {
+						name: "apply",
+					},
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "@config;",
+			languageOptions: {
+				customSyntax: tailwind3,
+			},
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: {
+						name: "config",
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "@config foo;",
+			languageOptions: {
+				customSyntax: tailwind3,
+			},
+			errors: [
+				{
+					messageId: "invalidPrelude",
+					data: {
+						name: "config",
+						prelude: "foo",
+						expected: "<string>",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 12,
+				},
+			],
+		},
+		{
+			code: '@CHARSET "UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "CHARSET" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: '@CharSet "UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "CharSet" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset;",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "@charset ;",
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "charset" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: '@charset "";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 12,
+				},
+			],
+		},
+		{
+			code: '@charset "  ";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: "@charset 'UTF-8';",
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@charset UTF-8;",
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: '@charset"UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 16,
+				},
+			],
+		},
+		{
+			code: '@charset  "UTF-8";',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 18,
+				},
+			],
+		},
+		{
+			code: '@charset "UTF-8"',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: '@charset "UTF-8" ;',
+			output: '@charset "UTF-8";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: '@charset  "UTF-8";\n@impor "foo.css";',
+			output: '@charset "UTF-8";\n@impor "foo.css";',
+			errors: [
+				{
+					messageId: "invalidCharsetSyntax",
+					data: {
+						encoding: "UTF-8",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 18,
+				},
+				{
+					messageId: "unknownAtRule",
+					data: { name: "impor" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 7,
+				},
+			],
+		},
+	],
+});

@@ -1,0 +1,290 @@
+/**
+ * @fileoverview Rule to prevent the use of unknown at-rules in CSS.
+ * @author Nicholas C. Zakas
+ */
+
+//-----------------------------------------------------------------------------
+// Imports
+//-----------------------------------------------------------------------------
+
+import { isSyntaxMatchError } from "../util.js";
+
+//-----------------------------------------------------------------------------
+// Type Definitions
+//-----------------------------------------------------------------------------
+
+/**
+ * @import { AtrulePlain } from "@eslint/css-tree"
+ * @import { CSSRuleDefinition } from "../types.js"
+ * @typedef {"unknownAtRule" | "invalidPrelude" | "unknownDescriptor" | "invalidDescriptor" | "invalidExtraPrelude" | "missingPrelude" | "invalidCharsetSyntax"} NoInvalidAtRulesMessageIds
+ * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidAtRulesMessageIds }>} NoInvalidAtRulesRuleDefinition
+ */
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
+/**
+ * Set of at-rules that can be nested inside style rules.
+ * @see https://www.w3.org/TR/css-nesting-1/#conditionals
+ */
+const nestableAtRules = new Set([
+	"media",
+	"supports",
+	"layer",
+	"scope",
+	"container",
+	"starting-style",
+]);
+
+/**
+ * A valid `@charset` rule must:
+ * - Enclose the encoding name in double quotes
+ * - Include exactly one space character after `@charset`
+ * - End immediately with a semicolon
+ */
+const charsetPattern = /^@charset "[^"]+";$/u;
+const charsetEncodingPattern = /^['"]?([^"';]+)['"]?/u;
+
+/**
+ * Extracts metadata from an error object.
+ * @param {SyntaxError} error The error object to extract metadata from.
+ * @returns {Object} The metadata extracted from the error.
+ */
+function extractMetaDataFromError(error) {
+	const message = error.message;
+	const atRuleName = /`@(.*)`/u.exec(message)[1];
+	let messageId = "unknownAtRule";
+
+	if (message.endsWith("prelude")) {
+		messageId = message.includes("should not")
+			? "invalidExtraPrelude"
+			: "missingPrelude";
+	}
+
+	return {
+		messageId,
+		data: {
+			name: atRuleName,
+		},
+	};
+}
+
+//-----------------------------------------------------------------------------
+// Rule Definition
+//-----------------------------------------------------------------------------
+
+/** @type {NoInvalidAtRulesRuleDefinition} */
+export default {
+	meta: {
+		type: "problem",
+
+		fixable: "code",
+
+		docs: {
+			description: "Disallow invalid at-rules",
+			recommended: true,
+			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-at-rules.md",
+		},
+
+		messages: {
+			unknownAtRule: "Unknown at-rule '@{{name}}' found.",
+			invalidPrelude:
+				"Invalid prelude '{{prelude}}' found for at-rule '@{{name}}'. Expected '{{expected}}'.",
+			unknownDescriptor:
+				"Unknown descriptor '{{descriptor}}' found for at-rule '@{{name}}'.",
+			invalidDescriptor:
+				"Invalid value '{{value}}' for descriptor '{{descriptor}}' found for at-rule '@{{name}}'. Expected {{expected}}.",
+			invalidExtraPrelude:
+				"At-rule '@{{name}}' should not contain a prelude.",
+			missingPrelude: "At-rule '@{{name}}' should contain a prelude.",
+			invalidCharsetSyntax:
+				"Invalid @charset syntax. Expected '@charset \"{{encoding}}\";'.",
+		},
+	},
+
+	create(context) {
+		const { sourceCode } = context;
+		const lexer = sourceCode.lexer;
+
+		/**
+		 * Validates a `@charset` rule for correct syntax:
+		 * - Verifies the rule name is exactly "charset" (case-sensitive)
+		 * - Ensures the rule has a prelude
+		 * - Validates the prelude matches the expected pattern
+		 * @param {AtrulePlain} node The node representing the rule.
+		 * @returns {void}
+		 */
+		function validateCharsetRule(node) {
+			const { name, prelude, loc } = node;
+
+			const charsetNameLoc = {
+				start: loc.start,
+				end: {
+					line: loc.start.line,
+					column: loc.start.column + name.length + 1,
+				},
+			};
+
+			if (name !== "charset") {
+				context.report({
+					loc: charsetNameLoc,
+					messageId: "unknownAtRule",
+					data: {
+						name,
+					},
+					fix(fixer) {
+						return fixer.replaceTextRange(
+							[
+								loc.start.offset,
+								loc.start.offset + name.length + 1,
+							],
+							"@charset",
+						);
+					},
+				});
+				return;
+			}
+
+			if (!prelude) {
+				context.report({
+					loc: charsetNameLoc,
+					messageId: "missingPrelude",
+					data: {
+						name,
+					},
+				});
+				return;
+			}
+
+			const nodeText = sourceCode.getText(node);
+			const preludeText = sourceCode.getText(prelude);
+			const encoding = preludeText
+				.match(charsetEncodingPattern)?.[1]
+				?.trim();
+
+			if (!encoding) {
+				context.report({
+					loc: prelude.loc,
+					messageId: "invalidCharsetSyntax",
+					data: { encoding: "<charset>" },
+				});
+				return;
+			}
+
+			if (!charsetPattern.test(nodeText)) {
+				context.report({
+					loc: prelude.loc,
+					messageId: "invalidCharsetSyntax",
+					data: { encoding },
+					fix(fixer) {
+						return fixer.replaceText(
+							node,
+							`@charset "${encoding}";`,
+						);
+					},
+				});
+			}
+		}
+
+		return {
+			Atrule(node) {
+				if (node.name.toLowerCase() === "charset") {
+					validateCharsetRule(node);
+					return;
+				}
+
+				// checks both name and prelude
+				const { error } = lexer.matchAtrulePrelude(
+					node.name,
+					node.prelude,
+				);
+
+				if (error) {
+					if (isSyntaxMatchError(error)) {
+						context.report({
+							loc: error.loc,
+							messageId: "invalidPrelude",
+							data: {
+								name: node.name,
+								prelude: error.css,
+								expected: error.syntax,
+							},
+						});
+						return;
+					}
+
+					const loc = node.loc;
+
+					context.report({
+						loc: {
+							start: loc.start,
+							end: {
+								line: loc.start.line,
+
+								// add 1 to account for the @ symbol
+								column: loc.start.column + node.name.length + 1,
+							},
+						},
+						...extractMetaDataFromError(error),
+					});
+				}
+			},
+
+			"AtRule > Block > Declaration"(node) {
+				// skip custom descriptors
+				if (node.property.startsWith("--")) {
+					return;
+				}
+
+				// get at rule node
+				const atRule = /** @type {AtrulePlain} */ (
+					sourceCode.getParent(sourceCode.getParent(node))
+				);
+
+				if (nestableAtRules.has(atRule.name.toLowerCase())) {
+					return;
+				}
+
+				const { error } = lexer.matchAtruleDescriptor(
+					atRule.name,
+					node.property,
+					node.value,
+				);
+
+				if (error) {
+					if (isSyntaxMatchError(error)) {
+						context.report({
+							loc: error.loc,
+							messageId: "invalidDescriptor",
+							data: {
+								name: atRule.name,
+								descriptor: node.property,
+								value: error.css,
+								expected: error.syntax,
+							},
+						});
+						return;
+					}
+
+					const loc = node.loc;
+
+					context.report({
+						loc: {
+							start: loc.start,
+							end: {
+								line: loc.start.line,
+								column: loc.start.column + node.property.length,
+							},
+						},
+						messageId: "unknownDescriptor",
+						data: {
+							name: atRule.name,
+							descriptor: node.property,
+						},
+					});
+				}
+			},
+		};
+	},
+};

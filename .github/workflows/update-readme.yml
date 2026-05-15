@@ -1,0 +1,16 @@
+name: update-readme
+
+on:
+    schedule:
+        - cron: "0 8 * * *" # Runs every day at 08:00 AM UTC
+
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    update-readme:
+        uses: eslint/workflows/.github/workflows/update-readme.yml@main
+        secrets:
+            workflow_push_bot_token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}

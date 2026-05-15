@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "checkJs": false,
+    "noEmit": true,
+    "rootDir": "../..",
+    "strict": true,
+    "strictNullChecks": true,
+    "useUnknownInCatchVariables": true,
+    "noImplicitAny": true,
+    "exactOptionalPropertyTypes": true,
+    "verbatimModuleSyntax": true
+    // "erasableSyntaxOnly" is not supported in TypeScript < 5.8.
+  },
+  "files": [],
+  "include": [".", "../../dist"]
+}

@@ -1,0 +1,103 @@
+{
+  "name": "@eslint/css",
+  "version": "1.2.0",
+  "description": "CSS linting plugin for ESLint",
+  "author": "Nicholas C. Zakas",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "!(*.js)": "prettier --write --ignore-unknown",
+    "{src/rules/*.js,tools/update-rules-docs.js,README.md}": [
+      "npm run build:update-rules-docs",
+      "git add README.md"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eslint/css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eslint/css/issues"
+  },
+  "homepage": "https://github.com/eslint/css#readme",
+  "scripts": {
+    "build": "npm run build:rules && npm run build:types && npm run build:update-rules-docs",
+    "build:baseline": "node tools/generate-baseline.js",
+    "build:rules": "node tools/build-rules.js",
+    "build:types": "tsc",
+    "build:update-rules-docs": "node tools/update-rules-docs.js",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "lint:types": "attw --pack --profile esm-only",
+    "lint:unused": "knip",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "test": "mocha \"tests/**/*.test.js\"",
+    "test:coverage": "c8 npm test",
+    "test:jsr": "npx -y jsr@latest publish --dry-run",
+    "test:types": "npm run build && tsc -p tests/types/tsconfig.json",
+    "test:types:5.3": "npx -p typescript@5.3 -y -- tsc -p tests/types/tsconfig.legacy.json",
+    "test:types:5.x": "npx -p typescript@5.x -y -- tsc -p tests/types/tsconfig.json",
+    "test:types:7.x": "npx -p @typescript/native-preview@latest -y -- tsgo -p tests/types/tsconfig.json",
+    "test:types:all": "npm run test:types && npm run test:types:5.3 && npm run test:types:5.x && npm run test:types:7.x"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin",
+    "css",
+    "linting"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@eslint/core": "^1.2.1",
+    "@eslint/css-tree": "^4.0.3",
+    "@eslint/plugin-kit": "^0.7.1"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
+    "@eslint/json": "^1.2.0",
+    "@types/node": "^20.19.0",
+    "@webref/css": "^8.5.5",
+    "c8": "^11.0.0",
+    "dedent": "^1.5.3",
+    "eslint": "^10.0.0",
+    "eslint-config-eslint": "^14.0.0",
+    "eslint-plugin-eslint-plugin": "^7.3.2",
+    "globals": "^17.0.0",
+    "knip": "^6.0.0",
+    "lint-staged": "^16.0.0",
+    "mdast-util-from-markdown": "^2.0.2",
+    "mocha": "^11.0.0",
+    "prettier": "3.8.3",
+    "tailwind-csstree": "^0.3.0",
+    "typescript": "^6.0.3",
+    "web-features": "^3.27.0",
+    "yorkie": "^2.0.0"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "include": ["src/**/*.js", "src/**/*.ts"],
+  "compilerOptions": {
+    "declaration": true,
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "rootDir": "./src",
+    "strictNullChecks": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitAny": false,
+    "types": []
+  }
+}
