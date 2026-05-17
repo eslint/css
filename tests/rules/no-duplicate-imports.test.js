@@ -280,5 +280,378 @@ ruleTester.run("no-duplicate-imports", rule, {
 				},
 			],
 		},
+		{
+			code: "@import url('a.css') print;\n@import url('a.css') print;\n@import url('b.css');",
+			output: "@import url('a.css') print;\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: "@import 'a.css' print;\n@import url('a.css') print;\n@import url('b.css');",
+			output: "@import 'a.css' print;\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') print;\n@import url('a.css');\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 22,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: { conditions: "print" },
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') print;\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css');\n@import url('a.css') print;\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 28,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') print;\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: { conditions: "print" },
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') print, screen;\n@import url('a.css');\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 22,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: { conditions: "print, screen" },
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') print, screen;\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css');\n@import url('a.css') print, screen;\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 36,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') print, screen;\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: { conditions: "print, screen" },
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') print, screen;\n@import url('a.css') print, screen and (width > 800px);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 56,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: { conditions: "print, screen" },
+							output: "@import url('a.css') print, screen and (width > 800px);\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "print, screen and (width > 800px)",
+							},
+							output: "@import url('a.css') print, screen;\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') layer(foo);\n@import url('a.css') layer(foo);\n@import url('b.css');",
+			output: "@import url('a.css') layer(foo);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: "@import url('a.css');\n@import url('a.css') layer(foo);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 33,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "layer(foo)",
+							},
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') layer(foo);\n@import url('a.css');\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 22,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "layer(foo)",
+							},
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') layer;\n@import url('a.css') layer(foo);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 33,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "layer",
+							},
+							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "layer(foo)",
+							},
+							output: "@import url('a.css') layer;\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') supports(display: grid);\n@import url('a.css') supports(display: grid);\n@import url('b.css');",
+			output: "@import url('a.css') supports(display: grid);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 46,
+				},
+			],
+		},
+		{
+			code: "@import url('a.css');\n@import url('a.css') supports(display: grid);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 46,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') supports(display: grid);\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "supports(display: grid)",
+							},
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') supports(display: grid);\n@import url('a.css');\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 22,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "supports(display: grid)",
+							},
+							output: "@import url('a.css');\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithoutConditions",
+							output: "@import url('a.css') supports(display: grid);\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') layer(foo) supports(display: grid);\n@import url('a.css') layer(foo);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 33,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions:
+									"layer(foo) supports(display: grid)",
+							},
+							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions: "layer(foo)",
+							},
+							output: "@import url('a.css') layer(foo) supports(display: grid);\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('a.css') layer(foo) supports(display: grid) screen and (width > 600px);\n@import url('a.css') layer(foo) supports(display: grid);\n@import url('b.css');",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "a.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 57,
+					suggestions: [
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions:
+									"layer(foo) supports(display: grid) screen and (width > 600px)",
+							},
+							output: "@import url('a.css') layer(foo) supports(display: grid);\n@import url('b.css');",
+						},
+						{
+							messageId: "removeDuplicateImportWithConditions",
+							data: {
+								conditions:
+									"layer(foo) supports(display: grid)",
+							},
+							output: "@import url('a.css') layer(foo) supports(display: grid) screen and (width > 600px);\n@import url('b.css');",
+						},
+					],
+				},
+			],
+		},
 	],
 });

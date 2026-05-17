@@ -25,13 +25,23 @@ Examples of **incorrect** code:
 /* eslint css/no-duplicate-imports: "error" */
 
 @import url(a.css);
-@import "b.css";
-@import url("c.css");
+@import "b.css" print;
+@import url("c.css") print, screen;
 
 /* duplicates */
 @import "a.css";
 @import url(b.css);
-@import "c.css";
+@import "c.css" print;
+```
+
+Examples of **correct** code:
+
+```css
+/* eslint css/no-duplicate-imports: "error" */
+
+@import url(a.css);
+@import "b.css";
+@import url("c.css") print;
 ```
 
 ## When Not to Use It
