@@ -43,7 +43,7 @@ ruleTester.run("use-baseline", rule, {
 		"@supports (accent-color: auto) { a { accent-color: auto; } }",
 		"@supports (accent-color: red) { a { accent-color: red; } }",
 		"@supports (accent-color: auto) { a { accent-color: red; } }",
-		"@supports (clip-path: fill-box) { a { clip-path: fill-box; } }",
+		"@supports (image-rendering: smooth) { a { image-rendering: smooth; } }",
 		`@supports (accent-color: auto) and (backdrop-filter: auto) {
 			a { accent-color: auto; background-filter: auto }
 		}`,
@@ -52,7 +52,7 @@ ruleTester.run("use-baseline", rule, {
 				a { accent-color: auto; background-filter: auto }
 			}
 		}`,
-		"@SUPPORTS (clip-path: fill-box) { a { clip-path: fill-box; } }",
+		"@SUPPORTS (image-rendering: smooth) { a { image-rendering: smooth; } }",
 		`@Supports (accent-color: auto) and (backdrop-filter: auto) {
 			a { accent-color: auto; background-filter: auto }
 		}`,
@@ -133,23 +133,31 @@ ruleTester.run("use-baseline", rule, {
 			options: [{ allowMediaConditions: ["scripting"] }],
 		},
 		{
-			code: "a { clip-path: fill-box; }",
-			options: [{ allowPropertyValues: { "clip-path": ["fill-box"] } }],
+			code: "a { image-rendering: smooth; }",
+			options: [
+				{ allowPropertyValues: { "image-rendering": ["smooth"] } },
+			],
 		},
 		{
-			code: ".a { clip-path: fill-box; }\n.b { clip-path: stroke-box; }\n.c { max-height: stretch; }",
+			code: ".a { image-rendering: smooth; }\n.b { image-rendering: crisp-edges; }\n.c { max-height: stretch; }",
 			options: [
 				{
 					allowPropertyValues: {
-						"clip-path": ["fill-box", "stroke-box"],
+						"image-rendering": ["smooth", "crisp-edges"],
 						"max-height": ["stretch"],
 					},
 				},
 			],
 		},
 		{
-			code: "@supports (clip-path: fill-box) { .a { clip-path: fill-box; }\n.b { clip-path: stroke-box; } }",
-			options: [{ allowPropertyValues: { "clip-path": ["stroke-box"] } }],
+			code: "@supports (image-rendering: smooth) { .a { image-rendering: smooth; }\n.b { image-rendering: crisp-edges; } }",
+			options: [
+				{
+					allowPropertyValues: {
+						"image-rendering": ["crisp-edges"],
+					},
+				},
+			],
 		},
 		"a { height: 100vh; }",
 		"a { width: 50vw; }",
@@ -314,36 +322,36 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@supports (clip-path: fill-box) { a { clip-path: stroke-box; } }",
+			code: "@supports (image-rendering: smooth) { a { image-rendering: crisp-edges; } }",
 			errors: [
 				{
 					messageId: "notBaselinePropertyValue",
 					data: {
-						property: "clip-path",
-						value: "stroke-box",
+						property: "image-rendering",
+						value: "crisp-edges",
 						availability: "widely",
 					},
 					line: 1,
-					column: 50,
+					column: 60,
 					endLine: 1,
-					endColumn: 60,
+					endColumn: 71,
 				},
 			],
 		},
 		{
-			code: "@SUPPORTS (clip-path: fill-box) { a { clip-path: stroke-box; } }",
+			code: "@SUPPORTS (image-rendering: smooth) { a { image-rendering: crisp-edges; } }",
 			errors: [
 				{
 					messageId: "notBaselinePropertyValue",
 					data: {
-						property: "clip-path",
-						value: "stroke-box",
+						property: "image-rendering",
+						value: "crisp-edges",
 						availability: "widely",
 					},
 					line: 1,
-					column: 50,
+					column: 60,
 					endLine: 1,
-					endColumn: 60,
+					endColumn: 71,
 				},
 			],
 		},
@@ -698,38 +706,42 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "@supports (clip-path: fill-box) { a { clip-path: stroke-box; } }",
-			options: [{ allowPropertyValues: { "clip-path": ["fill-box"] } }],
+			code: "@supports (image-rendering: smooth) { a { image-rendering: crisp-edges; } }",
+			options: [
+				{ allowPropertyValues: { "image-rendering": ["smooth"] } },
+			],
 			errors: [
 				{
 					messageId: "notBaselinePropertyValue",
 					data: {
-						property: "clip-path",
-						value: "stroke-box",
+						property: "image-rendering",
+						value: "crisp-edges",
 						availability: "widely",
 					},
 					line: 1,
-					column: 50,
+					column: 60,
 					endLine: 1,
-					endColumn: 60,
+					endColumn: 71,
 				},
 			],
 		},
 		{
-			code: ".a { clip-path: fill-box; }\n.b { clip-path: stroke-box; }\n.c { max-height: stretch; }",
-			options: [{ allowPropertyValues: { "clip-path": ["fill-box"] } }],
+			code: ".a { image-rendering: smooth; }\n.b { image-rendering: crisp-edges; }\n.c { max-height: stretch; }",
+			options: [
+				{ allowPropertyValues: { "image-rendering": ["smooth"] } },
+			],
 			errors: [
 				{
 					messageId: "notBaselinePropertyValue",
 					data: {
-						property: "clip-path",
-						value: "stroke-box",
+						property: "image-rendering",
+						value: "crisp-edges",
 						availability: "widely",
 					},
 					line: 2,
-					column: 17,
+					column: 23,
 					endLine: 2,
-					endColumn: 27,
+					endColumn: 34,
 				},
 				{
 					messageId: "notBaselinePropertyValue",
