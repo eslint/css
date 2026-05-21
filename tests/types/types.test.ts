@@ -60,6 +60,7 @@ import type {
 
 css satisfies Plugin;
 css.meta.name satisfies string;
+css.meta.namespace satisfies string;
 css.meta.version satisfies string;
 
 // Check that these languages are defined:
