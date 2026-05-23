@@ -9,7 +9,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"duplicateImport" | "removeDuplicateImportWithConditions" | "removeDuplicateImportWithoutConditions"} NoDuplicateKeysMessageIds
+ * @typedef {"duplicateImport" | "removeDuplicateImportWithModifiers" | "removeDuplicateImportWithoutModifiers"} NoDuplicateKeysMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoDuplicateKeysMessageIds }>} NoDuplicateImportsRuleDefinition
  */
 
@@ -37,24 +37,24 @@ function getImportEnd(text, end) {
 }
 
 /**
- * Get the conditions of an import statement.
- * @param {Object} importNode The import node to get conditions from.
+ * Get the modifiers of an import statement.
+ * @param {Object} importNode The import node to get modifiers from.
  * @param {Object} sourceCode The source code object.
- * @returns {string[]} An array of conditions for the import statement.
+ * @returns {string[]} An array of modifiers for the import statement.
  */
-function getImportConditions(importNode, sourceCode) {
-	const importConditions = [];
+function getImportModifiers(importNode, sourceCode) {
+	const importModifiers = [];
 
-	const importHasConditions = importNode.prelude.children.length > 1;
+	const importHasModifiers = importNode.prelude.children.length > 1;
 
-	if (importHasConditions) {
-		importNode.prelude.children.slice(1).forEach(condition => {
-			const conditionText = sourceCode.getText(condition).trim();
-			importConditions.push(conditionText);
+	if (importHasModifiers) {
+		importNode.prelude.children.slice(1).forEach(modifier => {
+			const modifierText = sourceCode.getText(modifier).trim();
+			importModifiers.push(modifierText);
 		});
 	}
 
-	return importConditions;
+	return importModifiers;
 }
 
 /**
@@ -63,13 +63,13 @@ function getImportConditions(importNode, sourceCode) {
  * @param {string} text The full text of the source code.
  * @param {number} start The start index of the import statement to fix.
  * @param {number} end The end index of the import statement to fix.
- * @param {boolean} condition A boolean indicating whether the import statement has conditions that differ from the original import.
+ * @param {boolean} hasModifiers A boolean indicating whether the import statement has modifiers that differ from the original import.
  * @returns {Object|null} A fix object if a fix is applicable, or null if no fix should be applied.
  */
-function getFixForImport(fixer, text, start, end, condition) {
+function getFixForImport(fixer, text, start, end, hasModifiers) {
 	const removeEnd = getImportEnd(text, end);
 
-	if (condition) {
+	if (hasModifiers) {
 		return fixer.removeRange([start, removeEnd]);
 	}
 
@@ -98,10 +98,10 @@ export default {
 
 		messages: {
 			duplicateImport: "Unexpected duplicate @import rule for '{{url}}'.",
-			removeDuplicateImportWithConditions:
-				"Remove duplicate @import rule with condition(s) - {{conditions}}.",
-			removeDuplicateImportWithoutConditions:
-				"Remove duplicate @import rule without conditions.",
+			removeDuplicateImportWithModifiers:
+				"Remove duplicate @import rule with modifier(s) - {{modifiers}}.",
+			removeDuplicateImportWithoutModifiers:
+				"Remove duplicate @import rule without modifiers.",
 		},
 	},
 
@@ -124,28 +124,28 @@ export default {
 					const [firstImportStart, firstImportEnd] =
 						sourceCode.getRange(firstImportNode);
 
-					const firstImporthHasConditions =
+					const firstImportHasModifiers =
 						firstImportNode.prelude.children.length > 1;
-					const nodeHasConditions = node.prelude.children.length > 1;
+					const nodeHasModifiers = node.prelude.children.length > 1;
 
 					const [start, end] = sourceCode.getRange(node);
 					const text = sourceCode.text;
 
-					const firstImportConditions = getImportConditions(
+					const firstImportModifiers = getImportModifiers(
 						firstImportNode,
 						sourceCode,
 					);
-					const duplicateImportConditions = getImportConditions(
+					const duplicateImportModifiers = getImportModifiers(
 						node,
 						sourceCode,
 					);
 
-					const hasSameConditions =
-						firstImportConditions.length ===
-							duplicateImportConditions.length &&
-						firstImportConditions.every(
-							(condition, index) =>
-								condition === duplicateImportConditions[index],
+					const hasSameModifiers =
+						firstImportModifiers.length ===
+							duplicateImportModifiers.length &&
+						firstImportModifiers.every(
+							(modifier, index) =>
+								modifier === duplicateImportModifiers[index],
 						);
 
 					context.report({
@@ -153,62 +153,62 @@ export default {
 						messageId: "duplicateImport",
 						data: { url },
 						fix(fixer) {
-							const condition =
-								(!firstImporthHasConditions &&
-									!nodeHasConditions) ||
-								hasSameConditions;
+							const hasModifiers =
+								(!firstImportHasModifiers &&
+									!nodeHasModifiers) ||
+								hasSameModifiers;
 
 							return getFixForImport(
 								fixer,
 								text,
 								start,
 								end,
-								condition,
+								hasModifiers,
 							);
 						},
 						suggest: [
 							{
-								messageId: firstImporthHasConditions
-									? "removeDuplicateImportWithConditions"
-									: "removeDuplicateImportWithoutConditions",
+								messageId: firstImportHasModifiers
+									? "removeDuplicateImportWithModifiers"
+									: "removeDuplicateImportWithoutModifiers",
 								data: {
-									conditions: firstImportConditions.join(" "),
+									modifiers: firstImportModifiers.join(" "),
 								},
 								fix(fixer) {
-									const condition =
-										(firstImporthHasConditions ||
-											nodeHasConditions) &&
-										!hasSameConditions;
+									const hasModifiers =
+										(firstImportHasModifiers ||
+											nodeHasModifiers) &&
+										!hasSameModifiers;
 
 									return getFixForImport(
 										fixer,
 										text,
 										firstImportStart,
 										firstImportEnd,
-										condition,
+										hasModifiers,
 									);
 								},
 							},
 							{
-								messageId: nodeHasConditions
-									? "removeDuplicateImportWithConditions"
-									: "removeDuplicateImportWithoutConditions",
+								messageId: nodeHasModifiers
+									? "removeDuplicateImportWithModifiers"
+									: "removeDuplicateImportWithoutModifiers",
 								data: {
-									conditions:
-										duplicateImportConditions.join(" "),
+									modifiers:
+										duplicateImportModifiers.join(" "),
 								},
 								fix(fixer) {
-									const condition =
-										(firstImporthHasConditions ||
-											nodeHasConditions) &&
-										!hasSameConditions;
+									const hasModifiers =
+										(firstImportHasModifiers ||
+											nodeHasModifiers) &&
+										!hasSameModifiers;
 
 									return getFixForImport(
 										fixer,
 										text,
 										start,
 										end,
-										condition,
+										hasModifiers,
 									);
 								},
 							},

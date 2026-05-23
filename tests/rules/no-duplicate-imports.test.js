@@ -320,12 +320,12 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 22,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
-							data: { conditions: "print" },
+							messageId: "removeDuplicateImportWithModifiers",
+							data: { modifiers: "print" },
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') print;\n@import url('b.css');",
 						},
 					],
@@ -344,12 +344,12 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 28,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') print;\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
-							data: { conditions: "print" },
+							messageId: "removeDuplicateImportWithModifiers",
+							data: { modifiers: "print" },
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
 					],
@@ -368,12 +368,12 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 22,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
-							data: { conditions: "print, screen" },
+							messageId: "removeDuplicateImportWithModifiers",
+							data: { modifiers: "print, screen" },
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') print, screen;\n@import url('b.css');",
 						},
 					],
@@ -392,12 +392,12 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 36,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') print, screen;\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
-							data: { conditions: "print, screen" },
+							messageId: "removeDuplicateImportWithModifiers",
+							data: { modifiers: "print, screen" },
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
 					],
@@ -416,14 +416,14 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 56,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
-							data: { conditions: "print, screen" },
+							messageId: "removeDuplicateImportWithModifiers",
+							data: { modifiers: "print, screen" },
 							output: "@import url('a.css') print, screen and (width > 800px);\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "print, screen and (width > 800px)",
+								modifiers: "print, screen and (width > 800px)",
 							},
 							output: "@import url('a.css') print, screen;\n@import url('b.css');",
 						},
@@ -457,13 +457,13 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 33,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "layer(foo)",
+								modifiers: "layer(foo)",
 							},
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
@@ -483,14 +483,14 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 22,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "layer(foo)",
+								modifiers: "layer(foo)",
 							},
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
 						},
 					],
@@ -509,16 +509,16 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 33,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "layer",
+								modifiers: "layer",
 							},
 							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "layer(foo)",
+								modifiers: "layer(foo)",
 							},
 							output: "@import url('a.css') layer;\n@import url('b.css');",
 						},
@@ -552,13 +552,13 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 46,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') supports(display: grid);\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "supports(display: grid)",
+								modifiers: "supports(display: grid)",
 							},
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
@@ -578,14 +578,14 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 22,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "supports(display: grid)",
+								modifiers: "supports(display: grid)",
 							},
 							output: "@import url('a.css');\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithoutConditions",
+							messageId: "removeDuplicateImportWithoutModifiers",
 							output: "@import url('a.css') supports(display: grid);\n@import url('b.css');",
 						},
 					],
@@ -604,17 +604,16 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 33,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions:
-									"layer(foo) supports(display: grid)",
+								modifiers: "layer(foo) supports(display: grid)",
 							},
 							output: "@import url('a.css') layer(foo);\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions: "layer(foo)",
+								modifiers: "layer(foo)",
 							},
 							output: "@import url('a.css') layer(foo) supports(display: grid);\n@import url('b.css');",
 						},
@@ -634,18 +633,17 @@ ruleTester.run("no-duplicate-imports", rule, {
 					endColumn: 57,
 					suggestions: [
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions:
+								modifiers:
 									"layer(foo) supports(display: grid) screen and (width > 600px)",
 							},
 							output: "@import url('a.css') layer(foo) supports(display: grid);\n@import url('b.css');",
 						},
 						{
-							messageId: "removeDuplicateImportWithConditions",
+							messageId: "removeDuplicateImportWithModifiers",
 							data: {
-								conditions:
-									"layer(foo) supports(display: grid)",
+								modifiers: "layer(foo) supports(display: grid)",
 							},
 							output: "@import url('a.css') layer(foo) supports(display: grid) screen and (width > 600px);\n@import url('b.css');",
 						},
