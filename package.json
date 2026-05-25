@@ -94,7 +94,7 @@
     "prettier": "3.8.3",
     "tailwind-csstree": "^0.3.0",
     "typescript": "^6.0.3",
-    "web-features": "^3.27.0",
+    "web-features": "^3.29.0",
     "yorkie": "^2.0.0"
   },
   "overrides": {
