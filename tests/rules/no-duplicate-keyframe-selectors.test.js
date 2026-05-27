@@ -87,6 +87,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -102,6 +103,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -117,6 +119,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -132,6 +135,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -149,6 +153,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "10.5%" },
 					line: 4,
 					column: 5,
 					endLine: 4,
@@ -164,6 +169,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "from" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -179,6 +185,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "from" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -194,6 +201,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "from" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -210,6 +218,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "to" },
 					line: 4,
 					column: 5,
 					endLine: 4,
@@ -226,6 +235,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "to" },
 					line: 4,
 					column: 5,
 					endLine: 4,
@@ -243,6 +253,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "50%" },
 					line: 4,
 					column: 5,
 					endLine: 4,
@@ -276,6 +287,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 6,
 					column: 5,
 					endLine: 6,
@@ -283,6 +295,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 				},
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "50%" },
 					line: 14,
 					column: 5,
 					endLine: 14,
@@ -290,6 +303,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 				},
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "50%" },
 					line: 18,
 					column: 5,
 					endLine: 18,
@@ -308,6 +322,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 5,
 					column: 5,
 					endLine: 5,
@@ -323,6 +338,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -356,6 +372,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
 					line: 6,
 					column: 5,
 					endLine: 6,
@@ -363,6 +380,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 				},
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "50%" },
 					line: 14,
 					column: 5,
 					endLine: 14,
@@ -370,6 +388,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 				},
 				{
 					messageId: "duplicateKeyframeSelector",
+					data: { selector: "50%" },
 					line: 18,
 					column: 5,
 					endLine: 18,
