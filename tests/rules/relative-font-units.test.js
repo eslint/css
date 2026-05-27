@@ -651,7 +651,12 @@ ruleTester.run("relative-font-units", rule, {
 		{
 			code: "a { font: 2EM Arial, sans-serif; }",
 			options: [{ allowUnits: ["rem"] }],
-			errors: [{ messageId: "allowedFontUnits" }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					data: { allowedFontUnits: "rem" },
+				},
+			],
 		},
 		{
 			code: "a { font-size: xx-small; }",
