@@ -74,7 +74,7 @@
   "dependencies": {
     "@eslint/core": "^1.2.1",
     "@eslint/css-tree": "^4.0.4",
-    "@eslint/plugin-kit": "^0.7.1"
+    "@eslint/plugin-kit": "^0.7.2"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
