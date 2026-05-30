@@ -139,8 +139,22 @@ export default {
 							child => child.type === "Identifier",
 						);
 						const percentageNode = value.children.find(
-							child => child.type === "Percentage",
+							(child, index) => {
+								const isPercentage =
+									child.type === "Percentage";
+								const previousNode = value.children[index - 1];
+
+								const previousNodeIsSlashOperator =
+									previousNode &&
+									previousNode.type === "Operator" &&
+									previousNode.value === "/";
+
+								return (
+									isPercentage && !previousNodeIsSlashOperator
+								);
+							},
 						);
+
 						let location;
 						let shouldReport = false;
 
