@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.0](https://github.com/eslint/css/compare/css-v1.2.0...css-v1.3.0) (2026-05-27)
+
+
+### Features
+
+* add data to no-duplicate-keyframe-selectors ([bfdbb8b](https://github.com/eslint/css/commit/bfdbb8bb8667896b3579005c44d2cdd46d34a818))
+* replace fix with suggestions in `no-duplicate-imports` ([#445](https://github.com/eslint/css/issues/445)) ([5a3325b](https://github.com/eslint/css/commit/5a3325bea10bf15f9cd54179296dfe28ed6a8b58))
+
+
+### Bug Fixes
+
+* update baseline data ([c33fbe8](https://github.com/eslint/css/commit/c33fbe8256cb3e5bb5f13ff67383201283bd6cff))
+* update baseline data ([#440](https://github.com/eslint/css/issues/440)) ([7615d2d](https://github.com/eslint/css/commit/7615d2d4eba312fc8c2beeb222ed540b34b00283))
+* update baseline data ([#448](https://github.com/eslint/css/issues/448)) ([e758a11](https://github.com/eslint/css/commit/e758a11ac5a164ed5f2d1f3d61255848f5bedae4))
+* update baseline data ([#457](https://github.com/eslint/css/issues/457)) ([afbd6c5](https://github.com/eslint/css/commit/afbd6c5f9dac8bb6d410d49efc8a515ea793d2f4))
+* update dependency @eslint/css-tree to ^4.0.3 ([#437](https://github.com/eslint/css/issues/437)) ([61575c2](https://github.com/eslint/css/commit/61575c2a603bae1a724dc4101e6c0ea6805979f0))
+* update dependency @eslint/css-tree to ^4.0.4 ([#453](https://github.com/eslint/css/issues/453)) ([9af90e5](https://github.com/eslint/css/commit/9af90e5edf20167de78545e81bd247485a1d1e0f))
+
 ## [1.2.0](https://github.com/eslint/css/compare/css-v1.1.0...css-v1.2.0) (2026-04-30)
 
 
