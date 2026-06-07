@@ -692,6 +692,7 @@ export const functions = new Map([
 	["sin", "10:2023"],
 	["tan", "10:2023"],
 	["cross-origin", "0:"],
+	["integrity", "0:"],
 	["referrer-policy", "0:"],
 ]);
 export const units = new Map([
@@ -3703,7 +3704,11 @@ export const propertyValues = new Map([
 		"text-decoration",
 		new Map([
 			["currentColor", "5:2025"],
+			["line-through", "10:2015"],
+			["none", "10:2015"],
+			["overline", "10:2015"],
 			["transparent", "5:2025"],
+			["underline", "10:2015"],
 		]),
 	],
 	[
