@@ -30,6 +30,7 @@ ruleTester.run("no-duplicate-imports", rule, {
 		"@IMPORT url('x.css');",
 		"@imPort url('x.css'); @IMport url('y.css');",
 		"@IMPORT 'x.css'; @import url('y.css'); @IMport 'z.css';",
+		"@import url('x.css'); @import;",
 	],
 	invalid: [
 		{
