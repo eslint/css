@@ -45,10 +45,10 @@ function getImportEnd(text, end) {
 function getImportModifiers(importNode, sourceCode) {
 	const importModifiers = [];
 
-	const importHasModifiers = importNode.prelude.children.length > 1;
+	const importHasModifiers = importNode.prelude?.children.length > 1;
 
 	if (importHasModifiers) {
-		importNode.prelude.children.slice(1).forEach(modifier => {
+		importNode.prelude?.children.slice(1).forEach(modifier => {
 			const modifierText = sourceCode.getText(modifier).trim();
 			importModifiers.push(modifierText);
 		});
@@ -111,22 +111,22 @@ export default {
 
 		return {
 			"Atrule[name=/^import$/i]"(node) {
-				const url = node.prelude.children[0].value;
+				const url = node.prelude?.children[0].value;
 				const hasImport = imports.some(
-					importNode => importNode.prelude.children[0].value === url,
+					importNode => importNode.prelude?.children[0].value === url,
 				);
 
 				if (hasImport) {
 					const firstImportNode = imports.find(
 						importNode =>
-							importNode.prelude.children[0].value === url,
+							importNode.prelude?.children[0].value === url,
 					);
 					const [firstImportStart, firstImportEnd] =
 						sourceCode.getRange(firstImportNode);
 
 					const firstImportHasModifiers =
-						firstImportNode.prelude.children.length > 1;
-					const nodeHasModifiers = node.prelude.children.length > 1;
+						firstImportNode.prelude?.children.length > 1;
+					const nodeHasModifiers = node.prelude?.children.length > 1;
 
 					const [start, end] = sourceCode.getRange(node);
 					const text = sourceCode.text;
