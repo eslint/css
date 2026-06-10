@@ -50,6 +50,7 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font: revert-layer Arial, sans-serif; }",
 		"a { font-size: unset; }",
 		"a { font: unset Arial, sans-serif; }",
+		"a { font: 1rem/120% Arial, sans-serif; }",
 		{
 			code: "a { font-size: 1em; }",
 			options: [
@@ -842,6 +843,24 @@ ruleTester.run("relative-font-units", rule, {
 			code: dedent`
                 a {
                     font: 20% Arial, sans-serif;
+                }
+            `,
+			options: [
+				{
+					allowUnits: ["em"],
+				},
+			],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					data: { allowedFontUnits: "em" },
+				},
+			],
+		},
+		{
+			code: dedent`
+                a {
+                    font: 1rem/120% Arial, sans-serif;
                 }
             `,
 			options: [
