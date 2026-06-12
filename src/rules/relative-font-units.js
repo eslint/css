@@ -136,7 +136,11 @@ export default {
 							child => child.type === "Dimension",
 						);
 						const identifierNode = value.children.find(
-							child => child.type === "Identifier",
+							child =>
+								child.type === "Identifier" &&
+								disallowedFontSizeKeywords.has(
+									child.name.toLowerCase(),
+								),
 						);
 						const percentageNode = value.children.find(
 							(child, index) => {
@@ -166,11 +170,7 @@ export default {
 								loc: percentageNode?.loc,
 							},
 							{
-								check:
-									identifierNode &&
-									disallowedFontSizeKeywords.has(
-										identifierNode.name.toLowerCase(),
-									),
+								check: identifierNode,
 								loc: identifierNode?.loc,
 							},
 							{

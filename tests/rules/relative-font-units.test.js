@@ -51,6 +51,7 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font-size: unset; }",
 		"a { font: unset Arial, sans-serif; }",
 		"a { font: 1rem/120% Arial, sans-serif; }",
+		"a { font: italic smaller Arial, sans-serif; }",
 		{
 			code: "a { font-size: 1em; }",
 			options: [
@@ -1252,6 +1253,15 @@ ruleTester.run("relative-font-units", rule, {
 		},
 		{
 			code: "a { font: Small Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font: italic small Arial, sans-serif; }",
 			errors: [
 				{
 					messageId: "allowedFontUnits",
