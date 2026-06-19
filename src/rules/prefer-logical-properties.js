@@ -133,8 +133,7 @@ const unitReplacements = new Map([
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {PreferLogicalPropertiesRuleDefinition} */
-export default {
+export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
@@ -253,4 +252,4 @@ export default {
 			},
 		};
 	},
-};
+});

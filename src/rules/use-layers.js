@@ -22,8 +22,7 @@
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {UseLayersRuleDefinition} */
-export default {
+export default /** @satisfies {UseLayersRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
@@ -167,4 +166,4 @@ export default {
 			},
 		};
 	},
-};
+});

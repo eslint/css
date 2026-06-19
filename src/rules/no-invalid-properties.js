@@ -86,8 +86,7 @@ function getVarFallbackList(value) {
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {NoInvalidPropertiesRuleDefinition} */
-export default {
+export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
@@ -490,4 +489,4 @@ export default {
 			},
 		};
 	},
-};
+});

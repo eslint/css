@@ -483,8 +483,7 @@ class BaselineAvailability {
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {UseBaselineRuleDefinition} */
-export default {
+export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
@@ -1048,4 +1047,4 @@ export default {
 			},
 		};
 	},
-};
+});

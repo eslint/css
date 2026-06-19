@@ -80,10 +80,7 @@ function getFixForImport(fixer, text, start, end, hasModifiers) {
 // Rule
 //-----------------------------------------------------------------------------
 
-/**
- * @type {NoDuplicateImportsRuleDefinition}
- */
-export default {
+export default /** @satisfies {NoDuplicateImportsRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
@@ -220,4 +217,4 @@ export default {
 			},
 		};
 	},
-};
+});
