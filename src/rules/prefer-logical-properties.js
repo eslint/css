@@ -4,7 +4,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"notLogicalProperty" | "notLogicalValue" | "notLogicalUnit"} PreferLogicalPropertiesMessageIds
+ * @typedef {"notLogicalProperty" | "notLogicalValue" | "notLogicalUnit" | "replaceWithLogicalProperty" | "replaceWithLogicalValue" | "replaceWithLogicalUnit"} PreferLogicalPropertiesMessageIds
  * @typedef {[{
  *     allowProperties?: string[],
  *     allowUnits?: string[]
@@ -137,7 +137,7 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
-		fixable: "code",
+		hasSuggestions: true,
 
 		docs: {
 			description: "Enforce the use of logical properties",
@@ -181,6 +181,12 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 				"Expected logical value '{{replacement}}' instead of '{{value}}'.",
 			notLogicalUnit:
 				"Expected logical unit '{{replacement}}' instead of '{{unit}}'.",
+			replaceWithLogicalProperty:
+				"Replace '{{original}}' with logical property '{{replacement}}'.",
+			replaceWithLogicalValue:
+				"Replace '{{original}}' with logical value '{{replacement}}'.",
+			replaceWithLogicalUnit:
+				"Replace '{{original}}' with logical unit '{{replacement}}'.",
 		},
 	},
 
@@ -198,15 +204,35 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					propertiesReplacements.get(node.property) &&
 					!allowProperties.includes(node.property)
 				) {
+					const replacement = propertiesReplacements.get(
+						node.property,
+					);
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalProperty",
 						data: {
 							property: node.property,
-							replacement: propertiesReplacements.get(
-								node.property,
-							),
+							replacement,
 						},
+						suggest: [
+							{
+								messageId: "replaceWithLogicalProperty",
+								data: {
+									original: node.property,
+									replacement,
+								},
+								fix(fixer) {
+									return fixer.replaceTextRange(
+										[
+											node.loc.start.offset,
+											node.loc.start.offset +
+												node.property.length,
+										],
+										replacement,
+									);
+								},
+							},
+						],
 					});
 				}
 
@@ -215,7 +241,8 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					node.value.type === "Value" &&
 					node.value.children[0].type === "Identifier"
 				) {
-					const nodeValue = node.value.children[0].name;
+					const identifier = node.value.children[0];
+					const nodeValue = identifier.name;
 					if (
 						propertyValuesReplacements.get(node.property)[nodeValue]
 					) {
@@ -224,12 +251,27 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 						)[nodeValue];
 						if (replacement) {
 							context.report({
-								loc: node.value.children[0].loc,
+								loc: identifier.loc,
 								messageId: "notLogicalValue",
 								data: {
 									value: nodeValue,
 									replacement,
 								},
+								suggest: [
+									{
+										messageId: "replaceWithLogicalValue",
+										data: {
+											original: nodeValue,
+											replacement,
+										},
+										fix(fixer) {
+											return fixer.replaceText(
+												identifier,
+												replacement,
+											);
+										},
+									},
+								],
 							});
 						}
 					}
@@ -240,13 +282,29 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					unitReplacements.get(node.unit) &&
 					!allowUnits.includes(node.unit)
 				) {
+					const replacement = unitReplacements.get(node.unit);
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalUnit",
 						data: {
 							unit: node.unit,
-							replacement: unitReplacements.get(node.unit),
+							replacement,
 						},
+						suggest: [
+							{
+								messageId: "replaceWithLogicalUnit",
+								data: {
+									original: node.unit,
+									replacement,
+								},
+								fix(fixer) {
+									return fixer.replaceText(
+										node,
+										node.value + replacement,
+									);
+								},
+							},
+						],
 					});
 				}
 			},
