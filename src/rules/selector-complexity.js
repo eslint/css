@@ -152,8 +152,7 @@ function getDisallowedCombinatorsLocation(
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {SelectorComplexityRuleDefinition} */
-export default {
+export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
@@ -497,4 +496,4 @@ export default {
 			},
 		};
 	},
-};
+});

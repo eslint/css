@@ -50,8 +50,7 @@ const disallowedFontSizeKeywords = new Set([
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {RelativeFontUnitsRuleDefinition} */
-export default {
+export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
 
@@ -205,4 +204,4 @@ export default {
 			},
 		};
 	},
-};
+});

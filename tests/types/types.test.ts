@@ -5,6 +5,7 @@ import type {
 	CSSSourceCode,
 } from "@eslint/css";
 import type { Plugin, SourceLocation, SourceRange } from "@eslint/core";
+import type { ESLint } from "eslint";
 import type {
 	AnPlusB,
 	AtrulePlain,
@@ -59,11 +60,17 @@ import type {
 } from "@eslint/css-tree";
 
 css satisfies Plugin;
+// This type check verifies that the plugin is compatible with ESLint v9.15.0, v9.x, and v10.x.
+// See: https://github.com/eslint/css/pull/473
+css satisfies ESLint.Plugin;
 css.meta.name satisfies string;
 css.meta.version satisfies string;
 
 // Check that these languages are defined:
 css.languages.css satisfies object;
+
+declare const ruleName: keyof typeof css.rules;
+css.rules[ruleName] satisfies CSSRuleDefinition;
 
 // Check that `plugins` in the recommended config is defined:
 css.configs.recommended.plugins satisfies object;
