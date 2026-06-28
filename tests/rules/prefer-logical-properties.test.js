@@ -59,7 +59,11 @@ ruleTester.run("prefer-logical-properties", rule, {
 					},
 					suggestions: [
 						{
-							desc: "Replace 'margin-top' with logical property 'margin-block-start'.",
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "margin-top",
+								replacement: "margin-block-start",
+							},
 							output: "a { margin-block-start: 10px; }",
 						},
 					],
@@ -81,7 +85,11 @@ ruleTester.run("prefer-logical-properties", rule, {
 					},
 					suggestions: [
 						{
-							desc: "Replace 'padding-top' with logical property 'padding-block-start'.",
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "padding-top",
+								replacement: "padding-block-start",
+							},
 							output: "a { padding-block-start: 20px; }",
 						},
 					],
@@ -103,7 +111,11 @@ ruleTester.run("prefer-logical-properties", rule, {
 					},
 					suggestions: [
 						{
-							desc: "Replace 'left' with logical value 'start'.",
+							messageId: "replaceWithLogicalValue",
+							data: {
+								value: "left",
+								replacement: "start",
+							},
 							output: "a { text-align: start }",
 						},
 					],
@@ -125,7 +137,11 @@ ruleTester.run("prefer-logical-properties", rule, {
 					},
 					suggestions: [
 						{
-							desc: "Replace 'vh' with logical unit 'vb'.",
+							messageId: "replaceWithLogicalUnit",
+							data: {
+								unit: "vh",
+								replacement: "vb",
+							},
 							output: "a { block-size: 100vb }",
 						},
 					],
