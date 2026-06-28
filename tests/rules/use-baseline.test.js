@@ -70,8 +70,8 @@ ruleTester.run("use-baseline", rule, {
 		`@supports (width: abs(20% - 100px)) {
 			a { width: abs(20% - 100px); }
 		}`,
-		`@supports selector(:has()) {
-				h1:has(+ h2) { color: red; }
+		`@supports selector(:fullscreen) {
+				h1:fullscreen { color: red; }
 		}`,
 		"div { cursor: pointer; }",
 		"pre { overflow: auto; }",
@@ -105,8 +105,8 @@ ruleTester.run("use-baseline", rule, {
 		"@media (color-gamut: srgb) { a { color: red; } }",
 		"@MEDIA (color-gamut: srgb) { a { color: red; } }",
 		{
-			code: "h1:has(+ h2) { margin: 0 0 0.25rem 0; }",
-			options: [{ allowSelectors: ["has"] }],
+			code: "h1:fullscreen { margin: 0 0 0.25rem 0; }",
+			options: [{ allowSelectors: ["fullscreen"] }],
 		},
 		{
 			code: `label {
@@ -512,26 +512,26 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "h1:has(+ h2) { margin: 0 0 0.25rem 0; }",
+			code: "h1:fullscreen { margin: 0 0 0.25rem 0; }",
 			errors: [
 				{
 					messageId: "notBaselineSelector",
 					data: {
-						selector: "has",
+						selector: "fullscreen",
 						availability: "widely",
 					},
 					line: 1,
 					column: 3,
 					endLine: 1,
-					endColumn: 7,
+					endColumn: 14,
 				},
 			],
 		},
 		{
-			code: `@supports selector(:has()) {}
+			code: `@supports selector(:fullscreen) {}
 
 			@supports (color: red) {
-				h1:has(+ h2) {
+				h1:fullscreen {
 					color: red;
 				}
 			}`,
@@ -539,13 +539,13 @@ ruleTester.run("use-baseline", rule, {
 				{
 					messageId: "notBaselineSelector",
 					data: {
-						selector: "has",
+						selector: "fullscreen",
 						availability: "widely",
 					},
 					line: 4,
 					column: 7,
 					endLine: 4,
-					endColumn: 11,
+					endColumn: 18,
 				},
 			],
 		},
@@ -655,19 +655,19 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "h1:has(+ h2) { margin: 0; }\nh1:fullscreen { color: red; }",
-			options: [{ allowSelectors: ["has"] }],
+			code: "h1:fullscreen { margin: 0; }\ninput:autofill { color: red; }",
+			options: [{ allowSelectors: ["fullscreen"] }],
 			errors: [
 				{
 					messageId: "notBaselineSelector",
 					data: {
-						selector: "fullscreen",
+						selector: "autofill",
 						availability: "widely",
 					},
 					line: 2,
-					column: 3,
+					column: 6,
 					endLine: 2,
-					endColumn: 14,
+					endColumn: 15,
 				},
 			],
 		},

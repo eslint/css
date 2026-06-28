@@ -55,8 +55,8 @@ a {
 	height: 100svh;
 }
 
-/* invalid - :has() is not widely available */
-h1:has(+ h2) {
+/* invalid - :fullscreen is not widely available */
+h1:fullscreen {
 	margin: 0 0 0.25rem 0;
 }
 
@@ -88,8 +88,8 @@ Examples of **correct** code:
 /* eslint css/use-baseline: "error" */
 
 /* valid - @supports indicates you're choosing a limited availability selector */
-@supports selector(:has()) {
-	h1:has(+ h2) {
+@supports selector(:fullscreen) {
+	h1:fullscreen {
 		margin: 0 0 0.25rem 0;
 	}
 }
@@ -199,12 +199,12 @@ Examples of **correct** code with `{ allowSelectors: ["nesting"] }`:
 }
 ```
 
-Examples of **correct** code with `{ allowSelectors: ["has"] }`:
+Examples of **correct** code with `{ allowSelectors: ["fullscreen"] }`:
 
 ```css
-/* eslint css/use-baseline: ["error", { allowSelectors: ["has"] }] */
+/* eslint css/use-baseline: ["error", { allowSelectors: ["fullscreen"] }] */
 
-h1:has(+ h2) {
+h1:fullscreen {
 	margin: 0 0 0.25rem 0;
 }
 ```
