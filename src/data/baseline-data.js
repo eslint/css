@@ -126,7 +126,7 @@ export const properties = new Map([
 	["display", "10:2015"],
 	["dominant-baseline", "10:2020"],
 	["dynamic-range-limit", "0:"],
-	["field-sizing", "0:"],
+	["field-sizing", "5:2026"],
 	["filter", "10:2016"],
 	["align-content", "10:2015"],
 	["align-items", "10:2015"],
@@ -806,7 +806,7 @@ export const selectors = new Map([
 	["required", "10:2015"],
 	["valid", "10:2015"],
 	["fullscreen", "0:"],
-	["has", "5:2023"],
+	["has", "10:2023"],
 	["has-slotted", "0:"],
 	["heading", "0:"],
 	["headingfunction", "0:"],
@@ -2173,8 +2173,8 @@ export const propertyValues = new Map([
 	[
 		"field-sizing",
 		new Map([
-			["content", "0:"],
-			["fixed", "0:"],
+			["content", "5:2026"],
+			["fixed", "5:2026"],
 		]),
 	],
 	[
