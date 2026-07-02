@@ -9,7 +9,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"emptyBlock"} NoEmptyBlocksMessageIds
+ * @typedef {"emptyBlock" | "deleteEmptyBlock"} NoEmptyBlocksMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoEmptyBlocksMessageIds }>} NoEmptyBlocksRuleDefinition
  */
 
@@ -21,6 +21,8 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
+		hasSuggestions: true,
+
 		docs: {
 			description: "Disallow empty blocks",
 			recommended: true,
@@ -29,6 +31,7 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 
 		messages: {
 			emptyBlock: "Unexpected empty block found.",
+			deleteEmptyBlock: "Delete the empty block.",
 		},
 	},
 
@@ -39,6 +42,22 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 					context.report({
 						loc: node.loc,
 						messageId: "emptyBlock",
+						suggest: [
+							{
+								messageId: "deleteEmptyBlock",
+								fix(fixer) {
+									const parent =
+										context.sourceCode.getParent(node);
+									const isAtLayer =
+										parent.type === "Atrule" &&
+										parent.name === "layer";
+
+									return fixer.remove(
+										isAtLayer ? node : parent,
+									);
+								},
+							},
+						],
 					});
 				}
 			},
