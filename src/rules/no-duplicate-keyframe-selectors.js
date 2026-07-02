@@ -20,9 +20,11 @@
 export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow duplicate selectors within keyframe blocks",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-duplicate-keyframe-selectors.md",
 		},
