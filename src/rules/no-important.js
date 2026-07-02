@@ -26,8 +26,7 @@ const trailingWhitespacePattern = /\s*$/u;
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {NoImportantRuleDefinition} */
-export default {
+export default /** @satisfies {NoImportantRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -97,4 +96,4 @@ export default {
 			},
 		};
 	},
-};
+});

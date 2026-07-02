@@ -4,7 +4,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"notLogicalProperty" | "notLogicalValue" | "notLogicalUnit"} PreferLogicalPropertiesMessageIds
+ * @typedef {"notLogicalProperty" | "notLogicalValue" | "notLogicalUnit" | "replaceWithLogicalProperty" | "replaceWithLogicalValue" | "replaceWithLogicalUnit"} PreferLogicalPropertiesMessageIds
  * @typedef {[{
  *     allowProperties?: string[],
  *     allowUnits?: string[]
@@ -133,13 +133,12 @@ const unitReplacements = new Map([
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {PreferLogicalPropertiesRuleDefinition} */
-export default {
+export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
 
-		fixable: "code",
+		hasSuggestions: true,
 
 		docs: {
 			description: "Enforce the use of logical properties",
@@ -184,6 +183,12 @@ export default {
 				"Expected logical value '{{replacement}}' instead of '{{value}}'.",
 			notLogicalUnit:
 				"Expected logical unit '{{replacement}}' instead of '{{unit}}'.",
+			replaceWithLogicalProperty:
+				"Replace '{{property}}' with logical property '{{replacement}}'.",
+			replaceWithLogicalValue:
+				"Replace '{{value}}' with logical value '{{replacement}}'.",
+			replaceWithLogicalUnit:
+				"Replace '{{unit}}' with logical unit '{{replacement}}'.",
 		},
 	},
 
@@ -197,8 +202,12 @@ export default {
 					return;
 				}
 
+				const propertyReplacement = propertiesReplacements.get(
+					node.property,
+				);
+
 				if (
-					propertiesReplacements.get(node.property) &&
+					propertyReplacement &&
 					!allowProperties.includes(node.property)
 				) {
 					context.report({
@@ -206,53 +215,99 @@ export default {
 						messageId: "notLogicalProperty",
 						data: {
 							property: node.property,
-							replacement: propertiesReplacements.get(
-								node.property,
-							),
+							replacement: propertyReplacement,
 						},
+						suggest: [
+							{
+								messageId: "replaceWithLogicalProperty",
+								data: {
+									property: node.property,
+									replacement: propertyReplacement,
+								},
+								fix(fixer) {
+									return fixer.replaceTextRange(
+										[
+											node.loc.start.offset,
+											node.loc.start.offset +
+												node.property.length,
+										],
+										propertyReplacement,
+									);
+								},
+							},
+						],
 					});
 				}
 
+				const valueReplacements = propertyValuesReplacements.get(
+					node.property,
+				);
+
 				if (
-					propertyValuesReplacements.get(node.property) &&
+					valueReplacements &&
 					node.value.type === "Value" &&
 					node.value.children[0].type === "Identifier"
 				) {
-					const nodeValue = node.value.children[0].name;
-					if (
-						propertyValuesReplacements.get(node.property)[nodeValue]
-					) {
-						const replacement = propertyValuesReplacements.get(
-							node.property,
-						)[nodeValue];
-						if (replacement) {
-							context.report({
-								loc: node.value.children[0].loc,
-								messageId: "notLogicalValue",
-								data: {
-									value: nodeValue,
-									replacement,
+					const identifier = node.value.children[0];
+					const nodeValue = identifier.name;
+					const valueReplacement = valueReplacements[nodeValue];
+
+					if (valueReplacement) {
+						context.report({
+							loc: identifier.loc,
+							messageId: "notLogicalValue",
+							data: {
+								value: nodeValue,
+								replacement: valueReplacement,
+							},
+							suggest: [
+								{
+									messageId: "replaceWithLogicalValue",
+									data: {
+										value: nodeValue,
+										replacement: valueReplacement,
+									},
+									fix(fixer) {
+										return fixer.replaceText(
+											identifier,
+											valueReplacement,
+										);
+									},
 								},
-							});
-						}
+							],
+						});
 					}
 				}
 			},
 			Dimension(node) {
-				if (
-					unitReplacements.get(node.unit) &&
-					!allowUnits.includes(node.unit)
-				) {
+				const unitReplacement = unitReplacements.get(node.unit);
+
+				if (unitReplacement && !allowUnits.includes(node.unit)) {
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalUnit",
 						data: {
 							unit: node.unit,
-							replacement: unitReplacements.get(node.unit),
+							replacement: unitReplacement,
 						},
+						suggest: [
+							{
+								messageId: "replaceWithLogicalUnit",
+								data: {
+									unit: node.unit,
+									replacement: unitReplacement,
+								},
+								fix(fixer) {
+									return fixer.replaceText(
+										node,
+										node.value + unitReplacement,
+									);
+								},
+							},
+						],
 					});
 				}
 			},
 		};
 	},
-};
+});

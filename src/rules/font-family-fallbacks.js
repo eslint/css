@@ -111,10 +111,7 @@ function reportFontWithoutFallbacksInFontProperty(
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/**
- * @type {FontFamilyFallbacksRuleDefinition}
- */
-export default {
+export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
 		languages: ["css/css"],
@@ -477,4 +474,4 @@ export default {
 			},
 		};
 	},
-};
+});

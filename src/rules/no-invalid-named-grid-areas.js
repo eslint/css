@@ -79,8 +79,7 @@ const validProps = new Set(["grid-template-areas", "grid-template", "grid"]);
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {NoInvalidNamedGridAreasRuleDefinition} */
-export default {
+export default /** @satisfies {NoInvalidNamedGridAreasRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -177,4 +176,4 @@ export default {
 			},
 		};
 	},
-};
+});

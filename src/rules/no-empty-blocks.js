@@ -17,8 +17,7 @@
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {NoEmptyBlocksRuleDefinition} */
-export default {
+export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -47,4 +46,4 @@ export default {
 			},
 		};
 	},
-};
+});

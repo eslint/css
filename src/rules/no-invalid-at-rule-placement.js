@@ -17,8 +17,7 @@
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {NoInvalidAtRulePlacementRuleDefinition} */
-export default {
+export default /** @satisfies {NoInvalidAtRulePlacementRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -104,4 +103,4 @@ export default {
 			},
 		};
 	},
-};
+});

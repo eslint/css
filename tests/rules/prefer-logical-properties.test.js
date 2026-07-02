@@ -57,6 +57,16 @@ ruleTester.run("prefer-logical-properties", rule, {
 						property: "margin-top",
 						replacement: "margin-block-start",
 					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "margin-top",
+								replacement: "margin-block-start",
+							},
+							output: "a { margin-block-start: 10px; }",
+						},
+					],
 				},
 			],
 		},
@@ -73,6 +83,16 @@ ruleTester.run("prefer-logical-properties", rule, {
 						property: "padding-top",
 						replacement: "padding-block-start",
 					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "padding-top",
+								replacement: "padding-block-start",
+							},
+							output: "a { padding-block-start: 20px; }",
+						},
+					],
 				},
 			],
 		},
@@ -89,6 +109,16 @@ ruleTester.run("prefer-logical-properties", rule, {
 						value: "left",
 						replacement: "start",
 					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalValue",
+							data: {
+								value: "left",
+								replacement: "start",
+							},
+							output: "a { text-align: start }",
+						},
+					],
 				},
 			],
 		},
@@ -105,6 +135,16 @@ ruleTester.run("prefer-logical-properties", rule, {
 						unit: "vh",
 						replacement: "vb",
 					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalUnit",
+							data: {
+								unit: "vh",
+								replacement: "vb",
+							},
+							output: "a { block-size: 100vb }",
+						},
+					],
 				},
 			],
 		},

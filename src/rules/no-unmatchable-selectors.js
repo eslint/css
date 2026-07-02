@@ -17,8 +17,7 @@
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {NoUnmatchableSelectorsRuleDefinition} */
-export default {
+export default /** @satisfies {NoUnmatchableSelectorsRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -60,4 +59,4 @@ export default {
 			},
 		};
 	},
-};
+});

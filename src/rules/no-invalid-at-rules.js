@@ -74,8 +74,7 @@ function extractMetaDataFromError(error) {
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {NoInvalidAtRulesRuleDefinition} */
-export default {
+export default /** @satisfies {NoInvalidAtRulesRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -289,4 +288,4 @@ export default {
 			},
 		};
 	},
-};
+});

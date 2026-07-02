@@ -22,8 +22,7 @@
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {UseLayersRuleDefinition} */
-export default {
+export default /** @satisfies {UseLayersRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -79,7 +78,7 @@ export default {
 		return {
 			"Atrule[name=/^import$/i]"(node) {
 				// layer, if present, must always be the second child of the prelude
-				const secondChild = node.prelude.children[1];
+				const secondChild = node.prelude?.children[1];
 				const layerNode =
 					secondChild?.name === "layer" ? secondChild : null;
 
@@ -169,4 +168,4 @@ export default {
 			},
 		};
 	},
-};
+});

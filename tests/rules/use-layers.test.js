@@ -227,6 +227,18 @@ ruleTester.run("use-layers", rule, {
 			],
 		},
 		{
+			code: "@import;",
+			errors: [
+				{
+					messageId: "missingImportLayer",
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
 			code: "@IMPORT 'foo.css';",
 			errors: [
 				{

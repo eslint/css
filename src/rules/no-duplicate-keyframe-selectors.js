@@ -17,8 +17,7 @@
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {DuplicateKeyframeSelectorRuleDefinition} */
-export default {
+export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
@@ -80,4 +79,4 @@ export default {
 			},
 		};
 	},
-};
+});

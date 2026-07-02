@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.4.0](https://github.com/eslint/css/compare/css-v1.3.0...css-v1.4.0) (2026-07-01)
+
+
+### Features
+
+* add suggestions to prefer-logical-properties ([#474](https://github.com/eslint/css/issues/474)) ([045277e](https://github.com/eslint/css/commit/045277e498d6dcd486f514c1632f40ad6cb7aa4a))
+
+
+### Bug Fixes
+
+* check for preludes in `[@import](https://github.com/import)` ([#470](https://github.com/eslint/css/issues/470)) ([cc8791d](https://github.com/eslint/css/commit/cc8791dcb277473fc7a49487c02155c5b049645e))
+* false negative when font used as identifier ([#471](https://github.com/eslint/css/issues/471)) ([f248a32](https://github.com/eslint/css/commit/f248a32d5d99dbdf3ebdf5da6838a4c3c174bc86))
+* reporting font-size unit with percentage in line-height ([#466](https://github.com/eslint/css/issues/466)) ([bae9097](https://github.com/eslint/css/commit/bae9097c0a355b1eb85ad6dcc2737f29f22b3a90))
+* type compatibility issue between CSS v1 and ESLint v9 ([#473](https://github.com/eslint/css/issues/473)) ([3cb31a5](https://github.com/eslint/css/commit/3cb31a5f94a121706ab5150f95f09f2023826797))
+* update baseline data ([6726b1f](https://github.com/eslint/css/commit/6726b1f9facf5f178e3035a87e415d45b3511541))
+* update baseline data ([#469](https://github.com/eslint/css/issues/469)) ([99ba37f](https://github.com/eslint/css/commit/99ba37f373e76d5c86fd34319e6c7c833e2a5110))
+* update baseline data ([#475](https://github.com/eslint/css/issues/475)) ([7dbbb9d](https://github.com/eslint/css/commit/7dbbb9d27c7f17db021bbc5124c51a96c6e3ca10))
+* update baseline data ([#482](https://github.com/eslint/css/issues/482)) ([cd52c73](https://github.com/eslint/css/commit/cd52c7305a0f85f9d0811b83e19a9082307e13cd))
+* update dependency @eslint/plugin-kit to ^0.7.2 ([#463](https://github.com/eslint/css/issues/463)) ([1678418](https://github.com/eslint/css/commit/167841821aeb4a9ba1f632b0d756dd1d3bd2ed5c))
+
 ## [1.3.0](https://github.com/eslint/css/compare/css-v1.2.0...css-v1.3.0) (2026-05-27)
 
 

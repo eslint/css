@@ -50,8 +50,7 @@ const disallowedFontSizeKeywords = new Set([
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-/** @type {RelativeFontUnitsRuleDefinition} */
-export default {
+export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
 		languages: ["css/css"],
@@ -138,11 +137,29 @@ export default {
 							child => child.type === "Dimension",
 						);
 						const identifierNode = value.children.find(
-							child => child.type === "Identifier",
+							child =>
+								child.type === "Identifier" &&
+								disallowedFontSizeKeywords.has(
+									child.name.toLowerCase(),
+								),
 						);
 						const percentageNode = value.children.find(
-							child => child.type === "Percentage",
+							(child, index) => {
+								const isPercentage =
+									child.type === "Percentage";
+								const previousNode = value.children[index - 1];
+
+								const previousNodeIsSlashOperator =
+									previousNode &&
+									previousNode.type === "Operator" &&
+									previousNode.value === "/";
+
+								return (
+									isPercentage && !previousNodeIsSlashOperator
+								);
+							},
 						);
+
 						let location;
 						let shouldReport = false;
 
@@ -154,11 +171,7 @@ export default {
 								loc: percentageNode?.loc,
 							},
 							{
-								check:
-									identifierNode &&
-									disallowedFontSizeKeywords.has(
-										identifierNode.name.toLowerCase(),
-									),
+								check: identifierNode,
 								loc: identifierNode?.loc,
 							},
 							{
@@ -193,4 +206,4 @@ export default {
 			},
 		};
 	},
-};
+});
