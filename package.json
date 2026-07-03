@@ -91,7 +91,7 @@
     "lint-staged": "^16.0.0",
     "mdast-util-from-markdown": "^2.0.2",
     "mocha": "^11.0.0",
-    "prettier": "3.8.4",
+    "prettier": "3.8.5",
     "tailwind-csstree": "^0.3.0",
     "typescript": "^6.0.3",
     "web-features": "^3.32.0",
