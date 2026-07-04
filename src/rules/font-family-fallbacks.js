@@ -268,12 +268,10 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 					} else {
 						const lastFont = valueArr.at(-1);
 
-						if (
-							!(
-								lastFont.type === "Identifier" &&
-								genericFonts.has(lastFont.name)
-							)
-						) {
+						if (!(
+							lastFont.type === "Identifier" &&
+							genericFonts.has(lastFont.name)
+						)) {
 							context.report({
 								loc: node.loc,
 								messageId: "useGenericFont",
