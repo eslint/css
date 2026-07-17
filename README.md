@@ -16,6 +16,7 @@ In order to use the ESLint CSS plugin, you must have the following installed:
 ## Installation
 
 You can install ESLint using npm or other package managers:
+
 ```shell
 npm install eslint -D
 # or
