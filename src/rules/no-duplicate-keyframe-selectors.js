@@ -53,26 +53,29 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 				}
 
 				// @ts-ignore - children is a valid property for prelude
-				const selector = node.prelude.children[0].children[0];
-				let value;
-				if (selector.type === "Percentage") {
-					value = `${selector.value}%`;
-				} else if (selector.type === "TypeSelector") {
-					value = selector.name.toLowerCase();
-				} else {
-					value = selector.value;
-				}
+				const selector = node.prelude.children[0];
+				const value = [];
 
-				if (seen.has(value)) {
+				selector.children.forEach(component => {
+					if (component.type === "Percentage") {
+						value.push(`${component.value}%`);
+					} else if (component.type === "TypeSelector") {
+						value.push(component.name.toLowerCase());
+					}
+				});
+
+				const key = value.join(" ");
+
+				if (seen.has(key)) {
 					context.report({
 						loc: selector.loc,
 						messageId: "duplicateKeyframeSelector",
 						data: {
-							selector: value,
+							selector: key,
 						},
 					});
 				} else {
-					seen.set(value, true);
+					seen.set(key, true);
 				}
 			},
 		};
