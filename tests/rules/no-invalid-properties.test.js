@@ -30,6 +30,7 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { padding-top: calc(env(safe-area-inset-top) + 10px); }",
 		"a { width: env(titlebar-area-width); }",
 		"a { padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0; }",
+		"a { padding: env(safe-area-inset-top) red }",
 		"a { color: red; background-color: blue; }",
 		"a { color: red; transition: none; }",
 		"body { --custom-property: red; }",
