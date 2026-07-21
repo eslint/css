@@ -418,5 +418,53 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 				},
 			],
 		},
+		{
+			code: dedent`@keyframes test {
+                entry 0% { opacity: 0; }
+                entry  0% { opacity: 1; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "entry 0%" },
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: dedent`@keyframes test {
+                exit 100% { opacity: 0; }
+                exit /* comment */ 100% { opacity: 1; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "exit 100%" },
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: dedent`@keyframes test {
+                ENTRY 0% { opacity: 0; }
+                entry 0% { opacity: 1; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "entry 0%" },
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 13,
+				},
+			],
+		},
 	],
 });
