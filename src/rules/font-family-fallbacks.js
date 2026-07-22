@@ -114,10 +114,12 @@ function reportFontWithoutFallbacksInFontProperty(
 export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
+		languages: ["css/css"],
 
 		docs: {
 			description:
 				"Enforce use of fallback fonts and a generic font last",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/font-family-fallbacks.md",
 		},

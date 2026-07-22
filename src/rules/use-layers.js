@@ -25,9 +25,11 @@
 export default /** @satisfies {UseLayersRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Require use of layers",
+			dialects: ["CSS"],
 			url: "https://github.com/eslint/css/blob/main/docs/rules/use-layers.md",
 		},
 
