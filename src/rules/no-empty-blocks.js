@@ -9,7 +9,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"emptyBlock"} NoEmptyBlocksMessageIds
+ * @typedef {"emptyBlock" | "removeRule" | "convertToStatement"} NoEmptyBlocksMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoEmptyBlocksMessageIds }>} NoEmptyBlocksRuleDefinition
  */
 
@@ -21,6 +21,8 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 
+		hasSuggestions: true,
+
 		docs: {
 			description: "Disallow empty blocks",
 			recommended: true,
@@ -29,6 +31,8 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 
 		messages: {
 			emptyBlock: "Unexpected empty block found.",
+			removeRule: "Remove the empty rule.",
+			convertToStatement: "Convert to layer statement.",
 		},
 	},
 
@@ -36,9 +40,29 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 		return {
 			Block(node) {
 				if (node.children.length === 0) {
+					const parent = context.sourceCode.getParent(node);
+					const isNamedAtLayer =
+						parent.type === "Atrule" &&
+						parent.name === "layer" &&
+						parent.prelude;
+
 					context.report({
 						loc: node.loc,
 						messageId: "emptyBlock",
+						suggest: isNamedAtLayer
+							? [
+									{
+										messageId: "convertToStatement",
+										fix: fixer =>
+											fixer.replaceText(node, ";"),
+									},
+								]
+							: [
+									{
+										messageId: "removeRule",
+										fix: fixer => fixer.remove(parent),
+									},
+								],
 					});
 				}
 			},

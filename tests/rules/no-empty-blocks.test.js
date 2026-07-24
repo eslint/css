@@ -34,6 +34,7 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 1,
 					endColumn: 6,
+					suggestions: [{ messageId: "removeRule", output: "" }],
 				},
 			],
 		},
@@ -46,6 +47,7 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 1,
 					endColumn: 20,
+					suggestions: [{ messageId: "removeRule", output: "" }],
 				},
 			],
 		},
@@ -58,6 +60,7 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 2,
 					endColumn: 2,
+					suggestions: [{ messageId: "removeRule", output: "" }],
 				},
 			],
 		},
@@ -70,6 +73,7 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 2,
 					endColumn: 3,
+					suggestions: [{ messageId: "removeRule", output: "" }],
 				},
 			],
 		},
@@ -82,6 +86,12 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 14,
 					endLine: 1,
 					endColumn: 17,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "",
+						},
+					],
 				},
 			],
 		},
@@ -94,6 +104,12 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 1,
 					endColumn: 6,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "\n@media print { \nb { } \n}", // only a{} was removed
+						},
+					],
 				},
 				{
 					messageId: "emptyBlock",
@@ -101,6 +117,133 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 3,
 					endColumn: 6,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "a { }\n@media print { \n \n}", // only b{} was removed
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@layer defaults { \n }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 17,
+					endLine: 2,
+					endColumn: 3,
+					suggestions: [
+						{
+							messageId: "convertToStatement",
+							output: "@layer defaults ;",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@layer a, b { \n }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 13,
+					endLine: 2,
+					endColumn: 3,
+					suggestions: [
+						{
+							messageId: "convertToStatement",
+							output: "@layer a, b ;",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@layer { \n }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 8,
+					endLine: 2,
+					endColumn: 3,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@supports not selector(h2 > p) { }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 32,
+					endLine: 1,
+					endColumn: 35,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@keyframes a { 0% {} 100% {} }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 19,
+					endLine: 1,
+					endColumn: 21,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "@keyframes a {  100% {} }",
+						},
+					],
+				},
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 29,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "@keyframes a { 0% {}  }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@keyframes a { }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 14,
+					endLine: 1,
+					endColumn: 17,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: "",
+						},
+					],
 				},
 			],
 		},
