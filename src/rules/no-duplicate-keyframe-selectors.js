@@ -14,6 +14,15 @@
  */
 
 //-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
+const keyframeSelectorAliases = new Map([
+	["from", "0%"],
+	["to", "100%"],
+]);
+
+//-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
 
@@ -64,14 +73,21 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 					}
 				});
 
-				const key = value.join(" ");
+				const selectorValue = value.join(" ");
+				const key = value
+					.map(
+						selectorPart =>
+							keyframeSelectorAliases.get(selectorPart) ??
+							selectorPart,
+					)
+					.join(" ");
 
 				if (seen.has(key)) {
 					context.report({
 						loc: selector.loc,
 						messageId: "duplicateKeyframeSelector",
 						data: {
-							selector: key,
+							selector: selectorValue,
 						},
 					});
 				} else {
