@@ -25,6 +25,12 @@ const ruleTester = new RuleTester({
 ruleTester.run("no-invalid-properties", rule, {
 	valid: [
 		"a { color: red; }",
+		"a { padding-top: env(safe-area-inset-top); }",
+		"a { padding-top: env(safe-area-inset-top, 20px); }",
+		"a { padding-top: calc(env(safe-area-inset-top) + 10px); }",
+		"a { width: env(titlebar-area-width); }",
+		"a { padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0; }",
+		"a { padding: env(safe-area-inset-top) red }",
 		"a { color: red; background-color: blue; }",
 		"a { color: red; transition: none; }",
 		"body { --custom-property: red; }",
@@ -276,6 +282,19 @@ ruleTester.run("no-invalid-properties", rule, {
 		"main { p:first-of-type, span { color: red; } }",
 	],
 	invalid: [
+		{
+			code: "a { paddin-top: env(safe-area-inset-top); }",
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: { property: "paddin-top" },
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
 		{
 			code: "a { color: bar }",
 			errors: [
