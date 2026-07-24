@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.1](https://github.com/eslint/css/compare/css-v1.4.0...css-v1.4.1) (2026-07-24)
+
+
+### Bug Fixes
+
+* distinguish named timeline range keyframe selectors ([#507](https://github.com/eslint/css/issues/507)) ([c96ceeb](https://github.com/eslint/css/commit/c96ceeb3fe225505657b3ccf75e07a65e4117ca1))
+* update baseline data ([43672ee](https://github.com/eslint/css/commit/43672ee184353178e75b60846435adf7dfc8c551))
+* update baseline data ([1ae3a41](https://github.com/eslint/css/commit/1ae3a4125a4e6d78fd32e93969100a8090a87157))
+* update baseline data ([#504](https://github.com/eslint/css/issues/504)) ([e90e001](https://github.com/eslint/css/commit/e90e001ae2d26f600aaaa7009047a316a254c4b7))
+* update dependency @eslint/css-tree to ^4.0.5 ([#511](https://github.com/eslint/css/issues/511)) ([500ad2a](https://github.com/eslint/css/commit/500ad2a95a2b37c397be0ee00c90352d1a299b2b))
+
 ## [1.4.0](https://github.com/eslint/css/compare/css-v1.3.0...css-v1.4.0) (2026-07-01)
 
 
