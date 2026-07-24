@@ -18,11 +18,11 @@ The [`@keyframes` at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/@key
 }
 ```
 
-If a selector is repeated within the same @keyframes block, the last declaration wins, potentially causing unintentional overrides or confusion.
+If a selector is repeated within the same `@keyframes` block, the last declaration wins, potentially causing unintentional overrides or confusion.
 
 ## Rule Details
 
-This rule warns when it finds a keyframe block that contains duplicate selectors.
+This rule warns when it finds a keyframe block that contains duplicate selectors. It treats `from` and `0%` as equivalent selectors, as well as `to` and `100%`.
 
 Examples of **incorrect** code for this rule:
 
@@ -60,6 +60,24 @@ Examples of **incorrect** code for this rule:
 
 	to {
 		opacity: 1;
+	}
+}
+
+@keyframes test {
+	from {
+		opacity: 0;
+	}
+
+	0% {
+		opacity: 0.25;
+	}
+
+	to {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0.75;
 	}
 }
 ```

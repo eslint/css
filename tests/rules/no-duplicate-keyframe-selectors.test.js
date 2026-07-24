@@ -466,5 +466,83 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 				},
 			],
 		},
+		{
+			code: dedent`@keyframes test {
+			    from { opacity: 0; }
+			    0% { opacity: 0.25; }
+			    to { opacity: 1; }
+			    100% { opacity: 0.75; }
+			}`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 7,
+				},
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "100%" },
+					line: 5,
+					column: 5,
+					endLine: 5,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: dedent`@keyframes test {
+                FROM { opacity: 0; }
+                0% { opacity: 0.25; }
+                To { opacity: 1; }
+                100% { opacity: 0.75; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "0%" },
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 7,
+				},
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "100%" },
+					line: 5,
+					column: 5,
+					endLine: 5,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: dedent`@keyframes test {
+                0% { opacity: 0; }
+                From { opacity: 0.25; }
+                100% { opacity: 1; }
+                TO { opacity: 0.75; }
+            }`,
+			errors: [
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "from" },
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 9,
+				},
+				{
+					messageId: "duplicateKeyframeSelector",
+					data: { selector: "to" },
+					line: 5,
+					column: 5,
+					endLine: 5,
+					endColumn: 7,
+				},
+			],
+		},
 	],
 });
