@@ -295,6 +295,26 @@ ruleTester.run("no-invalid-properties", rule, {
 				},
 			],
 		},
+
+		/*
+		 * Reporting an unknown `var()` nested inside `env()` is intentional:
+		 * this rule also checks that custom properties are resolvable, and that
+		 * check is independent of the syntax validation skipped for `env()`.
+		 * We can revisit this once the rule supports partial validation of values.
+		 */
+		{
+			code: "a { padding: env(safe-area-inset-top, var(--external-padding)); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--external-padding" },
+					line: 1,
+					column: 43,
+					endLine: 1,
+					endColumn: 61,
+				},
+			],
+		},
 		{
 			code: "a { color: bar }",
 			errors: [
