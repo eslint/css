@@ -44,7 +44,7 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 
 	create(context) {
 		let insideKeyframes = false;
-		const seen = new Map();
+		const seen = new Set();
 
 		return {
 			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]"() {
@@ -91,7 +91,7 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 						},
 					});
 				} else {
-					seen.set(key, true);
+					seen.add(key);
 				}
 			},
 		};
