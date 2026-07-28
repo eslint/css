@@ -274,6 +274,14 @@ ruleTester.run("no-invalid-properties", rule, {
 		"main { p:has(.child) { color: red; } }",
 		"main { p:has(.child:hover) { color: red; } }",
 		"main { p:first-of-type, span { color: red; } }",
+
+		// env() values are provided by the user agent and cannot be validated
+		"a { padding-top: env(safe-area-inset-top); }",
+		"a { padding-top: env(safe-area-inset-top, 20px); }",
+		"a { padding-top: calc(env(safe-area-inset-top) + 10px); }",
+		"a { width: env(titlebar-area-width); }",
+		"a { padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0; }",
+		"a { padding: env(safe-area-inset-top) red }",
 	],
 	invalid: [
 		{
@@ -1451,6 +1459,39 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 56,
 					endLine: 1,
 					endColumn: 63,
+				},
+			],
+		},
+		{
+			code: "a { paddin-top: env(safe-area-inset-top); }",
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: { property: "paddin-top" },
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+
+		/*
+		 * Reporting an unknown `var()` nested inside `env()` is intentional:
+		 * this rule also checks that custom properties are resolvable, and that
+		 * check is independent of the syntax validation skipped for `env()`.
+		 * We can revisit this once the rule supports partial validation of values.
+		 */
+		{
+			code: "a { padding: env(safe-area-inset-top, var(--external-padding)); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--external-padding" },
+					line: 1,
+					column: 43,
+					endLine: 1,
+					endColumn: 61,
 				},
 			],
 		},

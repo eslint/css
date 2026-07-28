@@ -32,3 +32,13 @@ export function isSyntaxMatchError(error) {
 export function isSyntaxReferenceError(error) {
 	return typeof error.reference === "string";
 }
+
+/**
+ * Determines if an error is the lexer error thrown when a value containing
+ * `env()` cannot be matched against a syntax definition.
+ * @param {Object} error The error object to check.
+ * @returns {boolean} True if the error is the `env()` match error, false if not.
+ */
+export function isEnvMatchError(error) {
+	return error.message === "Matching for a tree with env() is not supported";
+}

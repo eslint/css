@@ -7,7 +7,11 @@
 // Imports
 //-----------------------------------------------------------------------------
 
-import { isSyntaxMatchError, isSyntaxReferenceError } from "../util.js";
+import {
+	isSyntaxMatchError,
+	isSyntaxReferenceError,
+	isEnvMatchError,
+} from "../util.js";
 
 //-----------------------------------------------------------------------------
 // Type Definitions
@@ -463,7 +467,13 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 						});
 						return;
 					}
-
+					if (isEnvMatchError(error)) {
+						/*
+						 * env() values are provided by the user agent and
+						 * cannot be validated, so skip validation entirely.
+						 */
+						return;
+					}
 					if (
 						!allowUnknownVariables ||
 						isSyntaxReferenceError(error)
