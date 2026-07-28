@@ -33,6 +33,26 @@ const genericFonts = new Set([
 	"fangsong",
 ]);
 
+/*
+ * Matches a generic font family as a whole word, for the single value `font`
+ * branch that searches the shorthand where the family sits next to the size.
+ * A name such as `MySerifFont` must not match.
+ */
+const genericFontPattern = new RegExp(
+	String.raw`(?<![\w-])(?:${[...genericFonts].join("|")})(?![\w-])`,
+	"iu",
+);
+
+/**
+ * Check if the name is a generic font family.
+ * Generic font families are keywords, so they are matched case-insensitively.
+ * @param {string} name The name to check.
+ * @returns {boolean} True if the name is a generic font family, false otherwise.
+ */
+function isGenericFont(name) {
+	return genericFonts.has(name.toLowerCase());
+}
+
 /**
  * Check if the value is a CSS-wide keyword.
  * @param {string} value The value to check.
@@ -87,9 +107,9 @@ function reportFontWithoutFallbacksInFontProperty(
 	const valueList = fontPropertyValues.split(",").map(v => v.trim());
 
 	if (valueList.length === 1) {
-		const containsGenericFont = Array.from(genericFonts).some(font =>
-			valueList[0].includes(font),
-		);
+		// A quoted name is a family name, not a keyword
+		const unquoted = valueList[0].replace(/"[^"]*"|'[^']*'/gu, "");
+		const containsGenericFont = genericFontPattern.test(unquoted);
 
 		if (!containsGenericFont) {
 			context.report({
@@ -98,7 +118,7 @@ function reportFontWithoutFallbacksInFontProperty(
 			});
 		}
 	} else {
-		if (!genericFonts.has(valueList.at(-1))) {
+		if (!isGenericFont(valueList.at(-1))) {
 			context.report({
 				loc: node.loc,
 				messageId: "useGenericFont",
@@ -180,13 +200,13 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						if (
 							variableList.length === 1 &&
-							!genericFonts.has(variableList[0])
+							!isGenericFont(variableList[0])
 						) {
 							context.report({
 								loc: node.loc,
 								messageId: "useFallbackFonts",
 							});
-						} else if (!genericFonts.has(variableList.at(-1))) {
+						} else if (!isGenericFont(variableList.at(-1))) {
 							context.report({
 								loc: node.loc,
 								messageId: "useGenericFont",
@@ -195,7 +215,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 					} else {
 						if (
 							valueArr[0].type === "Identifier" &&
-							genericFonts.has(valueArr[0].name)
+							isGenericFont(valueArr[0].name)
 						) {
 							return;
 						}
@@ -230,7 +250,10 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						valueArr.forEach(child => {
 							if (child.type === "String") {
-								fontsList.push(child.value);
+								// Keep the quotes so it is not read as a keyword
+								fontsList.push(
+									sourceCode.getText(child).trim(),
+								);
 							}
 
 							if (child.type === "Identifier") {
@@ -258,7 +281,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						if (
 							fontsList.length > 0 &&
-							!genericFonts.has(fontsList.at(-1))
+							!isGenericFont(fontsList.at(-1))
 						) {
 							context.report({
 								loc: node.loc,
@@ -270,7 +293,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						if (!(
 							lastFont.type === "Identifier" &&
-							genericFonts.has(lastFont.name)
+							isGenericFont(lastFont.name)
 						)) {
 							context.report({
 								loc: node.loc,
@@ -352,9 +375,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 								);
 
 								if (!usingVar) {
-									if (
-										!genericFonts.has(afterOperator.at(-1))
-									) {
+									if (!isGenericFont(afterOperator.at(-1))) {
 										context.report({
 											loc: node.loc,
 											messageId: "useGenericFont",
@@ -386,9 +407,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 										if (
 											variableList.length > 0 &&
-											!genericFonts.has(
-												variableList.at(-1),
-											)
+											!isGenericFont(variableList.at(-1))
 										) {
 											context.report({
 												loc: node.loc,
@@ -397,9 +416,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 										}
 									} else {
 										if (
-											!genericFonts.has(
-												afterOperator.at(-1),
-											)
+											!isGenericFont(afterOperator.at(-1))
 										) {
 											context.report({
 												loc: node.loc,
@@ -441,7 +458,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 								);
 							} else {
 								if (
-									!genericFonts.has(
+									!isGenericFont(
 										sourceCode
 											.getText(valueArr.at(-1))
 											.trim(),

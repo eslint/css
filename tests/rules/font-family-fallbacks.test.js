@@ -56,6 +56,19 @@ ruleTester.run("font-family-fallbacks", rule, {
 				},
 			},
 		},
+		"a { font-family: Serif; }",
+		"a { font-family: SANS-SERIF; }",
+		"a { font-family: Arial, Sans-Serif; }",
+		"a { font-family: 'Arial', 'Segoe UI Emoji', SERIF; }",
+		"a { font: 16px MONOSPACE; }",
+		"a { font: 16px Arial, MONOSPACE; }",
+		"a { font: italic bold 1.2em 'Open Sans', Sans-Serif; }",
+		":root { --my-font: SANS-SERIF; } a { font-family: var(--my-font); }",
+		":root { --my-font: 'Arial'; } a { font-family: var(--my-font), Sans-Serif; }",
+		"a { font: var(--font-size) 'Open Sans', MONOSPACE; }",
+		":root { --my-font: Arial, SANS-SERIF; } a { font: 16px/1.5 Helvetica, var(--my-font); }",
+		"a { font: 16px/1.5 Arial, var(--x), SANS-SERIF; }",
+		"a { font: var(--font-weight) var(--font-size)/var(--line-height) MONOSPACE; }",
 	],
 	invalid: [
 		{
@@ -271,6 +284,126 @@ ruleTester.run("font-family-fallbacks", rule, {
 					column: 59,
 					endLine: 1,
 					endColumn: 132,
+				},
+			],
+		},
+		{
+			code: 'a { font-family: Arial, "serif"; }',
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 32,
+				},
+			],
+		},
+		{
+			code: 'a { font-family: Arial, "SERIF"; }',
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 32,
+				},
+			],
+		},
+		{
+			code: 'a { font: 16px "SERIF"; }',
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 23,
+				},
+			],
+		},
+		{
+			code: 'a { font: 16px "MySerifFont"; }',
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: 'a { font: 16px "serif"; }',
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 23,
+				},
+			],
+		},
+		{
+			code: "a { font: 16px MySerifFont; }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: "a { font: 16px MyserifFont; }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: "a { font: 16px MYSERIFFONT; }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: "a { font: 16px MyMonospaceFont; }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 31,
+				},
+			],
+		},
+		{
+			code: ":root { --my-font: 'Arial'; } a { font-family: var(--my-font), \"sans-serif\"; }",
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 48,
+					endLine: 1,
+					endColumn: 76,
 				},
 			],
 		},
