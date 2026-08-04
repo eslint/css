@@ -53,21 +53,42 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 							? [
 									{
 										messageId: "convertToStatement",
-										fix: fixer =>
-											fixer.replaceTextRange(
+										fix(fixer) {
+											const commentsBeforeBlock =
+												context.sourceCode.comments.filter(
+													comment =>
+														comment.loc.start
+															.offset >=
+															parent.prelude.loc
+																.end.offset &&
+														comment.loc.end
+															.offset <=
+															node.loc.start
+																.offset,
+												);
+											const lastComment =
+												commentsBeforeBlock.at(-1);
+
+											return fixer.replaceTextRange(
 												[
-													parent.prelude.loc.end
-														.offset,
+													lastComment
+														? lastComment.loc.end
+																.offset
+														: parent.prelude.loc.end
+																.offset,
 													node.loc.end.offset,
 												],
 												";",
-											),
+											);
+										},
 									},
 								]
 							: [
 									{
 										messageId: "removeRule",
-										fix: fixer => fixer.remove(parent),
+										fix(fixer) {
+											return fixer.remove(parent);
+										},
 									},
 								],
 					});

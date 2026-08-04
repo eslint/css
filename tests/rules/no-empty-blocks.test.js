@@ -163,10 +163,68 @@ ruleTester.run("no-empty-blocks", rule, {
 			],
 		},
 		{
+			code: "@layer defaults /* comment */ { }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 31,
+					endLine: 1,
+					endColumn: 34,
+					suggestions: [
+						{
+							messageId: "convertToStatement",
+							output: "@layer defaults /* comment */;",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@layer defaults /*\n * comment\n */ { }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 3,
+					column: 5,
+					endLine: 3,
+					endColumn: 8,
+					suggestions: [
+						{
+							messageId: "convertToStatement",
+							output: "@layer defaults /*\n * comment\n */;",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@layer defaults /* first */ /* second */ { }",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 42,
+					endLine: 1,
+					endColumn: 45,
+					suggestions: [
+						{
+							messageId: "convertToStatement",
+							output: "@layer defaults /* first */ /* second */;",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: "@LAYER foo{}",
 			errors: [
 				{
 					messageId: "emptyBlock",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 13,
 					suggestions: [
 						{
 							messageId: "convertToStatement",
@@ -181,6 +239,10 @@ ruleTester.run("no-empty-blocks", rule, {
 			errors: [
 				{
 					messageId: "emptyBlock",
+					line: 2,
+					column: 2,
+					endLine: 2,
+					endColumn: 5,
 					suggestions: [
 						{
 							messageId: "convertToStatement",
