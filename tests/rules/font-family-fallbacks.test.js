@@ -407,5 +407,53 @@ ruleTester.run("font-family-fallbacks", rule, {
 				},
 			],
 		},
+		{
+			code: "a { font: 16px 'Roboto', 'Open Sans', 'serif'; }",
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 46,
+				},
+			],
+		},
+		{
+			code: ":root { --my-font: 'serif'; } a { font: 16px var(--my-font); }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 41,
+					endLine: 1,
+					endColumn: 60,
+				},
+			],
+		},
+		{
+			code: ":root { --my-font: 'MySerifFont'; } a { font: 16px var(--my-font); }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 47,
+					endLine: 1,
+					endColumn: 66,
+				},
+			],
+		},
+		{
+			code: ":root { --my-font: 'Roboto', 'Open Sans', 'serif'; } a { font: 16px var(--my-font); }",
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 64,
+					endLine: 1,
+					endColumn: 83,
+				},
+			],
+		},
 	],
 });
