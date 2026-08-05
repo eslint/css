@@ -251,9 +251,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 						valueArr.forEach(child => {
 							if (child.type === "String") {
 								// Keep the quotes so it is not read as a keyword
-								fontsList.push(
-									sourceCode.getText(child),
-								);
+								fontsList.push(sourceCode.getText(child));
 							}
 
 							if (child.type === "Identifier") {
