@@ -252,7 +252,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 							if (child.type === "String") {
 								// Keep the quotes so it is not read as a keyword
 								fontsList.push(
-									sourceCode.getText(child).trim(),
+									sourceCode.getText(child),
 								);
 							}
 
