@@ -20,7 +20,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 //-----------------------------------------------------------------------------
 
 /**
- * @import { CssNode, CssNodePlain, CssLocationRange, Comment, Lexer, StyleSheetPlain } from "@eslint/css-tree"
+ * @import { CssNode, CssNodePlain, CssLocationRange, Comment, Lexer, StyleSheetPlain, DeclarationPlain, AtrulePlain, FunctionNodePlain, ValuePlain, Raw } from "@eslint/css-tree"
  * @import { SourceRange, FileProblem, DirectiveType, RulesConfig } from "@eslint/core"
  * @import { CSSSyntaxElement } from "../types.js"
  * @import { CSSLanguageOptions } from "./css-language.js"
@@ -103,6 +103,18 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	 * @type {Lexer}
 	 */
 	lexer;
+
+	/**
+	 * Map of custom property names to their uses.
+	 * @type {Map<string, {declarations: Array<DeclarationPlain>, definitions: Array<AtrulePlain>, references: Array<FunctionNodePlain>}>}
+	 */
+	#customProperties = new Map();
+
+	/**
+	 * Map of declaration nodes to the var() function nodes they contain.
+	 * @type {WeakMap<DeclarationPlain, Array<FunctionNodePlain>>}
+	 */
+	#declarationVariables = new WeakMap();
 
 	/**
 	 * Creates a new instance.
@@ -255,6 +267,139 @@ export class CSSSourceCode extends TextSourceCodeBase {
 	}
 
 	/**
+	 * Returns the var() function nodes used in a declaration's value.
+	 * @param {DeclarationPlain} declaration The declaration node.
+	 * @returns {Array<FunctionNodePlain>} The var() function nodes.
+	 */
+	getDeclarationVariables(declaration) {
+		return this.#declarationVariables.get(declaration) || [];
+	}
+
+	/**
+	 * Returns the closest variable value for a var() function node.
+	 * @param {FunctionNodePlain} func The var() function node.
+	 * @returns {ValuePlain|Raw|undefined} The closest variable value.
+	 */
+	getClosestVariableValue(func) {
+		const varName = /** @type {{name: string}} */ (func.children[0]).name;
+		const uses = this.#customProperties.get(varName);
+
+		// Step 1: Check if the current rule block has a declaration for this variable
+		const funcParent = this.#parents.get(func);
+		let current = funcParent;
+
+		while (current) {
+			if (current.type === "Block") {
+				break;
+			}
+			current = this.#parents.get(current);
+		}
+
+		if (current && current.type === "Block" && uses) {
+			// Find declarations in the same block
+			const blockDecls = uses.declarations.filter(decl => {
+				let declParent = this.#parents.get(decl);
+
+				while (declParent) {
+					if (declParent === current) {
+						return true;
+					}
+					declParent = this.#parents.get(declParent);
+				}
+				return false;
+			});
+
+			if (blockDecls.length > 0) {
+				return blockDecls.at(-1).value;
+			}
+		}
+
+		// Step 2: Check if var() has a fallback value
+		if (func.children.length >= 3 && func.children[2]) {
+			return /** @type {Raw} */ (func.children[2]);
+		}
+
+		// Step 3: Check previous rules for a declaration
+		if (uses) {
+			const funcOffset = func.loc.start.offset;
+
+			// Find the last declaration before this var() usage
+			const previousDecls = uses.declarations.filter(
+				decl => decl.loc.start.offset < funcOffset,
+			);
+
+			if (previousDecls.length > 0) {
+				return previousDecls.at(-1).value;
+			}
+
+			// Also check declarations after the var() usage (hoisting)
+			if (uses.declarations.length > 0) {
+				return uses.declarations.at(-1).value;
+			}
+		}
+
+		// Step 4: Check @property definitions for initial-value
+		if (uses) {
+			for (const definition of uses.definitions) {
+				if (definition.block && definition.block.children) {
+					for (const decl of definition.block.children) {
+						if (
+							decl.type === "Declaration" &&
+							decl.property === "initial-value"
+						) {
+							return decl.value;
+						}
+					}
+				}
+			}
+		}
+
+		// Step 5: return undefined
+		return undefined;
+	}
+
+	/**
+	 * Returns all declared values for a var() function node's custom property.
+	 * @param {FunctionNodePlain} func The var() function node.
+	 * @returns {Array<Raw|ValuePlain>} The declared values.
+	 */
+	getVariableValues(func) {
+		const varName = /** @type {{name: string}} */ (func.children[0]).name;
+		const uses = this.#customProperties.get(varName);
+		const result = [];
+
+		// Step 1: @property initial-value comes first
+		if (uses) {
+			for (const definition of uses.definitions) {
+				if (definition.block && definition.block.children) {
+					for (const decl of definition.block.children) {
+						if (
+							decl.type === "Declaration" &&
+							decl.property === "initial-value"
+						) {
+							result.push(decl.value);
+						}
+					}
+				}
+			}
+		}
+
+		// Step 2: Declaration values in source order
+		if (uses) {
+			for (const decl of uses.declarations) {
+				result.push(decl.value);
+			}
+		}
+
+		// Step 3: Fallback value last
+		if (func.children.length >= 3 && func.children[2]) {
+			result.push(/** @type {Raw} */ (func.children[2]));
+		}
+
+		return result;
+	}
+
+	/**
 	 * Traverse the source code and return the steps that were taken.
 	 * @returns {Iterable<CSSTraversalStep>} The steps that were taken while traversing the source code.
 	 */
@@ -267,11 +412,99 @@ export class CSSSourceCode extends TextSourceCodeBase {
 		/** @type {Array<CSSTraversalStep>} */
 		const steps = (this.#steps = []);
 
+		/**
+		 * Stack to track the current declaration being visited for
+		 * collecting var() references in declarations.
+		 * @type {Array<DeclarationPlain>}
+		 */
+		const declarationStack = [];
+
 		// Note: We can't use `walk` from `css-tree` because it uses `CssNode` instead of `CssNodePlain`
 
 		const visit = (node, parent) => {
 			// first set the parent
 			this.#parents.set(node, parent);
+
+			// Track custom property declarations (e.g., --my-color: red)
+			if (node.type === "Declaration" && node.property.startsWith("--")) {
+				const varName = node.property;
+				let uses = this.#customProperties.get(varName);
+
+				if (!uses) {
+					uses = {
+						declarations: [],
+						definitions: [],
+						references: [],
+					};
+					this.#customProperties.set(varName, uses);
+				}
+				uses.declarations.push(node);
+			}
+
+			// Track @property definitions
+			if (
+				node.type === "Atrule" &&
+				node.name.toLowerCase() === "property" &&
+				node.prelude &&
+				node.prelude.children &&
+				node.prelude.children.length > 0
+			) {
+				const propName = node.prelude.children[0].name;
+
+				if (propName) {
+					let uses = this.#customProperties.get(propName);
+
+					if (!uses) {
+						uses = {
+							declarations: [],
+							definitions: [],
+							references: [],
+						};
+						this.#customProperties.set(propName, uses);
+					}
+					uses.definitions.push(node);
+				}
+			}
+
+			// Track declaration enter for var() collection
+			if (node.type === "Declaration") {
+				declarationStack.push(node);
+			}
+
+			// Track var() references
+			if (
+				node.type === "Function" &&
+				node.name.toLowerCase() === "var" &&
+				node.children &&
+				node.children.length > 0 &&
+				node.children[0].type === "Identifier"
+			) {
+				const varName = node.children[0].name;
+				let uses = this.#customProperties.get(varName);
+
+				if (!uses) {
+					uses = {
+						declarations: [],
+						definitions: [],
+						references: [],
+					};
+					this.#customProperties.set(varName, uses);
+				}
+				uses.references.push(node);
+
+				// Also track which declarations contain var() references
+				const currentDecl = declarationStack.at(-1);
+
+				if (currentDecl) {
+					let varRefs = this.#declarationVariables.get(currentDecl);
+
+					if (!varRefs) {
+						varRefs = [];
+						this.#declarationVariables.set(currentDecl, varRefs);
+					}
+					varRefs.push(node);
+				}
+			}
 
 			// then add the step
 			steps.push(
@@ -295,6 +528,11 @@ export class CSSSourceCode extends TextSourceCodeBase {
 						visit(child, node);
 					}
 				}
+			}
+
+			// Track declaration exit
+			if (node.type === "Declaration") {
+				declarationStack.pop();
 			}
 
 			// then add the exit step

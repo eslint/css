@@ -171,6 +171,15 @@ ruleTester.run("no-invalid-properties", rule, {
 		"@supports (color: color(display-p3 1 1 1)) { @media (color-gamut: p3) { a { --c: oklch(50% 0.1 120); } } }",
 		"@import 'x.css' layer(theme);",
 
+		// Fallback values take priority over other-block declarations per getClosestVariableValue
+		":root { --style: foo }\na { border-top: 1px var(--style, solid) var(--color, red); }",
+		":root { --style: foo }\na { border-top: 1px VAR(--style, solid) VAR(--color, red); }",
+		":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--b, solid) var(--c, red); }",
+
+		// Variable hoisting: var() used before custom property declaration (#199)
+		".test { color: var(--myColor); }\n:root { --myColor: blue; }",
+		"a { color: var(--x); }\nb { --x: red; }",
+
 		/*
 		 * CSSTree doesn't currently support custom functions properly, so leaving
 		 * these out for now.
@@ -776,23 +785,6 @@ ruleTester.run("no-invalid-properties", rule, {
 			],
 		},
 		{
-			code: ":root { --style: foo }\na { border-top: 1px var(--style, solid) var(--color, red); }",
-			errors: [
-				{
-					messageId: "invalidPropertyValue",
-					data: {
-						property: "border-top",
-						value: "foo",
-						expected: "<line-width> || <line-style> || <color>",
-					},
-					line: 2,
-					column: 21,
-					endLine: 2,
-					endColumn: 40,
-				},
-			],
-		},
-		{
 			code: ":root { --color: foo }\na { border-top: 1px var(--style, var(--fallback, solid)) var(--color); }",
 			errors: [
 				{
@@ -901,23 +893,6 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 21,
 					endLine: 2,
 					endColumn: 33,
-				},
-			],
-		},
-		{
-			code: ":root { --style: foo }\na { border-top: 1px VAR(--style, solid) VAR(--color, red); }",
-			errors: [
-				{
-					messageId: "invalidPropertyValue",
-					data: {
-						property: "border-top",
-						value: "foo",
-						expected: "<line-width> || <line-style> || <color>",
-					},
-					line: 2,
-					column: 21,
-					endLine: 2,
-					endColumn: 40,
 				},
 			],
 		},
@@ -1052,23 +1027,6 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 21,
 					endLine: 2,
 					endColumn: 29,
-				},
-			],
-		},
-		{
-			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--b, solid) var(--c, red); }",
-			errors: [
-				{
-					messageId: "invalidPropertyValue",
-					data: {
-						property: "border-top",
-						value: "foo",
-						expected: "<line-width> || <line-style> || <color>",
-					},
-					line: 2,
-					column: 21,
-					endLine: 2,
-					endColumn: 36,
 				},
 			],
 		},
