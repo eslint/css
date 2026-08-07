@@ -29,11 +29,13 @@ const trailingWhitespacePattern = /\s*$/u;
 export default /** @satisfies {NoImportantRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		hasSuggestions: true,
 
 		docs: {
 			description: "Disallow !important flags",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-important.md",
 		},

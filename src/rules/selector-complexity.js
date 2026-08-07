@@ -155,9 +155,11 @@ function getDisallowedCombinatorsLocation(
 export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow and limit CSS selectors",
+			dialects: ["CSS"],
 			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/selector-complexity.md",
 		},

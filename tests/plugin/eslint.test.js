@@ -43,6 +43,34 @@ describe("Plugin", () => {
 				.map(([name]) => `css/${name}`);
 			assert.deepStrictEqual(actualRuleIds, expectedRuleIds);
 		});
+
+		it("rules should work when the plugin is registered under a custom namespace", async () => {
+			const eslint = new ESLint({
+				overrideConfigFile: true,
+				overrideConfig: {
+					files: ["**/*.css"],
+					plugins: {
+						eslintcss: css,
+					},
+					language: "eslintcss/css",
+					rules: {
+						"eslintcss/no-empty-blocks": "error",
+					},
+				},
+			});
+
+			const results = await eslint.lintText("a {}", {
+				filePath: "test.css",
+			});
+
+			assert.strictEqual(results.length, 1);
+			assert.strictEqual(results[0].messages.length, 1);
+			assert.strictEqual(
+				results[0].messages[0].ruleId,
+				"eslintcss/no-empty-blocks",
+			);
+			assert.strictEqual(results[0].messages[0].messageId, "emptyBlock");
+		});
 	});
 
 	describe("languageOptions", () => {
