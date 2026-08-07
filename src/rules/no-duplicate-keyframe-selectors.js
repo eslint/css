@@ -62,37 +62,57 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 				}
 
 				// @ts-ignore - children is a valid property for prelude
-				const selector = node.prelude.children[0];
+				const selectors = node.prelude.children;
 				const value = [];
 
-				selector.children.forEach(component => {
-					if (component.type === "Percentage") {
-						value.push(`${component.value}%`);
-					} else if (component.type === "TypeSelector") {
-						value.push(component.name.toLowerCase());
+				selectors.forEach(selector => {
+					const component = selector.children[0];
+					const componentType = component.type;
+
+					if (selector.children.length === 1) {
+						if (componentType === "Percentage") {
+							value.push(`${component.value}%`);
+						} else if (componentType === "TypeSelector") {
+							value.push(component.name.toLowerCase());
+						}
+					} else {
+						if (
+							selector.children.some(
+								child => child.type === "Combinator",
+							)
+						) {
+							if (
+								componentType === "TypeSelector" &&
+								selector.children[1].type === "Combinator" &&
+								selector.children[2].type === "Percentage"
+							) {
+								value.push(
+									`${component.name.toLowerCase()} ${selector.children[2].value}%`,
+								);
+							}
+						}
 					}
 				});
 
-				const selectorValue = value.join(" ");
-				const key = value
-					.map(
-						selectorPart =>
-							keyframeSelectorAliases.get(selectorPart) ??
-							selectorPart,
-					)
-					.join(" ");
+				const keys = value.map(
+					selectorPart =>
+						keyframeSelectorAliases.get(selectorPart) ??
+						selectorPart,
+				);
 
-				if (seen.has(key)) {
-					context.report({
-						loc: selector.loc,
-						messageId: "duplicateKeyframeSelector",
-						data: {
-							selector: selectorValue,
-						},
-					});
-				} else {
-					seen.add(key);
-				}
+				keys.forEach((key, i) => {
+					if (seen.has(key)) {
+						context.report({
+							loc: selectors[i].loc,
+							messageId: "duplicateKeyframeSelector",
+							data: {
+								selector: value[i],
+							},
+						});
+					} else {
+						seen.add(key);
+					}
+				});
 			},
 		};
 	},
