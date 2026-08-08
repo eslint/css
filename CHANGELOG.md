@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.5.0](https://github.com/eslint/css/compare/css-v1.4.0...css-v1.5.0) (2026-08-08)
+
+
+### Features
+
+* add suggestions to no-empty-blocks ([#479](https://github.com/eslint/css/issues/479)) ([aa750cc](https://github.com/eslint/css/commit/aa750cca82c806af1ec8366228db72bd7c2def13))
+* make font-family-fallbacks generic fonts case-insensitive ([#517](https://github.com/eslint/css/issues/517)) ([f010c7b](https://github.com/eslint/css/commit/f010c7bc1f043b5cc0059f0293cfdc3f4184d290))
+
+
+### Bug Fixes
+
+* detect equivalent selectors in `no-duplicate-keyframe-selectors` ([#512](https://github.com/eslint/css/issues/512)) ([f4fbea8](https://github.com/eslint/css/commit/f4fbea84cf5583a43fa2eca3dc0a02f5925a6727))
+* distinguish named timeline range keyframe selectors ([#507](https://github.com/eslint/css/issues/507)) ([c96ceeb](https://github.com/eslint/css/commit/c96ceeb3fe225505657b3ccf75e07a65e4117ca1))
+* skip validating values containing env() in no-invalid-properties ([#510](https://github.com/eslint/css/issues/510)) ([ffc5c32](https://github.com/eslint/css/commit/ffc5c325756e1800cb397b079190bec00658abae))
+* update baseline data ([43672ee](https://github.com/eslint/css/commit/43672ee184353178e75b60846435adf7dfc8c551))
+* update baseline data ([1ae3a41](https://github.com/eslint/css/commit/1ae3a4125a4e6d78fd32e93969100a8090a87157))
+* update baseline data ([#504](https://github.com/eslint/css/issues/504)) ([e90e001](https://github.com/eslint/css/commit/e90e001ae2d26f600aaaa7009047a316a254c4b7))
+* update baseline data ([#514](https://github.com/eslint/css/issues/514)) ([1c8a632](https://github.com/eslint/css/commit/1c8a6324588b69d6c905b09046f3f80ec438313c))
+* update dependency @eslint/css-tree to ^4.0.5 ([#511](https://github.com/eslint/css/issues/511)) ([500ad2a](https://github.com/eslint/css/commit/500ad2a95a2b37c397be0ee00c90352d1a299b2b))
+
 ## [1.4.0](https://github.com/eslint/css/compare/css-v1.3.0...css-v1.4.0) (2026-07-01)
 
 
