@@ -97,7 +97,7 @@
     "prettier": "3.9.6",
     "tailwind-csstree": "^0.3.0",
     "typescript": "^7.0.2",
-    "web-features": "^3.34.2",
+    "web-features": "^3.34.3",
     "yorkie": "^2.0.0"
   },
   "engines": {
