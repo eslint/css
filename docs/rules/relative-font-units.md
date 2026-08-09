@@ -14,7 +14,7 @@ Generally, relative units such as `rem` or `em` are preferred over absolute ones
 
 - **Responsive Design** - Relative units adapt better to various screen widths and pixel densities (e.g., mobile vs. desktop).
 - **Accessibility** - Relative units allow text to scale when users adjust browser settings or zoom levels.
-- **Consistency and Scalability** - Using relative units allow for consistent scaling across a whole site.
+- **Consistency and Scalability** - Using relative units allows for consistent scaling across a whole site.
 - **Maintainability and Reusability** - Relative units allow components or utility classes to work well in different contexts.
 
 ## Rule Details
