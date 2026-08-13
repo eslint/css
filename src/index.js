@@ -19,6 +19,7 @@ import rules from "./build/rules.js";
 const plugin = {
 	meta: {
 		name: "@eslint/css",
+		namespace: "css",
 		version: "1.4.0", // x-release-please-version
 	},
 	languages: {

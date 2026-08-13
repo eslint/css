@@ -20,11 +20,13 @@
 export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		hasSuggestions: true,
 
 		docs: {
 			description: "Disallow empty blocks",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-empty-blocks.md",
 		},
