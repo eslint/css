@@ -73,6 +73,16 @@ ruleTester.run("use-baseline", rule, {
 		`@supports selector(:fullscreen) {
 				h1:fullscreen { color: red; }
 		}`,
+		`@supports at-rule(@scope) {
+			@scope (.card) {
+				a { color: red; }
+			}
+		}`,
+		`@SUPPORTS AT-RULE(@SCOPE) {
+			@scope (.card) {
+				a { color: red; }
+			}
+		}`,
 		"div { cursor: pointer; }",
 		"pre { overflow: auto; }",
 		".highlight, #highlight, highlight { color: red }",
@@ -546,6 +556,22 @@ ruleTester.run("use-baseline", rule, {
 					column: 7,
 					endLine: 4,
 					endColumn: 18,
+				},
+			],
+		},
+		{
+			code: "@supports at-rule(@scope) {}\n@supports (color: red) {\n@scope (.card) { a { color: red; } }\n}",
+			errors: [
+				{
+					messageId: "notBaselineAtRule",
+					data: {
+						atRule: "scope",
+						availability: "widely",
+					},
+					line: 3,
+					column: 1,
+					endLine: 3,
+					endColumn: 7,
 				},
 			],
 		},
