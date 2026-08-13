@@ -20,10 +20,13 @@ const ruleTester = new RuleTester({
 ruleTester.run("prefer-logical-properties", rule, {
 	valid: [
 		"a { margin-block: 10px; }",
+		"a { MARGIN-BLOCK: 10px; }",
 		"a { padding-inline: 20px; }",
+		"a { PADDING-INLINE: 20PX; }",
 		"a { margin: 10px; }",
 		"a { padding: 20px; }",
 		"a { text-align: start }",
+		"a { TEXT-ALIGN: START }",
 		"@supports (text-align: left) {}",
 		"@supports (padding-left: 10px) {}",
 		{
@@ -35,7 +38,23 @@ ruleTester.run("prefer-logical-properties", rule, {
 			],
 		},
 		{
+			code: "a { PADDING-LEFT: 20px; }",
+			options: [
+				{
+					allowProperties: ["padding-left"],
+				},
+			],
+		},
+		{
 			code: "a { inline-size: 100vw; }",
+			options: [
+				{
+					allowUnits: ["vw"],
+				},
+			],
+		},
+		{
+			code: "a { inline-size: 100VW; }",
 			options: [
 				{
 					allowUnits: ["vw"],
@@ -62,6 +81,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 							messageId: "replaceWithLogicalProperty",
 							data: {
 								property: "margin-top",
+								replacement: "margin-block-start",
+							},
+							output: "a { margin-block-start: 10px; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { MARGIN-TOP: 10px; }",
+			errors: [
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 21,
+					data: {
+						property: "MARGIN-TOP",
+						replacement: "margin-block-start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "MARGIN-TOP",
 								replacement: "margin-block-start",
 							},
 							output: "a { margin-block-start: 10px; }",
@@ -123,6 +168,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 			],
 		},
 		{
+			code: "a { TEXT-ALIGN: LEFT }",
+			errors: [
+				{
+					messageId: "notLogicalValue",
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 21,
+					data: {
+						value: "LEFT",
+						replacement: "start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalValue",
+							data: {
+								value: "LEFT",
+								replacement: "start",
+							},
+							output: "a { TEXT-ALIGN: start }",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: "a { block-size: 100vh }",
 			errors: [
 				{
@@ -143,6 +214,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 								replacement: "vb",
 							},
 							output: "a { block-size: 100vb }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { BLOCK-SIZE: 100VH }",
+			errors: [
+				{
+					messageId: "notLogicalUnit",
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 22,
+					data: {
+						unit: "VH",
+						replacement: "vb",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalUnit",
+							data: {
+								unit: "VH",
+								replacement: "vb",
+							},
+							output: "a { BLOCK-SIZE: 100vb }",
 						},
 					],
 				},
