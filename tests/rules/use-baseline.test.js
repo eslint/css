@@ -73,6 +73,18 @@ ruleTester.run("use-baseline", rule, {
 		`@supports selector(:fullscreen) {
 				h1:fullscreen { color: red; }
 		}`,
+		{
+			code: "@supports selector(&) {}",
+			options: [{ available: 2022 }],
+		},
+		{
+			code: `@supports selector(&) {
+				label {
+					& input { border: blue 2px dashed; }
+				}
+			}`,
+			options: [{ available: 2022 }],
+		},
 		"div { cursor: pointer; }",
 		"pre { overflow: auto; }",
 		".highlight, #highlight, highlight { color: red }",

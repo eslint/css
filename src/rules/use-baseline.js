@@ -781,7 +781,11 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					) {
 						for (const selectorChild of conditionChild.value
 							.children) {
-							supportsRule.addSelector(selectorChild.name);
+							supportsRule.addSelector(
+								selectorChild.type === "NestingSelector"
+									? "nesting"
+									: selectorChild.name,
+							);
 						}
 					}
 				}
@@ -1028,6 +1032,10 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 				const selector = "nesting";
 
 				if (allowSelectors.has(selector)) {
+					return;
+				}
+
+				if (supportsRules.hasSelector(selector)) {
 					return;
 				}
 
