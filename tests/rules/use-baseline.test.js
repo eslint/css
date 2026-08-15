@@ -576,6 +576,22 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
+			code: "@supports at-rule(@scope) {\n@view-transition { navigation: auto; }\n}",
+			errors: [
+				{
+					messageId: "notBaselineAtRule",
+					data: {
+						atRule: "view-transition",
+						availability: "widely",
+					},
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 17,
+				},
+			],
+		},
+		{
 			code: "details::details-content { background-color: #a29bfe; }",
 			errors: [
 				{
