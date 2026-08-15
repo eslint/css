@@ -192,12 +192,6 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 
 	create(context) {
 		const [{ allowProperties, allowUnits }] = context.options;
-		const allowedProperties = new Set(
-			allowProperties.map(property => property.toLowerCase()),
-		);
-		const allowedUnits = new Set(
-			allowUnits.map(unit => unit.toLowerCase()),
-		);
 
 		return {
 			Declaration(node) {
@@ -210,7 +204,10 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 				const propertyReplacement =
 					propertiesReplacements.get(property);
 
-				if (propertyReplacement && !allowedProperties.has(property)) {
+				if (
+					propertyReplacement &&
+					!allowProperties.includes(property)
+				) {
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalProperty",
@@ -284,7 +281,7 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 				const unit = node.unit.toLowerCase();
 				const unitReplacement = unitReplacements.get(unit);
 
-				if (unitReplacement && !allowedUnits.has(unit)) {
+				if (unitReplacement && !allowUnits.includes(unit)) {
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalUnit",
