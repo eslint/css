@@ -62,51 +62,32 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 				}
 
 				// @ts-ignore - children is a valid property for prelude
-				const selectors = node.prelude.children;
-				const value = [];
+				node.prelude.children.forEach(selector => {
+					const value = [];
 
-				selectors.forEach(selector => {
-					const component = selector.children[0];
-					const componentType = component.type;
-
-					if (selector.children.length === 1) {
-						if (componentType === "Percentage") {
+					selector.children.forEach(component => {
+						if (component.type === "Percentage") {
 							value.push(`${component.value}%`);
-						} else if (componentType === "TypeSelector") {
+						} else if (component.type === "TypeSelector") {
 							value.push(component.name.toLowerCase());
 						}
-					} else {
-						if (
-							selector.children.some(
-								child => child.type === "Combinator",
-							)
-						) {
-							if (
-								componentType === "TypeSelector" &&
-								selector.children[1].type === "Combinator" &&
-								selector.children[2].type === "Percentage"
-							) {
-								value.push(
-									`${component.name.toLowerCase()} ${selector.children[2].value}%`,
-								);
-							}
-						}
-					}
-				});
+					});
 
-				const keys = value.map(
-					selectorPart =>
-						keyframeSelectorAliases.get(selectorPart) ??
-						selectorPart,
-				);
+					const selectorValue = value.join(" ");
+					const key = value
+						.map(
+							selectorPart =>
+								keyframeSelectorAliases.get(selectorPart) ??
+								selectorPart,
+						)
+						.join(" ");
 
-				keys.forEach((key, i) => {
 					if (seen.has(key)) {
 						context.report({
-							loc: selectors[i].loc,
+							loc: selector.loc,
 							messageId: "duplicateKeyframeSelector",
 							data: {
-								selector: value[i],
+								selector: selectorValue,
 							},
 						});
 					} else {
