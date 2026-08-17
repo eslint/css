@@ -1,5 +1,6 @@
 import css from "@eslint/css";
 import type {
+	CSSLanguageOptions,
 	CSSRuleDefinition,
 	CSSRuleVisitor,
 	CSSSourceCode,
@@ -74,6 +75,23 @@ css.rules[ruleName] satisfies CSSRuleDefinition;
 
 // Check that `plugins` in the recommended config is defined:
 css.configs.recommended.plugins satisfies object;
+
+const validLanguageOptions1: CSSLanguageOptions = {};
+const validLanguageOptions2: CSSLanguageOptions = {
+	tolerant: true,
+};
+const validLanguageOptions3: CSSLanguageOptions = {
+	tolerant: false,
+};
+const validLanguageOptions4: CSSLanguageOptions = {
+	tolerant: true,
+	unknownOption: "unknown",
+};
+
+const invalidLanguageOptions1: CSSLanguageOptions = {
+	// @ts-expect-error -- Invalid value for `tolerant`
+	tolerant: "true",
+};
 
 {
 	type RecommendedRuleName = keyof typeof css.configs.recommended.rules;
