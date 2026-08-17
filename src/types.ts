@@ -7,18 +7,54 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import type { RuleVisitor } from "@eslint/core";
-import type { CssNodePlain, StyleSheetPlain } from "@eslint/css-tree";
+import type { LanguageOptions, RuleVisitor } from "@eslint/core";
+import type {
+	CssNodePlain,
+	StyleSheetPlain,
+	SyntaxConfig,
+} from "@eslint/css-tree";
 import type {
 	CustomRuleDefinitionType,
 	CustomRuleTypeDefinitions,
 	CustomRuleVisitorWithExit,
 } from "@eslint/plugin-kit";
-import type { CSSLanguageOptions, CSSSourceCode } from "./index.js";
+import type { CSSSourceCode } from "./index.js";
 
 //------------------------------------------------------------------------------
 // Types
 //------------------------------------------------------------------------------
+
+/**
+ * Default syntax configuration representing the structure returned by
+ * `@eslint/css-tree/definition-syntax-data`.
+ */
+export type DefaultSyntaxConfig = Pick<
+	SyntaxConfig,
+	"atrules" | "types" | "properties"
+>;
+
+/**
+ * A callback used to extend the default CSS syntax configuration.
+ */
+export type SyntaxExtensionCallback = (
+	defaultSyntax: DefaultSyntaxConfig,
+) => Partial<SyntaxConfig>;
+
+/**
+ * Language options provided for CSS files.
+ */
+export interface CSSLanguageOptions extends LanguageOptions {
+	/**
+	 * Whether to be tolerant of recoverable parsing errors.
+	 * @default false
+	 */
+	tolerant?: boolean;
+
+	/**
+	 * Custom syntax to use for parsing.
+	 */
+	customSyntax?: Partial<SyntaxConfig> | SyntaxExtensionCallback;
+}
 
 /**
  * A CSS syntax element, including nodes and comments.

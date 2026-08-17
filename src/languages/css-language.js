@@ -25,24 +25,11 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /**
  * @import { CssNodePlain, Comment, Lexer, StyleSheetPlain, SyntaxConfig } from "@eslint/css-tree"
  * @import { Language, OkParseResult, ParseResult, File, FileError } from "@eslint/core";
+ * @import { CSSLanguageOptions } from "../types.js";
  */
 
 /** @typedef {OkParseResult<StyleSheetPlain> & { comments: Comment[], lexer: Lexer }} CSSOkParseResult */
 /** @typedef {ParseResult<StyleSheetPlain>} CSSParseResult */
-/**
- * DefaultSyntaxConfig type representing the structure returned by `@eslint/css-tree/definition-syntax-data`.
- * This type is defined inline because it's not exported from the main `@eslint/css-tree` package.
- * @typedef {Pick<SyntaxConfig, "atrules" | "types" | "properties">} DefaultSyntaxConfig
- */
-/**
- * @typedef {(defaultSyntax: DefaultSyntaxConfig) => Partial<SyntaxConfig>} SyntaxExtensionCallback
- */
-/**
- * @typedef {Object} CSSLanguageOptions
- * @property {boolean} [tolerant] Whether to be tolerant of recoverable parsing errors.
- * @property {Partial<SyntaxConfig> | SyntaxExtensionCallback} [customSyntax] Custom syntax to use for parsing.
- */
-
 //-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
