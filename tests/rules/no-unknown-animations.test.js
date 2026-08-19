@@ -178,20 +178,165 @@ ruleTester.run("no-unknown-animations", rule, {
 		".a { animation-name: revert; }",
 		".a { animation-name: revert-layer; }",
 		".a { animation: 2s ease-in 1s infinite alternate; }",
-		// dynamic values can't be statically analyzed
+		// vendor-prefixed animation properties
+		dedent`
+			.a { -webkit-animation-name: fade-in; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { -moz-animation: fade-in 1s; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { -o-animation-name: fade-in; }
+			@-o-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// -ms- is not checked, matching the prefixes the @keyframes check uses
+		".a { -ms-animation-name: fade-in; }",
+		// names that can't be determined statically are ignored
 		".a { animation: var(--anim) 1s; }",
 		".a { animation-name: var(--anim-name); }",
+		".a { animation: var(--anim); }",
+		// names that remain determinable next to a var() are still checked
+		dedent`
+			.a { animation: fade-in var(--duration); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: var(--anim-name, fade-in); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation: var(--anim, fade-in 1s ease); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: var(--a, var(--b, fade-in)); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// a fallback that isn't an animation name contributes none
+		".a { animation: var(--duration, 1s); }",
+		// @keyframes preludes that don't name an animation
+		"@keyframes 50% { to { opacity: 1; } }",
+		"@keyframes 1s { to { opacity: 1; } }",
 		// invalid values are reported by no-invalid-properties
 		".a { animation-name: 100px; }",
 		".a { animation-name: (); }",
 		// animation names are extracted only from animation and animation-name
 		".a { --animation-name: fade-in; }",
 		".a { transition-property: fade-in; }",
-		".a { -webkit-animation-name: fade-in; }",
 		// feature queries don't use animations
 		"@supports (animation-name: fade-in) { .a { color: red; } }",
 	],
 	invalid: [
+		{
+			code: ".a { -webkit-animation-name: fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 37,
+				},
+			],
+		},
+		{
+			code: ".a { -moz-animation: fade-in 1s; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: '.a { animation-name: var(--anim-name, "slide-in"); }',
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-in" },
+					line: 1,
+					column: 39,
+					endLine: 1,
+					endColumn: 49,
+				},
+			],
+		},
+		{
+			code: ".a { animation: fade-in var(--duration); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: ".a { animation: var(--anim, fade-in 1s ease); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 29,
+					endLine: 1,
+					endColumn: 36,
+				},
+			],
+		},
+		{
+			code: ".a { animation-name: var(--a, var(--b, slide-in)); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-in" },
+					line: 1,
+					column: 40,
+					endLine: 1,
+					endColumn: 48,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a { animation-name: fade-in; }
+				@keyframes 50% { to { opacity: 1; } }
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
 		{
 			code: ".a { animation-name: fade-in !important; }",
 			errors: [

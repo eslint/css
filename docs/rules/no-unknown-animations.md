@@ -26,11 +26,22 @@ If an animation name doesn't match any `@keyframes` rule, for example because of
 
 ## Rule Details
 
-This rule warns when an animation name used in `animation` or `animation-name` doesn't match any `@keyframes` rule defined in the same source.
+This rule warns when an animation name used in `animation` or `animation-name` doesn't match any `@keyframes` rule defined in the same source. Vendor-prefixed properties such as `-webkit-animation` are checked too, and a vendor-prefixed `@keyframes` rule defines an animation name just like an unprefixed one does.
 
 Animation names are case-sensitive, and quoted and unquoted names refer to the same animation, so `animation-name: "fade-in"` matches `@keyframes fade-in`.
 
-The rule only checks statically determinable animation names. Dynamic animation names, such as those using `var()`, are ignored.
+The rule only checks statically determinable animation names. A `var()` contributes the animation name in its fallback, if it has one, and the rest of the value is checked either way:
+
+```css
+/* `fade-in` is checked, the duration is not */
+animation: fade-in var(--duration);
+
+/* the fallback names an animation, so `slide-in` is checked */
+animation-name: var(--animation-name, slide-in);
+
+/* no name can be determined, so nothing is checked */
+animation-name: var(--animation-name);
+```
 
 Examples of **incorrect** code for this rule:
 
