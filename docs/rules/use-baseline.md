@@ -25,7 +25,7 @@ While using only Baseline widely available features can help ensure the greatest
 This rule warns when it finds any of the following:
 
 - A CSS property that isn't widely available or otherwise isn't enclosed in a `@supports` block.
-- An at-rule that isn't widely available.
+- An at-rule that isn't widely available or isn't guarded by a matching `@supports at-rule()` query.
 - A media condition inside `@media` that isn't widely available.
 - A CSS property value that isn't widely available or otherwise isn't enclosed in a `@supports` block (currently limited to identifiers only).
 - A CSS property function that isn't widely available.
@@ -98,6 +98,15 @@ Examples of **correct** code:
 @supports (accent-color: auto) {
 	a {
 		accent-color: auto;
+	}
+}
+
+/* valid - @supports indicates you're choosing a limited availability at-rule */
+@supports at-rule(@scope) {
+	@scope (.card) {
+		a {
+			color: red;
+		}
 	}
 }
 ```
