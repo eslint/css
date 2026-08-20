@@ -69,6 +69,7 @@ ruleTester.run("font-family-fallbacks", rule, {
 		":root { --my-font: Arial, SANS-SERIF; } a { font: 16px/1.5 Helvetica, var(--my-font); }",
 		"a { font: 16px/1.5 Arial, var(--x), SANS-SERIF; }",
 		"a { font: var(--font-weight) var(--font-size)/var(--line-height) MONOSPACE; }",
+		":root { --my-font: SANS-SERIF; } a { font-family: VAR(--my-font); }",
 	],
 	invalid: [
 		{
@@ -108,6 +109,18 @@ ruleTester.run("font-family-fallbacks", rule, {
 			],
 		},
 		{
+			code: "a { FONT-FAMILY: 'Arial'; }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 25,
+				},
+			],
+		},
+		{
 			code: "a { font-family: 'Arial', 'Segoe UI Emoji'; }",
 			errors: [
 				{
@@ -132,7 +145,31 @@ ruleTester.run("font-family-fallbacks", rule, {
 			],
 		},
 		{
+			code: "a { FONT-FAMILY: VAR(--my-font), 'Arial'; }",
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 41,
+				},
+			],
+		},
+		{
 			code: ":root { --my-font: 'Arial', 'Segoe UI Emoji'; } a { font-family: 'Segoe UI', var(--my-font); }",
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 66,
+					endLine: 1,
+					endColumn: 92,
+				},
+			],
+		},
+		{
+			code: ":root { --my-font: 'Arial', 'Segoe UI Emoji'; } a { FONT-FAMILY: 'Segoe UI', VAR(--my-font); }",
 			errors: [
 				{
 					messageId: "useGenericFont",
@@ -192,6 +229,18 @@ ruleTester.run("font-family-fallbacks", rule, {
 			],
 		},
 		{
+			code: "a { FONT: 1.2em 'Arial'; }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
 			code: "a { font: 1.2em 'Arial', 'Fira Sans'; }",
 			errors: [
 				{
@@ -228,6 +277,18 @@ ruleTester.run("font-family-fallbacks", rule, {
 			],
 		},
 		{
+			code: "a { FONT: VAR(--font-size) 'Open Sans'; }",
+			errors: [
+				{
+					messageId: "useFallbackFonts",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 39,
+				},
+			],
+		},
+		{
 			code: "a { font: var(--font-size) 'Roboto', 'Open Sans'; }",
 			errors: [
 				{
@@ -252,7 +313,31 @@ ruleTester.run("font-family-fallbacks", rule, {
 			],
 		},
 		{
+			code: ":root { --my-font: 'Roboto', 'Open Sans'; } a { FONT: var(--font-size) 'Open Sans', VAR(--my-font); }",
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 55,
+					endLine: 1,
+					endColumn: 99,
+				},
+			],
+		},
+		{
 			code: "a { font: var(--font-size) 'Open Sans', var(--my-font), 'Roboto'; }",
+			errors: [
+				{
+					messageId: "useGenericFont",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 65,
+				},
+			],
+		},
+		{
+			code: "a { FONT: VAR(--font-size) 'Open Sans', VAR(--my-font), 'Roboto'; }",
 			errors: [
 				{
 					messageId: "useGenericFont",

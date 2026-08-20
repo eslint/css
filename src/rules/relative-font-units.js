@@ -111,7 +111,9 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 
 		return {
 			Declaration(node) {
-				if (node.property === "font-size") {
+				const property = node.property.toLowerCase();
+
+				if (property === "font-size") {
 					if (
 						node.value.type === "Value" &&
 						node.value.children.length > 0
@@ -131,7 +133,7 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 					}
 				}
 
-				if (node.property === "font") {
+				if (property === "font") {
 					if (
 						node.value.type === "Value" &&
 						node.value.children.length > 0

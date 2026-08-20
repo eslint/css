@@ -70,8 +70,20 @@ ruleTester.run("use-baseline", rule, {
 		`@supports (width: abs(20% - 100px)) {
 			a { width: abs(20% - 100px); }
 		}`,
+		`@supports (WIDTH: ABS(20% - 100px)) {
+			a { width: abs(20% - 100px); }
+		}`,
 		`@supports selector(:fullscreen) {
 				h1:fullscreen { color: red; }
+		}`,
+		`@SUPPORTS SELECTOR(:fullscreen) {
+			h1:fullscreen { color: red; }
+		}`,
+		`@supports selector(:FULLSCREEN) {
+			h1:fullscreen { color: red; }
+		}`,
+		`@SUPPORTS (IMAGE-RENDERING: SMOOTH) {
+			a { image-rendering: smooth; }
 		}`,
 		"div { cursor: pointer; }",
 		"pre { overflow: auto; }",
@@ -167,6 +179,10 @@ ruleTester.run("use-baseline", rule, {
 		"a { margin: 0; }",
 		"@supports (height: 100svh) { a { height: 100svh; } }",
 		{
+			code: "@supports (HEIGHT: 100SVH) { a { height: 100svh; } }",
+			options: [{ available: 2021 }],
+		},
+		{
 			code: "a { height: 100svh; }",
 			options: [{ allowUnits: ["svh"] }],
 		},
@@ -200,6 +216,22 @@ ruleTester.run("use-baseline", rule, {
 					column: 24,
 					endLine: 1,
 					endColumn: 39,
+				},
+			],
+		},
+		{
+			code: "a { ACCENT-COLOR: AUTO; }",
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "accent-color",
+						availability: "widely",
+					},
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 17,
 				},
 			],
 		},
@@ -356,6 +388,23 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
+			code: "a { IMAGE-RENDERING: SMOOTH; }",
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "image-rendering",
+						value: "SMOOTH",
+						availability: "widely",
+					},
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
 			code: "@supports (accent-color: auto) { a { accent-color: abs(20% - 10px); } }",
 			errors: [
 				{
@@ -373,6 +422,22 @@ ruleTester.run("use-baseline", rule, {
 		},
 		{
 			code: "@supports not (accent-color: auto) { a { accent-color: auto } }",
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "accent-color",
+						availability: "widely",
+					},
+					line: 1,
+					column: 42,
+					endLine: 1,
+					endColumn: 54,
+				},
+			],
+		},
+		{
+			code: "@supports NOT (accent-color: auto) { a { accent-color: auto; } }",
 			errors: [
 				{
 					messageId: "notBaselineProperty",
@@ -420,6 +485,22 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
+			code: "a { color: LIGHT-DARK(black, white); }",
+			errors: [
+				{
+					messageId: "notBaselineFunction",
+					data: {
+						function: "LIGHT-DARK",
+						availability: "widely",
+					},
+					line: 1,
+					column: 12,
+					endLine: 1,
+					endColumn: 36,
+				},
+			],
+		},
+		{
 			code: 'a { background-image: image("foo.png", red); }',
 			errors: [
 				{
@@ -442,6 +523,22 @@ ruleTester.run("use-baseline", rule, {
 					messageId: "notBaselineMediaCondition",
 					data: {
 						condition: "inverted-colors",
+						availability: "widely",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: "@MEDIA (INVERTED-COLORS: INVERTED) { a { color: red; } }",
+			errors: [
+				{
+					messageId: "notBaselineMediaCondition",
+					data: {
+						condition: "INVERTED-COLORS",
 						availability: "widely",
 					},
 					line: 1,
@@ -518,6 +615,22 @@ ruleTester.run("use-baseline", rule, {
 					messageId: "notBaselineSelector",
 					data: {
 						selector: "fullscreen",
+						availability: "widely",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: "h1:FULLSCREEN { margin: 0; }",
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "FULLSCREEN",
 						availability: "widely",
 					},
 					line: 1,
@@ -782,6 +895,23 @@ ruleTester.run("use-baseline", rule, {
 					messageId: "notBaselineUnit",
 					data: {
 						unit: "dvh",
+						availability: 2021,
+					},
+					line: 1,
+					column: 13,
+					endLine: 1,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: "a { HEIGHT: 100DVH; }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselineUnit",
+					data: {
+						unit: "DVH",
 						availability: 2021,
 					},
 					line: 1,
