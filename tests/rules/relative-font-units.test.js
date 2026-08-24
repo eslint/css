@@ -52,6 +52,8 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font: revert Arial, sans-serif; }",
 		"a { font-size: revert-layer; }",
 		"a { font: revert-layer Arial, sans-serif; }",
+		"a { font-size: revert-rule; }",
+		"a { font: revert-rule Arial, sans-serif; }",
 		"a { font-size: unset; }",
 		"a { font: unset Arial, sans-serif; }",
 		"a { font: 1rem/120% Arial, sans-serif; }",
