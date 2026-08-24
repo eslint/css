@@ -33,17 +33,6 @@
 //-----------------------------------------------------------------------------
 
 /**
- * Get the location of a selector of a given name.
- * @param {Array<Object>} allSelector All CSS selector nodes.
- * @param {string} disallowedSelector The name of the disallowed selector.
- * @returns {Object} The location of the disallowed selector.
- */
-function getDisallowedSelectorsLocation(allSelector, disallowedSelector) {
-	return allSelector.find(selector => selector.name === disallowedSelector)
-		.loc;
-}
-
-/**
  * An error for exceeding the maximum allowed selectors of a specific type.
  * @param {Object} context The ESLint rule context object.
  * @param {Object} selectorLoc The location of the selector.
@@ -282,6 +271,12 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowAttributeMatchers,
 			},
 		] = context.options;
+		const disallowedPseudoClasses = new Set(
+			disallowPseudoClasses.map(selector => selector.toLowerCase()),
+		);
+		const disallowedPseudoElements = new Set(
+			disallowPseudoElements.map(selector => selector.toLowerCase()),
+		);
 
 		return {
 			Selector(node) {
@@ -309,14 +304,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				const combinatorNodes = getSelectors(selectors, "Combinator");
 
 				const combinators = getSelectorNames(combinatorNodes);
-				const pseudoClassSelectorsNames =
-					getSelectorNames(pseudoClassSelectors);
 				const pseudoElementSelectors = getSelectors(
 					selectors,
 					"PseudoElementSelector",
-				);
-				const pseudoElementNames = getSelectorNames(
-					pseudoElementSelectors,
 				);
 				const attributeNames = attributeSelectors.map(s => s.name.name);
 				const attributeMatchers = attributeSelectors
@@ -381,19 +371,17 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				}
 
 				if (disallowPseudoClasses.length > 0) {
-					let disallowedPseudoClassLocation;
-					for (const pseudoClassName of pseudoClassSelectorsNames) {
-						if (disallowPseudoClasses.includes(pseudoClassName)) {
-							disallowedPseudoClassLocation =
-								getDisallowedSelectorsLocation(
-									pseudoClassSelectors,
-									pseudoClassName,
-								);
+					for (const selectorNode of pseudoClassSelectors) {
+						if (
+							disallowedPseudoClasses.has(
+								selectorNode.name.toLowerCase(),
+							)
+						) {
 							context.report({
-								loc: disallowedPseudoClassLocation,
+								loc: selectorNode.loc,
 								messageId: "disallowedSelectors",
 								data: {
-									selectorName: pseudoClassName,
+									selectorName: selectorNode.name,
 									selector: "pseudo-class",
 								},
 							});
@@ -425,19 +413,17 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				}
 
 				if (disallowPseudoElements.length > 0) {
-					let disallowPseudoElementsLocation;
-					for (const pseudoElement of pseudoElementNames) {
-						if (disallowPseudoElements.includes(pseudoElement)) {
-							disallowPseudoElementsLocation =
-								getDisallowedSelectorsLocation(
-									pseudoElementSelectors,
-									pseudoElement,
-								);
+					for (const selectorNode of pseudoElementSelectors) {
+						if (
+							disallowedPseudoElements.has(
+								selectorNode.name.toLowerCase(),
+							)
+						) {
 							context.report({
-								loc: disallowPseudoElementsLocation,
+								loc: selectorNode.loc,
 								messageId: "disallowedSelectors",
 								data: {
-									selectorName: pseudoElement,
+									selectorName: selectorNode.name,
 									selector: "pseudo-element",
 								},
 							});

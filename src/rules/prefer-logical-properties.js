@@ -200,13 +200,13 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					return;
 				}
 
-				const propertyReplacement = propertiesReplacements.get(
-					node.property,
-				);
+				const property = node.property.toLowerCase();
+				const propertyReplacement =
+					propertiesReplacements.get(property);
 
 				if (
 					propertyReplacement &&
-					!allowProperties.includes(node.property)
+					!allowProperties.includes(property)
 				) {
 					context.report({
 						loc: node.loc,
@@ -237,9 +237,8 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					});
 				}
 
-				const valueReplacements = propertyValuesReplacements.get(
-					node.property,
-				);
+				const valueReplacements =
+					propertyValuesReplacements.get(property);
 
 				if (
 					valueReplacements &&
@@ -248,7 +247,8 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 				) {
 					const identifier = node.value.children[0];
 					const nodeValue = identifier.name;
-					const valueReplacement = valueReplacements[nodeValue];
+					const valueReplacement =
+						valueReplacements[nodeValue.toLowerCase()];
 
 					if (valueReplacement) {
 						context.report({
@@ -278,9 +278,10 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 				}
 			},
 			Dimension(node) {
-				const unitReplacement = unitReplacements.get(node.unit);
+				const unit = node.unit.toLowerCase();
+				const unitReplacement = unitReplacements.get(unit);
 
-				if (unitReplacement && !allowUnits.includes(node.unit)) {
+				if (unitReplacement && !allowUnits.includes(unit)) {
 					context.report({
 						loc: node.loc,
 						messageId: "notLogicalUnit",
