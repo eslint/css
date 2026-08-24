@@ -70,9 +70,11 @@ function isDisallowedFontSize(value, allowedFontUnits) {
 export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Enforce the use of relative font units",
+			dialects: ["CSS"],
 			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/relative-font-units.md",
 		},
