@@ -900,6 +900,13 @@ export const selectors = new Map([
 	["xr-overlay", "0:"],
 	["where", "10:2021"],
 ]);
+export const globalKeywords = new Map([
+	["revert-layer", "10:2022"],
+	["inherit", "10:2015"],
+	["initial", "10:2015"],
+	["revert", "10:2020"],
+	["unset", "10:2016"],
+]);
 export const propertyValues = new Map([
 	[
 		"position",

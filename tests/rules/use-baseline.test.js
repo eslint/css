@@ -202,6 +202,36 @@ ruleTester.run("use-baseline", rule, {
 			code: "a { height: 100svh; }",
 			options: [{ available: 2022 }],
 		},
+		{
+			code: "a { font-size: revert; }",
+			options: [{ available: 2021 }],
+		},
+		{
+			code: "a { font-size: revert-layer; }",
+			options: [{ available: 2022 }],
+		},
+		{
+			code: "a { font-size: revert-layer; }",
+			options: [
+				{
+					available: 2021,
+					allowPropertyValues: { "font-size": ["revert-layer"] },
+				},
+			],
+		},
+		{
+			code: "@supports (font-size: revert-layer) { a { font-size: revert-layer; } }",
+			options: [{ available: 2021 }],
+		},
+		{
+			code: "a { all: revert-layer; }",
+			options: [
+				{
+					available: 2021,
+					allowPropertyValues: { all: ["revert-layer"] },
+				},
+			],
+		},
 	],
 	invalid: [
 		{
@@ -413,6 +443,60 @@ ruleTester.run("use-baseline", rule, {
 					column: 22,
 					endLine: 1,
 					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: "a { font-size: revert-layer; }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "font-size",
+						value: "revert-layer",
+						availability: 2021,
+					},
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: "a { FONT-SIZE: REVERT-LAYER; }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "font-size",
+						value: "REVERT-LAYER",
+						availability: 2021,
+					},
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: "a { all: revert-layer; }",
+			options: [{ available: 2021 }],
+			errors: [
+				{
+					messageId: "notBaselinePropertyValue",
+					data: {
+						property: "all",
+						value: "revert-layer",
+						availability: 2021,
+					},
+					line: 1,
+					column: 10,
+					endLine: 1,
+					endColumn: 22,
 				},
 			],
 		},
