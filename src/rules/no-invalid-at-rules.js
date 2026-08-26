@@ -14,8 +14,10 @@ import { isSyntaxMatchError } from "../util.js";
 //-----------------------------------------------------------------------------
 
 /**
+ * @import { SourceLocation } from "@eslint/core"
  * @import { AtrulePlain } from "@eslint/css-tree"
  * @import { CSSRuleDefinition } from "../types.js"
+ * @import { CSSSourceCode } from "../languages/css-source-code.js"
  * @typedef {"unknownAtRule" | "invalidPrelude" | "unknownDescriptor" | "invalidDescriptor" | "invalidExtraPrelude" | "missingPrelude" | "invalidCharsetSyntax"} NoInvalidAtRulesMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidAtRulesMessageIds }>} NoInvalidAtRulesRuleDefinition
  */
@@ -35,6 +37,42 @@ const nestableAtRules = new Set([
 	"scope",
 	"container",
 	"starting-style",
+]);
+
+/**
+ * Map of at-rules that are only valid directly inside of another at-rule. Each
+ * key is an at-rule name and each value is the name of the at-rule it must be
+ * nested in.
+ * @see https://drafts.csswg.org/css-page-3/#margin-at-rules
+ * @see https://drafts.csswg.org/css-fonts-4/#font-feature-values-syntax
+ */
+const requiredParentAtRules = new Map([
+	// margin at-rules
+	["top-left-corner", "page"],
+	["top-left", "page"],
+	["top-center", "page"],
+	["top-right", "page"],
+	["top-right-corner", "page"],
+	["bottom-left-corner", "page"],
+	["bottom-left", "page"],
+	["bottom-center", "page"],
+	["bottom-right", "page"],
+	["bottom-right-corner", "page"],
+	["left-top", "page"],
+	["left-middle", "page"],
+	["left-bottom", "page"],
+	["right-top", "page"],
+	["right-middle", "page"],
+	["right-bottom", "page"],
+
+	// feature value blocks
+	["stylistic", "font-feature-values"],
+	["historical-forms", "font-feature-values"],
+	["styleset", "font-feature-values"],
+	["character-variant", "font-feature-values"],
+	["swash", "font-feature-values"],
+	["ornaments", "font-feature-values"],
+	["annotation", "font-feature-values"],
 ]);
 
 /**
@@ -68,6 +106,45 @@ function extractMetaDataFromError(error) {
 			name: atRuleName,
 		},
 	};
+}
+
+/**
+ * Calculates the location of an at-rule's name, including the `@` symbol.
+ * @param {AtrulePlain} node The at-rule to calculate the location for.
+ * @returns {SourceLocation} The location of the at-rule's name.
+ */
+function getAtRuleNameLoc(node) {
+	const { start } = node.loc;
+
+	return {
+		start,
+		end: {
+			line: start.line,
+			column: start.column + node.name.length + 1,
+		},
+	};
+}
+
+/**
+ * Determines if an at-rule that must be nested inside of another at-rule, such
+ * as `@top-left` inside of `@page`, is nested inside of that at-rule.
+ * @param {CSSSourceCode} sourceCode The source code object.
+ * @param {AtrulePlain} node The at-rule to check.
+ * @returns {boolean} `true` if the at-rule requires a parent at-rule and is
+ *      nested inside of it, `false` otherwise.
+ */
+function isInRequiredParentAtRule(sourceCode, node) {
+	const parentName = requiredParentAtRules.get(node.name.toLowerCase());
+
+	if (!parentName) {
+		return false;
+	}
+
+	const parent = sourceCode.getParent(sourceCode.getParent(node));
+
+	return (
+		parent?.type === "Atrule" && parent.name.toLowerCase() === parentName
+	);
 }
 
 //-----------------------------------------------------------------------------
@@ -119,13 +196,7 @@ export default /** @satisfies {NoInvalidAtRulesRuleDefinition} */ ({
 		function validateCharsetRule(node) {
 			const { name, prelude, loc } = node;
 
-			const charsetNameLoc = {
-				start: loc.start,
-				end: {
-					line: loc.start.line,
-					column: loc.start.column + name.length + 1,
-				},
-			};
+			const charsetNameLoc = getAtRuleNameLoc(node);
 
 			if (name !== "charset") {
 				context.report({
@@ -190,8 +261,28 @@ export default /** @satisfies {NoInvalidAtRulesRuleDefinition} */ ({
 
 		return {
 			Atrule(node) {
-				if (node.name.toLowerCase() === "charset") {
+				const name = node.name.toLowerCase();
+
+				if (name === "charset") {
 					validateCharsetRule(node);
+					return;
+				}
+
+				if (
+					!lexer.getAtrule(name) &&
+					isInRequiredParentAtRule(sourceCode, node)
+				) {
+					// none of these at-rules accept a prelude
+					if (node.prelude) {
+						context.report({
+							loc: getAtRuleNameLoc(node),
+							messageId: "invalidExtraPrelude",
+							data: {
+								name: node.name,
+							},
+						});
+					}
+
 					return;
 				}
 
@@ -215,18 +306,8 @@ export default /** @satisfies {NoInvalidAtRulesRuleDefinition} */ ({
 						return;
 					}
 
-					const loc = node.loc;
-
 					context.report({
-						loc: {
-							start: loc.start,
-							end: {
-								line: loc.start.line,
-
-								// add 1 to account for the @ symbol
-								column: loc.start.column + node.name.length + 1,
-							},
-						},
+						loc: getAtRuleNameLoc(node),
 						...extractMetaDataFromError(error),
 					});
 				}
@@ -243,7 +324,16 @@ export default /** @satisfies {NoInvalidAtRulesRuleDefinition} */ ({
 					sourceCode.getParent(sourceCode.getParent(node))
 				);
 
-				if (nestableAtRules.has(atRule.name.toLowerCase())) {
+				const atRuleName = atRule.name.toLowerCase();
+
+				if (nestableAtRules.has(atRuleName)) {
+					return;
+				}
+
+				if (
+					!lexer.getAtrule(atRuleName) &&
+					isInRequiredParentAtRule(sourceCode, atRule)
+				) {
 					return;
 				}
 

@@ -94,6 +94,41 @@ ruleTester.run("no-invalid-at-rules", rule, {
 				},
 			},
 		},
+		"@page { @top-left { content: 'x'; } }",
+		"@page { size: A4; @top-center { content: counter(page); } }",
+		"@page :first { @top-right { content: 'x'; } }",
+		"@media print { @page { @bottom-left { content: 'x'; } } }",
+		"@page { @top-left { --custom: red; } }",
+		"@PAGE { @TOP-LEFT { content: 'x'; } }",
+		`@page {
+			@top-left-corner { content: 'x'; }
+			@top-left { content: 'x'; }
+			@top-center { content: 'x'; }
+			@top-right { content: 'x'; }
+			@top-right-corner { content: 'x'; }
+			@bottom-left-corner { content: 'x'; }
+			@bottom-left { content: 'x'; }
+			@bottom-center { content: 'x'; }
+			@bottom-right { content: 'x'; }
+			@bottom-right-corner { content: 'x'; }
+			@left-top { content: 'x'; }
+			@left-middle { content: 'x'; }
+			@left-bottom { content: 'x'; }
+			@right-top { content: 'x'; }
+			@right-middle { content: 'x'; }
+			@right-bottom { content: 'x'; }
+		}`,
+		"@font-feature-values Font One { @styleset { nice-style: 12; } }",
+		"@font-feature-values Font One, Font Two { @character-variant { alt-a: 2 1; } }",
+		`@font-feature-values Font One {
+			@stylistic { cursive: 1; }
+			@historical-forms { hist: 1; }
+			@styleset { double-W: 14; }
+			@character-variant { alt-a: 2; }
+			@swash { swishy: 1; }
+			@ornaments { bullets: 1; }
+			@annotation { circled: 1; }
+		}`,
 	],
 	invalid: [
 		{
@@ -530,6 +565,146 @@ ruleTester.run("no-invalid-at-rules", rule, {
 					column: 1,
 					endLine: 2,
 					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: "@top-left { content: 'x'; }",
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "top-left" },
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 10,
+				},
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "top-left", descriptor: "content" },
+					line: 1,
+					column: 13,
+					endLine: 1,
+					endColumn: 20,
+				},
+			],
+		},
+		{
+			code: ".foo { @top-left { content: 'x'; } }",
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "top-left" },
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 17,
+				},
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "top-left", descriptor: "content" },
+					line: 1,
+					column: 20,
+					endLine: 1,
+					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: "@page { @swash { swishy: 1; } }",
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "swash" },
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 15,
+				},
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "swash", descriptor: "swishy" },
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: "@font-feature-values Font One { @top-left { content: 'x'; } }",
+			errors: [
+				{
+					messageId: "unknownAtRule",
+					data: { name: "top-left" },
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 42,
+				},
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "top-left", descriptor: "content" },
+					line: 1,
+					column: 45,
+					endLine: 1,
+					endColumn: 52,
+				},
+			],
+		},
+		{
+			code: "@page { @top-left foo { content: 'x'; } }",
+			errors: [
+				{
+					messageId: "invalidExtraPrelude",
+					data: { name: "top-left" },
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 18,
+				},
+			],
+		},
+		{
+			code: "@font-feature-values Font One { @styleset foo { nice-style: 12; } }",
+			errors: [
+				{
+					messageId: "invalidExtraPrelude",
+					data: { name: "styleset" },
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 42,
+				},
+			],
+		},
+		{
+			code: "@page { @top-left { content: 'x'; } }",
+			languageOptions: {
+				customSyntax: {
+					atrules: {
+						"top-left": {
+							prelude: "<url>",
+						},
+					},
+				},
+			},
+			errors: [
+				{
+					messageId: "missingPrelude",
+					data: { name: "top-left" },
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 18,
+				},
+				{
+					messageId: "unknownDescriptor",
+					data: { name: "top-left", descriptor: "content" },
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 28,
 				},
 			],
 		},
