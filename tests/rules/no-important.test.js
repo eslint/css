@@ -50,6 +50,7 @@ ruleTester.run("no-important", rule, {
 		"a { color: red /* !important */; }",
 		"a { color: /* !important */ red; }",
 		"a { color: red; /* !important */ background: blue; }",
+		'a { content: "!important"; }',
 	],
 	invalid: [
 		{
@@ -887,6 +888,78 @@ ruleTester.run("no-important", rule, {
 								color: red;
 							}
 							`,
+						},
+					],
+				},
+			],
+		},
+		{
+			code: 'a { content: "!important" !important; }',
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 37,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: 'a { content: "!important"; }',
+						},
+					],
+				},
+			],
+		},
+		{
+			code: 'a { content: "x ! important y" !important; }',
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 32,
+					endLine: 1,
+					endColumn: 42,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: 'a { content: "x ! important y"; }',
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { background: url(!important.png) !important; }",
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 37,
+					endLine: 1,
+					endColumn: 47,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: "a { background: url(!important.png); }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: 'a { --x: "!important" !important; }',
+			errors: [
+				{
+					messageId: "unexpectedImportant",
+					line: 1,
+					column: 23,
+					endLine: 1,
+					endColumn: 33,
+					suggestions: [
+						{
+							messageId: "removeImportant",
+							output: 'a { --x: "!important"; }',
 						},
 					],
 				},

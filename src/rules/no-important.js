@@ -58,12 +58,16 @@ export default /** @satisfies {NoImportantRuleDefinition} */ ({
 						/* eslint-disable-next-line require-unicode-regexp -- we want to replace each code unit with a space */
 						match => match.replace(/[^\r\n\f]/g, " "),
 					);
-					const importantMatch =
-						importantPattern.exec(textWithoutComments);
-					const importantStartOffset = importantMatch.index;
+					const nodeStartOffset = node.loc.start.offset;
+					const valueEndOffset =
+						node.value.loc.end.offset - nodeStartOffset;
+					const importantMatch = importantPattern.exec(
+						textWithoutComments.slice(valueEndOffset),
+					);
+					const importantStartOffset =
+						valueEndOffset + importantMatch.index;
 					const importantEndOffset =
 						importantStartOffset + importantMatch[0].length;
-					const nodeStartOffset = node.loc.start.offset;
 
 					context.report({
 						loc: {
