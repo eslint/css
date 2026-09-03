@@ -29,6 +29,9 @@ ruleTester.run("no-invalid-named-grid-areas", rule, {
 		'.grid { grid-template-areas: "a a a" "b b b"; }',
 		'.grid { grid-template-areas: " a a a " "b b b"; }',
 		'.grid { GRID-TEMPLATE-AREAS: "a a a" "b b b"; }',
+		'.grid { grid-template-areas: "a\tb" "a b"; }',
+		'.grid { grid-template-areas: "a\t b" "a b"; }',
+
 		dedent`
         .grid { grid-template-areas: "head head"
                                      "nav  main"
@@ -71,6 +74,18 @@ ruleTester.run("no-invalid-named-grid-areas", rule, {
 					messageId: "unevenGridArea",
 					line: 1,
 					column: 34,
+					endLine: 1,
+					endColumn: 39,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a\ta" "a b c"; }',
+			errors: [
+				{
+					messageId: "unevenGridArea",
+					line: 1,
+					column: 32,
 					endLine: 1,
 					endColumn: 39,
 				},
