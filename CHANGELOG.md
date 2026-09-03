@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/eslint/css/compare/css-v2.0.0...css-v2.0.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* update eslint ([#554](https://github.com/eslint/css/issues/554)) ([33e7314](https://github.com/eslint/css/commit/33e7314cf4127543f1863ebeab13a8b7ecc8f161))
+
 ## [2.0.0](https://github.com/eslint/css/compare/css-v1.4.0...css-v2.0.0) (2026-09-01)
 
 
