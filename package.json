@@ -1,6 +1,6 @@
 {
   "name": "@eslint/css",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "CSS linting plugin for ESLint",
   "author": "Nicholas C. Zakas",
   "type": "module",
@@ -76,15 +76,15 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@eslint/core": "^1.2.1",
-    "@eslint/css-tree": "^4.0.5",
-    "@eslint/plugin-kit": "^0.7.2"
+    "@eslint/css-tree": "^4.1.0",
+    "@eslint/plugin-kit": "^0.7.3"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.3",
-    "@eslint/json": "^2.0.1",
+    "@eslint/json": "^2.1.0",
     "@types/node": "^20.19.0",
-    "@webref/css": "^8.7.2",
-    "c8": "^11.0.0",
+    "@webref/css": "^8.7.3",
+    "c8": "^12.0.0",
     "dedent": "^1.5.3",
     "eslint": "^10.4.0",
     "eslint-config-eslint": "^14.0.0",
@@ -97,7 +97,7 @@
     "prettier": "3.9.6",
     "tailwind-csstree": "^0.3.0",
     "typescript": "^7.0.2",
-    "web-features": "^3.35.1",
+    "web-features": "^3.36.0",
     "yorkie": "^2.0.0"
   },
   "engines": {

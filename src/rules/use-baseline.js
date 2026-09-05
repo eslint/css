@@ -17,6 +17,7 @@ import {
 	functions,
 	units,
 	selectors,
+	globalKeywords,
 } from "../data/baseline-data.js";
 import { namedColors } from "../data/colors.js";
 
@@ -543,18 +544,23 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					allowPropertyValues: {
 						type: "object",
 						properties: Object.fromEntries(
-							Array.from(propertyValues.entries()).map(
-								([prop, valuesMap]) => [
+							Array.from(properties.keys()).map(prop => {
+								const values = new Set([
+									...globalKeywords.keys(),
+									...(propertyValues.get(prop)?.keys() ?? []),
+								]);
+
+								return [
 									prop,
 									{
 										type: "array",
 										items: {
-											enum: Array.from(valuesMap.keys()),
+											enum: Array.from(values),
 										},
 										uniqueItems: true,
 									},
-								],
-							),
+								];
+							}),
 						),
 						additionalProperties: false,
 					},
@@ -644,6 +650,24 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 
 			const allowedValues = allowPropertyValuesMap.get(property);
 			if (allowedValues?.has(identifier)) {
+				return;
+			}
+
+			const globalKeywordStatus = globalKeywords.get(identifier);
+
+			if (globalKeywordStatus !== undefined) {
+				if (!baselineAvailability.isSupported(globalKeywordStatus)) {
+					context.report({
+						loc: child.loc,
+						messageId: "notBaselinePropertyValue",
+						data: {
+							property,
+							value: child.name,
+							availability: baselineAvailability.availability,
+						},
+					});
+				}
+
 				return;
 			}
 
@@ -796,7 +820,9 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 						for (const selectorChild of conditionChild.value
 							.children) {
 							supportsRule.addSelector(
-								selectorChild.name.toLowerCase(),
+								selectorChild.type === "NestingSelector"
+									? "nesting"
+									: selectorChild.name.toLowerCase(),
 							);
 						}
 					}
@@ -1050,6 +1076,10 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 				const selector = "nesting";
 
 				if (allowSelectors.has(selector)) {
+					return;
+				}
+
+				if (supportsRules.hasSelector(selector)) {
 					return;
 				}
 

@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.0.0](https://github.com/eslint/css/compare/css-v1.4.0...css-v2.0.0) (2026-09-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* add `meta.languages` to CSS rules ([#447](https://github.com/eslint/css/issues/447))
+
+### Features
+
+* add `meta.languages` to CSS rules ([#447](https://github.com/eslint/css/issues/447)) ([c44dc61](https://github.com/eslint/css/commit/c44dc615caa7382c16697a3d6df22b850d25963f))
+* add suggestions to no-empty-blocks ([#479](https://github.com/eslint/css/issues/479)) ([aa750cc](https://github.com/eslint/css/commit/aa750cca82c806af1ec8366228db72bd7c2def13))
+* check CSS-wide keywords in `use-baseline` ([#542](https://github.com/eslint/css/issues/542)) ([506bdbb](https://github.com/eslint/css/commit/506bdbbcb841978299abefd1de72a56d1e6ff993))
+* check duplicate comma-separated [@keyframe](https://github.com/keyframe) selectors ([#522](https://github.com/eslint/css/issues/522)) ([223fce0](https://github.com/eslint/css/commit/223fce0c29147aed0827f83f3a044db8494359d0))
+* make font-family-fallbacks generic fonts case-insensitive ([#517](https://github.com/eslint/css/issues/517)) ([f010c7b](https://github.com/eslint/css/commit/f010c7bc1f043b5cc0059f0293cfdc3f4184d290))
+
+
+### Bug Fixes
+
+* correctly identify font-size in font shorthand ([#526](https://github.com/eslint/css/issues/526)) ([7ac061e](https://github.com/eslint/css/commit/7ac061e93a6df97b683a10c1fcc28f8c3149a677))
+* detect equivalent selectors in `no-duplicate-keyframe-selectors` ([#512](https://github.com/eslint/css/issues/512)) ([f4fbea8](https://github.com/eslint/css/commit/f4fbea84cf5583a43fa2eca3dc0a02f5925a6727))
+* distinguish named timeline range keyframe selectors ([#507](https://github.com/eslint/css/issues/507)) ([c96ceeb](https://github.com/eslint/css/commit/c96ceeb3fe225505657b3ccf75e07a65e4117ca1))
+* handle CSS case-insensitivity ([#530](https://github.com/eslint/css/issues/530)) ([c979a85](https://github.com/eslint/css/commit/c979a857cb771558c7c007697374aa5d0a915cee))
+* locate `!important` after the value in `no-important` ([#550](https://github.com/eslint/css/issues/550)) ([a851d5c](https://github.com/eslint/css/commit/a851d5c0de0dc18283f404fba57aec1b6ae83b53))
+* recognize nesting feature detection in `use-baseline` ([#531](https://github.com/eslint/css/issues/531)) ([de5965b](https://github.com/eslint/css/commit/de5965bf5ac2c39cfb347e61d95b3e7fcf5935dd))
+* skip validating values containing env() in no-invalid-properties ([#510](https://github.com/eslint/css/issues/510)) ([ffc5c32](https://github.com/eslint/css/commit/ffc5c325756e1800cb397b079190bec00658abae))
+* update baseline data ([005db74](https://github.com/eslint/css/commit/005db746f026714534a4df71da38598eade8697b))
+* update baseline data ([43672ee](https://github.com/eslint/css/commit/43672ee184353178e75b60846435adf7dfc8c551))
+* update baseline data ([1ae3a41](https://github.com/eslint/css/commit/1ae3a4125a4e6d78fd32e93969100a8090a87157))
+* update baseline data ([#504](https://github.com/eslint/css/issues/504)) ([e90e001](https://github.com/eslint/css/commit/e90e001ae2d26f600aaaa7009047a316a254c4b7))
+* update baseline data ([#514](https://github.com/eslint/css/issues/514)) ([1c8a632](https://github.com/eslint/css/commit/1c8a6324588b69d6c905b09046f3f80ec438313c))
+* update baseline data ([#539](https://github.com/eslint/css/issues/539)) ([0f7b823](https://github.com/eslint/css/commit/0f7b82378be6451a50fde4ef61acd2283ab12ac7))
+* update baseline data ([#548](https://github.com/eslint/css/issues/548)) ([2c95233](https://github.com/eslint/css/commit/2c952331bd6cd2e34effee86bede076285cc635a))
+* update dependency @eslint/css-tree to ^4.0.5 ([#511](https://github.com/eslint/css/issues/511)) ([500ad2a](https://github.com/eslint/css/commit/500ad2a95a2b37c397be0ee00c90352d1a299b2b))
+
 ## [1.4.0](https://github.com/eslint/css/compare/css-v1.3.0...css-v1.4.0) (2026-07-01)
 
 

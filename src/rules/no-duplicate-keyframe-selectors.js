@@ -64,37 +64,38 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 				}
 
 				// @ts-ignore - children is a valid property for prelude
-				const selector = node.prelude.children[0];
-				const value = [];
+				node.prelude.children.forEach(selector => {
+					const value = [];
 
-				selector.children.forEach(component => {
-					if (component.type === "Percentage") {
-						value.push(`${component.value}%`);
-					} else if (component.type === "TypeSelector") {
-						value.push(component.name.toLowerCase());
+					selector.children.forEach(component => {
+						if (component.type === "Percentage") {
+							value.push(`${component.value}%`);
+						} else if (component.type === "TypeSelector") {
+							value.push(component.name.toLowerCase());
+						}
+					});
+
+					const selectorValue = value.join(" ");
+					const key = value
+						.map(
+							selectorPart =>
+								keyframeSelectorAliases.get(selectorPart) ??
+								selectorPart,
+						)
+						.join(" ");
+
+					if (seen.has(key)) {
+						context.report({
+							loc: selector.loc,
+							messageId: "duplicateKeyframeSelector",
+							data: {
+								selector: selectorValue,
+							},
+						});
+					} else {
+						seen.add(key);
 					}
 				});
-
-				const selectorValue = value.join(" ");
-				const key = value
-					.map(
-						selectorPart =>
-							keyframeSelectorAliases.get(selectorPart) ??
-							selectorPart,
-					)
-					.join(" ");
-
-				if (seen.has(key)) {
-					context.report({
-						loc: selector.loc,
-						messageId: "duplicateKeyframeSelector",
-						data: {
-							selector: selectorValue,
-						},
-					});
-				} else {
-					seen.add(key);
-				}
 			},
 		};
 	},
