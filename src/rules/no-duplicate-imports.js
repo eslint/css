@@ -77,7 +77,7 @@ function getFixForImport(fixer, text, start, end, hasModifiers) {
 }
 
 //-----------------------------------------------------------------------------
-// Rule
+// Rule Definition
 //-----------------------------------------------------------------------------
 
 export default /** @satisfies {NoDuplicateImportsRuleDefinition} */ ({
