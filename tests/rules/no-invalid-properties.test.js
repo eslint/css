@@ -282,6 +282,15 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { width: env(titlebar-area-width); }",
 		"a { padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0; }",
 		"a { padding: env(safe-area-inset-top) red }",
+
+		// CSS-wide keywords are valid for every property
+		"a { color: inherit; }",
+		"a { color: initial; }",
+		"a { color: unset; }",
+		"a { color: revert; }",
+		"a { color: revert-layer; }",
+		"a { color: revert-rule; }",
+		"a { width: revert-rule; }",
 	],
 	invalid: [
 		{
