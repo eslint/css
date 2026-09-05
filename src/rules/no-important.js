@@ -51,7 +51,7 @@ export default /** @satisfies {NoImportantRuleDefinition} */ ({
 
 		return {
 			Declaration(node) {
-				if (node.important) {
+				if (node.important === true) {
 					const declarationText = sourceCode.getText(node);
 					const textWithoutComments = declarationText.replace(
 						commentPattern,
