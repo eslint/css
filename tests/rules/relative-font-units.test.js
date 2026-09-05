@@ -28,10 +28,14 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font-size: 1rem; }",
 		"a { font: 2rem Arial, sans-serif; }",
 		"a { font: 1.2rem/2 Arial, sans-serif; }",
+		"a { font: oblique 10deg 1rem serif; }",
+		"a { font: 1rem math; }",
 		"a { font-size: 1REM; }",
 		"a { font-size: 1Rem; }",
 		"a { font-size: 1rEm; }",
+		"a { FONT-SIZE: 1rEm; }",
 		"a { font: 2REM Arial, sans-serif; }",
+		"a { FONT: 2REM Arial, sans-serif; }",
 		"a { font: 1.2REM/2 Arial, sans-serif; }",
 		"a { font-size: var(--foo); }",
 		"a { font: var(--foo) Arial; }",
@@ -334,6 +338,19 @@ ruleTester.run("relative-font-units", rule, {
 	invalid: [
 		{
 			code: "a { font-size: 1px; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 19,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { FONT-SIZE: 1PX; }",
 			errors: [
 				{
 					messageId: "allowedFontUnits",
@@ -760,6 +777,19 @@ ruleTester.run("relative-font-units", rule, {
 					column: 11,
 					endLine: 1,
 					endColumn: 14,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font: oblique 10deg 1em serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 25,
+					endLine: 1,
+					endColumn: 28,
 					data: { allowedFontUnits: "rem" },
 				},
 			],
@@ -1200,6 +1230,19 @@ ruleTester.run("relative-font-units", rule, {
 					endLine: 2,
 					endColumn: 27,
 					data: { allowedFontUnits: "lh, rex, %" },
+				},
+			],
+		},
+		{
+			code: "a { FONT: 2EM Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 14,
+					data: { allowedFontUnits: "rem" },
 				},
 			],
 		},

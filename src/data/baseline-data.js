@@ -174,6 +174,7 @@ export const properties = new Map([
 	["font-weight", "10:2015"],
 	["font-width", "0:"],
 	["forced-color-adjust", "0:"],
+	["frame-sizing", "0:"],
 	["column-rule-break", "0:"],
 	["column-rule-inset", "0:"],
 	["column-rule-inset-cap", "0:"],
@@ -327,7 +328,7 @@ export const properties = new Map([
 	["mask-clip", "10:2023"],
 	["mask-composite", "10:2023"],
 	["mask-image", "10:2023"],
-	["mask-mode", "10:2023"],
+	["mask-mode", "0:"],
 	["mask-origin", "10:2023"],
 	["mask-position", "10:2023"],
 	["mask-repeat", "10:2023"],
@@ -496,9 +497,9 @@ export const properties = new Map([
 	["text-align", "10:2015"],
 	["text-align-last", "10:2022"],
 	["text-autospace", "5:2025"],
-	["text-box", "0:"],
-	["text-box-edge", "0:"],
-	["text-box-trim", "0:"],
+	["text-box", "5:2026"],
+	["text-box-edge", "5:2026"],
+	["text-box-trim", "5:2026"],
 	["text-combine-upright", "10:2022"],
 	["text-decoration", "10:2015"],
 	["text-decoration-color", "10:2020"],
@@ -555,6 +556,7 @@ export const properties = new Map([
 	["height", "10:2015"],
 	["width", "10:2015"],
 	["will-change", "10:2020"],
+	["window-drag", "0:"],
 	["word-break", "10:2015"],
 	["word-spacing", "10:2015"],
 	["writing-mode", "10:2017"],
@@ -579,7 +581,7 @@ export const atRules = new Map([
 	["namespace", "10:2015"],
 	["page", "5:2024"],
 	["property", "5:2024"],
-	["scope", "5:2025"],
+	["scope", "5:2026"],
 	["starting-style", "5:2024"],
 	["supports", "10:2015"],
 ]);
@@ -628,6 +630,7 @@ export const mediaConditions = new Map([
 export const functions = new Map([
 	["abs", "5:2025"],
 	["sign", "5:2025"],
+	["alpha", "0:"],
 	["anchor", "5:2026"],
 	["anchor-size", "5:2026"],
 	["attr", "10:2015"],
@@ -699,8 +702,8 @@ export const functions = new Map([
 	["ellipse", "10:2020"],
 	["inset", "10:2020"],
 	["polygon", "10:2020"],
-	["sibling-count", "0:"],
-	["sibling-index", "0:"],
+	["sibling-count", "5:2026"],
+	["sibling-index", "5:2026"],
 	["steps", "10:2015"],
 	["matrix", "10:2015"],
 	["rotate", "10:2015"],
@@ -899,6 +902,13 @@ export const selectors = new Map([
 	["cue", "10:2020"],
 	["xr-overlay", "0:"],
 	["where", "10:2021"],
+]);
+export const globalKeywords = new Map([
+	["revert-layer", "10:2022"],
+	["inherit", "10:2015"],
+	["initial", "10:2015"],
+	["revert", "10:2020"],
+	["unset", "10:2016"],
 ]);
 export const propertyValues = new Map([
 	[
@@ -1399,6 +1409,8 @@ export const propertyValues = new Map([
 			["anchor-valid", "0:"],
 			["anchor-visible", "0:"],
 			["no-overflow", "5:2026"],
+			["anchors-valid", "0:"],
+			["anchors-visible", "0:"],
 		]),
 	],
 	[
@@ -2219,6 +2231,7 @@ export const propertyValues = new Map([
 			["nowrap", "10:2015"],
 			["wrap", "10:2015"],
 			["wrap-reverse", "10:2015"],
+			["balance", "0:"],
 		]),
 	],
 	["flex", new Map([["none", "10:2015"]])],
@@ -2506,6 +2519,16 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
+		"frame-sizing",
+		new Map([
+			["auto", "0:"],
+			["content-block-size", "0:"],
+			["content-height", "0:"],
+			["content-inline-size", "0:"],
+			["content-width", "0:"],
+		]),
+	],
+	[
 		"column-rule-break",
 		new Map([
 			["intersection", "0:"],
@@ -2707,7 +2730,6 @@ export const propertyValues = new Map([
 			["none", "10:2020"],
 			["repeat", "10:2020"],
 			["animation", "10:2022"],
-			["masonry", "0:"],
 			["subgrid", "10:2023"],
 		]),
 	],
@@ -2722,7 +2744,6 @@ export const propertyValues = new Map([
 			["none", "10:2020"],
 			["repeat", "10:2020"],
 			["animation", "10:2022"],
-			["masonry", "0:"],
 			["subgrid", "10:2023"],
 		]),
 	],
@@ -3219,9 +3240,9 @@ export const propertyValues = new Map([
 	[
 		"mask-mode",
 		new Map([
-			["alpha", "10:2023"],
-			["luminance", "10:2023"],
-			["match-source", "10:2023"],
+			["alpha", "0:"],
+			["luminance", "0:"],
+			["match-source", "0:"],
 		]),
 	],
 	[
@@ -3874,17 +3895,17 @@ export const propertyValues = new Map([
 			["replace", "0:"],
 		]),
 	],
-	["text-box-edge", new Map([["auto", "0:"]])],
+	["text-box-edge", new Map([["auto", "5:2026"]])],
 	[
 		"text-box-trim",
 		new Map([
-			["none", "0:"],
-			["trim-both", "0:"],
-			["trim-end", "0:"],
-			["trim-start", "0:"],
+			["none", "5:2026"],
+			["trim-both", "5:2026"],
+			["trim-end", "5:2026"],
+			["trim-start", "5:2026"],
 		]),
 	],
-	["text-box", new Map([["normal", "0:"]])],
+	["text-box", new Map([["normal", "5:2026"]])],
 	[
 		"text-combine-upright",
 		new Map([
@@ -4226,6 +4247,13 @@ export const propertyValues = new Map([
 			["auto", "10:2020"],
 			["contents", "10:2020"],
 			["scroll-position", "10:2020"],
+		]),
+	],
+	[
+		"window-drag",
+		new Map([
+			["move", "0:"],
+			["none", "0:"],
 		]),
 	],
 	[

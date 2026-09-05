@@ -33,6 +33,26 @@ const genericFonts = new Set([
 	"fangsong",
 ]);
 
+/*
+ * Matches a generic font family as a whole word, for the single value `font`
+ * branch that searches the shorthand where the family sits next to the size.
+ * A name such as `MySerifFont` must not match.
+ */
+const genericFontPattern = new RegExp(
+	String.raw`(?<![\w-])(?:${[...genericFonts].join("|")})(?![\w-])`,
+	"iu",
+);
+
+/**
+ * Check if the name is a generic font family.
+ * Generic font families are keywords, so they are matched case-insensitively.
+ * @param {string} name The name to check.
+ * @returns {boolean} True if the name is a generic font family, false otherwise.
+ */
+function isGenericFont(name) {
+	return genericFonts.has(name.toLowerCase());
+}
+
 /**
  * Check if the value is a CSS-wide keyword.
  * @param {string} value The value to check.
@@ -62,7 +82,7 @@ function isCSSWideKeywordIdentifier(node, cssWideKeywords) {
  * @returns {boolean} True if the node is a variable function, false otherwise.
  */
 function isVarFunction(node) {
-	return node.type === "Function" && node.name === "var";
+	return node.type === "Function" && node.name.toLowerCase() === "var";
 }
 
 /**
@@ -87,9 +107,9 @@ function reportFontWithoutFallbacksInFontProperty(
 	const valueList = fontPropertyValues.split(",").map(v => v.trim());
 
 	if (valueList.length === 1) {
-		const containsGenericFont = Array.from(genericFonts).some(font =>
-			valueList[0].includes(font),
-		);
+		// A quoted name is a family name, not a keyword
+		const unquoted = valueList[0].replace(/"[^"]*"|'[^']*'/gu, "");
+		const containsGenericFont = genericFontPattern.test(unquoted);
 
 		if (!containsGenericFont) {
 			context.report({
@@ -98,7 +118,7 @@ function reportFontWithoutFallbacksInFontProperty(
 			});
 		}
 	} else {
-		if (!genericFonts.has(valueList.at(-1))) {
+		if (!isGenericFont(valueList.at(-1))) {
 			context.report({
 				loc: node.loc,
 				messageId: "useGenericFont",
@@ -114,10 +134,12 @@ function reportFontWithoutFallbacksInFontProperty(
 export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
+		languages: ["css/css"],
 
 		docs: {
 			description:
 				"Enforce use of fallback fonts and a generic font last",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/font-family-fallbacks.md",
 		},
@@ -147,7 +169,9 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 				}
 			},
 
-			"Rule > Block > Declaration[property='font-family'] > Value"(node) {
+			"Rule > Block > Declaration[property=/^font-family$/i] > Value"(
+				node,
+			) {
 				const valueArr = node.children;
 
 				if (valueArr.length === 1) {
@@ -157,10 +181,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 						return;
 					}
 
-					if (
-						valueArr[0].type === "Function" &&
-						valueArr[0].name === "var"
-					) {
+					if (isVarFunction(valueArr[0])) {
 						const variableName =
 							valueArr[0].children[0].type === "Identifier" &&
 							valueArr[0].children[0].name;
@@ -180,13 +201,13 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						if (
 							variableList.length === 1 &&
-							!genericFonts.has(variableList[0])
+							!isGenericFont(variableList[0])
 						) {
 							context.report({
 								loc: node.loc,
 								messageId: "useFallbackFonts",
 							});
-						} else if (!genericFonts.has(variableList.at(-1))) {
+						} else if (!isGenericFont(variableList.at(-1))) {
 							context.report({
 								loc: node.loc,
 								messageId: "useGenericFont",
@@ -195,7 +216,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 					} else {
 						if (
 							valueArr[0].type === "Identifier" &&
-							genericFonts.has(valueArr[0].name)
+							isGenericFont(valueArr[0].name)
 						) {
 							return;
 						}
@@ -214,10 +235,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 						const fontsList = [];
 						const lastNode = valueArr.at(-1);
 
-						if (
-							lastNode.type === "Function" &&
-							lastNode.name === "var"
-						) {
+						if (isVarFunction(lastNode)) {
 							const variableName =
 								lastNode.children[0].type === "Identifier" &&
 								lastNode.children[0].name;
@@ -230,17 +248,15 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						valueArr.forEach(child => {
 							if (child.type === "String") {
-								fontsList.push(child.value);
+								// Keep the quotes so it is not read as a keyword
+								fontsList.push(sourceCode.getText(child));
 							}
 
 							if (child.type === "Identifier") {
 								fontsList.push(child.name);
 							}
 
-							if (
-								child.type === "Function" &&
-								child.name === "var"
-							) {
+							if (isVarFunction(child)) {
 								const variableName =
 									child.children[0].type === "Identifier" &&
 									child.children[0].name;
@@ -258,7 +274,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						if (
 							fontsList.length > 0 &&
-							!genericFonts.has(fontsList.at(-1))
+							!isGenericFont(fontsList.at(-1))
 						) {
 							context.report({
 								loc: node.loc,
@@ -270,7 +286,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 						if (!(
 							lastFont.type === "Identifier" &&
-							genericFonts.has(lastFont.name)
+							isGenericFont(lastFont.name)
 						)) {
 							context.report({
 								loc: node.loc,
@@ -281,7 +297,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 				}
 			},
 
-			"Rule > Block > Declaration[property='font'] > Value"(node) {
+			"Rule > Block > Declaration[property=/^font$/i] > Value"(node) {
 				const valueArr = node.children;
 
 				if (valueArr.length === 1) {
@@ -293,10 +309,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 					}
 
 					// If the value is a variable function, we need to check the variable value
-					if (
-						firstValue.type === "Function" &&
-						firstValue.name === "var"
-					) {
+					if (isVarFunction(firstValue)) {
 						// Check if the function is a variable
 						const variableName =
 							firstValue.children[0].type === "Identifier" &&
@@ -348,13 +361,11 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 							if (afterOperator.length !== 0) {
 								const usingVar = afterOperator.some(value =>
-									value.startsWith("var"),
+									value.toLowerCase().startsWith("var"),
 								);
 
 								if (!usingVar) {
-									if (
-										!genericFonts.has(afterOperator.at(-1))
-									) {
+									if (!isGenericFont(afterOperator.at(-1))) {
 										context.report({
 											loc: node.loc,
 											messageId: "useGenericFont",
@@ -362,12 +373,14 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 									}
 								} else {
 									if (
-										afterOperator.at(-1).startsWith("var")
+										afterOperator
+											.at(-1)
+											.toLowerCase()
+											.startsWith("var")
 									) {
 										const lastNode = valueArr.at(-1);
 										const isFunctionVar =
-											lastNode.type === "Function" &&
-											lastNode.name === "var";
+											isVarFunction(lastNode);
 										const variableName =
 											isFunctionVar &&
 											lastNode.children[0].type ===
@@ -386,9 +399,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 										if (
 											variableList.length > 0 &&
-											!genericFonts.has(
-												variableList.at(-1),
-											)
+											!isGenericFont(variableList.at(-1))
 										) {
 											context.report({
 												loc: node.loc,
@@ -397,9 +408,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 										}
 									} else {
 										if (
-											!genericFonts.has(
-												afterOperator.at(-1),
-											)
+											!isGenericFont(afterOperator.at(-1))
 										) {
 											context.report({
 												loc: node.loc,
@@ -414,12 +423,11 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 								sourceCode
 									.getText(valueArr.at(-1))
 									.trim()
+									.toLowerCase()
 									.startsWith("var")
 							) {
 								const lastNode = valueArr.at(-1);
-								const isFunctionVar =
-									lastNode.type === "Function" &&
-									lastNode.name === "var";
+								const isFunctionVar = isVarFunction(lastNode);
 								const variableName =
 									isFunctionVar &&
 									lastNode.children[0].type ===
@@ -441,7 +449,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 								);
 							} else {
 								if (
-									!genericFonts.has(
+									!isGenericFont(
 										sourceCode
 											.getText(valueArr.at(-1))
 											.trim(),
