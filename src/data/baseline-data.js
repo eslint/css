@@ -174,6 +174,7 @@ export const properties = new Map([
 	["font-weight", "10:2015"],
 	["font-width", "0:"],
 	["forced-color-adjust", "0:"],
+	["frame-sizing", "0:"],
 	["column-rule-break", "0:"],
 	["column-rule-inset", "0:"],
 	["column-rule-inset-cap", "0:"],
@@ -555,6 +556,7 @@ export const properties = new Map([
 	["height", "10:2015"],
 	["width", "10:2015"],
 	["will-change", "10:2020"],
+	["window-drag", "0:"],
 	["word-break", "10:2015"],
 	["word-spacing", "10:2015"],
 	["writing-mode", "10:2017"],
@@ -628,6 +630,7 @@ export const mediaConditions = new Map([
 export const functions = new Map([
 	["abs", "5:2025"],
 	["sign", "5:2025"],
+	["alpha", "0:"],
 	["anchor", "5:2026"],
 	["anchor-size", "5:2026"],
 	["attr", "10:2015"],
@@ -899,6 +902,13 @@ export const selectors = new Map([
 	["cue", "10:2020"],
 	["xr-overlay", "0:"],
 	["where", "10:2021"],
+]);
+export const globalKeywords = new Map([
+	["revert-layer", "10:2022"],
+	["inherit", "10:2015"],
+	["initial", "10:2015"],
+	["revert", "10:2020"],
+	["unset", "10:2016"],
 ]);
 export const propertyValues = new Map([
 	[
@@ -2221,6 +2231,7 @@ export const propertyValues = new Map([
 			["nowrap", "10:2015"],
 			["wrap", "10:2015"],
 			["wrap-reverse", "10:2015"],
+			["balance", "0:"],
 		]),
 	],
 	["flex", new Map([["none", "10:2015"]])],
@@ -2505,6 +2516,16 @@ export const propertyValues = new Map([
 			["auto", "0:"],
 			["none", "0:"],
 			["preserve-parent-color", "0:"],
+		]),
+	],
+	[
+		"frame-sizing",
+		new Map([
+			["auto", "0:"],
+			["content-block-size", "0:"],
+			["content-height", "0:"],
+			["content-inline-size", "0:"],
+			["content-width", "0:"],
 		]),
 	],
 	[
@@ -4226,6 +4247,13 @@ export const propertyValues = new Map([
 			["auto", "10:2020"],
 			["contents", "10:2020"],
 			["scroll-position", "10:2020"],
+		]),
+	],
+	[
+		"window-drag",
+		new Map([
+			["move", "0:"],
+			["none", "0:"],
 		]),
 	],
 	[

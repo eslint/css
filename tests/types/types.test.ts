@@ -64,6 +64,7 @@ css satisfies Plugin;
 // See: https://github.com/eslint/css/pull/473
 css satisfies ESLint.Plugin;
 css.meta.name satisfies string;
+css.meta.namespace satisfies string;
 css.meta.version satisfies string;
 
 // Check that these languages are defined:
