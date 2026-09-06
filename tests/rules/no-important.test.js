@@ -50,6 +50,9 @@ ruleTester.run("no-important", rule, {
 		"a { color: red /* !important */; }",
 		"a { color: /* !important */ red; }",
 		"a { color: red; /* !important */ background: blue; }",
+		"a { color: red !ie; }",
+		"a { color: red !IE7; }",
+		"a { color: red !important\\9; }",
 		'a { content: "!important"; }',
 	],
 	invalid: [
