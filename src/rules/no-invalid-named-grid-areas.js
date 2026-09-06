@@ -23,6 +23,11 @@
 const nullCellToken = /^\.+$/u;
 
 /**
+ * Regular expression to match sequences of CSS whitespace
+ */
+const cssWhitespace = /[\t ]+/u;
+
+/**
  * Finds non-rectangular grid areas in a 2D grid
  * @param {string[][]} grid 2D array representing the grid areas
  * @returns {Array<{name: string, row: number}>} Array of errors found
@@ -131,7 +136,7 @@ export default /** @satisfies {NoInvalidNamedGridAreasRuleDefinition} */ ({
 							continue;
 						}
 
-						const row = trimmedValue.split(" ").filter(Boolean);
+						const row = trimmedValue.split(cssWhitespace);
 						grid.push(row);
 
 						if (firstRowLen === null) {
