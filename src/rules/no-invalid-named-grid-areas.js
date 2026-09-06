@@ -25,7 +25,7 @@ const nullCellToken = /^\.+$/u;
 /**
  * Regular expression to match sequences of CSS whitespace
  */
-const cssWhitespace = /[\t\n ]+/u;
+const cssWhitespace = /[\t ]+/u;
 
 /**
  * Finds non-rectangular grid areas in a 2D grid
