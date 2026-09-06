@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.1](https://github.com/eslint/css/compare/css-v2.0.0...css-v2.0.1) (2026-09-06)
+
+
+### Bug Fixes
+
+* crash in `no-important` on non-standard important values ([#541](https://github.com/eslint/css/issues/541)) ([2985ad5](https://github.com/eslint/css/commit/2985ad5a79b33d355bafd8156e81bbe16921d7dd))
+* recognize CSS whitespace in named grid areas ([#556](https://github.com/eslint/css/issues/556)) ([ea5407d](https://github.com/eslint/css/commit/ea5407ddd542955b820271db75b4fef73b9bf79e))
+* update baseline data ([#561](https://github.com/eslint/css/issues/561)) ([94d79a4](https://github.com/eslint/css/commit/94d79a46c8249fc6d12e6c02132952e106a53b68))
+* update eslint ([#554](https://github.com/eslint/css/issues/554)) ([33e7314](https://github.com/eslint/css/commit/33e7314cf4127543f1863ebeab13a8b7ecc8f161))
+
 ## [2.0.0](https://github.com/eslint/css/compare/css-v1.4.0...css-v2.0.0) (2026-09-01)
 
 
