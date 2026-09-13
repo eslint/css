@@ -126,6 +126,10 @@ b {
 }
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 If you are confident that the font will always load and render as expected, then you can safely disable this rule.
