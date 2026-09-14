@@ -109,6 +109,15 @@ const validLanguageOptions6: CSSLanguageOptions = {
 	unknownOption: "unknown",
 };
 
+const invalidLanguageOptions1: CSSLanguageOptions = {
+	// @ts-expect-error -- Invalid value for `tolerant`
+	tolerant: "true",
+};
+const invalidLanguageOptions2: CSSLanguageOptions = {
+	// @ts-expect-error -- Invalid value for `customSyntax`
+	customSyntax: "invalid",
+};
+
 const defaultSyntaxConfig: DefaultSyntaxConfig = {
 	atrules: {},
 	types: {},
@@ -137,11 +146,6 @@ const invalidSyntaxExtensionCallback: SyntaxExtensionCallback = () => ({
 		foo: 1,
 	},
 });
-
-const invalidLanguageOptions1: CSSLanguageOptions = {
-	// @ts-expect-error -- Invalid value for `tolerant`
-	tolerant: "true",
-};
 
 {
 	type RecommendedRuleName = keyof typeof css.configs.recommended.rules;
