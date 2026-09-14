@@ -134,6 +134,10 @@ Examples of **correct** code for this rule:
 }
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 If you aren't concerned with duplicate selectors within keyframe blocks, you can safely disable this rule.

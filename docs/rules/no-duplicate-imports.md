@@ -44,6 +44,10 @@ Examples of **correct** code:
 @import url("c.css") print;
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 If you aren't concerned with duplicate `@import` rules, you can safely disable this rule.
