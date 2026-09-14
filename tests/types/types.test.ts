@@ -4,6 +4,8 @@ import type {
 	CSSRuleDefinition,
 	CSSRuleVisitor,
 	CSSSourceCode,
+	DefaultSyntaxConfig,
+	SyntaxExtensionCallback,
 } from "@eslint/css";
 import type { Plugin, SourceLocation, SourceRange } from "@eslint/core";
 import type { ESLint } from "eslint";
@@ -85,9 +87,56 @@ const validLanguageOptions3: CSSLanguageOptions = {
 	tolerant: false,
 };
 const validLanguageOptions4: CSSLanguageOptions = {
+	customSyntax: {
+		atrules: {},
+		properties: {},
+		types: {},
+	},
+};
+const validLanguageOptions5: CSSLanguageOptions = {
+	customSyntax: defaultSyntax => {
+		defaultSyntax satisfies DefaultSyntaxConfig;
+
+		return {
+			properties: {
+				foo: "<ident>",
+			},
+		};
+	},
+};
+const validLanguageOptions6: CSSLanguageOptions = {
 	tolerant: true,
 	unknownOption: "unknown",
 };
+
+const defaultSyntaxConfig: DefaultSyntaxConfig = {
+	atrules: {},
+	types: {},
+	properties: {},
+};
+
+// @ts-expect-error -- Default syntax configuration requires `properties`.
+const invalidDefaultSyntaxConfig: DefaultSyntaxConfig = {
+	atrules: {},
+	types: {},
+};
+
+const syntaxExtensionCallback: SyntaxExtensionCallback = defaultSyntax => {
+	defaultSyntax satisfies DefaultSyntaxConfig;
+
+	return {
+		properties: {
+			foo: "<ident>",
+		},
+	};
+};
+
+const invalidSyntaxExtensionCallback: SyntaxExtensionCallback = () => ({
+	properties: {
+		// @ts-expect-error -- CSS property syntax definitions must be strings.
+		foo: 1,
+	},
+});
 
 const invalidLanguageOptions1: CSSLanguageOptions = {
 	// @ts-expect-error -- Invalid value for `tolerant`

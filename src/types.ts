@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import type { LanguageOptions, RuleVisitor } from "@eslint/core";
+import type { DefaultSyntaxConfig as CSSTreeDefaultSyntaxConfig } from "@eslint/css-tree/definition-syntax-data";
 import type {
 	CssNodePlain,
 	StyleSheetPlain,
@@ -25,13 +26,9 @@ import type { CSSSourceCode } from "./index.js";
 //------------------------------------------------------------------------------
 
 /**
- * Default syntax configuration representing the structure returned by
- * `@eslint/css-tree/definition-syntax-data`.
+ * Default syntax configuration representing the structure returned by `@eslint/css-tree/definition-syntax-data`.
  */
-export type DefaultSyntaxConfig = Pick<
-	SyntaxConfig,
-	"atrules" | "types" | "properties"
->;
+export type DefaultSyntaxConfig = CSSTreeDefaultSyntaxConfig;
 
 /**
  * A callback used to extend the default CSS syntax configuration.

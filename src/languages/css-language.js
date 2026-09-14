@@ -30,6 +30,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 
 /** @typedef {OkParseResult<StyleSheetPlain> & { comments: Comment[], lexer: Lexer }} CSSOkParseResult */
 /** @typedef {ParseResult<StyleSheetPlain>} CSSParseResult */
+
 //-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
