@@ -47,6 +47,10 @@ a {
 }
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 If you aren't concerned with empty blocks, you can safely disable this rule.

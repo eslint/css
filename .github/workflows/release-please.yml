@@ -13,15 +13,15 @@ jobs:
             id-token: write
             models: read
         steps:
-            - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
+            - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5
               id: release
               with:
                   token: ${{ secrets.WORKFLOW_PUSH_BOT_TOKEN }}
 
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
               if: ${{ steps.release.outputs.release_created }}
 
-            - uses: actions/setup-node@v6
+            - uses: actions/setup-node@v7
               with:
                   node-version: lts/*
                   registry-url: https://registry.npmjs.org
@@ -48,7 +48,7 @@ jobs:
             - run: npx @humanwhocodes/social-changelog --org ${{ github.repository_owner }} --repo ${{ github.event.repository.name }} --tag ${{ steps.release.outputs.tag_name }} > social-post.txt
               if: ${{ steps.release.outputs.release_created }}
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
             - name: Post release announcement
               run: npx @humanwhocodes/crosspost -t -b -m --discord-webhook --file social-post.txt

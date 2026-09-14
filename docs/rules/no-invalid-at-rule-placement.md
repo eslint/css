@@ -137,6 +137,10 @@ a {
 }
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 You can disable this rule if your stylesheets don't use `@charset`, `@import`, or `@namespace` rules, or if you're not concerned about the impact of incorrect placement on encoding, namespace usage, or style loading.
