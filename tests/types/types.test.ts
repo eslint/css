@@ -1,8 +1,11 @@
 import css from "@eslint/css";
 import type {
+	CSSLanguageOptions,
 	CSSRuleDefinition,
 	CSSRuleVisitor,
 	CSSSourceCode,
+	DefaultSyntaxConfig,
+	SyntaxExtensionCallback,
 } from "@eslint/css";
 import type { Plugin, SourceLocation, SourceRange } from "@eslint/core";
 import type { ESLint } from "eslint";
@@ -75,6 +78,74 @@ css.rules[ruleName] satisfies CSSRuleDefinition;
 
 // Check that `plugins` in the recommended config is defined:
 css.configs.recommended.plugins satisfies object;
+
+const validLanguageOptions1: CSSLanguageOptions = {};
+const validLanguageOptions2: CSSLanguageOptions = {
+	tolerant: true,
+};
+const validLanguageOptions3: CSSLanguageOptions = {
+	tolerant: false,
+};
+const validLanguageOptions4: CSSLanguageOptions = {
+	customSyntax: {
+		atrules: {},
+		properties: {},
+		types: {},
+	},
+};
+const validLanguageOptions5: CSSLanguageOptions = {
+	customSyntax: defaultSyntax => {
+		defaultSyntax satisfies DefaultSyntaxConfig;
+
+		return {
+			properties: {
+				foo: "<ident>",
+			},
+		};
+	},
+};
+const validLanguageOptions6: CSSLanguageOptions = {
+	tolerant: true,
+	unknownOption: "unknown",
+};
+
+const invalidLanguageOptions1: CSSLanguageOptions = {
+	// @ts-expect-error -- Invalid value for `tolerant`
+	tolerant: "true",
+};
+const invalidLanguageOptions2: CSSLanguageOptions = {
+	// @ts-expect-error -- Invalid value for `customSyntax`
+	customSyntax: "invalid",
+};
+
+const defaultSyntaxConfig: DefaultSyntaxConfig = {
+	atrules: {},
+	types: {},
+	properties: {},
+};
+
+// @ts-expect-error -- Default syntax configuration requires `properties`.
+const invalidDefaultSyntaxConfig: DefaultSyntaxConfig = {
+	atrules: {},
+	types: {},
+};
+
+const syntaxExtensionCallback: SyntaxExtensionCallback = defaultSyntax => {
+	defaultSyntax satisfies DefaultSyntaxConfig;
+
+	return {
+		properties: {
+			foo: "<ident>",
+		},
+	};
+};
+
+const invalidSyntaxExtensionCallback: SyntaxExtensionCallback = () => ({
+	properties: {
+		// @ts-expect-error -- CSS property syntax definitions must be strings.
+		foo: 1,
+	},
+});
 
 {
 	type RecommendedRuleName = keyof typeof css.configs.recommended.rules;
