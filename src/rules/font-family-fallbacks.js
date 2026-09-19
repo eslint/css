@@ -82,7 +82,7 @@ function isCSSWideKeywordIdentifier(node, cssWideKeywords) {
  * @returns {boolean} True if the node is a variable function, false otherwise.
  */
 function isVarFunction(node) {
-	return node.type === "Function" && node.name === "var";
+	return node.type === "Function" && node.name.toLowerCase() === "var";
 }
 
 /**
@@ -134,10 +134,12 @@ function reportFontWithoutFallbacksInFontProperty(
 export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
+		languages: ["css/css"],
 
 		docs: {
 			description:
 				"Enforce use of fallback fonts and a generic font last",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/font-family-fallbacks.md",
 		},
@@ -167,7 +169,9 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 				}
 			},
 
-			"Rule > Block > Declaration[property='font-family'] > Value"(node) {
+			"Rule > Block > Declaration[property=/^font-family$/i] > Value"(
+				node,
+			) {
 				const valueArr = node.children;
 
 				if (valueArr.length === 1) {
@@ -177,10 +181,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 						return;
 					}
 
-					if (
-						valueArr[0].type === "Function" &&
-						valueArr[0].name === "var"
-					) {
+					if (isVarFunction(valueArr[0])) {
 						const variableName =
 							valueArr[0].children[0].type === "Identifier" &&
 							valueArr[0].children[0].name;
@@ -234,10 +235,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 						const fontsList = [];
 						const lastNode = valueArr.at(-1);
 
-						if (
-							lastNode.type === "Function" &&
-							lastNode.name === "var"
-						) {
+						if (isVarFunction(lastNode)) {
 							const variableName =
 								lastNode.children[0].type === "Identifier" &&
 								lastNode.children[0].name;
@@ -258,10 +256,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 								fontsList.push(child.name);
 							}
 
-							if (
-								child.type === "Function" &&
-								child.name === "var"
-							) {
+							if (isVarFunction(child)) {
 								const variableName =
 									child.children[0].type === "Identifier" &&
 									child.children[0].name;
@@ -302,7 +297,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 				}
 			},
 
-			"Rule > Block > Declaration[property='font'] > Value"(node) {
+			"Rule > Block > Declaration[property=/^font$/i] > Value"(node) {
 				const valueArr = node.children;
 
 				if (valueArr.length === 1) {
@@ -314,10 +309,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 					}
 
 					// If the value is a variable function, we need to check the variable value
-					if (
-						firstValue.type === "Function" &&
-						firstValue.name === "var"
-					) {
+					if (isVarFunction(firstValue)) {
 						// Check if the function is a variable
 						const variableName =
 							firstValue.children[0].type === "Identifier" &&
@@ -369,7 +361,7 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 
 							if (afterOperator.length !== 0) {
 								const usingVar = afterOperator.some(value =>
-									value.startsWith("var"),
+									value.toLowerCase().startsWith("var"),
 								);
 
 								if (!usingVar) {
@@ -381,12 +373,14 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 									}
 								} else {
 									if (
-										afterOperator.at(-1).startsWith("var")
+										afterOperator
+											.at(-1)
+											.toLowerCase()
+											.startsWith("var")
 									) {
 										const lastNode = valueArr.at(-1);
 										const isFunctionVar =
-											lastNode.type === "Function" &&
-											lastNode.name === "var";
+											isVarFunction(lastNode);
 										const variableName =
 											isFunctionVar &&
 											lastNode.children[0].type ===
@@ -429,12 +423,11 @@ export default /** @satisfies {FontFamilyFallbacksRuleDefinition} */ ({
 								sourceCode
 									.getText(valueArr.at(-1))
 									.trim()
+									.toLowerCase()
 									.startsWith("var")
 							) {
 								const lastNode = valueArr.at(-1);
-								const isFunctionVar =
-									lastNode.type === "Function" &&
-									lastNode.name === "var";
+								const isFunctionVar = isVarFunction(lastNode);
 								const variableName =
 									isFunctionVar &&
 									lastNode.children[0].type ===

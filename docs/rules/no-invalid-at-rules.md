@@ -95,6 +95,10 @@ Examples of **correct** code:
 @charset "UTF-8";
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 If you are purposely using at-rules that aren't part of the CSS specification, then you can safely disable this rule.

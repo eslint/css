@@ -25,9 +25,11 @@
 export default /** @satisfies {UseLayersRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Require use of layers",
+			dialects: ["CSS"],
 			url: "https://github.com/eslint/css/blob/main/docs/rules/use-layers.md",
 		},
 
@@ -78,7 +80,9 @@ export default /** @satisfies {UseLayersRuleDefinition} */ ({
 				// layer, if present, must always be the second child of the prelude
 				const secondChild = node.prelude?.children[1];
 				const layerNode =
-					secondChild?.name === "layer" ? secondChild : null;
+					secondChild?.name?.toLowerCase() === "layer"
+						? secondChild
+						: null;
 
 				if (options.requireImportLayers && !layerNode) {
 					context.report({

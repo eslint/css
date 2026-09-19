@@ -42,6 +42,7 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		".foo { @starting-style { opacity: 0; transform: translateY(-10px); } }",
 		".foo { @media (min-width: 768px) { color: red; @media (orientation: landscape) { background: blue; @supports (display: flex) { display: flex; } } } }",
 		"@property --my-color { syntax: '<color>'; inherits: false; initial-value: #c0ffee; }",
+		"@page { size: landscape; margin: 1in; margin-top: 1in; margin-right: 1in; margin-bottom: 1in; margin-left: 1in; }",
 		"@media (max-width: 800px) { .foo { color: red; } }",
 		".foo { @media (max-width: 800px) { & .bar { color: red; } &:hover { background: blue; } } }",
 		"@layer base { .foo { color: red; } }",

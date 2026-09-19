@@ -53,6 +53,10 @@ Examples of **correct** code:
 }
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 You may disable this rule if you are using `!important` in these specific cases:

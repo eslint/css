@@ -31,14 +31,14 @@ a {
 }
 ```
 
-### Options
+## Options
 
 This rule accepts an option object with the following properties:
 
 - `allowProperties` (default: `[]`) - Specify an array of physical properties that are allowed to be used.
 - `allowUnits` (default: `[]`) - Specify an array of physical units that are allowed to be used.
 
-#### `allowProperties`
+### `allowProperties`
 
 Examples of **correct** code with `{ allowProperties: ["margin-left"] }`:
 
@@ -50,7 +50,7 @@ a {
 }
 ```
 
-#### `allowUnits`
+### `allowUnits`
 
 Examples of **correct** code with `{ allowUnits: ["vw"] }`:
 

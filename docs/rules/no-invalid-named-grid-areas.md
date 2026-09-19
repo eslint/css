@@ -82,6 +82,10 @@ Examples of **correct** code:
 }
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 If you aren't concerned with invalid grid area definitions, then you can safely disable this rule.

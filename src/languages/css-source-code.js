@@ -22,8 +22,7 @@ import { visitorKeys } from "./css-visitor-keys.js";
 /**
  * @import { CssNode, CssNodePlain, CssLocationRange, Comment, Lexer, StyleSheetPlain } from "@eslint/css-tree"
  * @import { SourceRange, FileProblem, DirectiveType, RulesConfig } from "@eslint/core"
- * @import { CSSSyntaxElement } from "../types.js"
- * @import { CSSLanguageOptions } from "./css-language.js"
+ * @import { CSSLanguageOptions, CSSSyntaxElement } from "../types.js"
  */
 
 //-----------------------------------------------------------------------------

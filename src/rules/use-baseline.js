@@ -17,6 +17,7 @@ import {
 	functions,
 	units,
 	selectors,
+	globalKeywords,
 } from "../data/baseline-data.js";
 import { namedColors } from "../data/colors.js";
 
@@ -519,9 +520,11 @@ class BaselineAvailability {
 export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Enforce the use of baseline features",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/use-baseline.md",
 		},
@@ -574,18 +577,23 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					allowPropertyValues: {
 						type: "object",
 						properties: Object.fromEntries(
-							Array.from(propertyValues.entries()).map(
-								([prop, valuesMap]) => [
+							Array.from(properties.keys()).map(prop => {
+								const values = new Set([
+									...globalKeywords.keys(),
+									...(propertyValues.get(prop)?.keys() ?? []),
+								]);
+
+								return [
 									prop,
 									{
 										type: "array",
 										items: {
-											enum: Array.from(valuesMap.keys()),
+											enum: Array.from(values),
 										},
 										uniqueItems: true,
 									},
-								],
-							),
+								];
+							}),
 						),
 						additionalProperties: false,
 					},
@@ -666,13 +674,33 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 		 * @returns {void}
 		 */
 		function checkPropertyValueIdentifier(property, child) {
+			const identifier = child.name.toLowerCase();
+
 			// named colors are always valid
-			if (namedColors.has(child.name)) {
+			if (namedColors.has(identifier)) {
 				return;
 			}
 
 			const allowedValues = allowPropertyValuesMap.get(property);
-			if (allowedValues?.has(child.name)) {
+			if (allowedValues?.has(identifier)) {
+				return;
+			}
+
+			const globalKeywordStatus = globalKeywords.get(identifier);
+
+			if (globalKeywordStatus !== undefined) {
+				if (!baselineAvailability.isSupported(globalKeywordStatus)) {
+					context.report({
+						loc: child.loc,
+						messageId: "notBaselinePropertyValue",
+						data: {
+							property,
+							value: child.name,
+							availability: baselineAvailability.availability,
+						},
+					});
+				}
+
 				return;
 			}
 
@@ -683,7 +711,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 				return;
 			}
 
-			const featureStatus = possiblePropertyValues.get(child.name);
+			const featureStatus = possiblePropertyValues.get(identifier);
 
 			// if we don't know of any possible property values, just skip it
 			if (featureStatus === undefined) {
@@ -709,11 +737,13 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 		 * @returns {void}
 		 */
 		function checkPropertyValueFunction(child) {
-			if (allowFunctions.has(child.name)) {
+			const functionName = child.name.toLowerCase();
+
+			if (allowFunctions.has(functionName)) {
 				return;
 			}
 
-			const featureStatus = functions.get(child.name);
+			const featureStatus = functions.get(functionName);
 
 			// if we don't know of any possible property values, just skip it
 			if (featureStatus === undefined) {
@@ -739,11 +769,13 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 		 * @returns {void}
 		 */
 		function checkPropertyValueUnit(property, child) {
-			if (allowUnits.has(child.unit)) {
+			const unit = child.unit.toLowerCase();
+
+			if (allowUnits.has(unit)) {
 				return;
 			}
 
-			const featureStatus = units.get(child.unit);
+			const featureStatus = units.get(unit);
 
 			// if we don't know of this unit, just skip it
 			if (featureStatus === undefined) {
@@ -776,7 +808,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					// if a SupportsDeclaration is preceded by "not" then we don't consider it
 					if (
 						conditionChild.type === "Identifier" &&
-						conditionChild.name === "not"
+						conditionChild.name.toLowerCase() === "not"
 					) {
 						i++;
 						continue;
@@ -785,23 +817,29 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					// save the supported properties and values for this at-rule
 					if (conditionChild.type === "SupportsDeclaration") {
 						const { declaration } = conditionChild;
-						const property = declaration.property;
+						const property = declaration.property.toLowerCase();
 						const supportedProperty =
 							supportsRule.addProperty(property);
 
 						declaration.value.children.forEach(child => {
 							if (child.type === "Identifier") {
-								supportedProperty.addIdentifier(child.name);
+								supportedProperty.addIdentifier(
+									child.name.toLowerCase(),
+								);
 								return;
 							}
 
 							if (child.type === "Dimension") {
-								supportedProperty.addUnit(child.unit);
+								supportedProperty.addUnit(
+									child.unit.toLowerCase(),
+								);
 								return;
 							}
 
 							if (child.type === "Function") {
-								supportedProperty.addFunction(child.name);
+								supportedProperty.addFunction(
+									child.name.toLowerCase(),
+								);
 							}
 						});
 
@@ -817,7 +855,11 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					if (feature === "selector") {
 						for (const selectorChild of conditionChild.value
 							.children) {
-							supportsRule.addSelector(selectorChild.name);
+							supportsRule.addSelector(
+								selectorChild.type === "NestingSelector"
+									? "nesting"
+									: selectorChild.name.toLowerCase(),
+							);
 						}
 
 						continue;
@@ -833,7 +875,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 			},
 
 			"Rule > Block > Declaration"(node) {
-				const property = node.property;
+				const property = node.property.toLowerCase();
 
 				// ignore unknown properties - no-invalid-properties already catches this
 				if (!properties.has(property)) {
@@ -900,7 +942,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 						if (
 							!supportsRules.hasPropertyIdentifier(
 								property,
-								child.name,
+								child.name.toLowerCase(),
 							)
 						) {
 							checkPropertyValueIdentifier(property, child);
@@ -911,7 +953,10 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 
 					if (child.type === "Dimension") {
 						if (
-							!supportsRules.hasPropertyUnit(property, child.unit)
+							!supportsRules.hasPropertyUnit(
+								property,
+								child.unit.toLowerCase(),
+							)
 						) {
 							checkPropertyValueUnit(property, child);
 						}
@@ -923,7 +968,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 						if (
 							!supportsRules.hasPropertyFunction(
 								property,
-								child.name,
+								child.name.toLowerCase(),
 							)
 						) {
 							checkPropertyValueFunction(child);
@@ -940,20 +985,22 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 				node,
 			) {
 				for (const child of node.children) {
-					// ignore unknown media conditions - no-invalid-at-rules already catches this
-					if (!mediaConditions.has(child.name)) {
-						continue;
-					}
-
 					if (child.type !== "Feature") {
 						continue;
 					}
 
-					if (allowMediaConditions.has(child.name)) {
+					const condition = child.name.toLowerCase();
+
+					// ignore unknown media conditions - no-invalid-at-rules already catches this
+					if (!mediaConditions.has(condition)) {
 						continue;
 					}
 
-					const featureStatus = mediaConditions.get(child.name);
+					if (allowMediaConditions.has(condition)) {
+						continue;
+					}
+
+					const featureStatus = mediaConditions.get(condition);
 
 					if (!baselineAvailability.isSupported(featureStatus)) {
 						const loc = child.loc;
@@ -1025,21 +1072,22 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 
 			"PseudoClassSelector,PseudoElementSelector"(node) {
 				const selector = node.name;
+				const selectorName = selector.toLowerCase();
 
-				if (!selectors.has(selector)) {
+				if (!selectors.has(selectorName)) {
 					return;
 				}
 
-				if (allowSelectors.has(selector)) {
+				if (allowSelectors.has(selectorName)) {
 					return;
 				}
 
 				// if the selector has been tested in a @supports rule, don't check it
-				if (supportsRules.hasSelector(selector)) {
+				if (supportsRules.hasSelector(selectorName)) {
 					return;
 				}
 
-				const featureStatus = selectors.get(selector);
+				const featureStatus = selectors.get(selectorName);
 
 				if (!baselineAvailability.isSupported(featureStatus)) {
 					const loc = node.loc;
@@ -1077,6 +1125,10 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 				const selector = "nesting";
 
 				if (allowSelectors.has(selector)) {
+					return;
+				}
+
+				if (supportsRules.hasSelector(selector)) {
 					return;
 				}
 
