@@ -866,10 +866,9 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					}
 
 					if (feature === "at-rule") {
-						const atRule = conditionChild.value.value
-							.slice(1)
-							.toLowerCase();
-						supportsRule.addAtRule(atRule);
+						supportsRule.addAtRule(
+							conditionChild.value.name.toLowerCase(),
+						);
 					}
 				}
 			},
