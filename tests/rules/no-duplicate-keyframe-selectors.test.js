@@ -215,7 +215,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
-					data: { selector: "from" },
+					data: { selector: "From" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -231,7 +231,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
-					data: { selector: "from" },
+					data: { selector: "FROM" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -265,7 +265,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
-					data: { selector: "to" },
+					data: { selector: "TO" },
 					line: 4,
 					column: 5,
 					endLine: 4,
@@ -624,7 +624,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
-					data: { selector: "entry 0%" },
+					data: { selector: "Entry 0%" },
 					line: 2,
 					column: 15,
 					endLine: 2,
@@ -742,7 +742,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 			errors: [
 				{
 					messageId: "duplicateKeyframeSelector",
-					data: { selector: "from" },
+					data: { selector: "From" },
 					line: 3,
 					column: 5,
 					endLine: 3,
@@ -750,7 +750,7 @@ ruleTester.run("no-duplicate-keyframe-selectors", rule, {
 				},
 				{
 					messageId: "duplicateKeyframeSelector",
-					data: { selector: "to" },
+					data: { selector: "TO" },
 					line: 5,
 					column: 5,
 					endLine: 5,
