@@ -19,7 +19,7 @@ Generally, relative units such as `rem` or `em` are preferred over absolute ones
 
 ## Rule Details
 
-This rule enforces the use of relative units for font size. Relative-size keywords (`smaller`, `larger`) and global values (`inherit`, `initial`, `revert`, `revert-layer`, `unset`) are always allowed. Conversely, absolute-size keywords (`xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large`, `xxx-large`) along with the `math` keyword and any absolute length units (such as `px` or `pt`), are never allowed.
+This rule enforces the use of relative units for font size. Relative-size keywords (`smaller`, `larger`) and global values (`inherit`, `initial`, `revert`, `revert-layer`, `revert-rule`, `unset`) are always allowed. Conversely, absolute-size keywords (`xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large`, `xxx-large`) along with the `math` keyword and any absolute length units (such as `px` or `pt`), are never allowed.
 
 ## Options
 

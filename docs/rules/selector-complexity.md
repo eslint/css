@@ -12,7 +12,7 @@ It is a good practice to refrain from using complex selectors to improve maintai
 
 This rule limits the use of descendant selectors and disallows certain selectors or combinators to prevent overly complex CSS selectors.
 
-### Options
+## Options
 
 This rule accepts an option object with the following properties:
 
@@ -43,7 +43,7 @@ This rule accepts an option object with the following properties:
 - `disallowAttributeMatchers` (default: `[]`) -
   Specify an array of `attribute-matchers`s or `operator`s that are not allowed to be used.
 
-#### `maxIds`
+### `maxIds`
 
 Examples of **incorrect** code with `{ maxIds: 1 }`:
 
@@ -73,7 +73,7 @@ Examples of **correct** code with `{ maxIds: 1 }`:
 }
 ```
 
-#### `maxClasses`
+### `maxClasses`
 
 Examples of **incorrect** code with `{ maxClasses: 2 }`:
 
@@ -106,7 +106,7 @@ a.foo a.bar {
 }
 ```
 
-#### `maxTypes`
+### `maxTypes`
 
 Examples of **incorrect** code with `{ maxTypes: 2 }`:
 
@@ -135,7 +135,7 @@ button img:not(img.foo) {
 }
 ```
 
-#### `maxAttributes`
+### `maxAttributes`
 
 Examples of **incorrect** code with `{ maxAttributes: 1 }`:
 
@@ -161,7 +161,7 @@ Examples of **correct** code with `{ maxAttributes: 1 }`:
 }
 ```
 
-#### `maxPseudoClasses`
+### `maxPseudoClasses`
 
 Examples of **incorrect** code with `{ maxPseudoClasses: 1 }`:
 
@@ -187,7 +187,7 @@ li:nth-child(2) a {
 }
 ```
 
-#### `maxUniversals`
+### `maxUniversals`
 
 Examples of **incorrect** code with `{ maxUniversals: 1 }`:
 
@@ -207,7 +207,7 @@ Examples of **correct** code with `{ maxUniversals: 1 }`:
 }
 ```
 
-#### `maxCompounds`
+### `maxCompounds`
 
 Examples of **incorrect** code with `{ maxCompounds: 2 }`:
 
@@ -234,7 +234,7 @@ button {
 }
 ```
 
-#### `maxCombinators`
+### `maxCombinators`
 
 Examples of **incorrect** code with `{ maxCombinators: 1 }`:
 
@@ -260,7 +260,7 @@ Examples of **correct** code with `{ maxCombinators: 1 }`:
 }
 ```
 
-#### `disallowCombinators`
+### `disallowCombinators`
 
 Examples of **incorrect** code with `{ disallowCombinators: [">"] }`:
 
@@ -286,7 +286,7 @@ Examples of **correct** code with `{ disallowCombinators: [">"] }`:
 }
 ```
 
-#### `disallowPseudoClasses`
+### `disallowPseudoClasses`
 
 Examples of **incorrect** code with `{ disallowPseudoClasses: ["hover"] }`:
 
@@ -312,7 +312,7 @@ a:not(.foo) {
 }
 ```
 
-#### `disallowPseudoElements`
+### `disallowPseudoElements`
 
 Examples of **incorrect** code with `{ disallowPseudoElements: ["marker"] }`:
 
@@ -332,7 +332,7 @@ input::placeholder {
 }
 ```
 
-#### `disallowAttributes`
+### `disallowAttributes`
 
 Examples of **incorrect** code with `{ disallowAttributes: ["class", "alt"] }`:
 
@@ -358,7 +358,7 @@ img[src$=".foo"] {
 }
 ```
 
-#### `disallowAttributeMatchers`
+### `disallowAttributeMatchers`
 
 Examples of **incorrect** code with `{ disallowAttributeMatchers: ["*=", "^="] }`:
 

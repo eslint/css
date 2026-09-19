@@ -77,18 +77,20 @@ function getFixForImport(fixer, text, start, end, hasModifiers) {
 }
 
 //-----------------------------------------------------------------------------
-// Rule
+// Rule Definition
 //-----------------------------------------------------------------------------
 
 export default /** @satisfies {NoDuplicateImportsRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		fixable: "code",
 		hasSuggestions: true,
 
 		docs: {
 			description: "Disallow duplicate @import rules",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-duplicate-imports.md",
 		},

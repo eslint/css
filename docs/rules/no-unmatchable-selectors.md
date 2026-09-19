@@ -46,6 +46,10 @@ a:nth-of-type(1n) {}
 a:nth-last-of-type(1n+0) {}
 ```
 
+## Options
+
+This rule has no options.
+
 ## When Not to Use It
 
 If you intentionally use selectors that can never match (for example, as temporary placeholders during development), then you can safely disable this rule.

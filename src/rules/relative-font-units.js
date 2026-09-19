@@ -9,6 +9,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
+ * @import { CssNode, CssNodePlain } from "@eslint/css-tree"
  * @typedef {"allowedFontUnits"} RelativeFontUnitsMessageIds
  * @typedef {[{allowUnits?: string[]}]} RelativeFontUnitsOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: RelativeFontUnitsOptions, MessageIds: RelativeFontUnitsMessageIds}>} RelativeFontUnitsRuleDefinition
@@ -46,6 +47,22 @@ const disallowedFontSizeKeywords = new Set([
 	"math",
 ]);
 
+/**
+ * Checks whether a font size uses a unit or keyword that is not allowed.
+ * @param {CssNodePlain} value The font size value.
+ * @param {string[]} allowedFontUnits The relative units that are allowed.
+ * @returns {boolean} Whether the font size value is disallowed.
+ */
+function isDisallowedFontSize(value, allowedFontUnits) {
+	return (
+		(value.type === "Dimension" &&
+			!allowedFontUnits.includes(value.unit.toLowerCase())) ||
+		(value.type === "Identifier" &&
+			disallowedFontSizeKeywords.has(value.name.toLowerCase())) ||
+		(value.type === "Percentage" && !allowedFontUnits.includes("%"))
+	);
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -53,9 +70,11 @@ const disallowedFontSizeKeywords = new Set([
 export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 	meta: {
 		type: "suggestion",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Enforce the use of relative font units",
+			dialects: ["CSS"],
 			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/relative-font-units.md",
 		},
@@ -90,28 +109,20 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 
 	create(context) {
 		const [{ allowUnits: allowedFontUnits }] = context.options;
+		const { lexer } = context.sourceCode;
 
 		return {
 			Declaration(node) {
-				if (node.property === "font-size") {
+				const property = node.property.toLowerCase();
+
+				if (property === "font-size") {
 					if (
 						node.value.type === "Value" &&
 						node.value.children.length > 0
 					) {
 						const value = node.value.children[0];
 
-						if (
-							(value.type === "Dimension" &&
-								!allowedFontUnits.includes(
-									value.unit.toLowerCase(),
-								)) ||
-							(value.type === "Identifier" &&
-								disallowedFontSizeKeywords.has(
-									value.name.toLowerCase(),
-								)) ||
-							(value.type === "Percentage" &&
-								!allowedFontUnits.includes("%"))
-						) {
+						if (isDisallowedFontSize(value, allowedFontUnits)) {
 							context.report({
 								loc: value.loc,
 								messageId: "allowedFontUnits",
@@ -124,74 +135,28 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 					}
 				}
 
-				if (node.property === "font") {
+				if (property === "font") {
 					if (
 						node.value.type === "Value" &&
 						node.value.children.length > 0
 					) {
 						const value = node.value;
-
-						const dimensionNode = value.children.find(
-							child => child.type === "Dimension",
-						);
-						const identifierNode = value.children.find(
-							child =>
-								child.type === "Identifier" &&
-								disallowedFontSizeKeywords.has(
-									child.name.toLowerCase(),
-								),
-						);
-						const percentageNode = value.children.find(
-							(child, index) => {
-								const isPercentage =
-									child.type === "Percentage";
-								const previousNode = value.children[index - 1];
-
-								const previousNodeIsSlashOperator =
-									previousNode &&
-									previousNode.type === "Operator" &&
-									previousNode.value === "/";
-
-								return (
-									isPercentage && !previousNodeIsSlashOperator
-								);
-							},
-						);
-
-						let location;
-						let shouldReport = false;
-
-						const conditions = [
-							{
-								check:
-									!allowedFontUnits.includes("%") &&
-									percentageNode,
-								loc: percentageNode?.loc,
-							},
-							{
-								check: identifierNode,
-								loc: identifierNode?.loc,
-							},
-							{
-								check:
-									dimensionNode &&
-									!allowedFontUnits.includes(
-										dimensionNode.unit.toLowerCase(),
+						const match = lexer.matchProperty("font", value);
+						const fontSizeNode = match.matched
+							? value.children.find(child =>
+									match.isProperty(
+										/** @type {CssNode} */ (child),
+										"font-size",
 									),
-								loc: dimensionNode?.loc,
-							},
-						];
-						for (const condition of conditions) {
-							if (condition.check) {
-								shouldReport = true;
-								location = condition.loc;
-								break;
-							}
-						}
+								)
+							: undefined;
 
-						if (shouldReport) {
+						if (
+							fontSizeNode &&
+							isDisallowedFontSize(fontSizeNode, allowedFontUnits)
+						) {
 							context.report({
-								loc: location,
+								loc: fontSizeNode.loc,
 								messageId: "allowedFontUnits",
 								data: {
 									allowedFontUnits:

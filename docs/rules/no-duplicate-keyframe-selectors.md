@@ -40,6 +40,17 @@ Examples of **incorrect** code for this rule:
 }
 
 @keyframes test {
+	0%,
+	50% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 1;
+	}
+}
+
+@keyframes test {
 	from {
 		opacity: 0;
 	}
@@ -98,6 +109,21 @@ Examples of **correct** code for this rule:
 }
 
 @keyframes test {
+	0% {
+		opacity: 0;
+	}
+
+	30%,
+	60% {
+		opacity: 0.5;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes test {
 	from {
 		opacity: 0;
 	}
@@ -107,6 +133,10 @@ Examples of **correct** code for this rule:
 	}
 }
 ```
+
+## Options
+
+This rule has no options.
 
 ## When Not to Use It
 

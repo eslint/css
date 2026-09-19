@@ -66,7 +66,7 @@ Examples of **incorrect** code:
 
 There are also additional options to customize the behavior of this rule.
 
-### Options
+## Options
 
 This rule accepts an options object with the following properties:
 
@@ -74,7 +74,7 @@ This rule accepts an options object with the following properties:
 - `layerNamePattern` (default: `""`) - Set to a regular expression string to validate all layer names.
 - `requireImportLayers` (default: `true`) - Set to `false` to allow `@import` rules without a layer.
 
-#### `allowUnnamedLayers: true`
+### `allowUnnamedLayers: true`
 
 When `allowUnnamedLayers` is set to `true`, the following code is **correct**:
 
@@ -91,7 +91,7 @@ When `allowUnnamedLayers` is set to `true`, the following code is **correct**:
 }
 ```
 
-#### `layerNamePattern`
+### `layerNamePattern`
 
 The `layerNamePattern` is a regular expression string that allows you to validate the name of layers and prevent misspellings. This option supports period-separated layer names (e.g., `foo.bar`) as defined in [CSS Cascade and Inheritance Level 5](https://drafts.csswg.org/css-cascade-5/#layer-names).
 
@@ -123,7 +123,7 @@ Each part of a period-separated layer name is validated individually against the
 - `theme.custom` is invalid (`custom` doesn't match the pattern)
 - `other.base` is invalid (`other` doesn't match the pattern)
 
-#### `requireImportLayers: false`
+### `requireImportLayers: false`
 
 When `requireImportLayers` is set to `false`, the following code is **correct**:
 

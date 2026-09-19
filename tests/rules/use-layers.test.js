@@ -38,6 +38,7 @@ ruleTester.run("use-layers", rule, {
 		"@LAYER bar { a { color: red; } }",
 		"@Layer foo { a { color: red; } }",
 		"@IMPORT 'foo.css' layer(foo);",
+		"@IMPORT 'foo.css' LAYER(foo);",
 		dedent`
 			@media (min-width: 600px) {
 				@LAYER foo {
@@ -68,6 +69,10 @@ ruleTester.run("use-layers", rule, {
 			options: [{ allowUnnamedLayers: true }],
 		},
 		{
+			code: "@import 'foo.css' LAYER;",
+			options: [{ allowUnnamedLayers: true }],
+		},
+		{
 			code: "@import 'foo.css';",
 			options: [{ requireImportLayers: false }],
 		},
@@ -89,6 +94,10 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: "@import 'foo.css' layer(foo.bar);",
+			options: [{ layerNamePattern: "^(foo|bar)$" }],
+		},
+		{
+			code: "@import 'foo.css' LAYER(foo.bar);",
 			options: [{ layerNamePattern: "^(foo|bar)$" }],
 		},
 		{
@@ -263,6 +272,18 @@ ruleTester.run("use-layers", rule, {
 			],
 		},
 		{
+			code: "@import 'foo.css' LAYER;",
+			errors: [
+				{
+					messageId: "missingLayerName",
+					line: 1,
+					column: 19,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
 			code: "@layer foo, baz { a { color: bar } }",
 			options: [{ layerNamePattern: "bar" }],
 			errors: [
@@ -348,6 +369,23 @@ ruleTester.run("use-layers", rule, {
 		},
 		{
 			code: "@import 'foo.css' layer(baz);",
+			options: [{ layerNamePattern: "bar" }],
+			errors: [
+				{
+					messageId: "layerNameMismatch",
+					data: {
+						name: "baz",
+						pattern: "bar",
+					},
+					line: 1,
+					column: 25,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: "@import 'foo.css' LAYER(baz);",
 			options: [{ layerNamePattern: "bar" }],
 			errors: [
 				{

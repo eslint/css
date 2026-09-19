@@ -23,6 +23,11 @@
 const nullCellToken = /^\.+$/u;
 
 /**
+ * Regular expression to match sequences of CSS whitespace
+ */
+const cssWhitespace = /[\t ]+/u;
+
+/**
  * Finds non-rectangular grid areas in a 2D grid
  * @param {string[][]} grid 2D array representing the grid areas
  * @returns {Array<{name: string, row: number}>} Array of errors found
@@ -82,9 +87,11 @@ const validProps = new Set(["grid-template-areas", "grid-template", "grid"]);
 export default /** @satisfies {NoInvalidNamedGridAreasRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow invalid named grid areas",
+			dialects: ["CSS"],
 			recommended: true,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-invalid-named-grid-areas.md",
 		},
@@ -129,7 +136,7 @@ export default /** @satisfies {NoInvalidNamedGridAreasRuleDefinition} */ ({
 							continue;
 						}
 
-						const row = trimmedValue.split(" ").filter(Boolean);
+						const row = trimmedValue.split(cssWhitespace);
 						grid.push(row);
 
 						if (firstRowLen === null) {

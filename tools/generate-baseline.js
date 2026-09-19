@@ -93,6 +93,7 @@ const PATTERNS = {
 	property: /^css\.properties\.(?<property>[a-zA-Z$\d-]+)$/u,
 	propertyValue:
 		/^css\.properties\.(?<property>[a-zA-Z$\d-]+)\.(?<value>[a-zA-Z$\d-]+)$/u,
+	globalKeyword: /^css\.types\.global_keywords\.(?<keyword>[a-zA-Z$\d-]+)$/u,
 	atRule: /^css\.at-rules\.(?<atRule>[a-zA-Z$\d-]+)$/u,
 	mediaCondition: /^css\.at-rules\.media\.(?<condition>[a-zA-Z$\d-]+)$/u,
 	selector: /^css\.selectors\.(?<selector>[a-zA-Z$\d-]+)$/u,
@@ -163,6 +164,7 @@ function extractCSSFeatures(features) {
 	const output = {
 		properties: {},
 		propertyValues: {},
+		globalKeywords: {},
 		atRules: {},
 		mediaConditions: {},
 		selectors: {},
@@ -238,6 +240,11 @@ function extractCSSFeatures(features) {
 					] = mapFeatureStatus(status);
 				}
 			}
+			// CSS-wide keywords
+			else if ((match = PATTERNS.globalKeyword.exec(key))) {
+				output.globalKeywords[match.groups.keyword] =
+					mapFeatureStatus(status);
+			}
 			// at-rules
 			else if ((match = PATTERNS.atRule.exec(key))) {
 				output.atRules[match.groups.atRule] = mapFeatureStatus(status);
@@ -288,6 +295,7 @@ export const mediaConditions = new Map(${JSON.stringify(Object.entries(cssFeatur
 export const functions = new Map(${JSON.stringify(Object.entries(cssFeatures.functions), null, "\t")});
 export const units = new Map(${JSON.stringify(Object.entries(cssFeatures.units), null, "\t")});
 export const selectors = new Map(${JSON.stringify(Object.entries(cssFeatures.selectors), null, "\t")});
+export const globalKeywords = new Map(${JSON.stringify(Object.entries(cssFeatures.globalKeywords), null, "\t")});
 export const propertyValues = new Map([${Object.entries(
 	cssFeatures.propertyValues,
 ).map(

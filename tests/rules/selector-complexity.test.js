@@ -616,6 +616,57 @@ ruleTester.run("selector-complexity", rule, {
 			],
 		},
 		{
+			code: "a:hover {}",
+			options: [{ disallowPseudoClasses: ["HOVER"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "hover",
+						selector: "pseudo-class",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "a:HOVER {}",
+			options: [{ disallowPseudoClasses: ["hover"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "HOVER",
+						selector: "pseudo-class",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "a:HOVER {}",
+			options: [{ disallowPseudoClasses: ["HOVER"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "HOVER",
+						selector: "pseudo-class",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
 			code: "li:first-child:hover {}",
 			options: [{ disallowPseudoClasses: ["hover", "first-child"] }],
 			errors: [
@@ -651,6 +702,57 @@ ruleTester.run("selector-complexity", rule, {
 					messageId: "disallowedSelectors",
 					data: {
 						selectorName: "marker",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "li::marker {}",
+			options: [{ disallowPseudoElements: ["MARKER"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "marker",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "li::MARKER {}",
+			options: [{ disallowPseudoElements: ["marker"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "MARKER",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "li::MARKER {}",
+			options: [{ disallowPseudoElements: ["MARKER"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "MARKER",
 						selector: "pseudo-element",
 					},
 					line: 1,
