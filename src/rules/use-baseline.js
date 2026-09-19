@@ -178,6 +178,12 @@ class SupportsRule {
 	#selectors = new Set();
 
 	/**
+	 * The at-rules supported by this rule.
+	 * @type {Set<string>}
+	 */
+	#atRules = new Set();
+
+	/**
 	 * Adds a property to the rule.
 	 * @param {string} property The name of the property.
 	 * @returns {SupportedProperty} The supported property object.
@@ -321,6 +327,24 @@ class SupportsRule {
 	hasSelector(selector) {
 		return this.#selectors.has(selector);
 	}
+
+	/**
+	 * Adds an at-rule to the rule.
+	 * @param {string} atRule The name of the at-rule.
+	 * @returns {void}
+	 */
+	addAtRule(atRule) {
+		this.#atRules.add(atRule);
+	}
+
+	/**
+	 * Determines if the rule supports an at-rule.
+	 * @param {string} atRule The name of the at-rule.
+	 * @returns {boolean} `true` if the at-rule is supported, `false` if not.
+	 */
+	hasAtRule(atRule) {
+		return this.#atRules.has(atRule);
+	}
 }
 
 /**
@@ -424,6 +448,15 @@ class SupportsRules {
 	 */
 	hasSelector(selector) {
 		return this.#rules.some(rule => rule.hasSelector(selector));
+	}
+
+	/**
+	 * Determines if any rule supports an at-rule.
+	 * @param {string} atRule The name of the at-rule.
+	 * @returns {boolean} `true` if any rule supports the at-rule, `false` if not.
+	 */
+	hasAtRule(atRule) {
+		return this.#rules.some(rule => rule.hasAtRule(atRule));
 	}
 }
 
@@ -813,10 +846,13 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 						continue;
 					}
 
-					if (
-						conditionChild.type === "FeatureFunction" &&
-						conditionChild.feature.toLowerCase() === "selector"
-					) {
+					if (conditionChild.type !== "FeatureFunction") {
+						continue;
+					}
+
+					const feature = conditionChild.feature.toLowerCase();
+
+					if (feature === "selector") {
 						for (const selectorChild of conditionChild.value
 							.children) {
 							supportsRule.addSelector(
@@ -825,6 +861,14 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 									: selectorChild.name.toLowerCase(),
 							);
 						}
+
+						continue;
+					}
+
+					if (feature === "at-rule") {
+						supportsRule.addAtRule(
+							conditionChild.value.name.toLowerCase(),
+						);
 					}
 				}
 			},
@@ -994,6 +1038,10 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 				}
 
 				if (allowAtRules.has(atRuleName)) {
+					return;
+				}
+
+				if (supportsRules.hasAtRule(atRuleName)) {
 					return;
 				}
 
