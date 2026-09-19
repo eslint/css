@@ -278,11 +278,12 @@ function extractCSSFeatures(features) {
 			else if ((match = PATTERNS.type.exec(key))) {
 				const { group, type } = match.groups;
 				if (isCompatTypeAFunction(group, type)) {
+					if (!functionsFromBareKeys.has(type)) {
+						output.functions[type] = mapFeatureStatus(status);
+					}
+
 					if (!group) {
 						functionsFromBareKeys.add(type);
-						output.functions[type] = mapFeatureStatus(status);
-					} else if (!functionsFromBareKeys.has(type)) {
-						output.functions[type] = mapFeatureStatus(status);
 					}
 				}
 			}
