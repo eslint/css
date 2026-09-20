@@ -11,6 +11,7 @@ import rule from "../../src/rules/no-unknown-animations.js";
 import css from "../../src/index.js";
 import { RuleTester } from "eslint";
 import dedent from "dedent";
+import { tailwind4 } from "tailwind-csstree";
 
 //------------------------------------------------------------------------------
 // Tests
@@ -184,6 +185,24 @@ ruleTester.run("no-unknown-animations", rule, {
 		".a { animation-name: revert; }",
 		".a { animation-name: revert-layer; }",
 		".a { animation: 2s ease-in 1s infinite alternate; }",
+		".a { animation: 1s ease-in-out 500ms infinite alternate-reverse forwards paused; }",
+		".a { animation: 1s step-start reverse both running; }",
+		".a { animation: 1s linear normal backwards auto; }",
+		".a { animation: 1s EASE-OUT INFINITE ALTERNATE FORWARDS; }",
+		// the animation name can appear anywhere in the shorthand
+		dedent`
+			.a { animation: 1s ease fade-in; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// in animation-name, shorthand keywords such as `ease` are animation names
+		dedent`
+			.a { animation-name: ease; }
+			@keyframes ease {
+				to { opacity: 1; }
+			}
+		`,
 		// vendor-prefixed animation properties
 		dedent`
 			.a { -webkit-animation-name: fade-in; }
@@ -219,7 +238,7 @@ ruleTester.run("no-unknown-animations", rule, {
 		".a { animation: var(--anim) 1s; }",
 		".a { animation-name: var(--anim-name); }",
 		".a { animation: var(--anim); }",
-		// names that remain determinable next to a var() are still checked
+		// names next to a var() are still checked
 		dedent`
 			.a { animation: fade-in var(--duration); }
 			@keyframes fade-in {
@@ -244,12 +263,19 @@ ruleTester.run("no-unknown-animations", rule, {
 				to { opacity: 1; }
 			}
 		`,
-		// a fallback that isn't an animation name contributes none
+		// a fallback that isn't an animation name is ignored
 		".a { animation: var(--duration, 1s); }",
+		// a fallback that can't be parsed with the default syntax is ignored
+		{
+			code: ".a { animation-name: var(--x, theme(animation.fade)); }",
+			languageOptions: {
+				customSyntax: tailwind4,
+			},
+		},
 		// @keyframes preludes that don't name an animation
 		"@keyframes 50% { to { opacity: 1; } }",
 		"@keyframes 1s { to { opacity: 1; } }",
-		// invalid values are reported by no-invalid-properties
+		// values that aren't identifiers or strings don't name an animation
 		".a { animation-name: 100px; }",
 		".a { animation-name: (); }",
 		// animation names are extracted only from animation and animation-name
@@ -381,6 +407,23 @@ ruleTester.run("no-unknown-animations", rule, {
 				},
 			],
 		},
+		// names outside an unparseable fallback are still checked
+		{
+			code: ".a { animation: fade-in var(--x, theme(animation.fade)); }",
+			languageOptions: {
+				customSyntax: tailwind4,
+			},
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
 		{
 			code: dedent`
 				.a { animation-name: fade-in; }
@@ -467,6 +510,82 @@ ruleTester.run("no-unknown-animations", rule, {
 					column: 22,
 					endLine: 1,
 					endColumn: 29,
+				},
+			],
+		},
+		// only the animation name is reported, wherever it is in the shorthand
+		{
+			code: ".a { animation: 1s ease fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 25,
+					endLine: 1,
+					endColumn: 32,
+				},
+			],
+		},
+		{
+			code: ".a { animation: fade-in 1s ease-in-out infinite alternate both paused; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: ".a { animation: fade-in 1s ease, 2s linear slide-up; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-up" },
+					line: 1,
+					column: 44,
+					endLine: 1,
+					endColumn: 52,
+				},
+			],
+		},
+		// in animation-name, shorthand keywords such as `ease` are animation names
+		{
+			code: ".a { animation-name: ease; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "ease" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 26,
+				},
+			],
+		},
+		// names are checked even when the rest of the value is invalid
+		{
+			code: ".a { animation: fade-in 100px; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
 				},
 			],
 		},
