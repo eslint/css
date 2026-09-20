@@ -4,7 +4,7 @@ Disallow unknown animation names.
 
 ## Background
 
-CSS animations are created by assigning a [`@keyframes`](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes) rule's name to the [`animation-name`](https://developer.mozilla.org/en-US-US/docs/Web/CSS/animation-name) property or the [`animation`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation) shorthand property, as in this example:
+CSS animations are created by assigning a [`@keyframes`](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes) rule's name to the [`animation-name`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name) property or the [`animation`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation) shorthand property, as in this example:
 
 ```css
 .card {
@@ -22,7 +22,7 @@ CSS animations are created by assigning a [`@keyframes`](https://developer.mozil
 }
 ```
 
-If an animation name doesn't match any `@keyframes` rule, for example because of a typo or because the `@keyframes` rule was renamed or removed, the animation silently fails to run without any error.
+If an animation name doesn't match any `@keyframes` rule, for example because of a typo or because the `@keyframes` rule was renamed or removed, the animation doesn't run and the browser reports no error.
 
 ## Rule Details
 
@@ -30,7 +30,7 @@ This rule warns when an animation name used in `animation` or `animation-name` d
 
 Animation names are case-sensitive, and quoted and unquoted names refer to the same animation, so `animation-name: "fade-in"` matches `@keyframes fade-in`.
 
-The rule only checks statically determinable animation names. A `var()` contributes the animation name in its fallback, if it has one, and the rest of the value is checked either way:
+The rule only checks animation names that can be determined statically. When a value contains `var()`, the name in its fallback is checked if there is one, and so is the rest of the value:
 
 ```css
 /* `fade-in` is checked, the duration is not */
@@ -103,7 +103,7 @@ Examples of **correct** code for this rule:
 
 ## When Not to Use It
 
-Animations can reference `@keyframes` rules defined in another stylesheet, but this rule only checks `@keyframes` rules defined in the same source. If your `@keyframes` rules are defined separately from where the animations are used, you should not use this rule.
+This rule only checks `@keyframes` rules in the same source, so it can't find animations defined in another stylesheet. If your `@keyframes` rules live in a different file from the animations that use them, you can disable this rule.
 
 ## Prior Art
 
