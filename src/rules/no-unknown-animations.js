@@ -25,7 +25,7 @@ import { parse } from "@eslint/css-tree";
 //-----------------------------------------------------------------------------
 
 const animationPropertyPattern =
-	/^(?:-(?:o|moz|webkit)-)?animation(?:-name)?$/iu;
+	/^(?:-(?:o|ms|moz|webkit)-)?animation(?:-name)?$/iu;
 
 /**
  * Extracts an animation name from a node. Quoted and unquoted animation
@@ -225,7 +225,7 @@ export default /** @satisfies {NoUnknownAnimationsRuleDefinition} */ ({
 		}
 
 		return {
-			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i] > AtrulePrelude"(
+			"Atrule[name=/^(-(o|ms|moz|webkit)-)?keyframes$/i] > AtrulePrelude"(
 				node,
 			) {
 				const child = node.children[0];

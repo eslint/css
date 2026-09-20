@@ -87,6 +87,12 @@ ruleTester.run("no-unknown-animations", rule, {
 		`,
 		dedent`
 			.a { animation-name: fade-in; }
+			@-ms-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
 			@KEYFRAMES fade-in {
 				to { opacity: 1; }
 			}
@@ -197,8 +203,18 @@ ruleTester.run("no-unknown-animations", rule, {
 				to { opacity: 1; }
 			}
 		`,
-		// -ms- is not checked, matching the prefixes the @keyframes check uses
-		".a { -ms-animation-name: fade-in; }",
+		dedent`
+			.a { -ms-animation: fade-in 1s; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { -ms-animation-name: fade-in; }
+			@-ms-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
 		// names that can't be determined statically are ignored
 		".a { animation: var(--anim) 1s; }",
 		".a { animation-name: var(--anim-name); }",
@@ -258,6 +274,50 @@ ruleTester.run("no-unknown-animations", rule, {
 		},
 		{
 			code: ".a { -moz-animation: fade-in 1s; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: ".a { -ms-animation-name: fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: ".a { -ms-animation: fade-in 1s; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a { animation-name: fade-in; }
+				@-ms-keyframes fade-out {
+					to { opacity: 0; }
+				}
+			`,
 			errors: [
 				{
 					messageId: "unknownAnimation",
