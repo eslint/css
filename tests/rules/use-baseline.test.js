@@ -267,7 +267,7 @@ ruleTester.run("use-baseline", rule, {
 				{
 					messageId: "notBaselineProperty",
 					data: {
-						property: "accent-color",
+						property: "ACCENT-COLOR",
 						availability: "widely",
 					},
 					line: 1,
@@ -435,7 +435,7 @@ ruleTester.run("use-baseline", rule, {
 				{
 					messageId: "notBaselinePropertyValue",
 					data: {
-						property: "image-rendering",
+						property: "IMAGE-RENDERING",
 						value: "SMOOTH",
 						availability: "widely",
 					},
@@ -471,7 +471,7 @@ ruleTester.run("use-baseline", rule, {
 				{
 					messageId: "notBaselinePropertyValue",
 					data: {
-						property: "font-size",
+						property: "FONT-SIZE",
 						value: "REVERT-LAYER",
 						availability: 2021,
 					},
