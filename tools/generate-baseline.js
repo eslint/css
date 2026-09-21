@@ -61,9 +61,15 @@ const groupedUnitMappings = {
 /*
  * Some bare `css.types.<name>` compat keys refer to CSS data types
  * instead of functions. For example, `css.types.image` refers to `<image>`,
- * not `image()`.
+ * not `image()`, and `css.types.shape` refers to the deprecated `<shape>`
+ * type used by `clip`, not `shape()`.
  */
-const UNGROUPED_NON_FUNCTION_TYPES = new Set(["color", "image", "string"]);
+const UNGROUPED_NON_FUNCTION_TYPES = new Set([
+	"color",
+	"image",
+	"shape",
+	"string",
+]);
 
 const BASELINE_HIGH = 10;
 const BASELINE_LOW = 5;
@@ -172,10 +178,24 @@ function extractCSSFeatures(features) {
 		units: {},
 	};
 
+	/*
+	 * Functions whose status came from their own bare `css.types.<name>`
+	 * compat key. That key is the compat entry for the function itself, so it
+	 * takes precedence over a feature name match and over grouped
+	 * `css.types.<group>.<name>` keys, which describe a sub-feature of
+	 * `<group>` that merely shares the name. For example,
+	 * `css.types.param.url` describes `param()` inside `url()`, not `url()`.
+	 */
+	const functionsFromBareKeys = new Set();
+
 	for (const feature of Object.values(features)) {
 		// Check if the feature name itself represents a function
 		const nameMatch = PATTERNS.functionName.exec(feature.name);
-		if (nameMatch && isKnownCSSFunction(nameMatch.groups.name)) {
+		if (
+			nameMatch &&
+			isKnownCSSFunction(nameMatch.groups.name) &&
+			!functionsFromBareKeys.has(nameMatch.groups.name)
+		) {
 			output.functions[nameMatch.groups.name] = mapFeatureStatus(
 				feature.status,
 			);
@@ -258,7 +278,13 @@ function extractCSSFeatures(features) {
 			else if ((match = PATTERNS.type.exec(key))) {
 				const { group, type } = match.groups;
 				if (isCompatTypeAFunction(group, type)) {
-					output.functions[type] = mapFeatureStatus(status);
+					if (!functionsFromBareKeys.has(type)) {
+						output.functions[type] = mapFeatureStatus(status);
+					}
+
+					if (!group) {
+						functionsFromBareKeys.add(type);
+					}
 				}
 			}
 			// selectors
