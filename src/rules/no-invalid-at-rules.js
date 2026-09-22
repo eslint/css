@@ -7,7 +7,7 @@
 // Imports
 //-----------------------------------------------------------------------------
 
-import { isSyntaxMatchError } from "../util.js";
+import { isSyntaxMatchError, isUnsupportedMatchingTreeError } from "../util.js";
 
 //-----------------------------------------------------------------------------
 // Type Definitions
@@ -214,6 +214,13 @@ export default /** @satisfies {NoInvalidAtRulesRuleDefinition} */ ({
 						});
 						return;
 					}
+					if (isUnsupportedMatchingTreeError(error)) {
+						/*
+						 * The lexer can't match a prelude containing var() or env()
+						 * because their values are unknown at match time.
+						 */
+						return;
+					}
 
 					const loc = node.loc;
 
@@ -265,6 +272,13 @@ export default /** @satisfies {NoInvalidAtRulesRuleDefinition} */ ({
 								expected: error.syntax,
 							},
 						});
+						return;
+					}
+					if (isUnsupportedMatchingTreeError(error)) {
+						/*
+						 * The lexer can't match a descriptor value containing var() or
+						 * env() because their values are unknown at match time.
+						 */
 						return;
 					}
 

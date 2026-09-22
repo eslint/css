@@ -46,6 +46,9 @@ ruleTester.run("no-invalid-at-rules", rule, {
 		"@media (max-width: 800px) { .foo { color: red; } }",
 		".foo { @media (max-width: 800px) { & .bar { color: red; } &:hover { background: blue; } } }",
 		"@layer base { .foo { color: red; } }",
+		"@supports (color: var(--x)) {}",
+		"@supports (padding: env(safe-area-inset-top)) {}",
+		"@page { margin: env(safe-area-inset-top); }",
 		{
 			code: "@foobar url(foo.css) { body { font-size: 12px } }",
 			languageOptions: {

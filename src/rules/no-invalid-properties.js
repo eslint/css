@@ -10,7 +10,7 @@
 import {
 	isSyntaxMatchError,
 	isSyntaxReferenceError,
-	isEnvMatchError,
+	isUnsupportedMatchingTreeError,
 } from "../util.js";
 
 //-----------------------------------------------------------------------------
@@ -469,10 +469,12 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 						});
 						return;
 					}
-					if (isEnvMatchError(error)) {
+					if (isUnsupportedMatchingTreeError(error)) {
 						/*
-						 * env() values are provided by the user agent and
-						 * cannot be validated, so skip validation entirely.
+						 * The value contains env(), whose value comes from the user
+						 * agent, or a var() that could not be resolved above and was
+						 * let through because unknown variables are allowed. The
+						 * lexer can't match either, so there is nothing left to check.
 						 */
 						return;
 					}

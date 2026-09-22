@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 
 /**
- * @import { SyntaxMatchError, SyntaxReferenceError } from "@eslint/css-tree"
+ * @import { SyntaxMatchError, SyntaxReferenceError, UnsupportedMatchingTree } from "@eslint/css-tree"
  */
 
 //-----------------------------------------------------------------------------
@@ -34,11 +34,11 @@ export function isSyntaxReferenceError(error) {
 }
 
 /**
- * Determines if an error is the lexer error thrown when a value containing
- * `env()` cannot be matched against a syntax definition.
+ * Determines if an error is the lexer error returned when a value containing
+ * `var()` or `env()` cannot be matched against a syntax definition.
  * @param {Object} error The error object to check.
- * @returns {boolean} True if the error is the `env()` match error, false if not.
+ * @returns {error is UnsupportedMatchingTree} True if the error is an unsupported matching tree error, false if not.
  */
-export function isEnvMatchError(error) {
-	return error.message === "Matching for a tree with env() is not supported";
+export function isUnsupportedMatchingTreeError(error) {
+	return error.name === "UnsupportedMatchingTree";
 }
