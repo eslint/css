@@ -543,26 +543,16 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					},
 					allowPropertyValues: {
 						type: "object",
-						properties: Object.fromEntries(
-							Array.from(properties.keys()).map(prop => {
-								const values = new Set([
-									...globalKeywords.keys(),
-									...(propertyValues.get(prop)?.keys() ?? []),
-								]);
-
-								return [
-									prop,
-									{
-										type: "array",
-										items: {
-											enum: Array.from(values),
-										},
-										uniqueItems: true,
-									},
-								];
-							}),
-						),
-						additionalProperties: false,
+						propertyNames: {
+							enum: Array.from(properties.keys()),
+						},
+						additionalProperties: {
+							type: "array",
+							items: {
+								type: "string",
+							},
+							uniqueItems: true,
+						},
 					},
 					allowSelectors: {
 						type: "array",
