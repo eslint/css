@@ -71,17 +71,16 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 						if (component.type === "Percentage") {
 							value.push(`${component.value}%`);
 						} else if (component.type === "TypeSelector") {
-							value.push(component.name.toLowerCase());
+							value.push(component.name);
 						}
 					});
 
 					const selectorValue = value.join(" ");
 					const key = value
-						.map(
-							selectorPart =>
-								keyframeSelectorAliases.get(selectorPart) ??
-								selectorPart,
-						)
+						.map(selectorPart => {
+							const part = selectorPart.toLowerCase();
+							return keyframeSelectorAliases.get(part) ?? part;
+						})
 						.join(" ");
 
 					if (seen.has(key)) {
