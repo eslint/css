@@ -74,9 +74,13 @@ describe("Plugin", () => {
 		});
 
 		it("use-baseline config should compile with limited stack space", () => {
-			const pluginUrl = new URL("../../src/index.js", import.meta.url).href;
+			const pluginUrl = new URL("../../src/index.js", import.meta.url)
+				.href;
+			const nodeExecutable = process.versions.bun
+				? "node"
+				: process.execPath;
 			const output = execFileSync(
-				process.execPath,
+				nodeExecutable,
 				[
 					"--stack_size=100",
 					"--input-type=module",
