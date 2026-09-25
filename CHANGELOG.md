@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.1](https://github.com/eslint/css/compare/css-v2.0.0...css-v2.0.1) (2026-09-25)
+
+
+### Bug Fixes
+
+* allow additional properties in `CSSLanguageOptions` ([#538](https://github.com/eslint/css/issues/538)) ([471e568](https://github.com/eslint/css/commit/471e56813150cbfb5a1f27aa7602f0131dc56578))
+* crash in `no-important` on non-standard important values ([#541](https://github.com/eslint/css/issues/541)) ([2985ad5](https://github.com/eslint/css/commit/2985ad5a79b33d355bafd8156e81bbe16921d7dd))
+* handle `var()` and `env()` in `no-invalid-at-rules` ([#570](https://github.com/eslint/css/issues/570)) ([75050c3](https://github.com/eslint/css/commit/75050c315c3f3bed6bd399f7508d262cf2f59f43))
+* preserve keyframe selector casing in error messages ([#571](https://github.com/eslint/css/issues/571)) ([6589273](https://github.com/eslint/css/commit/6589273acf49edd67f46bbb28e2c9d63da3a1395))
+* recognize `at-rule()` feature queries in `use-baseline` ([#533](https://github.com/eslint/css/issues/533)) ([ba65596](https://github.com/eslint/css/commit/ba655964e8d4bb424638ab1c56dcf50a24231130))
+* recognize CSS whitespace in named grid areas ([#556](https://github.com/eslint/css/issues/556)) ([ea5407d](https://github.com/eslint/css/commit/ea5407ddd542955b820271db75b4fef73b9bf79e))
+* support at-rules nested in `[@page](https://github.com/page)` and `[@font-feature-values](https://github.com/font-feature-values)` ([#543](https://github.com/eslint/css/issues/543)) ([12ec029](https://github.com/eslint/css/commit/12ec029258de03056d8533a6960de154d8fb7e76))
+* update baseline data ([bcd705e](https://github.com/eslint/css/commit/bcd705e7536d47dd8aff8fb0b5dc9d6f3d72e276))
+* update baseline data ([#561](https://github.com/eslint/css/issues/561)) ([94d79a4](https://github.com/eslint/css/commit/94d79a46c8249fc6d12e6c02132952e106a53b68))
+* update baseline data ([#566](https://github.com/eslint/css/issues/566)) ([9856c3b](https://github.com/eslint/css/commit/9856c3b6f25f4ebaf2930b130159264b9d381628))
+* update dependency @eslint/css-tree to ^4.1.1 ([#568](https://github.com/eslint/css/issues/568)) ([ae69b1a](https://github.com/eslint/css/commit/ae69b1ad922f0c96e11bd4421033a92209e6afed))
+* update eslint ([#554](https://github.com/eslint/css/issues/554)) ([33e7314](https://github.com/eslint/css/commit/33e7314cf4127543f1863ebeab13a8b7ecc8f161))
+
 ## [2.0.0](https://github.com/eslint/css/compare/css-v1.4.0...css-v2.0.0) (2026-09-01)
 
 
