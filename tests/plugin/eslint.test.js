@@ -12,6 +12,7 @@ import ESLintAPI from "eslint";
 const { ESLint } = ESLintAPI;
 
 import assert from "node:assert";
+import { execFileSync } from "node:child_process";
 
 //-----------------------------------------------------------------------------
 // Tests
@@ -70,6 +71,45 @@ describe("Plugin", () => {
 				"eslintcss/no-empty-blocks",
 			);
 			assert.strictEqual(results[0].messages[0].messageId, "emptyBlock");
+		});
+
+		it("use-baseline config should compile with limited stack space", () => {
+			const pluginUrl = new URL("../../src/index.js", import.meta.url)
+				.href;
+			const nodeExecutable = process.versions.bun
+				? "node"
+				: process.execPath;
+			const output = execFileSync(
+				nodeExecutable,
+				[
+					"--stack_size=100",
+					"--input-type=module",
+					"--eval",
+					`
+						import css from ${JSON.stringify(pluginUrl)};
+						import ESLintAPI from "eslint";
+
+						const { ESLint } = ESLintAPI;
+						const eslint = new ESLint({
+							overrideConfigFile: true,
+							overrideConfig: {
+								files: ["**/*.css"],
+								plugins: { css },
+								language: "css/css",
+								rules: {
+									"css/use-baseline": "error",
+								},
+							},
+						});
+
+						await eslint.calculateConfigForFile("test.css");
+						process.stdout.write("ok");
+					`,
+				],
+				{ encoding: "utf8", cwd: process.cwd() },
+			);
+
+			assert.strictEqual(output, "ok");
 		});
 	});
 
