@@ -821,7 +821,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 						const supportedProperty =
 							supportsRule.addProperty(property);
 
-						declaration.value.children.forEach(child => {
+						declaration.value.children?.forEach(child => {
 							if (child.type === "Identifier") {
 								supportedProperty.addIdentifier(
 									child.name.toLowerCase(),
@@ -855,11 +855,16 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					if (feature === "selector") {
 						for (const selectorChild of conditionChild.value
 							.children) {
-							supportsRule.addSelector(
-								selectorChild.type === "NestingSelector"
-									? "nesting"
-									: selectorChild.name.toLowerCase(),
-							);
+							if (selectorChild.type === "NestingSelector") {
+								supportsRule.addSelector("nesting");
+							} else if (
+								selectorChild.type === "PseudoClassSelector" ||
+								selectorChild.type === "PseudoElementSelector"
+							) {
+								supportsRule.addSelector(
+									selectorChild.name.toLowerCase(),
+								);
+							}
 						}
 
 						continue;
