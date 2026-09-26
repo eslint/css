@@ -1,0 +1,747 @@
+/**
+ * @fileoverview Tests for no-unknown-animations rule.
+ * @author Gaic4o
+ */
+
+//------------------------------------------------------------------------------
+// Imports
+//------------------------------------------------------------------------------
+
+import rule from "../../src/rules/no-unknown-animations.js";
+import css from "../../src/index.js";
+import { RuleTester } from "eslint";
+import dedent from "dedent";
+import { tailwind4 } from "tailwind-csstree";
+
+//------------------------------------------------------------------------------
+// Tests
+//------------------------------------------------------------------------------
+
+const ruleTester = new RuleTester({
+	plugins: {
+		css,
+	},
+	language: "css/css",
+});
+
+ruleTester.run("no-unknown-animations", rule, {
+	valid: [
+		"a { color: red; }",
+		dedent`
+			@keyframes fade-in {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+			.a { animation: fade-in 300ms ease; }
+		`,
+		// @keyframes defined after usage
+		dedent`
+			.a { animation: fade-in 300ms ease; }
+			@keyframes fade-in {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// multiple animations
+		dedent`
+			.a { animation: fade-in 300ms ease, slide-up 1s infinite; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+			@keyframes slide-up {
+				to { transform: translateY(0); }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in, slide-up; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+			@keyframes slide-up {
+				to { transform: translateY(0); }
+			}
+		`,
+		// vendor-prefixed @keyframes
+		dedent`
+			.a { animation-name: fade-in; }
+			@-webkit-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
+			@-moz-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
+			@-o-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
+			@-ms-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
+			@KEYFRAMES fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
+			@-WEBKIT-KEYFRAMES fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// quoted and unquoted names refer to the same animation
+		dedent`
+			.a { animation-name: "fade-in"; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in; }
+			@keyframes "fade-in" {
+				to { opacity: 1; }
+			}
+		`,
+		// case-insensitive properties
+		dedent`
+			.a { ANIMATION-NAME: fade-in; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// @keyframes inside a conditional at-rule
+		dedent`
+			.a { animation-name: fade-in; }
+			@media (prefers-reduced-motion: no-preference) {
+				@keyframes fade-in {
+					to { opacity: 1; }
+				}
+			}
+		`,
+		// usage inside nested rules and at-rules
+		dedent`
+			.a {
+				.b { animation-name: fade-in; }
+			}
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			@media (min-width: 100px) {
+				.a { animation: fade-in 1s; }
+			}
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// declarations directly inside a nested at-rule
+		dedent`
+			.a {
+				@media (min-width: 100px) {
+					animation-name: fade-in;
+				}
+			}
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// `none` as a string is a valid animation name
+		dedent`
+			.a { animation-name: "none"; }
+			@keyframes "none" {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: fade-in !important; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// keywords are not animation names
+		".a { animation: none; }",
+		".a { animation-name: none; }",
+		".a { animation-name: none, none; }",
+		".a { animation-name: inherit; }",
+		".a { animation-name: INHERIT; }",
+		".a { animation-name: initial; }",
+		".a { animation-name: unset; }",
+		".a { animation-name: revert; }",
+		".a { animation-name: revert-layer; }",
+		".a { animation: 2s ease-in 1s infinite alternate; }",
+		".a { animation: 1s ease-in-out 500ms infinite alternate-reverse forwards paused; }",
+		".a { animation: 1s step-start reverse both running; }",
+		".a { animation: 1s linear normal backwards auto; }",
+		".a { animation: 1s EASE-OUT INFINITE ALTERNATE FORWARDS; }",
+		// the animation name can appear anywhere in the shorthand
+		dedent`
+			.a { animation: 1s ease fade-in; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// in animation-name, shorthand keywords such as `ease` are animation names
+		dedent`
+			.a { animation-name: ease; }
+			@keyframes ease {
+				to { opacity: 1; }
+			}
+		`,
+		// vendor-prefixed animation properties
+		dedent`
+			.a { -webkit-animation-name: fade-in; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { -moz-animation: fade-in 1s; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { -o-animation-name: fade-in; }
+			@-o-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { -ms-animation: fade-in 1s; }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { -ms-animation-name: fade-in; }
+			@-ms-keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// names that can't be determined statically are ignored
+		".a { animation: var(--anim) 1s; }",
+		".a { animation-name: var(--anim-name); }",
+		".a { animation: var(--anim); }",
+		// names next to a var() are still checked
+		dedent`
+			.a { animation: fade-in var(--duration); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: var(--anim-name, fade-in); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation: var(--anim, fade-in 1s ease); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		dedent`
+			.a { animation-name: var(--a, var(--b, fade-in)); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// a fallback that isn't an animation name is ignored
+		".a { animation: var(--duration, 1s); }",
+		// a fallback that can't be parsed with the default syntax is ignored
+		{
+			code: ".a { animation-name: var(--x, theme(animation.fade)); }",
+			languageOptions: {
+				customSyntax: tailwind4,
+			},
+		},
+		// @keyframes preludes that don't name an animation
+		"@keyframes 50% { to { opacity: 1; } }",
+		"@keyframes 1s { to { opacity: 1; } }",
+		// values that aren't identifiers or strings don't name an animation
+		".a { animation-name: 100px; }",
+		".a { animation-name: (); }",
+		// animation names are extracted only from animation and animation-name
+		".a { --animation-name: fade-in; }",
+		".a { transition-property: fade-in; }",
+		// feature queries don't use animations
+		"@supports (animation-name: fade-in) { .a { color: red; } }",
+	],
+	invalid: [
+		{
+			code: ".a { -webkit-animation-name: fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 37,
+				},
+			],
+		},
+		{
+			code: ".a { -moz-animation: fade-in 1s; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: ".a { -ms-animation-name: fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: ".a { -ms-animation: fade-in 1s; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a { animation-name: fade-in; }
+				@-ms-keyframes fade-out {
+					to { opacity: 0; }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: '.a { animation-name: var(--anim-name, "slide-in"); }',
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-in" },
+					line: 1,
+					column: 39,
+					endLine: 1,
+					endColumn: 49,
+				},
+			],
+		},
+		{
+			code: ".a { animation: fade-in var(--duration); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: ".a { animation: var(--anim, fade-in 1s ease); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 29,
+					endLine: 1,
+					endColumn: 36,
+				},
+			],
+		},
+		{
+			code: ".a { animation-name: var(--a, var(--b, slide-in)); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-in" },
+					line: 1,
+					column: 40,
+					endLine: 1,
+					endColumn: 48,
+				},
+			],
+		},
+		// names outside an unparseable fallback are still checked
+		{
+			code: ".a { animation: fade-in var(--x, theme(animation.fade)); }",
+			languageOptions: {
+				customSyntax: tailwind4,
+			},
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a { animation-name: fade-in; }
+				@keyframes 50% { to { opacity: 1; } }
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: ".a { animation-name: fade-in !important; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: '.a { animation-name: "none"; }',
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "none" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 28,
+				},
+			],
+		},
+		{
+			code: ".a { animation-name: /* c */ fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 30,
+					endLine: 1,
+					endColumn: 37,
+				},
+			],
+		},
+		{
+			code: ".a { animation-name: fade-in, fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 31,
+					endLine: 1,
+					endColumn: 38,
+				},
+			],
+		},
+		{
+			code: ".a { animation-name: fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		// only the animation name is reported, wherever it is in the shorthand
+		{
+			code: ".a { animation: 1s ease fade-in; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 25,
+					endLine: 1,
+					endColumn: 32,
+				},
+			],
+		},
+		{
+			code: ".a { animation: fade-in 1s ease-in-out infinite alternate both paused; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: ".a { animation: fade-in 1s ease, 2s linear slide-up; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-up" },
+					line: 1,
+					column: 44,
+					endLine: 1,
+					endColumn: 52,
+				},
+			],
+		},
+		// in animation-name, shorthand keywords such as `ease` are animation names
+		{
+			code: ".a { animation-name: ease; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "ease" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 26,
+				},
+			],
+		},
+		// names are checked even when the rest of the value is invalid
+		{
+			code: ".a { animation: fade-in 100px; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 24,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.card { animation: fade-in 300ms ease; }
+				.button { animation-name: slide-up; }
+				@keyframes fade-out {
+					from { opacity: 1; }
+					to { opacity: 0; }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 20,
+					endLine: 1,
+					endColumn: 27,
+				},
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-up" },
+					line: 2,
+					column: 27,
+					endLine: 2,
+					endColumn: 35,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a { animation: fade-in 300ms ease, slide-up 1s infinite; }
+				@keyframes fade-in {
+					to { opacity: 1; }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-up" },
+					line: 1,
+					column: 37,
+					endLine: 1,
+					endColumn: 45,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a { animation-name: fade-in, slide-up; }
+				@keyframes slide-up {
+					to { transform: translateY(0); }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		// animation names are case-sensitive
+		{
+			code: dedent`
+				.a { animation-name: FADE-IN; }
+				@keyframes fade-in {
+					to { opacity: 1; }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "FADE-IN" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a { animation-name: "fade-in"; }
+				@keyframes fade-out {
+					to { opacity: 0; }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 31,
+				},
+			],
+		},
+		{
+			code: dedent`
+				@media (min-width: 100px) {
+					.a { animation: fade-in 1s; }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 2,
+					column: 18,
+					endLine: 2,
+					endColumn: 25,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a {
+					@media (min-width: 100px) {
+						animation-name: fade-in;
+					}
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 3,
+					column: 19,
+					endLine: 3,
+					endColumn: 26,
+				},
+			],
+		},
+		{
+			code: dedent`
+				.a {
+					.b { animation-name: fade-in; }
+				}
+			`,
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 2,
+					column: 23,
+					endLine: 2,
+					endColumn: 30,
+				},
+			],
+		},
+	],
+});
