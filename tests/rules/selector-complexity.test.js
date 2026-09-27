@@ -797,6 +797,90 @@ ruleTester.run("selector-complexity", rule, {
 			],
 		},
 		{
+			code: "[data-foo][data-bar][data-foo] {}",
+			options: [{ disallowAttributes: ["data-foo"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "data-foo",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 10,
+				},
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "data-foo",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 30,
+				},
+			],
+		},
+		{
+			code: "[alt] img[alt] {}",
+			options: [{ disallowAttributes: ["alt"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "alt",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 5,
+				},
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "alt",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 14,
+				},
+			],
+		},
+		{
+			code: "a[href][href*='x'] {}",
+			options: [{ disallowAttributes: ["href"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "href",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 7,
+				},
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "href",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 9,
+					endLine: 1,
+					endColumn: 13,
+				},
+			],
+		},
+		{
 			code: "[class*='foo'] {}",
 			options: [{ disallowAttributeMatchers: ["*="] }],
 			errors: [
