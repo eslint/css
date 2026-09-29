@@ -4,12 +4,6 @@
  */
 
 //-----------------------------------------------------------------------------
-// Imports
-//-----------------------------------------------------------------------------
-
-import { parse, toPlainObject } from "@eslint/css-tree";
-
-//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
@@ -28,24 +22,11 @@ const animationPropertyPattern =
 	/^(?:-(?:o|ms|moz|webkit)-)?animation(?:-name)?$/iu;
 
 /**
- * Keywords that `animation-name` accepts in place of an animation name.
- */
-const animationNameKeywords = new Set([
-	"none",
-	"initial",
-	"inherit",
-	"unset",
-	"revert",
-	"revert-layer",
-]);
-
-/**
  * Keywords that the `animation` shorthand accepts for its other
  * sub-properties. The shorthand treats these as the values of those
  * sub-properties rather than as animation names.
  */
-const animationShorthandKeywords = new Set([
-	...animationNameKeywords,
+const animationShorthandKeywords = [
 	// <easing-function>
 	"linear",
 	"ease",
@@ -70,7 +51,7 @@ const animationShorthandKeywords = new Set([
 	"paused",
 	// <single-animation-timeline>
 	"auto",
-]);
+];
 
 /**
  * Extracts an animation name from a node. Quoted and unquoted animation
@@ -92,66 +73,53 @@ function getAnimationName(node) {
 }
 
 /**
- * Parses the fallback of a `var()` function, which the AST keeps as raw
- * text. Passing the fallback's position in the source along lets the names
- * inside it be reported where they appear.
- * @param {Object} fallback The `Raw` node holding the fallback.
- * @returns {Object|null} The parsed value node, or `null` if the fallback
- *      can't be parsed.
+ * Gets the nodes to search for animation names in the fallback of a `var()`
+ * function. A fallback kept as raw text is wrapped as a single string once
+ * trimmed and unquoted, so it can't be mistaken for a keyword. A parsed
+ * fallback, such as one parsed with `parseCustomProperty`, is searched like
+ * any other value.
+ * @param {Object} fallback The node holding the fallback.
+ * @returns {Array<Object>} The nodes to search.
  */
-function parseVarFallback(fallback) {
-	const { offset, line, column } = fallback.loc.start;
+function getVarFallbackNodes(fallback) {
+	if (fallback.type === "Raw") {
+		const value = fallback.value.trim().replace(/^(["'])(.*)\1$/su, "$2");
 
-	try {
-		return toPlainObject(
-			parse(fallback.value, {
-				context: "value",
-				positions: true,
-				offset,
-				line,
-				column,
-			}),
-		);
-	} catch {
-		/*
-		 * The fallback is parsed with the default syntax, so one written in
-		 * a custom syntax may not be parseable. Its names can't be
-		 * determined then, so it contributes none.
-		 */
-		return null;
+		return value ? [{ type: "String", value, loc: fallback.loc }] : [];
 	}
+
+	return fallback.type === "Value" ? fallback.children : [fallback];
 }
 
 /**
- * Finds the animation names in a value. An identifier or a string is a name
- * unless the property accepts it as a keyword. A `var()` can't be resolved
- * statically, so only the names in its fallback, if it has one, are found.
- * The value isn't validated, so names are found even when the rest of the
- * value is invalid.
- * @param {Object} value The value node to search.
+ * Finds the animation names in a list of value nodes. An identifier or a
+ * string is a name unless the property accepts it as a keyword. A `var()`
+ * can't be resolved statically, so only its fallback, if it has one, is
+ * searched. The value isn't validated, so names are found even when the
+ * rest of the value is invalid.
+ * @param {Array<Object>} nodes The value nodes to search.
+ * @param {Set<string>} keywords The lowercase keywords that aren't names.
  * @param {boolean} isShorthand Whether the value belongs to the `animation` shorthand.
  * @param {Array<{ name: string, loc: CssLocationRange }>} names The array to collect the names into.
  * @returns {void}
  */
-function findAnimationNames(value, isShorthand, names) {
-	const keywords = isShorthand
-		? animationShorthandKeywords
-		: animationNameKeywords;
-
-	for (const child of value.children ?? []) {
+function findAnimationNames(nodes, keywords, isShorthand, names) {
+	for (const child of nodes) {
 		if (child.type === "Function") {
-			if (child.name.toLowerCase() === "var") {
-				const fallback = child.children.find(
-					node => node.type === "Raw",
+			/*
+			 * The fallback, if any, is the third child after the custom
+			 * property name and the comma.
+			 */
+			const fallback =
+				child.name.toLowerCase() === "var" ? child.children[2] : null;
+
+			if (fallback) {
+				findAnimationNames(
+					getVarFallbackNodes(fallback),
+					keywords,
+					isShorthand,
+					names,
 				);
-
-				const fallbackValue = fallback
-					? parseVarFallback(fallback)
-					: null;
-
-				if (fallbackValue) {
-					findAnimationNames(fallbackValue, isShorthand, names);
-				}
 			}
 
 			continue;
@@ -197,6 +165,17 @@ export default /** @satisfies {NoUnknownAnimationsRuleDefinition} */ ({
 	},
 
 	create(context) {
+		const cssWideKeywords = context.sourceCode.lexer.cssWideKeywords.map(
+			keyword => keyword.toLowerCase(),
+		);
+
+		// `animation-name` also accepts `none` in place of an animation name.
+		const animationNameKeywords = new Set(["none", ...cssWideKeywords]);
+		const shorthandKeywords = new Set([
+			...animationNameKeywords,
+			...animationShorthandKeywords,
+		]);
+
 		/** @type {Set<string>} */
 		const definedAnimations = new Set();
 
@@ -232,7 +211,12 @@ export default /** @satisfies {NoUnknownAnimationsRuleDefinition} */ ({
 					.toLowerCase()
 					.endsWith("-name");
 
-				findAnimationNames(node.value, isShorthand, usedAnimations);
+				findAnimationNames(
+					node.value.children,
+					isShorthand ? shorthandKeywords : animationNameKeywords,
+					isShorthand,
+					usedAnimations,
+				);
 			},
 
 			/*

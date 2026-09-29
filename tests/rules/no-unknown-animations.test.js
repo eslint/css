@@ -11,7 +11,6 @@ import rule from "../../src/rules/no-unknown-animations.js";
 import css from "../../src/index.js";
 import { RuleTester } from "eslint";
 import dedent from "dedent";
-import { tailwind4 } from "tailwind-csstree";
 
 //------------------------------------------------------------------------------
 // Tests
@@ -179,6 +178,23 @@ ruleTester.run("no-unknown-animations", rule, {
 		".a { animation-name: none; }",
 		".a { animation-name: none, none; }",
 		".a { animation-name: inherit; }",
+		// CSS-wide keywords added by the custom syntax aren't names
+		{
+			code: ".a { animation-name: custom-inherit; }",
+			languageOptions: {
+				customSyntax: {
+					cssWideKeywords: ["custom-inherit"],
+				},
+			},
+		},
+		{
+			code: ".a { animation: custom-inherit; }",
+			languageOptions: {
+				customSyntax: {
+					cssWideKeywords: ["custom-inherit"],
+				},
+			},
+		},
 		".a { animation-name: INHERIT; }",
 		".a { animation-name: initial; }",
 		".a { animation-name: unset; }",
@@ -245,6 +261,7 @@ ruleTester.run("no-unknown-animations", rule, {
 				to { opacity: 1; }
 			}
 		`,
+		// the fallback of a var() is taken as the animation name
 		dedent`
 			.a { animation-name: var(--anim-name, fade-in); }
 			@keyframes fade-in {
@@ -252,26 +269,19 @@ ruleTester.run("no-unknown-animations", rule, {
 			}
 		`,
 		dedent`
-			.a { animation: var(--anim, fade-in 1s ease); }
+			.a { animation: var(--anim, "fade-in"); }
 			@keyframes fade-in {
 				to { opacity: 1; }
 			}
 		`,
 		dedent`
-			.a { animation-name: var(--a, var(--b, fade-in)); }
+			.a { animation: var(--anim, 'fade-in' ); }
 			@keyframes fade-in {
 				to { opacity: 1; }
 			}
 		`,
-		// a fallback that isn't an animation name is ignored
-		".a { animation: var(--duration, 1s); }",
-		// a fallback that can't be parsed with the default syntax is ignored
-		{
-			code: ".a { animation-name: var(--x, theme(animation.fade)); }",
-			languageOptions: {
-				customSyntax: tailwind4,
-			},
-		},
+		// an empty fallback doesn't name an animation
+		".a { animation-name: var(--anim-name,); }",
 		// @keyframes preludes that don't name an animation
 		"@keyframes 50% { to { opacity: 1; } }",
 		"@keyframes 1s { to { opacity: 1; } }",
@@ -362,57 +372,54 @@ ruleTester.run("no-unknown-animations", rule, {
 					messageId: "unknownAnimation",
 					data: { name: "slide-in" },
 					line: 1,
-					column: 39,
+					column: 38,
 					endLine: 1,
 					endColumn: 49,
 				},
 			],
 		},
 		{
-			code: ".a { animation: fade-in var(--duration); }",
+			code: ".a { animation-name: var(--anim-name,slide-in); }",
 			errors: [
 				{
 					messageId: "unknownAnimation",
-					data: { name: "fade-in" },
+					data: { name: "slide-in" },
 					line: 1,
-					column: 17,
+					column: 38,
 					endLine: 1,
-					endColumn: 24,
+					endColumn: 46,
+				},
+			],
+		},
+		// keywords in a raw fallback are taken as names
+		{
+			code: ".a { animation-name: var(--anim-name, none); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "none" },
+					line: 1,
+					column: 38,
+					endLine: 1,
+					endColumn: 43,
 				},
 			],
 		},
 		{
-			code: ".a { animation: var(--anim, fade-in 1s ease); }",
+			code: ".a { animation: var(--anim, inherit); }",
 			errors: [
 				{
 					messageId: "unknownAnimation",
-					data: { name: "fade-in" },
+					data: { name: "inherit" },
 					line: 1,
-					column: 29,
+					column: 28,
 					endLine: 1,
 					endColumn: 36,
 				},
 			],
 		},
 		{
-			code: ".a { animation-name: var(--a, var(--b, slide-in)); }",
-			errors: [
-				{
-					messageId: "unknownAnimation",
-					data: { name: "slide-in" },
-					line: 1,
-					column: 40,
-					endLine: 1,
-					endColumn: 48,
-				},
-			],
-		},
-		// names outside an unparseable fallback are still checked
-		{
-			code: ".a { animation: fade-in var(--x, theme(animation.fade)); }",
-			languageOptions: {
-				customSyntax: tailwind4,
-			},
+			code: ".a { animation: fade-in var(--duration); }",
 			errors: [
 				{
 					messageId: "unknownAnimation",
