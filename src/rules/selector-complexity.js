@@ -310,7 +310,6 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 					selectors,
 					"PseudoElementSelector",
 				);
-				const attributeNames = attributeSelectors.map(s => s.name.name);
 				const attributeMatchers = attributeSelectors
 					.map(child => child.matcher)
 					.filter(Boolean);
@@ -434,16 +433,12 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				}
 
 				if (disallowAttributes.length > 0) {
-					let disallowAttributesLocation;
-					for (const attributeName of attributeNames) {
+					for (const selectorNode of attributeSelectors) {
+						const attributeName = selectorNode.name.name;
+
 						if (disallowAttributes.includes(attributeName)) {
-							disallowAttributesLocation =
-								attributeSelectors.find(
-									selector =>
-										selector.name.name === attributeName,
-								).name.loc;
 							context.report({
-								loc: disallowAttributesLocation,
+								loc: selectorNode.name.loc,
 								messageId: "disallowedSelectors",
 								data: {
 									selectorName: attributeName,
