@@ -242,6 +242,8 @@ ruleTester.run("use-baseline", rule, {
 				},
 			],
 		},
+		"@supports (--css: variables) { a { color: red; } }",
+		"@supports selector([popover]) { a { color: red; } }",
 	],
 	invalid: [
 		{
@@ -1101,6 +1103,38 @@ ruleTester.run("use-baseline", rule, {
 					column: 21,
 					endLine: 1,
 					endColumn: 26,
+				},
+			],
+		},
+		{
+			code: "@supports (--css: variables) { a { accent-color: auto; } }",
+			errors: [
+				{
+					messageId: "notBaselineProperty",
+					data: {
+						property: "accent-color",
+						availability: "widely",
+					},
+					line: 1,
+					column: 36,
+					endLine: 1,
+					endColumn: 48,
+				},
+			],
+		},
+		{
+			code: "@supports selector([popover]) { h1:fullscreen { color: red; } }",
+			errors: [
+				{
+					messageId: "notBaselineSelector",
+					data: {
+						selector: "fullscreen",
+						availability: "widely",
+					},
+					line: 1,
+					column: 35,
+					endLine: 1,
+					endColumn: 46,
 				},
 			],
 		},
