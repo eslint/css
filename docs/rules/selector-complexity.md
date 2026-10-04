@@ -135,6 +135,23 @@ button img:not(img.foo) {
 }
 ```
 
+Keyframe selectors (`from`, `to`, and percentages) inside an `@keyframes`
+rule name no element and are therefore not counted as type selectors:
+
+```css
+/* eslint css/selector-complexity: ["error", { maxTypes: 0 }] */
+
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+```
+
 ### `maxAttributes`
 
 Examples of **incorrect** code with `{ maxAttributes: 1 }`:
