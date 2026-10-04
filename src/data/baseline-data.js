@@ -1589,6 +1589,22 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
+		"background-position-x",
+		new Map([
+			["center", "10:2016"],
+			["left", "10:2016"],
+			["right", "10:2016"],
+		]),
+	],
+	[
+		"background-position-y",
+		new Map([
+			["bottom", "10:2016"],
+			["center", "10:2016"],
+			["top", "10:2016"],
+		]),
+	],
+	[
 		"background-position",
 		new Map([
 			["bottom", "10:2020"],
@@ -1952,6 +1968,7 @@ export const propertyValues = new Map([
 	[
 		"clip-path",
 		new Map([
+			["none", "10:2020"],
 			["path", "10:2021"],
 			["fill-box", "10:2023"],
 			["stroke-box", "10:2023"],
@@ -2324,6 +2341,15 @@ export const propertyValues = new Map([
 	[
 		"font-size",
 		new Map([
+			["large", "10:2015"],
+			["larger", "10:2015"],
+			["medium", "10:2015"],
+			["small", "10:2015"],
+			["smaller", "10:2015"],
+			["x-large", "10:2015"],
+			["x-small", "10:2015"],
+			["xx-large", "10:2015"],
+			["xx-small", "10:2015"],
 			["xxx-large", "10:2023"],
 			["math", "5:2026"],
 		]),
@@ -3571,6 +3597,18 @@ export const propertyValues = new Map([
 		]),
 	],
 	[
+		"pointer-events",
+		new Map([
+			["all", "10:2015"],
+			["auto", "10:2015"],
+			["fill", "10:2015"],
+			["none", "10:2015"],
+			["painted", "10:2015"],
+			["stroke", "10:2015"],
+			["visible", "10:2015"],
+		]),
+	],
+	[
 		"print-color-adjust",
 		new Map([
 			["economy", "5:2025"],
@@ -4041,6 +4079,7 @@ export const propertyValues = new Map([
 			["upright", "10:2020"],
 		]),
 	],
+	["text-shadow", new Map([["none", "10:2015"]])],
 	[
 		"text-size-adjust",
 		new Map([
