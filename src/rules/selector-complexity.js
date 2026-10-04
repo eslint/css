@@ -256,6 +256,13 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 	},
 
 	create(context) {
+		// css-tree parses `from`, `to` and percentage selectors inside an
+		// `@keyframes` rule as `TypeSelector` nodes even though they name no
+		// element, so they must not be counted as type selectors. The AST here
+		// exposes no parent links, so the depth is tracked the same way
+		// `no-duplicate-keyframe-selectors` does it.
+		let insideKeyframes = false;
+
 		const [
 			{
 				maxIds,
@@ -281,6 +288,14 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		);
 
 		return {
+			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]"() {
+				insideKeyframes = true;
+			},
+
+			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]:exit"() {
+				insideKeyframes = false;
+			},
+
 			Selector(node) {
 				const selectors = node.children;
 				const selectorLoc = node.loc;
@@ -289,7 +304,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				const classSelectors = getSelectors(selectors, "ClassSelector");
 				const typeSelectors = selectors.filter(
 					child =>
-						child.type === "TypeSelector" && child.name !== "*",
+						child.type === "TypeSelector" &&
+						child.name !== "*" &&
+						!insideKeyframes,
 				);
 				const attributeSelectors = getSelectors(
 					selectors,

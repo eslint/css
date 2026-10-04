@@ -24,6 +24,43 @@ const ruleTester = new RuleTester({
 
 ruleTester.run("selector-complexity", rule, {
 	valid: [
+		// Keyframe selectors (`from`, `to`, percentages) are not type selectors.
+		{
+			code: `
+				@keyframes fade {
+					from {
+						opacity: 0;
+					}
+					to {
+						opacity: 1;
+					}
+				}
+			`,
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: `
+				@keyframes slide {
+					0% {
+						transform: translateX(0);
+					}
+					100% {
+						transform: translateX(100px);
+					}
+				}
+			`,
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			// a keyframes block must not suppress a later real selector
+			code: `
+				@keyframes fade {
+					from { opacity: 0; }
+				}
+				.foo { color: red; }
+			`,
+			options: [{ maxTypes: 0 }],
+		},
 		"#parent #child {}",
 		".foo .bar .baz {}",
 		"ul li a {}",
@@ -191,6 +228,17 @@ ruleTester.run("selector-complexity", rule, {
 		},
 	],
 	invalid: [
+		// A keyframes block must not suppress a later real type selector.
+		{
+			code: `
+				@keyframes fade {
+					from { opacity: 0; }
+				}
+				div span { color: red; }
+			`,
+			options: [{ maxTypes: 1 }],
+			errors: [{ messageId: "maxSelectors" }],
+		},
 		{
 			code: "#parent #child {}",
 			options: [{ maxIds: 1 }],
