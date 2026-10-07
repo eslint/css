@@ -4,12 +4,18 @@
  */
 
 //-----------------------------------------------------------------------------
+// Imports
+//-----------------------------------------------------------------------------
+
+import { parse, toPlainObject } from "@eslint/css-tree";
+
+//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @import { CssLocationRange } from "@eslint/css-tree"
+ * @import { CssLocationRange, ValuePlain } from "@eslint/css-tree"
  * @typedef {"unknownAnimation"} NoUnknownAnimationsMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoUnknownAnimationsMessageIds }>} NoUnknownAnimationsRuleDefinition
  */
@@ -74,18 +80,39 @@ function getAnimationName(node) {
 
 /**
  * Gets the nodes to search for animation names in the fallback of a `var()`
- * function. A fallback kept as raw text is wrapped as a single string once
- * trimmed and unquoted, so it can't be mistaken for a keyword. A parsed
- * fallback, such as one parsed with `parseCustomProperty`, is searched like
- * any other value.
+ * function. A fallback kept as raw text is parsed as a value so that a
+ * nested `var()` or a comma-separated list of names in it is searched like
+ * any other value. A parsed fallback, such as one parsed with
+ * `parseCustomProperty`, is searched as is.
  * @param {Object} fallback The node holding the fallback.
  * @returns {Array<Object>} The nodes to search.
  */
 function getVarFallbackNodes(fallback) {
 	if (fallback.type === "Raw") {
-		const value = fallback.value.trim().replace(/^(["'])(.*)\1$/su, "$2");
+		const { offset, line, column } = fallback.loc.start;
 
-		return value ? [{ type: "String", value, loc: fallback.loc }] : [];
+		try {
+			const value = /** @type {ValuePlain} */ (
+				toPlainObject(
+					parse(fallback.value, {
+						context: "value",
+						positions: true,
+						offset,
+						line,
+						column,
+					}),
+				)
+			);
+
+			return value.children;
+		} catch {
+			/*
+			 * The fallback is parsed with the default syntax, so one written
+			 * in a custom syntax may not be parseable. Its names can't be
+			 * determined then, so it contributes none.
+			 */
+			return [];
+		}
 	}
 
 	return fallback.type === "Value" ? fallback.children : [fallback];

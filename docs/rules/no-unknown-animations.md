@@ -11,6 +11,10 @@ CSS animations are created by assigning a [`@keyframes`](https://developer.mozil
 	animation: fade-in 300ms ease;
 }
 
+.button {
+	animation-name: fade-in;
+}
+
 @keyframes fade-in {
 	from {
 		opacity: 0;
@@ -38,6 +42,9 @@ animation: fade-in var(--duration);
 
 /* the fallback names an animation, so `slide-in` is checked */
 animation-name: var(--animation-name, slide-in);
+
+/* a nested fallback names an animation too, so `slide-in` is checked */
+animation-name: var(--animation-name, var(--fallback-name, slide-in));
 
 /* no name can be determined, so nothing is checked */
 animation-name: var(--animation-name);
@@ -100,6 +107,10 @@ Examples of **correct** code for this rule:
 	}
 }
 ```
+
+## Options
+
+This rule has no options.
 
 ## When Not to Use It
 

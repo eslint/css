@@ -280,6 +280,33 @@ ruleTester.run("no-unknown-animations", rule, {
 				to { opacity: 1; }
 			}
 		`,
+		dedent`
+			.a { animation: var(--anim, fade-in 1s ease); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		// the fallback of a nested var() is checked too
+		dedent`
+			.a { animation-name: var(--a, var(--b, fade-in)); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+		`,
+		".a { animation-name: var(--a, var(--b)); }",
+		// a comma-separated fallback names several animations
+		dedent`
+			.a { animation-name: var(--a, fade-in, slide-in); }
+			@keyframes fade-in {
+				to { opacity: 1; }
+			}
+			@keyframes slide-in {
+				to { transform: none; }
+			}
+		`,
+		// a keyword in a fallback isn't taken as a name
+		".a { animation-name: var(--anim-name, none); }",
+		".a { animation: var(--anim, inherit); }",
 		// an empty fallback doesn't name an animation
 		".a { animation-name: var(--anim-name,); }",
 		// @keyframes preludes that don't name an animation
@@ -372,7 +399,7 @@ ruleTester.run("no-unknown-animations", rule, {
 					messageId: "unknownAnimation",
 					data: { name: "slide-in" },
 					line: 1,
-					column: 38,
+					column: 39,
 					endLine: 1,
 					endColumn: 49,
 				},
@@ -391,30 +418,53 @@ ruleTester.run("no-unknown-animations", rule, {
 				},
 			],
 		},
-		// keywords in a raw fallback are taken as names
+		// a nested fallback with an unknown name
 		{
-			code: ".a { animation-name: var(--anim-name, none); }",
+			code: ".a { animation-name: var(--a, var(--b, nope)); }",
 			errors: [
 				{
 					messageId: "unknownAnimation",
-					data: { name: "none" },
+					data: { name: "nope" },
 					line: 1,
-					column: 38,
+					column: 40,
 					endLine: 1,
-					endColumn: 43,
+					endColumn: 44,
 				},
 			],
 		},
+		// each name in a comma-separated fallback is checked
 		{
-			code: ".a { animation: var(--anim, inherit); }",
+			code: ".a { animation-name: var(--a, fade-in, nope); }",
 			errors: [
 				{
 					messageId: "unknownAnimation",
-					data: { name: "inherit" },
+					data: { name: "fade-in" },
 					line: 1,
-					column: 28,
+					column: 31,
 					endLine: 1,
-					endColumn: 36,
+					endColumn: 38,
+				},
+				{
+					messageId: "unknownAnimation",
+					data: { name: "nope" },
+					line: 1,
+					column: 40,
+					endLine: 1,
+					endColumn: 44,
+				},
+			],
+		},
+		// only the name in a shorthand fallback is checked
+		{
+			code: ".a { animation: var(--anim, slide-in 1s ease); }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "slide-in" },
+					line: 1,
+					column: 29,
+					endLine: 1,
+					endColumn: 37,
 				},
 			],
 		},
