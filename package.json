@@ -81,7 +81,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.3",
-    "@eslint/json": "^2.1.0",
+    "@eslint/json": "^2.1.1",
     "@types/node": "^20.19.0",
     "@webref/css": "^8.7.5",
     "c8": "^12.0.0",
