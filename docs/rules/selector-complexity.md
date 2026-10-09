@@ -185,6 +185,12 @@ button:hover + a {
 
 li:nth-child(2) a {
 }
+
+a:hover::before {
+}
+
+a:hover:before {
+}
 ```
 
 ### `maxUniversals`
@@ -314,19 +320,25 @@ a:not(.foo) {
 
 ### `disallowPseudoElements`
 
-Examples of **incorrect** code with `{ disallowPseudoElements: ["marker"] }`:
+Examples of **incorrect** code with `{ disallowPseudoElements: ["marker", "before"] }`:
 
 ```css
-/* eslint css/selector-complexity: ["error", { disallowPseudoElements: ["marker"] }] */
+/* eslint css/selector-complexity: ["error", { disallowPseudoElements: ["marker", "before"] }] */
 
 li::marker {
 }
+
+a::before {
+}
+
+a:before {
+}
 ```
 
-Examples of **correct** code with `{ disallowPseudoElements: ["marker"] }`:
+Examples of **correct** code with `{ disallowPseudoElements: ["marker", "before"] }`:
 
 ```css
-/* eslint css/selector-complexity: ["error", { disallowPseudoElements: ["marker"] }] */
+/* eslint css/selector-complexity: ["error", { disallowPseudoElements: ["marker", "before"] }] */
 
 input::placeholder {
 }
