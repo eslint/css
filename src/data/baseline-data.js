@@ -392,7 +392,7 @@ export const properties = new Map([
 	["break-before", "10:2019"],
 	["break-inside", "10:2019"],
 	["page", "10:2023"],
-	["paint-order", "5:2024"],
+	["paint-order", "10:2024"],
 	["bottom", "10:2015"],
 	["left", "10:2015"],
 	["right", "10:2015"],
@@ -552,7 +552,7 @@ export const properties = new Map([
 	["view-transition-scope", "0:"],
 	["visibility", "10:2015"],
 	["white-space", "10:2015"],
-	["white-space-collapse", "5:2024"],
+	["white-space-collapse", "10:2024"],
 	["orphans", "0:"],
 	["widows", "0:"],
 	["height", "10:2015"],
@@ -707,6 +707,7 @@ export const functions = new Map([
 	["sibling-count", "5:2026"],
 	["sibling-index", "5:2026"],
 	["steps", "10:2015"],
+	["symbols", "0:"],
 	["matrix", "10:2015"],
 	["rotate", "10:2015"],
 	["scale", "10:2015"],
@@ -1539,6 +1540,7 @@ export const propertyValues = new Map([
 			["space", "10:2015"],
 			["transparent", "10:2015"],
 			["background-clip", "10:2015"],
+			["text", "0:"],
 			["background-origin", "10:2015"],
 			["background-size", "10:2015"],
 			["currentColor", "10:2015"],
@@ -1584,6 +1586,22 @@ export const propertyValues = new Map([
 			["border-box", "10:2015"],
 			["content-box", "10:2015"],
 			["padding-box", "10:2015"],
+		]),
+	],
+	[
+		"background-position-x",
+		new Map([
+			["center", "10:2016"],
+			["left", "10:2016"],
+			["right", "10:2016"],
+		]),
+	],
+	[
+		"background-position-y",
+		new Map([
+			["bottom", "10:2016"],
+			["center", "10:2016"],
+			["top", "10:2016"],
 		]),
 	],
 	[
@@ -1950,6 +1968,7 @@ export const propertyValues = new Map([
 	[
 		"clip-path",
 		new Map([
+			["none", "10:2020"],
 			["path", "10:2021"],
 			["fill-box", "10:2023"],
 			["stroke-box", "10:2023"],
@@ -2322,6 +2341,15 @@ export const propertyValues = new Map([
 	[
 		"font-size",
 		new Map([
+			["large", "10:2015"],
+			["larger", "10:2015"],
+			["medium", "10:2015"],
+			["small", "10:2015"],
+			["smaller", "10:2015"],
+			["x-large", "10:2015"],
+			["x-small", "10:2015"],
+			["xx-large", "10:2015"],
+			["xx-small", "10:2015"],
 			["xxx-large", "10:2023"],
 			["math", "5:2026"],
 		]),
@@ -2888,7 +2916,6 @@ export const propertyValues = new Map([
 			["simp-chinese-informal", "10:2021"],
 			["square", "10:2015"],
 			["string", "10:2021"],
-			["symbols", "0:"],
 			["tamil", "10:2021"],
 			["telugu", "10:2020"],
 			["thai", "10:2020"],
@@ -2899,6 +2926,7 @@ export const propertyValues = new Map([
 			["upper-armenian", "10:2020"],
 			["upper-latin", "10:2015"],
 			["upper-roman", "10:2015"],
+			["symbols", "0:"],
 		]),
 	],
 	[
@@ -3401,6 +3429,7 @@ export const propertyValues = new Map([
 	[
 		"outline",
 		new Map([
+			["auto", "10:2023"],
 			["currentColor", "10:2023"],
 			["dashed", "10:2023"],
 			["dotted", "10:2023"],
@@ -3565,6 +3594,18 @@ export const propertyValues = new Map([
 		new Map([
 			["auto", "0:"],
 			["avoid", "0:"],
+		]),
+	],
+	[
+		"pointer-events",
+		new Map([
+			["all", "10:2015"],
+			["auto", "10:2015"],
+			["fill", "10:2015"],
+			["none", "10:2015"],
+			["painted", "10:2015"],
+			["stroke", "10:2015"],
+			["visible", "10:2015"],
 		]),
 	],
 	[
@@ -4038,6 +4079,7 @@ export const propertyValues = new Map([
 			["upright", "10:2020"],
 		]),
 	],
+	["text-shadow", new Map([["none", "10:2015"]])],
 	[
 		"text-size-adjust",
 		new Map([
@@ -4091,9 +4133,9 @@ export const propertyValues = new Map([
 	[
 		"text-wrap",
 		new Map([
-			["nowrap", "5:2024"],
+			["nowrap", "10:2024"],
 			["stable", "5:2024"],
-			["wrap", "5:2024"],
+			["wrap", "10:2024"],
 			["balance", "5:2024"],
 			["pretty", "0:"],
 		]),
@@ -4244,10 +4286,10 @@ export const propertyValues = new Map([
 	[
 		"white-space-collapse",
 		new Map([
-			["break-spaces", "5:2024"],
-			["collapse", "5:2024"],
-			["preserve", "5:2024"],
-			["preserve-breaks", "5:2024"],
+			["break-spaces", "10:2024"],
+			["collapse", "10:2024"],
+			["preserve", "10:2024"],
+			["preserve-breaks", "10:2024"],
 			["preserve-spaces", "0:"],
 		]),
 	],

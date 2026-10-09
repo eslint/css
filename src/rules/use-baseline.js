@@ -27,7 +27,7 @@ import { namedColors } from "../data/colors.js";
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @import { Identifier, FunctionNodePlain, Dimension } from "@eslint/css-tree"
+ * @import { DeclarationPlain, Identifier, FunctionNodePlain, Dimension } from "@eslint/css-tree"
  * @typedef {"notBaselineProperty" | "notBaselinePropertyValue" | "notBaselineAtRule" | "notBaselineFunction" | "notBaselineMediaCondition" | "notBaselineSelector" | "notBaselineUnit"} UseBaselineMessageIds
  * @typedef {[{
  *     available?: "widely" | "newly" | number,
@@ -669,11 +669,12 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 
 		/**
 		 * Checks a property value identifier to see if it's a baseline feature.
-		 * @param {string} property The name of the property.
+		 * @param {DeclarationPlain} declaration The declaration containing the value.
 		 * @param {Identifier} child The node to check.
 		 * @returns {void}
 		 */
-		function checkPropertyValueIdentifier(property, child) {
+		function checkPropertyValueIdentifier(declaration, child) {
+			const property = declaration.property.toLowerCase();
 			const identifier = child.name.toLowerCase();
 
 			// named colors are always valid
@@ -694,7 +695,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 						loc: child.loc,
 						messageId: "notBaselinePropertyValue",
 						data: {
-							property,
+							property: declaration.property,
 							value: child.name,
 							availability: baselineAvailability.availability,
 						},
@@ -723,7 +724,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					loc: child.loc,
 					messageId: "notBaselinePropertyValue",
 					data: {
-						property,
+						property: declaration.property,
 						value: child.name,
 						availability: baselineAvailability.availability,
 					},
@@ -821,7 +822,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 						const supportedProperty =
 							supportsRule.addProperty(property);
 
-						declaration.value.children.forEach(child => {
+						declaration.value.children?.forEach(child => {
 							if (child.type === "Identifier") {
 								supportedProperty.addIdentifier(
 									child.name.toLowerCase(),
@@ -855,11 +856,16 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					if (feature === "selector") {
 						for (const selectorChild of conditionChild.value
 							.children) {
-							supportsRule.addSelector(
-								selectorChild.type === "NestingSelector"
-									? "nesting"
-									: selectorChild.name.toLowerCase(),
-							);
+							if (selectorChild.type === "NestingSelector") {
+								supportsRule.addSelector("nesting");
+							} else if (
+								selectorChild.type === "PseudoClassSelector" ||
+								selectorChild.type === "PseudoElementSelector"
+							) {
+								supportsRule.addSelector(
+									selectorChild.name.toLowerCase(),
+								);
+							}
 						}
 
 						continue;
@@ -907,7 +913,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 							},
 							messageId: "notBaselineProperty",
 							data: {
-								property,
+								property: node.property,
 								availability: baselineAvailability.availability,
 							},
 						});
@@ -944,7 +950,7 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 								child.name.toLowerCase(),
 							)
 						) {
-							checkPropertyValueIdentifier(property, child);
+							checkPropertyValueIdentifier(node, child);
 						}
 
 						continue;
