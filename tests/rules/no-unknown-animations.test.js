@@ -10,11 +10,39 @@
 import rule from "../../src/rules/no-unknown-animations.js";
 import css from "../../src/index.js";
 import { RuleTester } from "eslint";
+import { tokenTypes } from "@eslint/css-tree";
 import dedent from "dedent";
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
+
+/*
+ * A custom syntax that replaces the `var()` parser with one that parses the
+ * fallback as a value instead of keeping it as raw text.
+ */
+const parsedVarFallbackSyntax = {
+	scope: {
+		Value: {
+			/* eslint-disable new-cap -- These are css-tree parser methods */
+			var() {
+				const children = this.createList();
+
+				this.skipSC();
+				children.push(this.Identifier());
+				this.skipSC();
+
+				if (this.tokenType === tokenTypes.Comma) {
+					children.push(this.Operator());
+					children.push(this.Value(null));
+				}
+
+				return children;
+			},
+			/* eslint-enable new-cap -- These are css-tree parser methods */
+		},
+	},
+};
 
 const ruleTester = new RuleTester({
 	plugins: {
@@ -205,6 +233,17 @@ ruleTester.run("no-unknown-animations", rule, {
 		".a { animation: 1s step-start reverse both running; }",
 		".a { animation: 1s linear normal backwards auto; }",
 		".a { animation: 1s EASE-OUT INFINITE ALTERNATE FORWARDS; }",
+		// each animation in the shorthand takes its own keywords
+		".a { animation: ease-in 1s, ease-out 2s; }",
+		// a second `none` is the animation name `none`
+		".a { animation: none none; }",
+		// a keyword whose sub-property already has a value is an animation name
+		dedent`
+			.a { animation: ease-in ease-out; }
+			@keyframes ease-out {
+				to { opacity: 1; }
+			}
+		`,
 		// the animation name can appear anywhere in the shorthand
 		dedent`
 			.a { animation: 1s ease fade-in; }
@@ -307,6 +346,16 @@ ruleTester.run("no-unknown-animations", rule, {
 		// a keyword in a fallback isn't taken as a name
 		".a { animation-name: var(--anim-name, none); }",
 		".a { animation: var(--anim, inherit); }",
+		// a fallback parsed as a value by a custom syntax is checked too
+		{
+			code: dedent`
+				.a { animation-name: var(--a, var(--b, fade-in)); }
+				@keyframes fade-in {
+					to { opacity: 1; }
+				}
+			`,
+			languageOptions: { customSyntax: parsedVarFallbackSyntax },
+		},
 		// an empty fallback doesn't name an animation
 		".a { animation-name: var(--anim-name,); }",
 		// @keyframes preludes that don't name an animation
@@ -454,6 +503,35 @@ ruleTester.run("no-unknown-animations", rule, {
 				},
 			],
 		},
+		// a fallback parsed as a value by a custom syntax is checked too
+		{
+			code: ".a { animation-name: var(--a, nope); }",
+			languageOptions: { customSyntax: parsedVarFallbackSyntax },
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "nope" },
+					line: 1,
+					column: 31,
+					endLine: 1,
+					endColumn: 35,
+				},
+			],
+		},
+		{
+			code: ".a { animation-name: var(--a, var(--b, nope)); }",
+			languageOptions: { customSyntax: parsedVarFallbackSyntax },
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "nope" },
+					line: 1,
+					column: 40,
+					endLine: 1,
+					endColumn: 44,
+				},
+			],
+		},
 		// only the name in a shorthand fallback is checked
 		{
 			code: ".a { animation: var(--anim, slide-in 1s ease); }",
@@ -567,6 +645,81 @@ ruleTester.run("no-unknown-animations", rule, {
 					column: 22,
 					endLine: 1,
 					endColumn: 29,
+				},
+			],
+		},
+		// a keyword whose sub-property already has a value is an animation name
+		{
+			code: ".a { animation: ease-in ease-out; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "ease-out" },
+					line: 1,
+					column: 25,
+					endLine: 1,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: ".a { animation: 3s none backwards; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "backwards" },
+					line: 1,
+					column: 25,
+					endLine: 1,
+					endColumn: 34,
+				},
+			],
+		},
+		{
+			code: ".a { animation: 2 infinite; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "infinite" },
+					line: 1,
+					column: 19,
+					endLine: 1,
+					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: ".a { animation: steps(4) ease-out; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "ease-out" },
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 34,
+				},
+			],
+		},
+		// each animation in the shorthand takes its own keywords
+		{
+			code: ".a { animation: ease-in fade-in, ease-out fade-out; }",
+			errors: [
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-in" },
+					line: 1,
+					column: 25,
+					endLine: 1,
+					endColumn: 32,
+				},
+				{
+					messageId: "unknownAnimation",
+					data: { name: "fade-out" },
+					line: 1,
+					column: 43,
+					endLine: 1,
+					endColumn: 51,
 				},
 			],
 		},

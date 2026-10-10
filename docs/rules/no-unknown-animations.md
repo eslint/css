@@ -34,7 +34,14 @@ This rule warns when an animation name used in `animation` or `animation-name` d
 
 Animation names are case-sensitive, and quoted and unquoted names refer to the same animation, so `animation-name: "fade-in"` matches `@keyframes fade-in`.
 
-The rule only checks animation names that can be determined statically. When a value contains `var()`, the name in its fallback is checked if there is one, and so is the rest of the value:
+In the `animation` shorthand, keywords are assigned to their corresponding sub-properties first. If a sub-property already has a value, another keyword for that sub-property is treated as the animation name:
+
+```css
+/* `ease-in` sets the timing function; `ease-out` is checked as the animation name */
+animation: ease-in ease-out;
+```
+
+The rule only checks animation names that can be determined statically. When a value contains `var()`, the names in its fallback are checked if there is one, and so is the rest of the value:
 
 ```css
 /* `fade-in` is checked, the duration is not */
@@ -45,6 +52,9 @@ animation-name: var(--animation-name, slide-in);
 
 /* a nested fallback names an animation too, so `slide-in` is checked */
 animation-name: var(--animation-name, var(--fallback-name, slide-in));
+
+/* both fallback names are checked */
+animation-name: var(--animation-name, fade-in, slide-in);
 
 /* no name can be determined, so nothing is checked */
 animation-name: var(--animation-name);
