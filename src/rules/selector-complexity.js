@@ -256,6 +256,8 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 	},
 
 	create(context) {
+		let insideKeyframes = false;
+
 		const [
 			{
 				maxIds,
@@ -281,7 +283,19 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		);
 
 		return {
+			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]"() {
+				insideKeyframes = true;
+			},
+
+			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]:exit"() {
+				insideKeyframes = false;
+			},
+
 			Selector(node) {
+				if (insideKeyframes) {
+					return;
+				}
+
 				const selectors = node.children;
 				const selectorLoc = node.loc;
 
