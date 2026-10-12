@@ -49,12 +49,12 @@ export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
 		const seen = new Set();
 
 		return {
-			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]"() {
+			"Atrule[name=/^(-(o|ms|moz|webkit)-)?keyframes$/i]"() {
 				insideKeyframes = true;
 				seen.clear();
 			},
 
-			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]:exit"() {
+			"Atrule[name=/^(-(o|ms|moz|webkit)-)?keyframes$/i]:exit"() {
 				insideKeyframes = false;
 			},
 
