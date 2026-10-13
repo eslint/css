@@ -206,6 +206,14 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ maxTypes: 0 }],
 		},
 		{
+			code: "@-moz-keyframes fade { from {} to {} }",
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: "@-o-keyframes fade { from {} to {} }",
+			options: [{ maxTypes: 0 }],
+		},
+		{
 			code: "@KEYFRAMES fade { FROM {} TO {} }",
 			options: [{ maxTypes: 0 }],
 		},
