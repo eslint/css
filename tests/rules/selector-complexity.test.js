@@ -780,6 +780,85 @@ ruleTester.run("selector-complexity", rule, {
 			],
 		},
 		{
+			code: "[class*='foo'] {}",
+			options: [{ disallowAttributes: ["CLASS"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "class",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: "[CLASS*='foo'] {}",
+			options: [{ disallowAttributes: ["class"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "CLASS",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: "[CLASS*='foo'] {}",
+			options: [{ disallowAttributes: ["CLASS"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "CLASS",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 7,
+				},
+			],
+		},
+		{
+			code: "[Data-Foo][data-foo] {}",
+			options: [{ disallowAttributes: ["DATA-FOO"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "Data-Foo",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 10,
+				},
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "data-foo",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 12,
+					endLine: 1,
+					endColumn: 20,
+				},
+			],
+		},
+		{
 			code: "img[alt] {}",
 			options: [{ disallowAttributes: ["alt"] }],
 			errors: [

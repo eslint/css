@@ -279,6 +279,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		const disallowedPseudoElements = new Set(
 			disallowPseudoElements.map(selector => selector.toLowerCase()),
 		);
+		const disallowedAttributes = new Set(
+			disallowAttributes.map(attribute => attribute.toLowerCase()),
+		);
 
 		return {
 			Selector(node) {
@@ -436,7 +439,11 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 					for (const selectorNode of attributeSelectors) {
 						const attributeName = selectorNode.name.name;
 
-						if (disallowAttributes.includes(attributeName)) {
+						if (
+							disallowedAttributes.has(
+								attributeName.toLowerCase(),
+							)
+						) {
 							context.report({
 								loc: selectorNode.name.loc,
 								messageId: "disallowedSelectors",
