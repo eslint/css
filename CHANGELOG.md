@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/eslint/css/compare/css-v2.0.1...css-v2.0.2) (2026-10-17)
+
+
+### Bug Fixes
+
+* update dependency @eslint/css-tree to ^4.1.2 ([#593](https://github.com/eslint/css/issues/593)) ([16f80f7](https://github.com/eslint/css/commit/16f80f7cd92b410edb819e18cd70713e839d2168))
+
 ## [2.0.1](https://github.com/eslint/css/compare/css-v2.0.0...css-v2.0.1) (2026-10-11)
 
 
