@@ -110,6 +110,30 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ maxPseudoClasses: 1 }],
 		},
 		{
+			code: "a:before {}",
+			options: [{ maxPseudoClasses: 0 }],
+		},
+		{
+			code: "a:after {}",
+			options: [{ maxPseudoClasses: 0 }],
+		},
+		{
+			code: "p:first-line {}",
+			options: [{ maxPseudoClasses: 0 }],
+		},
+		{
+			code: "p:first-letter {}",
+			options: [{ maxPseudoClasses: 0 }],
+		},
+		{
+			code: "a:hover:before {}",
+			options: [{ maxPseudoClasses: 1 }],
+		},
+		{
+			code: "a:AFTER {}",
+			options: [{ maxPseudoClasses: 0 }],
+		},
+		{
 			code: "* {}",
 			options: [{ maxUniversals: 1 }],
 		},
@@ -162,12 +186,32 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ disallowPseudoClasses: ["active"] }],
 		},
 		{
+			code: "a:before {}",
+			options: [{ disallowPseudoClasses: ["before"] }],
+		},
+		{
+			code: "a:after {}",
+			options: [{ disallowPseudoClasses: ["after"] }],
+		},
+		{
+			code: "p:first-line {}",
+			options: [{ disallowPseudoClasses: ["first-line"] }],
+		},
+		{
+			code: "p:first-letter {}",
+			options: [{ disallowPseudoClasses: ["first-letter"] }],
+		},
+		{
 			code: ".foo::before {}",
 			options: [{ disallowPseudoElements: ["placeholder"] }],
 		},
 		{
 			code: ".foo::before, .bar::after {}",
 			options: [{ disallowPseudoElements: ["marker"] }],
+		},
+		{
+			code: "a:before {}",
+			options: [{ disallowPseudoElements: ["after"] }],
 		},
 		{
 			code: "[name='foo'] {}",
@@ -409,6 +453,23 @@ ruleTester.run("selector-complexity", rule, {
 					column: 1,
 					endLine: 1,
 					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: "a:hover:focus:before {}",
+			options: [{ maxPseudoClasses: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "pseudo-class",
+						limit: 1,
+					},
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 21,
 				},
 			],
 		},
@@ -759,6 +820,136 @@ ruleTester.run("selector-complexity", rule, {
 					column: 3,
 					endLine: 1,
 					endColumn: 11,
+				},
+			],
+		},
+		{
+			code: "a:before {}",
+			options: [{ disallowPseudoElements: ["before"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "before",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 9,
+				},
+			],
+		},
+		{
+			code: "a:after {}",
+			options: [{ disallowPseudoElements: ["after"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "after",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "p:first-line {}",
+			options: [{ disallowPseudoElements: ["first-line"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "first-line",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 13,
+				},
+			],
+		},
+		{
+			code: "p:first-letter {}",
+			options: [{ disallowPseudoElements: ["first-letter"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "first-letter",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: "a:AFTER {}",
+			options: [{ disallowPseudoElements: ["after"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "AFTER",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 8,
+				},
+			],
+		},
+		{
+			code: "li:first-letter {}",
+			options: [{ disallowPseudoElements: ["FIRST-LETTER"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "first-letter",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 16,
+				},
+			],
+		},
+		{
+			code: "p:first-line, p::first-line {}",
+			options: [{ disallowPseudoElements: ["first-line"] }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "first-line",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 13,
+				},
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "first-line",
+						selector: "pseudo-element",
+					},
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 28,
 				},
 			],
 		},
