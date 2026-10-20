@@ -82,7 +82,7 @@ describe("Plugin", () => {
 			const output = execFileSync(
 				nodeExecutable,
 				[
-					"--stack_size=100",
+					"--stack_size=200",
 					"--input-type=module",
 					"--eval",
 					`
@@ -110,6 +110,66 @@ describe("Plugin", () => {
 			);
 
 			assert.strictEqual(output, "ok");
+		});
+	});
+
+	describe("use-baseline allowPropertyValues validation", () => {
+		/**
+		 * Lints a file with the given `allowPropertyValues` option.
+		 * @param {Object} allowPropertyValues The option value.
+		 * @returns {Promise<void>}
+		 */
+		async function lint(allowPropertyValues) {
+			const eslint = new ESLint({
+				overrideConfigFile: true,
+				overrideConfig: {
+					files: ["**/*.css"],
+					plugins: { css },
+					language: "css/css",
+					rules: {
+						"css/use-baseline": ["error", { allowPropertyValues }],
+					},
+				},
+			});
+
+			await eslint.lintText("a { color: red; }", {
+				filePath: "test.css",
+			});
+		}
+
+		it("should allow known values and global keywords", async () => {
+			await lint({
+				"image-rendering": ["smooth"],
+				"font-size": ["revert-layer"],
+			});
+		});
+
+		it("should throw for an unknown value", async () => {
+			await assert.rejects(
+				lint({ "image-rendering": ["bogus"] }),
+				/Invalid value "bogus" for property "image-rendering" in "allowPropertyValues"/u,
+			);
+		});
+
+		it("should throw for a value that belongs to a different property", async () => {
+			await assert.rejects(
+				lint({ "image-rendering": ["flex"] }),
+				/Invalid value "flex" for property "image-rendering"/u,
+			);
+		});
+
+		it("should throw for a non-global value on a property with no known values", async () => {
+			await assert.rejects(
+				lint({ color: ["red"] }),
+				/Invalid value "red" for property "color"/u,
+			);
+		});
+
+		it("should throw for an unknown property", async () => {
+			await assert.rejects(
+				lint({ "not-a-property": ["inherit"] }),
+				/Value "not-a-property" should be equal to one of the allowed values/u,
+			);
 		});
 	});
 

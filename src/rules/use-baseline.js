@@ -654,6 +654,21 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 		for (const [prop, values] of Object.entries(
 			context.options[0].allowPropertyValues,
 		)) {
+			/*
+			 * Validating values here rather than in the schema because a schema
+			 * enumerating every value for every property is large enough to
+			 * overflow the stack when ESLint compiles it.
+			 */
+			const knownValues = propertyValues.get(prop);
+
+			for (const value of values) {
+				if (!globalKeywords.has(value) && !knownValues?.has(value)) {
+					throw new TypeError(
+						`Invalid value "${value}" for property "${prop}" in "allowPropertyValues".`,
+					);
+				}
+			}
+
 			allowPropertyValuesMap.set(prop, new Set(values));
 		}
 
