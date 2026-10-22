@@ -233,6 +233,38 @@ ruleTester.run("selector-complexity", rule, {
 			code: ".foo[class^='foo'] > .bar[name*='bar'] {}",
 			options: [{ disallowAttributeMatchers: ["=", "$="] }],
 		},
+		{
+			code: "@keyframes fade { from {} to {} }",
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: "@keyframes reveal { entry 0% {} exit 100% {} }",
+			options: [{ maxCompounds: 1 }],
+		},
+		{
+			code: "@keyframes reveal { entry 0% {} exit 100% {} }",
+			options: [{ disallowCombinators: [" "] }],
+		},
+		{
+			code: "@-webkit-keyframes fade { from {} to {} }",
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: "@-moz-keyframes fade { from {} to {} }",
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: "@-o-keyframes fade { from {} to {} }",
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: "@-ms-keyframes fade { from {} to {} }",
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: "@KEYFRAMES fade { FROM {} TO {} }",
+			options: [{ maxTypes: 0 }],
+		},
 	],
 	invalid: [
 		{
@@ -1119,6 +1151,23 @@ ruleTester.run("selector-complexity", rule, {
 					column: 11,
 					endLine: 1,
 					endColumn: 13,
+				},
+			],
+		},
+		{
+			code: "@keyframes fade { from {} to {} } a b {}",
+			options: [{ maxTypes: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "type",
+						limit: 1,
+					},
+					line: 1,
+					column: 35,
+					endLine: 1,
+					endColumn: 38,
 				},
 			],
 		},
