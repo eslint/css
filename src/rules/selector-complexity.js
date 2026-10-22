@@ -283,11 +283,11 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		);
 
 		return {
-			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]"() {
+			"Atrule[name=/^(-(o|ms|moz|webkit)-)?keyframes$/i]"() {
 				insideKeyframes = true;
 			},
 
-			"Atrule[name=/^(-(o|moz|webkit)-)?keyframes$/i]:exit"() {
+			"Atrule[name=/^(-(o|ms|moz|webkit)-)?keyframes$/i]:exit"() {
 				insideKeyframes = false;
 			},
 
