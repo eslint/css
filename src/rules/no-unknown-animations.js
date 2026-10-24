@@ -231,9 +231,11 @@ function findAnimationNames(nodes, nameKeywords, isShorthand, names) {
 export default /** @satisfies {NoUnknownAnimationsRuleDefinition} */ ({
 	meta: {
 		type: "problem",
+		languages: ["css/css"],
 
 		docs: {
 			description: "Disallow unknown animation names",
+			dialects: ["CSS"],
 			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-unknown-animations.md",
 		},
