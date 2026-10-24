@@ -111,14 +111,22 @@ export default /** @satisfies {NoDuplicateImportsRuleDefinition} */ ({
 		return {
 			"Atrule[name=/^import$/i]"(node) {
 				const url = node.prelude?.children[0].value;
+				const implicitUrl = url && url?.replace(/^(?:\.\/)+/u, "");
 				const hasImport = imports.some(
-					importNode => importNode.prelude?.children[0].value === url,
+					importNode =>
+						importNode.prelude?.children[0].value.replace(
+							/^(?:\.\/)+/u,
+							"",
+						) === implicitUrl,
 				);
 
 				if (hasImport) {
 					const firstImportNode = imports.find(
 						importNode =>
-							importNode.prelude?.children[0].value === url,
+							importNode.prelude?.children[0].value.replace(
+								/^(?:\.\/)+/u,
+								"",
+							) === implicitUrl,
 					);
 					const [firstImportStart, firstImportEnd] =
 						sourceCode.getRange(firstImportNode);
