@@ -576,26 +576,16 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 					},
 					allowPropertyValues: {
 						type: "object",
-						properties: Object.fromEntries(
-							Array.from(properties.keys()).map(prop => {
-								const values = new Set([
-									...globalKeywords.keys(),
-									...(propertyValues.get(prop)?.keys() ?? []),
-								]);
-
-								return [
-									prop,
-									{
-										type: "array",
-										items: {
-											enum: Array.from(values),
-										},
-										uniqueItems: true,
-									},
-								];
-							}),
-						),
-						additionalProperties: false,
+						propertyNames: {
+							enum: Array.from(properties.keys()),
+						},
+						additionalProperties: {
+							type: "array",
+							items: {
+								type: "string",
+							},
+							uniqueItems: true,
+						},
 					},
 					allowSelectors: {
 						type: "array",
@@ -664,6 +654,21 @@ export default /** @satisfies {UseBaselineRuleDefinition} */ ({
 		for (const [prop, values] of Object.entries(
 			context.options[0].allowPropertyValues,
 		)) {
+			/*
+			 * Validating values here rather than in the schema because a schema
+			 * enumerating every value for every property is large enough to
+			 * overflow the stack when ESLint compiles it.
+			 */
+			const knownValues = propertyValues.get(prop);
+
+			for (const value of values) {
+				if (!globalKeywords.has(value) && !knownValues?.has(value)) {
+					throw new TypeError(
+						`Invalid value "${value}" for property "${prop}" in "allowPropertyValues".`,
+					);
+				}
+			}
+
 			allowPropertyValuesMap.set(prop, new Set(values));
 		}
 
