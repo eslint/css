@@ -182,6 +182,10 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ disallowAttributes: ["alt"] }],
 		},
 		{
+			code: "svg[viewbox] {}",
+			options: [{ disallowAttributes: ["viewBox"], caseSensitive: true }],
+		},
+		{
 			code: "[class*='foo'] {}",
 			options: [{ disallowAttributeMatchers: ["="] }],
 		},
@@ -855,6 +859,42 @@ ruleTester.run("selector-complexity", rule, {
 					column: 12,
 					endLine: 1,
 					endColumn: 20,
+				},
+			],
+		},
+		{
+			code: "svg[viewBox] {}",
+			options: [{ disallowAttributes: ["viewBox"], caseSensitive: true }],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "viewBox",
+						selector: "attribute",
+					},
+					line: 1,
+					column: 5,
+					endLine: 1,
+					endColumn: 12,
+				},
+			],
+		},
+		{
+			code: "a:HOVER {}",
+			options: [
+				{ disallowPseudoClasses: ["hover"], caseSensitive: true },
+			],
+			errors: [
+				{
+					messageId: "disallowedSelectors",
+					data: {
+						selectorName: "HOVER",
+						selector: "pseudo-class",
+					},
+					line: 1,
+					column: 2,
+					endLine: 1,
+					endColumn: 8,
 				},
 			],
 		},

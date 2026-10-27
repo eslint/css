@@ -24,6 +24,7 @@
  *     disallowPseudoElements?: string[],
  *     disallowAttributes?: string[],
  *     disallowAttributeMatchers?: string[],
+ *     caseSensitive?: boolean,
  * }]} SelectorComplexityOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: SelectorComplexityOptions, MessageIds: SelectorComplexityMessageIds }> } SelectorComplexityRuleDefinition
  */
@@ -224,6 +225,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 						},
 						uniqueItems: true,
 					},
+					caseSensitive: {
+						type: "boolean",
+					},
 				},
 				additionalProperties: false,
 			},
@@ -244,6 +248,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoElements: [],
 				disallowAttributes: [],
 				disallowAttributeMatchers: [],
+				caseSensitive: false,
 			},
 		],
 
@@ -271,6 +276,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoElements,
 				disallowAttributes,
 				disallowAttributeMatchers,
+				caseSensitive,
 			},
 		] = context.options;
 		const disallowedPseudoClasses = new Set(
@@ -280,7 +286,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 			disallowPseudoElements.map(selector => selector.toLowerCase()),
 		);
 		const disallowedAttributes = new Set(
-			disallowAttributes.map(attribute => attribute.toLowerCase()),
+			caseSensitive
+				? disallowAttributes
+				: disallowAttributes.map(attribute => attribute.toLowerCase()),
 		);
 
 		return {
@@ -441,7 +449,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 
 						if (
 							disallowedAttributes.has(
-								attributeName.toLowerCase(),
+								caseSensitive
+									? attributeName
+									: attributeName.toLowerCase(),
 							)
 						) {
 							context.report({
