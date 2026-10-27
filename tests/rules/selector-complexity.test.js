@@ -265,6 +265,22 @@ ruleTester.run("selector-complexity", rule, {
 			code: "@KEYFRAMES fade { FROM {} TO {} }",
 			options: [{ maxTypes: 0 }],
 		},
+		{
+			code: "@page chapter {}",
+			options: [{ maxTypes: 0 }],
+		},
+		{
+			code: "@page :first {}",
+			options: [{ maxPseudoClasses: 0 }],
+		},
+		{
+			code: "@page :first {}",
+			options: [{ disallowPseudoClasses: ["first"] }],
+		},
+		{
+			code: "@PAGE chapter {}",
+			options: [{ maxTypes: 0 }],
+		},
 	],
 	invalid: [
 		{
@@ -1168,6 +1184,23 @@ ruleTester.run("selector-complexity", rule, {
 					column: 35,
 					endLine: 1,
 					endColumn: 38,
+				},
+			],
+		},
+		{
+			code: "@page chapter {} a b {}",
+			options: [{ maxTypes: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "type",
+						limit: 1,
+					},
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 21,
 				},
 			],
 		},

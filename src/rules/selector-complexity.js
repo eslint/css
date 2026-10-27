@@ -302,6 +302,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 
 	create(context) {
 		let insideKeyframes = false;
+		let insidePage = false;
 
 		const [
 			{
@@ -336,8 +337,16 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				insideKeyframes = false;
 			},
 
+			"Atrule[name=/^page$/i]"() {
+				insidePage = true;
+			},
+
+			"Atrule[name=/^page$/i]:exit"() {
+				insidePage = false;
+			},
+
 			Selector(node) {
-				if (insideKeyframes) {
+				if (insideKeyframes || insidePage) {
 					return;
 				}
 
