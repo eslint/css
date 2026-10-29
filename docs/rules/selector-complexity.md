@@ -1,37 +1,37 @@
 # selector-complexity
 
-Limit and disallow the CSS selectors.
+Disallow and limit CSS selectors.
 
 ## Background
 
-The CSS selectors are used to target HTML elements so that styles can be applied to them. Selectors can target HTML element tags, IDs, classes, or attributes applied to elements. Selectors can use simple syntax, such as targeting only IDs, classes, or HTML tags, or more complex syntax by combining classes, IDs, attributes, pseudo-classes, pseudo-elements and combinators to match specific elements or groups of elements.
+CSS selectors are used to target HTML elements so that styles can be applied to them. Selectors can target HTML element tags, IDs, classes, or attributes applied to elements. Selectors can use simple syntax, such as targeting only IDs, classes, or HTML tags, or more complex syntax by combining classes, IDs, attributes, pseudo-classes, pseudo-elements and combinators to match specific elements or groups of elements.
 
-It is a good practice to refrain from using complex selectors to improve maintainability and readability of code, reduce specificity issues, enhance performance, prevent bugs etc.
+It is a good practice to refrain from using complex selectors to improve maintainability and readability of code, reduce specificity issues, enhance performance, prevent bugs, etc.
 
 ## Rule Details
 
-This rule limits the use of descendant selectors and disallows certain selectors or combinators to prevent overly complex CSS selectors.
+This rule limits how many IDs, classes, types, attributes, pseudo-classes, universals, compounds and combinators a selector can contain, and disallows certain selectors or combinators to prevent overly complex CSS selectors.
 
 ## Options
 
 This rule accepts an option object with the following properties:
 
 - `maxIds` (default: `Infinity`) -
-  Specify the number of `ID`s can be used in a selector.
-- `maxClasses` (default: - `Infinity`) -
-  Specify the number of `class`es can be used in a selector.
+  Specify the number of `ID`s that can be used in a selector.
+- `maxClasses` (default: `Infinity`) -
+  Specify the number of `class`es that can be used in a selector.
 - `maxTypes` (default: `Infinity`) -
-  Specify the number of `type`s can be used in a selector.
+  Specify the number of `type`s that can be used in a selector.
 - `maxAttributes` (default: `Infinity`) -
-  Specify the number of `attribute`s can be used in a selector.
+  Specify the number of `attribute`s that can be used in a selector.
 - `maxPseudoClasses` (default: `Infinity`) -
-  Specify the number of `pseudo-class`es can be used in a selector.
+  Specify the number of `pseudo-class`es that can be used in a selector.
 - `maxUniversals` (default: `Infinity`) -
-  Specify the number of `universal`s can be used in a selector.
+  Specify the number of `universal`s that can be used in a selector.
 - `maxCompounds` (default: `Infinity`) -
-  Specify the number of `compound`s can be used in a selector.
+  Specify the number of `compound`s that can be used in a selector.
 - `maxCombinators` (default: `Infinity`) -
-  Specify the number of `combinator`s can be used in a selector.
+  Specify the number of `combinator`s that can be used in a selector.
 - `disallowCombinators` (default: `[]`) -
   Specify an array of `combinator`s that are not allowed to be used.
 - `disallowPseudoClasses` (default: `[]`) -
@@ -41,7 +41,7 @@ This rule accepts an option object with the following properties:
 - `disallowAttributes` (default: `[]`) -
   Specify an array of `attribute`s that are not allowed to be used.
 - `disallowAttributeMatchers` (default: `[]`) -
-  Specify an array of `attribute-matchers`s or `operator`s that are not allowed to be used.
+  Specify an array of `attribute-matcher`s or `operator`s that are not allowed to be used.
 
 ### `maxIds`
 
