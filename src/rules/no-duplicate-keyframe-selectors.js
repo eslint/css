@@ -9,8 +9,8 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"duplicateKeyframeSelector"} DuplicateKeyframeSelectorMessageIds
- * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: DuplicateKeyframeSelectorMessageIds }>} DuplicateKeyframeSelectorRuleDefinition
+ * @typedef {"duplicateKeyframeSelector"} NoDuplicateKeyframeSelectorsMessageIds
+ * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoDuplicateKeyframeSelectorsMessageIds }>} NoDuplicateKeyframeSelectorsRuleDefinition
  */
 
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ const keyframeSelectorAliases = new Map([
 // Rule Definition
 //-----------------------------------------------------------------------------
 
-export default /** @satisfies {DuplicateKeyframeSelectorRuleDefinition} */ ({
+export default /** @satisfies {NoDuplicateKeyframeSelectorsRuleDefinition} */ ({
 	meta: {
 		type: "problem",
 		languages: ["css/css"],
