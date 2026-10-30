@@ -66,22 +66,24 @@ export default /** @satisfies {NoDuplicateKeyframeSelectorsRuleDefinition} */ ({
 				// @ts-ignore - children is a valid property for prelude
 				node.prelude.children.forEach(selector => {
 					const value = [];
+					const keyParts = [];
 
 					selector.children.forEach(component => {
 						if (component.type === "Percentage") {
 							value.push(`${component.value}%`);
+							keyParts.push(`${Number(component.value)}%`);
 						} else if (component.type === "TypeSelector") {
+							const name = component.name.toLowerCase();
+
 							value.push(component.name);
+							keyParts.push(
+								keyframeSelectorAliases.get(name) ?? name,
+							);
 						}
 					});
 
 					const selectorValue = value.join(" ");
-					const key = value
-						.map(selectorPart => {
-							const part = selectorPart.toLowerCase();
-							return keyframeSelectorAliases.get(part) ?? part;
-						})
-						.join(" ");
+					const key = keyParts.join(" ");
 
 					if (seen.has(key)) {
 						context.report({
