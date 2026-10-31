@@ -129,6 +129,12 @@ const unitReplacements = new Map([
 	["vw", "vi"],
 ]);
 
+const propertiesWithPropertyNames = new Set([
+	"transition",
+	"transition-property",
+	"will-change",
+]);
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -276,6 +282,50 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 								},
 							],
 						});
+					}
+				}
+
+				if (
+					propertiesWithPropertyNames.has(property) &&
+					node.value.type === "Value"
+				) {
+					for (const child of node.value.children) {
+						if (child.type !== "Identifier") {
+							continue;
+						}
+
+						const name = child.name.toLowerCase();
+						const nameReplacement =
+							propertiesReplacements.get(name);
+
+						if (
+							nameReplacement &&
+							!allowProperties.includes(name)
+						) {
+							context.report({
+								loc: child.loc,
+								messageId: "notLogicalProperty",
+								data: {
+									property: child.name,
+									replacement: nameReplacement,
+								},
+								suggest: [
+									{
+										messageId: "replaceWithLogicalProperty",
+										data: {
+											property: child.name,
+											replacement: nameReplacement,
+										},
+										fix(fixer) {
+											return fixer.replaceText(
+												child,
+												nameReplacement,
+											);
+										},
+									},
+								],
+							});
+						}
 					}
 				}
 			},
