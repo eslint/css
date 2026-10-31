@@ -237,3 +237,5 @@ If your web application doesn't target all Baseline browsers then you can safely
 ## Further Reading
 
 - [How do features become part of Baseline?](https://web-platform-dx.github.io/web-features/#how-do-features-become-part-of-baseline%3F)
+- [`@html-eslint/use-baseline`](https://html-eslint.org/docs/rules/use-baseline) - The same check for HTML
+- [`baseline-js/use-baseline`](https://github.com/3ru/eslint-plugin-baseline-js) - The same check for JavaScript
