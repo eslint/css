@@ -194,7 +194,6 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		docs: {
 			description: "Disallow and limit CSS selectors",
 			dialects: ["CSS"],
-			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/selector-complexity.md",
 		},
 
