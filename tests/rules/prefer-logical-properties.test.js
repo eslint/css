@@ -61,6 +61,9 @@ ruleTester.run("prefer-logical-properties", rule, {
 				},
 			],
 		},
+		"@page { margin-left: 1in; }",
+		"@page { @top-left { text-align: left; } }",
+		"@PAGE { margin-left: 1in; }",
 	],
 	invalid: [
 		{
@@ -240,6 +243,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 								replacement: "vb",
 							},
 							output: "a { BLOCK-SIZE: 100vb }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@page {} a { margin-left: 0; }",
+			errors: [
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 14,
+					endLine: 1,
+					endColumn: 28,
+					data: {
+						property: "margin-left",
+						replacement: "margin-inline-start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "margin-left",
+								replacement: "margin-inline-start",
+							},
+							output: "@page {} a { margin-inline-start: 0; }",
 						},
 					],
 				},
