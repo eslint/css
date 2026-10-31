@@ -80,6 +80,13 @@ const propertyValuesReplacements = new Map([
 		},
 	],
 	[
+		"text-align-last",
+		{
+			left: "start",
+			right: "end",
+		},
+	],
+	[
 		"resize",
 		{
 			horizontal: "inline",

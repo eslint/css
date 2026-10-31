@@ -194,6 +194,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 			],
 		},
 		{
+			code: "a { text-align-last: right }",
+			errors: [
+				{
+					messageId: "notLogicalValue",
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 27,
+					data: {
+						value: "right",
+						replacement: "end",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalValue",
+							data: {
+								value: "right",
+								replacement: "end",
+							},
+							output: "a { text-align-last: end }",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: "a { block-size: 100vh }",
 			errors: [
 				{
