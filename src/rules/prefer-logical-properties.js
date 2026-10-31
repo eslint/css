@@ -194,11 +194,18 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 
 	create(context) {
 		const [{ allowProperties, allowUnits }] = context.options;
+		let insidePage = false;
 
 		return {
+			"Atrule[name=/^page$/i]"() {
+				insidePage = true;
+			},
+			"Atrule[name=/^page$/i]:exit"() {
+				insidePage = false;
+			},
 			Declaration(node) {
 				const parent = context.sourceCode.getParent(node);
-				if (parent.type === "SupportsDeclaration") {
+				if (insidePage || parent.type === "SupportsDeclaration") {
 					return;
 				}
 
