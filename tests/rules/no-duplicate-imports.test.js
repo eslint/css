@@ -31,6 +31,12 @@ ruleTester.run("no-duplicate-imports", rule, {
 		"@imPort url('x.css'); @IMport url('y.css');",
 		"@IMPORT 'x.css'; @import url('y.css'); @IMport 'z.css';",
 		"@import url('x.css'); @import;",
+		"@import url('x.css'); @import url('../x.css');",
+		"@import url('../x.css'); @import url('x.css');",
+		"@import 'x.css'; @import '../x.css';",
+		"@import '../x.css'; @import 'x.css';",
+		"@import url('../x.css'); @import 'x.css';",
+		"@import url('./y/x.css'); @import 'x.css';",
 	],
 	invalid: [
 		{
@@ -649,6 +655,118 @@ ruleTester.run("no-duplicate-imports", rule, {
 							output: "@import url('a.css') layer(foo) supports(display: grid) screen and (width > 600px);\n@import url('b.css');",
 						},
 					],
+				},
+			],
+		},
+		{
+			code: "@import 'x.css';\n@import './x.css';",
+			output: "@import 'x.css';\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "./x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: "@import './x.css';\n@import 'x.css';",
+			output: "@import './x.css';\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@import './x.css';\n@import './x.css';",
+			output: "@import './x.css';\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "./x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: "@import url('./x.css');\n@import url('./x.css')",
+			output: "@import url('./x.css');\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "./x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 23,
+				},
+			],
+		},
+		{
+			code: "@import url('x.css');\n@import url('././x.css');",
+			output: "@import url('x.css');\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "././x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 26,
+				},
+			],
+		},
+		{
+			code: "@import url('y/x.css');\n@import url('./y/x.css')",
+			output: "@import url('y/x.css');\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "./y/x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 25,
+				},
+			],
+		},
+		{
+			code: "@import url('./y/x.css');\n@import url('./y/x.css')",
+			output: "@import url('./y/x.css');\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "./y/x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 25,
+				},
+			],
+		},
+		{
+			code: "@import url('./x.css');\n@import 'x.css';",
+			output: "@import url('./x.css');\n",
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 2,
+					column: 1,
+					endLine: 2,
+					endColumn: 17,
 				},
 			],
 		},
