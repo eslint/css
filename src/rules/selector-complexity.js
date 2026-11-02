@@ -24,8 +24,8 @@
  *     disallowPseudoClasses?: string[],
  *     disallowPseudoElements?: string[],
  *     disallowAttributes?: string[],
+ *     disallowAttributesCaseSensitive?: boolean,
  *     disallowAttributeMatchers?: string[],
- *     caseSensitive?: boolean,
  * }]} SelectorComplexityOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: SelectorComplexityOptions, MessageIds: SelectorComplexityMessageIds }> } SelectorComplexityRuleDefinition
  */
@@ -263,15 +263,15 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 						},
 						uniqueItems: true,
 					},
+					disallowAttributesCaseSensitive: {
+						type: "boolean",
+					},
 					disallowAttributeMatchers: {
 						type: "array",
 						items: {
 							type: "string",
 						},
 						uniqueItems: true,
-					},
-					caseSensitive: {
-						type: "boolean",
 					},
 				},
 				additionalProperties: false,
@@ -292,8 +292,8 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoClasses: [],
 				disallowPseudoElements: [],
 				disallowAttributes: [],
+				disallowAttributesCaseSensitive: false,
 				disallowAttributeMatchers: [],
-				caseSensitive: false,
 			},
 		],
 
@@ -322,8 +322,8 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoClasses,
 				disallowPseudoElements,
 				disallowAttributes,
+				disallowAttributesCaseSensitive,
 				disallowAttributeMatchers,
-				caseSensitive,
 			},
 		] = context.options;
 		const disallowedPseudoClasses = new Set(
@@ -333,7 +333,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 			disallowPseudoElements.map(selector => selector.toLowerCase()),
 		);
 		const disallowedAttributes = new Set(
-			caseSensitive
+			disallowAttributesCaseSensitive
 				? disallowAttributes
 				: disallowAttributes.map(attribute => attribute.toLowerCase()),
 		);
@@ -506,7 +506,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 
 						if (
 							disallowedAttributes.has(
-								caseSensitive
+								disallowAttributesCaseSensitive
 									? attributeName
 									: attributeName.toLowerCase(),
 							)

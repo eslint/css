@@ -227,7 +227,12 @@ ruleTester.run("selector-complexity", rule, {
 		},
 		{
 			code: "svg[viewbox] {}",
-			options: [{ disallowAttributes: ["viewBox"], caseSensitive: true }],
+			options: [
+				{
+					disallowAttributes: ["viewBox"],
+					disallowAttributesCaseSensitive: true,
+				},
+			],
 		},
 		{
 			code: "[class*='foo'] {}",
@@ -1087,7 +1092,12 @@ ruleTester.run("selector-complexity", rule, {
 		},
 		{
 			code: "svg[viewBox] {}",
-			options: [{ disallowAttributes: ["viewBox"], caseSensitive: true }],
+			options: [
+				{
+					disallowAttributes: ["viewBox"],
+					disallowAttributesCaseSensitive: true,
+				},
+			],
 			errors: [
 				{
 					messageId: "disallowedSelectors",
@@ -1099,25 +1109,6 @@ ruleTester.run("selector-complexity", rule, {
 					column: 5,
 					endLine: 1,
 					endColumn: 12,
-				},
-			],
-		},
-		{
-			code: "a:HOVER {}",
-			options: [
-				{ disallowPseudoClasses: ["hover"], caseSensitive: true },
-			],
-			errors: [
-				{
-					messageId: "disallowedSelectors",
-					data: {
-						selectorName: "HOVER",
-						selector: "pseudo-class",
-					},
-					line: 1,
-					column: 2,
-					endLine: 1,
-					endColumn: 8,
 				},
 			],
 		},
