@@ -40,6 +40,8 @@ This rule accepts an option object with the following properties:
   Specify an array of `pseudo-element`s that are not allowed to be used.
 - `disallowAttributes` (default: `[]`) -
   Specify an array of `attribute`s that are not allowed to be used.
+- `disallowAttributesCaseSensitive` (default: `false`) -
+  Specify whether `disallowAttributes` matches attribute names case-sensitively.
 - `disallowAttributeMatchers` (default: `[]`) -
   Specify an array of `attribute-matcher`s or `operator`s that are not allowed to be used.
 
@@ -375,6 +377,28 @@ input[type="text"] {
 }
 
 img[src$=".foo"] {
+}
+```
+
+### `disallowAttributesCaseSensitive`
+
+By default, `disallowAttributes` matches attribute names case-insensitively, because attribute names on HTML elements in HTML documents are case-insensitive. Set this option to `true` to match them exactly, for example when styling XML documents such as SVG files.
+
+Examples of **incorrect** code with `{ disallowAttributes: ["viewBox"], disallowAttributesCaseSensitive: true }`:
+
+```css
+/* eslint css/selector-complexity: ["error", { disallowAttributes: ["viewBox"], disallowAttributesCaseSensitive: true }] */
+
+svg[viewBox] {
+}
+```
+
+Examples of **correct** code with `{ disallowAttributes: ["viewBox"], disallowAttributesCaseSensitive: true }`:
+
+```css
+/* eslint css/selector-complexity: ["error", { disallowAttributes: ["viewBox"], disallowAttributesCaseSensitive: true }] */
+
+svg[viewbox] {
 }
 ```
 

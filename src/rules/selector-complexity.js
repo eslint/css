@@ -24,6 +24,7 @@
  *     disallowPseudoClasses?: string[],
  *     disallowPseudoElements?: string[],
  *     disallowAttributes?: string[],
+ *     disallowAttributesCaseSensitive?: boolean,
  *     disallowAttributeMatchers?: string[],
  * }]} SelectorComplexityOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: SelectorComplexityOptions, MessageIds: SelectorComplexityMessageIds }> } SelectorComplexityRuleDefinition
@@ -281,6 +282,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 						},
 						uniqueItems: true,
 					},
+					disallowAttributesCaseSensitive: {
+						type: "boolean",
+					},
 					disallowAttributeMatchers: {
 						type: "array",
 						items: {
@@ -307,6 +311,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoClasses: [],
 				disallowPseudoElements: [],
 				disallowAttributes: [],
+				disallowAttributesCaseSensitive: false,
 				disallowAttributeMatchers: [],
 			},
 		],
@@ -337,6 +342,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoClasses,
 				disallowPseudoElements,
 				disallowAttributes,
+				disallowAttributesCaseSensitive,
 				disallowAttributeMatchers,
 			},
 		] = context.options;
@@ -345,6 +351,11 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		);
 		const disallowedPseudoElements = new Set(
 			disallowPseudoElements.map(selector => selector.toLowerCase()),
+		);
+		const disallowedAttributes = new Set(
+			disallowAttributesCaseSensitive
+				? disallowAttributes
+				: disallowAttributes.map(attribute => attribute.toLowerCase()),
 		);
 
 		return {
@@ -522,7 +533,13 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 					for (const selectorNode of attributeSelectors) {
 						const attributeName = selectorNode.name.name;
 
-						if (disallowAttributes.includes(attributeName)) {
+						if (
+							disallowedAttributes.has(
+								disallowAttributesCaseSensitive
+									? attributeName
+									: attributeName.toLowerCase(),
+							)
+						) {
 							context.report({
 								loc: selectorNode.name.loc,
 								messageId: "disallowedSelectors",
