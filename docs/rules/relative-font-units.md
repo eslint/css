@@ -21,6 +21,8 @@ Generally, relative units such as `rem` or `em` are preferred over absolute ones
 
 This rule enforces the use of relative units for font size. Relative-size keywords (`smaller`, `larger`) and global values (`inherit`, `initial`, `revert`, `revert-layer`, `revert-rule`, `unset`) are always allowed. Conversely, absolute-size keywords (`xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large`, `xxx-large`) along with the `math` keyword and any absolute length units (such as `px` or `pt`), are never allowed.
 
+Values inside functions are checked as well. This includes the arguments of math functions such as `calc()`, `clamp()`, `min()`, and `max()` (including nested functions) and the fallback value of `var()`. Each disallowed unit or keyword found inside a function is reported separately.
+
 ## Options
 
 This rule accepts an option which is an object with the following property:
@@ -60,6 +62,18 @@ Example of **incorrect** code for default `{ allowUnits: ["rem"] }` option:
 .d {
 	font-size: math;
 }
+
+.e {
+	font-size: calc(2rem + 2px);
+}
+
+.f {
+	font-size: clamp(12px, 1rem, 20px);
+}
+
+.g {
+	font-size: var(--foo, 16px);
+}
 ```
 
 Example of **correct** code for default `{ allowUnits: ["rem"] }` option:
@@ -81,7 +95,7 @@ Example of **correct** code for default `{ allowUnits: ["rem"] }` option:
 }
 
 .d {
-	font-size: calc(2rem + 2px);
+	font-size: calc(2rem + 1rem);
 }
 
 .e {
@@ -98,6 +112,14 @@ Example of **correct** code for default `{ allowUnits: ["rem"] }` option:
 
 .h {
 	font-size: unset;
+}
+
+.i {
+	font-size: clamp(1rem, 1rem + 1rem, 3rem);
+}
+
+.j {
+	font-size: var(--foo, 1rem);
 }
 ```
 

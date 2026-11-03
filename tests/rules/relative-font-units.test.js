@@ -39,7 +39,23 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font: 1.2REM/2 Arial, sans-serif; }",
 		"a { font-size: var(--foo); }",
 		"a { font: var(--foo) Arial; }",
-		"a { font-size: calc(10px + 2px); }",
+		"a { font-size: calc(1rem + 2rem); }",
+		"a { font-size: calc(1rem * 1.5); }",
+		"a { font-size: calc((1rem + 2rem) / 2); }",
+		"a { font-size: clamp(1rem, 1rem + 1rem, 3rem); }",
+		"a { font-size: min(1rem, 2rem); }",
+		"a { font-size: max(1rem, 2rem); }",
+		"a { font-size: clamp(1rem, calc(1rem + 2rem), 3rem); }",
+		"a { font-size: calc(1rem * sin(30deg)); }",
+		"a { font-size: round(nearest, 1.5rem, 1rem); }",
+		"a { font-size: env(safe-area-inset-top, 1rem); }",
+		"a { font-size: var(--foo, 1rem); }",
+		"a { font-size: var(--foo, calc(1rem + 2rem)); }",
+		"a { font-size: var(--foo, var(--bar, 1rem)); }",
+		"a { font-size: var(--foo,); }",
+		"a { font-size: var(--foo, smaller); }",
+		"a { font: clamp(1rem, 2rem, 3rem) Arial, sans-serif; }",
+		"a { font: italic calc(1rem + 2rem)/1.5 Arial, sans-serif; }",
 		"a { font-size: smaller; }",
 		"a { font: smaller Arial, sans-serif; }",
 		"a { font-size: larger; }",
@@ -335,6 +351,14 @@ ruleTester.run("relative-font-units", rule, {
 					allowUnits: ["em"],
 				},
 			],
+		},
+		{
+			code: "a { font-size: clamp(1em, 120%, 2rem); }",
+			options: [{ allowUnits: ["rem", "em", "%"] }],
+		},
+		{
+			code: "a { font-size: var(--foo, 2em); }",
+			options: [{ allowUnits: ["em"] }],
 		},
 	],
 	invalid: [
@@ -1794,6 +1818,322 @@ ruleTester.run("relative-font-units", rule, {
 					column: 11,
 					endLine: 1,
 					endColumn: 15,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(10px + 2px); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 25,
+					data: { allowedFontUnits: "rem" },
+				},
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 31,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(12px + 1rem); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 25,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: clamp(12px, 2vw, 20px); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 26,
+					data: { allowedFontUnits: "rem" },
+				},
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 31,
+					data: { allowedFontUnits: "rem" },
+				},
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 37,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: min(12px, 1rem); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 20,
+					endLine: 1,
+					endColumn: 24,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: max(1rem, 12pt); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 30,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: clamp(1rem, calc(12px + 1vw), 2rem); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 37,
+					data: { allowedFontUnits: "rem" },
+				},
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 40,
+					endLine: 1,
+					endColumn: 43,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc((12px + 1rem) * 2); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 26,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: round(nearest, 12px, 1rem); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 31,
+					endLine: 1,
+					endColumn: 35,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(1rem * sin(30deg) + 12px); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 41,
+					endLine: 1,
+					endColumn: 45,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(100% - 1rem); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 25,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2em, 3rem); }",
+			options: [{ allowUnits: ["rem"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 31,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: env(safe-area-inset-top, 12px); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 41,
+					endLine: 1,
+					endColumn: 45,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: var(--foo, 16px); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 31,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: VAR(--foo, 16px); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 31,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: var(--foo, calc(12px + 1rem)); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 32,
+					endLine: 1,
+					endColumn: 36,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: var(--foo, var(--bar, 16px)); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 38,
+					endLine: 1,
+					endColumn: 42,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: var(--foo, small); }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 32,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: dedent`
+				a {
+					font-size: var(
+						--foo,
+						calc(12px + 1rem)
+					);
+				}
+			`,
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 4,
+					column: 8,
+					endLine: 4,
+					endColumn: 12,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font: clamp(12px, 2vw, 20px) Arial; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 21,
+					data: { allowedFontUnits: "rem" },
+				},
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 23,
+					endLine: 1,
+					endColumn: 26,
+					data: { allowedFontUnits: "rem" },
+				},
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 32,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font: italic calc(12px + 1rem)/1.5 Arial, sans-serif; }",
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 23,
+					endLine: 1,
+					endColumn: 27,
 					data: { allowedFontUnits: "rem" },
 				},
 			],

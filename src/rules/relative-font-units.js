@@ -4,12 +4,18 @@
  */
 
 //-----------------------------------------------------------------------------
+// Imports
+//-----------------------------------------------------------------------------
+
+import { parse, toPlainObject } from "@eslint/css-tree";
+
+//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @import { CssNode, CssNodePlain } from "@eslint/css-tree"
+ * @import { CssNode, CssNodePlain, FunctionNodePlain, Lexer, ParenthesesPlain, Raw, ValuePlain } from "@eslint/css-tree"
  * @typedef {"allowedFontUnits"} RelativeFontUnitsMessageIds
  * @typedef {[{allowUnits?: string[]}]} RelativeFontUnitsOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: RelativeFontUnitsOptions, MessageIds: RelativeFontUnitsMessageIds}>} RelativeFontUnitsRuleDefinition
@@ -63,6 +69,75 @@ function isDisallowedFontSize(value, allowedFontUnits) {
 	);
 }
 
+/**
+ * Parses the fallback of a `var()` function, which the parser leaves as a `Raw` node.
+ * The locations in the parsed value point to the original source.
+ * @param {Raw} raw The `Raw` node that holds the fallback.
+ * @returns {ValuePlain} The parsed fallback value.
+ */
+function parseVarFallback(raw) {
+	const { offset, line, column } = raw.loc.start;
+
+	return /** @type {ValuePlain} */ (
+		toPlainObject(
+			parse(raw.value, {
+				context: "value",
+				positions: true,
+				offset,
+				line,
+				column,
+			}),
+		)
+	);
+}
+
+/**
+ * Finds the nodes in a font size value that use a unit or keyword that is not allowed.
+ * Function arguments, including `var()` fallbacks, are checked recursively. Inside
+ * functions only lengths are checked, so arguments such as the angle in `sin(30deg)` are ignored.
+ * @param {CssNodePlain} value The font size value.
+ * @param {string[]} allowedFontUnits The relative units that are allowed.
+ * @param {Lexer} lexer The lexer used to identify lengths.
+ * @returns {CssNodePlain[]} The disallowed nodes.
+ */
+function getDisallowedFontSizeNodes(value, allowedFontUnits, lexer) {
+	if (value.type !== "Function") {
+		return isDisallowedFontSize(value, allowedFontUnits) ? [value] : [];
+	}
+
+	/** @type {CssNodePlain[]} */
+	const disallowedNodes = [];
+
+	/**
+	 * Collects the disallowed nodes among the arguments of a function or expression.
+	 * @param {FunctionNodePlain | ParenthesesPlain | ValuePlain} node The node whose arguments are checked.
+	 * @returns {void}
+	 */
+	function checkArguments(node) {
+		for (const child of node.children) {
+			if (child.type === "Function" || child.type === "Parentheses") {
+				checkArguments(child);
+			} else if (
+				child.type === "Raw" &&
+				node.type === "Function" &&
+				node.name.toLowerCase() === "var"
+			) {
+				checkArguments(parseVarFallback(child));
+			} else if (
+				isDisallowedFontSize(child, allowedFontUnits) &&
+				(child.type !== "Dimension" ||
+					lexer.matchType("length", child).matched)
+			) {
+				disallowedNodes.push(child);
+			}
+		}
+	}
+
+	checkArguments(value);
+
+	return disallowedNodes;
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -111,6 +186,27 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 		const [{ allowUnits: allowedFontUnits }] = context.options;
 		const { lexer } = context.sourceCode;
 
+		/**
+		 * Reports the disallowed units and keywords in a font size value.
+		 * @param {CssNodePlain} value The font size value.
+		 * @returns {void}
+		 */
+		function checkFontSize(value) {
+			for (const disallowedNode of getDisallowedFontSizeNodes(
+				value,
+				allowedFontUnits,
+				lexer,
+			)) {
+				context.report({
+					loc: disallowedNode.loc,
+					messageId: "allowedFontUnits",
+					data: {
+						allowedFontUnits: allowedFontUnits.join(", "),
+					},
+				});
+			}
+		}
+
 		return {
 			Declaration(node) {
 				const property = node.property.toLowerCase();
@@ -120,18 +216,7 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 						node.value.type === "Value" &&
 						node.value.children.length > 0
 					) {
-						const value = node.value.children[0];
-
-						if (isDisallowedFontSize(value, allowedFontUnits)) {
-							context.report({
-								loc: value.loc,
-								messageId: "allowedFontUnits",
-								data: {
-									allowedFontUnits:
-										allowedFontUnits.join(", "),
-								},
-							});
-						}
+						checkFontSize(node.value.children[0]);
 					}
 				}
 
@@ -151,18 +236,8 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 								)
 							: undefined;
 
-						if (
-							fontSizeNode &&
-							isDisallowedFontSize(fontSizeNode, allowedFontUnits)
-						) {
-							context.report({
-								loc: fontSizeNode.loc,
-								messageId: "allowedFontUnits",
-								data: {
-									allowedFontUnits:
-										allowedFontUnits.join(", "),
-								},
-							});
+						if (fontSizeNode) {
+							checkFontSize(fontSizeNode);
 						}
 					}
 				}
