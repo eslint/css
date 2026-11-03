@@ -182,6 +182,25 @@ function getDisallowedCombinatorsLocation(
 	return location;
 }
 
+/**
+ * Get the number of compounds in a selector list.
+ * @param {Array<Object>} selectors All CSS selector nodes.
+ * @returns {number} The number of compound selectors.
+ */
+function getCompoundCount(selectors) {
+	let compound = 0;
+
+	selectors.forEach(selector => {
+		if (selector.type === "Combinator" && selector !== selectors[0]) {
+			compound++;
+		}
+	});
+
+	compound++;
+
+	return compound;
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -373,6 +392,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				const combinatorNodes = getSelectors(selectors, "Combinator");
 
 				const combinators = getSelectorNames(combinatorNodes);
+				const noOfCompounds = getCompoundCount(selectors);
 				const pseudoElementSelectors = selectors.filter(
 					isPseudoElementSelector,
 				);
@@ -428,7 +448,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 					);
 				}
 
-				if (combinatorNodes.length + 1 > maxCompounds) {
+				if (noOfCompounds > maxCompounds) {
 					exceedLimitError(
 						context,
 						selectorLoc,

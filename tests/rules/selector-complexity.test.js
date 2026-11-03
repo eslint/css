@@ -158,6 +158,38 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ maxCompounds: 2 }],
 		},
 		{
+			code: "a:has(> img) {}",
+			options: [{ maxCompounds: 1 }],
+		},
+		{
+			code: "h2:has(+ p) {}",
+			options: [{ maxCompounds: 1 }],
+		},
+		{
+			code: "h2:has(~ p) {}",
+			options: [{ maxCompounds: 1 }],
+		},
+		{
+			code: "a:has(> span img) {}",
+			options: [{ maxCompounds: 2 }],
+		},
+		{
+			code: "h2:has(+ p > a) {}",
+			options: [{ maxCompounds: 2 }],
+		},
+		{
+			code: ".foo { > img {} }",
+			options: [{ maxCompounds: 1 }],
+		},
+		{
+			code: ".foo { > a > b {} }",
+			options: [{ maxCompounds: 2 }],
+		},
+		{
+			code: "a:has(> img.foo#bar:hover) {}",
+			options: [{ maxCompounds: 1 }],
+		},
+		{
 			code: "div > p {}",
 			options: [{ maxCombinators: 1 }],
 		},
@@ -552,6 +584,108 @@ ruleTester.run("selector-complexity", rule, {
 					column: 1,
 					endLine: 1,
 					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: "a:has(> span img) {}",
+			options: [{ maxCompounds: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "compound",
+						limit: 1,
+					},
+					line: 1,
+					column: 7,
+					endLine: 1,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "h2:has(+ p > a) {}",
+			options: [{ maxCompounds: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "compound",
+						limit: 1,
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: "h2:has(~ p a) {}",
+			options: [{ maxCompounds: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "compound",
+						limit: 1,
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 13,
+				},
+			],
+		},
+		{
+			code: ".foo { > a > b {} }",
+			options: [{ maxCompounds: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "compound",
+						limit: 1,
+					},
+					line: 1,
+					column: 8,
+					endLine: 1,
+					endColumn: 15,
+				},
+			],
+		},
+		{
+			code: "a:has(> img, span a) {}",
+			options: [{ maxCompounds: 1 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "compound",
+						limit: 1,
+					},
+					line: 1,
+					column: 14,
+					endLine: 1,
+					endColumn: 20,
+				},
+			],
+		},
+		{
+			code: "a:has(> img) {}",
+			options: [{ maxCombinators: 0 }],
+			errors: [
+				{
+					messageId: "maxSelectors",
+					data: {
+						selector: "combinator",
+						limit: 0,
+					},
+					line: 1,
+					column: 7,
+					endLine: 1,
+					endColumn: 12,
 				},
 			],
 		},

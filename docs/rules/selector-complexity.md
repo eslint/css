@@ -238,6 +238,14 @@ p.foo span {
 #bar a,
 button {
 }
+
+a:has(> span img) {
+}
+
+.foo {
+	> a > b {
+	}
+}
 ```
 
 ### `maxCombinators`
