@@ -8,22 +8,29 @@
 //-----------------------------------------------------------------------------
 
 /**
+ * @import { SourceRange, SuggestedEdit } from "@eslint/core"
+ * @import { AtrulePlain } from "@eslint/css-tree"
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"duplicateImport" | "removeDuplicateImportWithModifiers" | "removeDuplicateImportWithoutModifiers"} NoDuplicateKeysMessageIds
- * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoDuplicateKeysMessageIds }>} NoDuplicateImportsRuleDefinition
+ * @import { CSSSourceCode } from "../languages/css-source-code.js"
+ * @typedef {"duplicateImport" | "removeDuplicateImportWithModifiers" | "removeDuplicateImportWithoutModifiers"} NoDuplicateImportsMessageIds
+ * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoDuplicateImportsMessageIds }>} NoDuplicateImportsRuleDefinition
  */
 
 //-----------------------------------------------------------------------------
 // Helpers
 //-----------------------------------------------------------------------------
 
+const leadingDotSlashPattern = /^(?:\.\/)+/u;
+
 /**
- * Get the end index of import statement including a following newline if present.
- * @param {string} text The full text of the source code.
- * @param {number} end The end index of the import statement.
- * @returns {number} The end index of the import statement including a following newline.
+ * Get the range of an import statement including a following newline if present.
+ * @param {AtrulePlain} importNode The import node to get the range of.
+ * @param {CSSSourceCode} sourceCode The source code object.
+ * @returns {SourceRange} The range of the import statement including a following newline.
  */
-function getImportEnd(text, end) {
+function getImportRange(importNode, sourceCode) {
+	const { text } = sourceCode;
+	const [start, end] = sourceCode.getRange(importNode);
 	let removeEnd = end;
 
 	// Remove the node, and also remove a following newline if present
@@ -33,47 +40,43 @@ function getImportEnd(text, end) {
 		removeEnd += 1;
 	}
 
-	return removeEnd;
+	return [start, removeEnd];
 }
 
 /**
  * Get the modifiers of an import statement.
- * @param {Object} importNode The import node to get modifiers from.
- * @param {Object} sourceCode The source code object.
- * @returns {string[]} An array of modifiers for the import statement.
+ * @param {AtrulePlain} importNode The import node to get modifiers from.
+ * @param {CSSSourceCode} sourceCode The source code object.
+ * @returns {string} The modifiers of the import statement separated by spaces, or an empty string if it has none.
  */
 function getImportModifiers(importNode, sourceCode) {
-	const importModifiers = [];
-
-	const importHasModifiers = importNode.prelude?.children.length > 1;
-
-	if (importHasModifiers) {
-		importNode.prelude?.children.slice(1).forEach(modifier => {
-			const modifierText = sourceCode.getText(modifier).trim();
-			importModifiers.push(modifierText);
-		});
+	if (importNode.prelude?.type !== "AtrulePrelude") {
+		return "";
 	}
 
-	return importModifiers;
+	return importNode.prelude.children
+		.slice(1)
+		.map(modifier => sourceCode.getText(modifier).trim())
+		.join(" ");
 }
 
 /**
- * Get the fix for a duplicate import statement.
- * @param {Object} fixer The fixer object.
- * @param {string} text The full text of the source code.
- * @param {number} start The start index of the import statement to fix.
- * @param {number} end The end index of the import statement to fix.
- * @param {boolean} hasModifiers A boolean indicating whether the import statement has modifiers that differ from the original import.
- * @returns {Object|null} A fix object if a fix is applicable, or null if no fix should be applied.
+ * Get a suggestion to remove an import statement.
+ * @param {AtrulePlain} importNode The import node to remove.
+ * @param {string} modifiers The modifiers of the import statement.
+ * @param {CSSSourceCode} sourceCode The source code object.
+ * @returns {SuggestedEdit<NoDuplicateImportsMessageIds>} The suggestion to remove the import statement.
  */
-function getFixForImport(fixer, text, start, end, hasModifiers) {
-	const removeEnd = getImportEnd(text, end);
-
-	if (hasModifiers) {
-		return fixer.removeRange([start, removeEnd]);
-	}
-
-	return null;
+function getRemoveImportSuggestion(importNode, modifiers, sourceCode) {
+	return {
+		messageId: modifiers
+			? "removeDuplicateImportWithModifiers"
+			: "removeDuplicateImportWithoutModifiers",
+		data: { modifiers },
+		fix(fixer) {
+			return fixer.removeRange(getImportRange(importNode, sourceCode));
+		},
+	};
 }
 
 //-----------------------------------------------------------------------------
@@ -106,126 +109,60 @@ export default /** @satisfies {NoDuplicateImportsRuleDefinition} */ ({
 
 	create(context) {
 		const { sourceCode } = context;
-		const imports = [];
-		const leadingDotSlashPattern = /^(?:\.\/)+/u;
+
+		/** @type {Map<string, AtrulePlain>} */
+		const imports = new Map();
 
 		return {
 			"Atrule[name=/^import$/i]"(node) {
 				const url = node.prelude?.children[0].value;
-				const implicitUrl =
-					url && url?.replace(leadingDotSlashPattern, "");
-				const hasImport = imports.some(
-					importNode =>
-						importNode.prelude?.children[0].value.replace(
-							leadingDotSlashPattern,
-							"",
-						) === implicitUrl,
-				);
+				const normalizedUrl = url?.replace(leadingDotSlashPattern, "");
+				const firstImportNode = imports.get(normalizedUrl);
 
-				if (hasImport) {
-					const firstImportNode = imports.find(
-						importNode =>
-							importNode.prelude?.children[0].value.replace(
-								leadingDotSlashPattern,
-								"",
-							) === implicitUrl,
-					);
-					const [firstImportStart, firstImportEnd] =
-						sourceCode.getRange(firstImportNode);
-
-					const firstImportHasModifiers =
-						firstImportNode.prelude?.children.length > 1;
-					const nodeHasModifiers = node.prelude?.children.length > 1;
-
-					const [start, end] = sourceCode.getRange(node);
-					const text = sourceCode.text;
-
-					const firstImportModifiers = getImportModifiers(
-						firstImportNode,
-						sourceCode,
-					);
-					const duplicateImportModifiers = getImportModifiers(
-						node,
-						sourceCode,
-					);
-
-					const hasSameModifiers =
-						firstImportModifiers.length ===
-							duplicateImportModifiers.length &&
-						firstImportModifiers.every(
-							(modifier, index) =>
-								modifier === duplicateImportModifiers[index],
-						);
-
-					context.report({
-						loc: node.loc,
-						messageId: "duplicateImport",
-						data: { url },
-						fix(fixer) {
-							const hasModifiers =
-								(!firstImportHasModifiers &&
-									!nodeHasModifiers) ||
-								hasSameModifiers;
-
-							return getFixForImport(
-								fixer,
-								text,
-								start,
-								end,
-								hasModifiers,
-							);
-						},
-						suggest: [
-							{
-								messageId: firstImportHasModifiers
-									? "removeDuplicateImportWithModifiers"
-									: "removeDuplicateImportWithoutModifiers",
-								data: {
-									modifiers: firstImportModifiers.join(" "),
-								},
-								fix(fixer) {
-									const hasModifiers =
-										(firstImportHasModifiers ||
-											nodeHasModifiers) &&
-										!hasSameModifiers;
-
-									return getFixForImport(
-										fixer,
-										text,
-										firstImportStart,
-										firstImportEnd,
-										hasModifiers,
-									);
-								},
-							},
-							{
-								messageId: nodeHasModifiers
-									? "removeDuplicateImportWithModifiers"
-									: "removeDuplicateImportWithoutModifiers",
-								data: {
-									modifiers:
-										duplicateImportModifiers.join(" "),
-								},
-								fix(fixer) {
-									const hasModifiers =
-										(firstImportHasModifiers ||
-											nodeHasModifiers) &&
-										!hasSameModifiers;
-
-									return getFixForImport(
-										fixer,
-										text,
-										start,
-										end,
-										hasModifiers,
-									);
-								},
-							},
-						],
-					});
-				} else {
-					imports.push(node);
+				if (!firstImportNode) {
+					imports.set(normalizedUrl, node);
+					return;
 				}
+
+				const firstImportModifiers = getImportModifiers(
+					firstImportNode,
+					sourceCode,
+				);
+				const duplicateImportModifiers = getImportModifiers(
+					node,
+					sourceCode,
+				);
+				const hasSameModifiers =
+					firstImportModifiers === duplicateImportModifiers;
+
+				context.report({
+					loc: node.loc,
+					messageId: "duplicateImport",
+					data: { url },
+					fix(fixer) {
+						if (!hasSameModifiers) {
+							return null;
+						}
+
+						return fixer.removeRange(
+							getImportRange(node, sourceCode),
+						);
+					},
+					suggest: hasSameModifiers
+						? null
+						: [
+								getRemoveImportSuggestion(
+									firstImportNode,
+									firstImportModifiers,
+									sourceCode,
+								),
+								getRemoveImportSuggestion(
+									node,
+									duplicateImportModifiers,
+									sourceCode,
+								),
+							],
+				});
 			},
 		};
 	},
