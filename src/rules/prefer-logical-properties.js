@@ -80,6 +80,13 @@ const propertyValuesReplacements = new Map([
 		},
 	],
 	[
+		"text-align-last",
+		{
+			left: "start",
+			right: "end",
+		},
+	],
+	[
 		"resize",
 		{
 			horizontal: "inline",
@@ -127,6 +134,12 @@ const unitReplacements = new Map([
 	["svw", "svi"],
 	["vh", "vb"],
 	["vw", "vi"],
+]);
+
+const propertiesWithPropertyNames = new Set([
+	"transition",
+	"transition-property",
+	"will-change",
 ]);
 
 //-----------------------------------------------------------------------------
@@ -218,7 +231,15 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					!allowProperties.includes(property)
 				) {
 					context.report({
-						loc: node.loc,
+						loc: {
+							start: node.loc.start,
+							end: {
+								line: node.loc.start.line,
+								column:
+									node.loc.start.column +
+									node.property.length,
+							},
+						},
 						messageId: "notLogicalProperty",
 						data: {
 							property: node.property,
@@ -283,6 +304,50 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 								},
 							],
 						});
+					}
+				}
+
+				if (
+					propertiesWithPropertyNames.has(property) &&
+					node.value.type === "Value"
+				) {
+					for (const child of node.value.children) {
+						if (child.type !== "Identifier") {
+							continue;
+						}
+
+						const name = child.name.toLowerCase();
+						const nameReplacement =
+							propertiesReplacements.get(name);
+
+						if (
+							nameReplacement &&
+							!allowProperties.includes(name)
+						) {
+							context.report({
+								loc: child.loc,
+								messageId: "notLogicalProperty",
+								data: {
+									property: child.name,
+									replacement: nameReplacement,
+								},
+								suggest: [
+									{
+										messageId: "replaceWithLogicalProperty",
+										data: {
+											property: child.name,
+											replacement: nameReplacement,
+										},
+										fix(fixer) {
+											return fixer.replaceText(
+												child,
+												nameReplacement,
+											);
+										},
+									},
+								],
+							});
+						}
 					}
 				}
 			},
