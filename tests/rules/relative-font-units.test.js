@@ -49,11 +49,10 @@ ruleTester.run("relative-font-units", rule, {
 		"a { font-size: calc(1rem * sin(30deg)); }",
 		"a { font-size: round(nearest, 1.5rem, 1rem); }",
 		"a { font-size: env(safe-area-inset-top, 1rem); }",
-		"a { font-size: var(--foo, 1rem); }",
-		"a { font-size: var(--foo, calc(1rem + 2rem)); }",
-		"a { font-size: var(--foo, var(--bar, 1rem)); }",
-		"a { font-size: var(--foo,); }",
-		"a { font-size: var(--foo, smaller); }",
+		"a { font-size: env(small, 1rem); }",
+		"a { font-size: foo(12px); }",
+		"a { font-size: --fluid(12px, 20px); }",
+		"a { font-size: calc(foo(12px) + 1rem); }",
 		"a { font: clamp(1rem, 2rem, 3rem) Arial, sans-serif; }",
 		"a { font: italic calc(1rem + 2rem)/1.5 Arial, sans-serif; }",
 		"a { font-size: smaller; }",
@@ -355,10 +354,6 @@ ruleTester.run("relative-font-units", rule, {
 		{
 			code: "a { font-size: clamp(1em, 120%, 2rem); }",
 			options: [{ allowUnits: ["rem", "em", "%"] }],
-		},
-		{
-			code: "a { font-size: var(--foo, 2em); }",
-			options: [{ allowUnits: ["em"] }],
 		},
 	],
 	invalid: [
@@ -2012,7 +2007,7 @@ ruleTester.run("relative-font-units", rule, {
 			],
 		},
 		{
-			code: "a { font-size: var(--foo, 16px); }",
+			code: "a { font-size: env(small, 12px); }",
 			errors: [
 				{
 					messageId: "allowedFontUnits",
@@ -2025,73 +2020,27 @@ ruleTester.run("relative-font-units", rule, {
 			],
 		},
 		{
-			code: "a { font-size: VAR(--foo, 16px); }",
+			code: "a { font-size: CLAMP(12px, 1rem, 2rem); }",
 			errors: [
 				{
 					messageId: "allowedFontUnits",
 					line: 1,
-					column: 27,
+					column: 22,
 					endLine: 1,
-					endColumn: 31,
+					endColumn: 26,
 					data: { allowedFontUnits: "rem" },
 				},
 			],
 		},
 		{
-			code: "a { font-size: var(--foo, calc(12px + 1rem)); }",
+			code: "a { font-size: calc(foo(12px) + 2px); }",
 			errors: [
 				{
 					messageId: "allowedFontUnits",
 					line: 1,
-					column: 32,
+					column: 33,
 					endLine: 1,
 					endColumn: 36,
-					data: { allowedFontUnits: "rem" },
-				},
-			],
-		},
-		{
-			code: "a { font-size: var(--foo, var(--bar, 16px)); }",
-			errors: [
-				{
-					messageId: "allowedFontUnits",
-					line: 1,
-					column: 38,
-					endLine: 1,
-					endColumn: 42,
-					data: { allowedFontUnits: "rem" },
-				},
-			],
-		},
-		{
-			code: "a { font-size: var(--foo, small); }",
-			errors: [
-				{
-					messageId: "allowedFontUnits",
-					line: 1,
-					column: 27,
-					endLine: 1,
-					endColumn: 32,
-					data: { allowedFontUnits: "rem" },
-				},
-			],
-		},
-		{
-			code: dedent`
-				a {
-					font-size: var(
-						--foo,
-						calc(12px + 1rem)
-					);
-				}
-			`,
-			errors: [
-				{
-					messageId: "allowedFontUnits",
-					line: 4,
-					column: 8,
-					endLine: 4,
-					endColumn: 12,
 					data: { allowedFontUnits: "rem" },
 				},
 			],
