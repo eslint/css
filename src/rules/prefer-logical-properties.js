@@ -224,7 +224,15 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					!allowProperties.includes(property)
 				) {
 					context.report({
-						loc: node.loc,
+						loc: {
+							start: node.loc.start,
+							end: {
+								line: node.loc.start.line,
+								column:
+									node.loc.start.column +
+									node.property.length,
+							},
+						},
 						messageId: "notLogicalProperty",
 						data: {
 							property: node.property,

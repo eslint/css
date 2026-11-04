@@ -79,7 +79,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 21,
+					endColumn: 15,
 					data: {
 						property: "margin-top",
 						replacement: "margin-block-start",
@@ -105,7 +105,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 21,
+					endColumn: 15,
 					data: {
 						property: "MARGIN-TOP",
 						replacement: "margin-block-start",
@@ -131,7 +131,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 22,
+					endColumn: 16,
 					data: {
 						property: "padding-top",
 						replacement: "padding-block-start",
