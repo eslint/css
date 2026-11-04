@@ -65,6 +65,8 @@ export default /** @satisfies {NoDuplicateKeyframeSelectorsRuleDefinition} */ ({
 
 				// @ts-ignore - children is a valid property for prelude
 				node.prelude.children.forEach(selector => {
+					// `value` keeps the selector as written for the error message,
+					// while `keyParts` holds the normalized form used to detect duplicates
 					const value = [];
 					const keyParts = [];
 
