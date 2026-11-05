@@ -65,34 +65,34 @@ export default /** @satisfies {NoDuplicateKeyframeSelectorsRuleDefinition} */ ({
 
 				// @ts-ignore - children is a valid property for prelude
 				node.prelude.children.forEach(selector => {
-					// `value` keeps the selector as written for the error message,
-					// while `keyParts` holds the normalized form used to detect duplicates
 					const value = [];
-					const keyParts = [];
 
 					selector.children.forEach(component => {
 						if (component.type === "Percentage") {
-							value.push(`${component.value}%`);
-							keyParts.push(`${Number(component.value)}%`);
+							value.push(`${Number(component.value)}%`);
 						} else if (component.type === "TypeSelector") {
-							const name = component.name.toLowerCase();
-
 							value.push(component.name);
-							keyParts.push(
-								keyframeSelectorAliases.get(name) ?? name,
-							);
 						}
 					});
 
-					const selectorValue = value.join(" ");
-					const key = keyParts.join(" ");
+					const key = value
+						.map(selectorPart => {
+							const part = selectorPart.toLowerCase();
+							return keyframeSelectorAliases.get(part) ?? part;
+						})
+						.join(" ");
 
 					if (seen.has(key)) {
 						context.report({
 							loc: selector.loc,
 							messageId: "duplicateKeyframeSelector",
 							data: {
-								selector: selectorValue,
+								selector: selector.children
+									.filter(component => component.loc !== null)
+									.map(component =>
+										context.sourceCode.getText(component),
+									)
+									.join(" "),
 							},
 						});
 					} else {
