@@ -69,13 +69,12 @@ export default /** @satisfies {NoDuplicateKeyframeSelectorsRuleDefinition} */ ({
 
 					selector.children.forEach(component => {
 						if (component.type === "Percentage") {
-							value.push(`${component.value}%`);
+							value.push(`${Number(component.value)}%`);
 						} else if (component.type === "TypeSelector") {
 							value.push(component.name);
 						}
 					});
 
-					const selectorValue = value.join(" ");
 					const key = value
 						.map(selectorPart => {
 							const part = selectorPart.toLowerCase();
@@ -88,7 +87,12 @@ export default /** @satisfies {NoDuplicateKeyframeSelectorsRuleDefinition} */ ({
 							loc: selector.loc,
 							messageId: "duplicateKeyframeSelector",
 							data: {
-								selector: selectorValue,
+								selector: selector.children
+									.filter(component => component.loc !== null)
+									.map(component =>
+										context.sourceCode.getText(component),
+									)
+									.join(" "),
 							},
 						});
 					} else {
