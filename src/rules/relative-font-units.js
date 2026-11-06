@@ -63,6 +63,7 @@ const mathFunctions = new Set([
 	"min",
 	"mod",
 	"pow",
+	"progress",
 	"rem",
 	"round",
 	"sign",
