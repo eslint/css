@@ -150,6 +150,34 @@ ruleTester.run("no-invalid-properties", rule, {
 			code: ":root { --color: red }\na { border-top: 1px VAR(--style, VAR(--fallback)) VAR(--color, blue); }",
 			options: [{ allowUnknownVariables: true }],
 		},
+		{
+			code: "html { --delta: fuchsia; body { background: linear-gradient(red, var(--delta)), var(--beta); } }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: "[data-rgh-heat='1'] { color: color-mix(in srgb, var(--rgh-heat-color) 100%, var(--fgColor-muted, var(--color-fg-muted))) !important; }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: ":root { --color: red; } a { color: color-mix(in srgb, var(--color), var(--unknown)); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: ":root { --color: red; } a { color: color-mix(in srgb, var(--unknown, var(--fallback)), var(--color)); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: ":root { --color: foo }\na { border-top: 1px var(--style, var(--fallback)) var(--color); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: ":root { --color: foo }\na { border-top: 1px VAR(--style, VAR(--fallback)) VAR(--color); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+		{
+			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--c, var(--d)) var(--b); }",
+			options: [{ allowUnknownVariables: true }],
+		},
 		":root { --a: red; --b: var(--a); }\na { color: var(--b); }",
 		":root { --a: red; --b: var(--a); }\na { color: var(  --b  ); }",
 		":root { --a: red; --b: var(--a); --c: var(--b); }\na { color: var(--c); }",
@@ -293,6 +321,34 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { width: revert-rule; }",
 	],
 	invalid: [
+		{
+			code: ":root { --color: red; } a { backgroound: linear-gradient(red, var(--color)), var(--unknown); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "unknownProperty",
+					data: { property: "backgroound" },
+				},
+			],
+		},
+		{
+			code: ":root { --color: red; } a { color: color-mix(in srgb, var(--color), var(--unknown)); }",
+			errors: [{ messageId: "unknownVar", data: { var: "--unknown" } }],
+		},
+		{
+			code: ":root { --color: 10px; } a { color: var(--color); }",
+			options: [{ allowUnknownVariables: true }],
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "color",
+						value: "10px",
+						expected: "<color>",
+					},
+				},
+			],
+		},
 		{
 			code: "a { color: bar }",
 			errors: [
@@ -820,24 +876,6 @@ ruleTester.run("no-invalid-properties", rule, {
 		},
 		{
 			code: ":root { --color: foo }\na { border-top: 1px var(--style, var(--fallback)) var(--color); }",
-			options: [{ allowUnknownVariables: true }],
-			errors: [
-				{
-					messageId: "invalidPropertyValue",
-					data: {
-						property: "border-top",
-						value: "foo",
-						expected: "<line-width> || <line-style> || <color>",
-					},
-					line: 2,
-					column: 51,
-					endLine: 2,
-					endColumn: 63,
-				},
-			],
-		},
-		{
-			code: ":root { --color: foo }\na { border-top: 1px var(--style, var(--fallback)) var(--color); }",
 			errors: [
 				{
 					messageId: "unknownVar",
@@ -944,24 +982,6 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 58,
 					endLine: 2,
 					endColumn: 70,
-				},
-			],
-		},
-		{
-			code: ":root { --color: foo }\na { border-top: 1px VAR(--style, VAR(--fallback)) VAR(--color); }",
-			options: [{ allowUnknownVariables: true }],
-			errors: [
-				{
-					messageId: "invalidPropertyValue",
-					data: {
-						property: "border-top",
-						value: "foo",
-						expected: "<line-width> || <line-style> || <color>",
-					},
-					line: 2,
-					column: 51,
-					endLine: 2,
-					endColumn: 63,
 				},
 			],
 		},
@@ -1125,24 +1145,6 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 5,
 					endLine: 2,
 					endColumn: 11,
-				},
-			],
-		},
-		{
-			code: ":root { --a: foo; --b: var(--a); }\na { border-top: 1px var(--c, var(--d)) var(--b); }",
-			options: [{ allowUnknownVariables: true }],
-			errors: [
-				{
-					messageId: "invalidPropertyValue",
-					data: {
-						property: "border-top",
-						value: "foo",
-						expected: "<line-width> || <line-style> || <color>",
-					},
-					line: 2,
-					column: 40,
-					endLine: 2,
-					endColumn: 48,
 				},
 			],
 		},
