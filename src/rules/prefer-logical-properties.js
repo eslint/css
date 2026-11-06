@@ -156,6 +156,7 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 		docs: {
 			description: "Enforce the use of logical properties",
 			dialects: ["CSS"],
+			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/prefer-logical-properties.md",
 		},
 

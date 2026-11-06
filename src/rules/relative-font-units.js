@@ -75,6 +75,7 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 		docs: {
 			description: "Enforce the use of relative font units",
 			dialects: ["CSS"],
+			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/relative-font-units.md",
 		},
 

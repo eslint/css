@@ -60,6 +60,7 @@ export default defineConfig([
 		files: ["src/rules/*.js"],
 		extends: [eslintPluginRulesRecommendedConfig],
 		rules: {
+			"eslint-plugin/require-meta-docs-recommended": "error",
 			"eslint-plugin/require-meta-schema": "off", // `schema` defaults to []
 			"eslint-plugin/require-meta-schema-description": "off",
 			"eslint-plugin/prefer-placeholders": "error",
