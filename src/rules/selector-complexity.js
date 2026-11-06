@@ -212,9 +212,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		languages: ["css/css"],
 
 		docs: {
-			recommended: false,
 			description: "Disallow and limit CSS selectors",
 			dialects: ["CSS"],
+			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/selector-complexity.md",
 		},
 
