@@ -388,12 +388,11 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 						return;
 					}
 
-					if (resolvedParts.length === 0) {
-						return;
+					if (resolvedParts.length > 0) {
+						state.hadVarSubstitution = true;
 					}
 
-					state.hadVarSubstitution = true;
-					result = resolvedParts[0];
+					result = resolvedParts[0] ?? sourceCode.getText(node);
 				} else {
 					result = `${node.name}(${parts.join(" ")})`;
 				}
