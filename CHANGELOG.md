@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.1.0](https://github.com/eslint/css/compare/css-v2.0.1...css-v2.1.0) (2026-11-06)
+
+
+### Features
+
+* add -ms- vendor prefix for keyframe selector ([#591](https://github.com/eslint/css/issues/591)) ([2e89118](https://github.com/eslint/css/commit/2e89118be142b050295c24fcf29fae289f10c923))
+* check `text-align-last` in `prefer-logical-properties` ([#610](https://github.com/eslint/css/issues/610)) ([61013dd](https://github.com/eslint/css/commit/61013ddd7d290cb1879356435c911ba3a5e0c2ce))
+* check `transition`/`will-change` in `prefer-logical-properties` ([#611](https://github.com/eslint/css/issues/611)) ([df90ffb](https://github.com/eslint/css/commit/df90ffb0e77c2093900540126a805a7933a1f02f))
+* match attribute names case-insensitively in `selector-complexity` ([#592](https://github.com/eslint/css/issues/592)) ([c0746da](https://github.com/eslint/css/commit/c0746dac2884ffb52f1e881805a70db09d17cec1))
+* remove recommended: false from meta ([f439a93](https://github.com/eslint/css/commit/f439a935a7d7e388b494248b7dfc3b663f5f8dbf))
+* report duplicate import with explicit path ([#597](https://github.com/eslint/css/issues/597)) ([48637ef](https://github.com/eslint/css/commit/48637ef5ff043a9131c759eb6b3de4a29dfbac2e))
+
+
+### Bug Fixes
+
+* compounds count with leading combinator in `selector-complexity` ([#605](https://github.com/eslint/css/issues/605)) ([0a9c8db](https://github.com/eslint/css/commit/0a9c8db7d167149ebe9d60f2e274e2a275955a7f))
+* ignore `[@page](https://github.com/page)` declarations in `prefer-logical-properties` ([#608](https://github.com/eslint/css/issues/608)) ([962c1e8](https://github.com/eslint/css/commit/962c1e82748410259ae784e12089509d03bd4956))
+* ignore `[@page](https://github.com/page)` selectors in `selector-complexity` ([#600](https://github.com/eslint/css/issues/600)) ([79e7d51](https://github.com/eslint/css/commit/79e7d511671868afc17777e1471a076c2a7b506c))
+* ignore keyframe selectors in `selector-complexity` ([#590](https://github.com/eslint/css/issues/590)) ([44443b0](https://github.com/eslint/css/commit/44443b0514ad3414c3a0d33533d13e1aae76580f))
+* recognize legacy pseudo-elements in `selector-complexity` ([#581](https://github.com/eslint/css/issues/581)) ([b2f6494](https://github.com/eslint/css/commit/b2f64945603dc3ca705bd82297d057c462f0bd4e))
+* Reduce `use-baseline` schema depth to avoid config stack overflows ([#575](https://github.com/eslint/css/issues/575)) ([c8f85e3](https://github.com/eslint/css/commit/c8f85e3cc13d35175621c225bad6deac6b5cbf05))
+* report property name location in `prefer-logical-properties` ([#612](https://github.com/eslint/css/issues/612)) ([1a7ea1f](https://github.com/eslint/css/commit/1a7ea1f37c9bc3ff4f510d261900634fc18fa568))
+* update baseline data ([#596](https://github.com/eslint/css/issues/596)) ([548dd0a](https://github.com/eslint/css/commit/548dd0aa74284e7f9fa252e3f260fcca36719515))
+* update baseline data ([#599](https://github.com/eslint/css/issues/599)) ([0fef023](https://github.com/eslint/css/commit/0fef023841628b7b8068239285847e04a59d5da8))
+* update dependency @eslint/css-tree to ^4.1.2 ([#593](https://github.com/eslint/css/issues/593)) ([16f80f7](https://github.com/eslint/css/commit/16f80f7cd92b410edb819e18cd70713e839d2168))
+
 ## [2.0.1](https://github.com/eslint/css/compare/css-v2.0.0...css-v2.0.1) (2026-10-11)
 
 
