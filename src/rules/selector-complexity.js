@@ -24,6 +24,7 @@
  *     disallowPseudoClasses?: string[],
  *     disallowPseudoElements?: string[],
  *     disallowAttributes?: string[],
+ *     disallowAttributesCaseSensitive?: boolean,
  *     disallowAttributeMatchers?: string[],
  * }]} SelectorComplexityOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: SelectorComplexityOptions, MessageIds: SelectorComplexityMessageIds }> } SelectorComplexityRuleDefinition
@@ -182,6 +183,25 @@ function getDisallowedCombinatorsLocation(
 	return location;
 }
 
+/**
+ * Get the number of compounds in a selector list.
+ * @param {Array<Object>} selectors All CSS selector nodes.
+ * @returns {number} The number of compound selectors.
+ */
+function getCompoundCount(selectors) {
+	let compound = 0;
+
+	selectors.forEach(selector => {
+		if (selector.type === "Combinator" && selector !== selectors[0]) {
+			compound++;
+		}
+	});
+
+	compound++;
+
+	return compound;
+}
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -262,6 +282,9 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 						},
 						uniqueItems: true,
 					},
+					disallowAttributesCaseSensitive: {
+						type: "boolean",
+					},
 					disallowAttributeMatchers: {
 						type: "array",
 						items: {
@@ -288,6 +311,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoClasses: [],
 				disallowPseudoElements: [],
 				disallowAttributes: [],
+				disallowAttributesCaseSensitive: false,
 				disallowAttributeMatchers: [],
 			},
 		],
@@ -318,6 +342,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				disallowPseudoClasses,
 				disallowPseudoElements,
 				disallowAttributes,
+				disallowAttributesCaseSensitive,
 				disallowAttributeMatchers,
 			},
 		] = context.options;
@@ -326,6 +351,11 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		);
 		const disallowedPseudoElements = new Set(
 			disallowPseudoElements.map(selector => selector.toLowerCase()),
+		);
+		const disallowedAttributes = new Set(
+			disallowAttributesCaseSensitive
+				? disallowAttributes
+				: disallowAttributes.map(attribute => attribute.toLowerCase()),
 		);
 
 		return {
@@ -373,6 +403,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 				const combinatorNodes = getSelectors(selectors, "Combinator");
 
 				const combinators = getSelectorNames(combinatorNodes);
+				const noOfCompounds = getCompoundCount(selectors);
 				const pseudoElementSelectors = selectors.filter(
 					isPseudoElementSelector,
 				);
@@ -428,7 +459,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 					);
 				}
 
-				if (combinatorNodes.length + 1 > maxCompounds) {
+				if (noOfCompounds > maxCompounds) {
 					exceedLimitError(
 						context,
 						selectorLoc,
@@ -502,7 +533,13 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 					for (const selectorNode of attributeSelectors) {
 						const attributeName = selectorNode.name.name;
 
-						if (disallowAttributes.includes(attributeName)) {
+						if (
+							disallowedAttributes.has(
+								disallowAttributesCaseSensitive
+									? attributeName
+									: attributeName.toLowerCase(),
+							)
+						) {
 							context.report({
 								loc: selectorNode.name.loc,
 								messageId: "disallowedSelectors",

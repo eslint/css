@@ -63,6 +63,17 @@ ruleTester.run("prefer-logical-properties", rule, {
 				},
 			],
 		},
+		"@page { margin-left: 1in; }",
+		"@page { @top-left { text-align: left; } }",
+		"@PAGE { margin-left: 1in; }",
+		{
+			code: "a { transition: margin-left 1s; }",
+			options: [
+				{
+					allowProperties: ["margin-left"],
+				},
+			],
+		},
 	],
 	invalid: [
 		{
@@ -73,7 +84,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 21,
+					endColumn: 15,
 					data: {
 						property: "margin-top",
 						replacement: "margin-block-start",
@@ -99,7 +110,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 21,
+					endColumn: 15,
 					data: {
 						property: "MARGIN-TOP",
 						replacement: "margin-block-start",
@@ -125,7 +136,7 @@ ruleTester.run("prefer-logical-properties", rule, {
 					line: 1,
 					column: 5,
 					endLine: 1,
-					endColumn: 22,
+					endColumn: 16,
 					data: {
 						property: "padding-top",
 						replacement: "padding-block-start",
@@ -196,6 +207,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 			],
 		},
 		{
+			code: "a { text-align-last: right }",
+			errors: [
+				{
+					messageId: "notLogicalValue",
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 27,
+					data: {
+						value: "right",
+						replacement: "end",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalValue",
+							data: {
+								value: "right",
+								replacement: "end",
+							},
+							output: "a { text-align-last: end }",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: "a { block-size: 100vh }",
 			errors: [
 				{
@@ -242,6 +279,157 @@ ruleTester.run("prefer-logical-properties", rule, {
 								replacement: "vb",
 							},
 							output: "a { BLOCK-SIZE: 100vb }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@page {} a { margin-left: 0; }",
+			errors: [
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 14,
+					endLine: 1,
+					endColumn: 25,
+					data: {
+						property: "margin-left",
+						replacement: "margin-inline-start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "margin-left",
+								replacement: "margin-inline-start",
+							},
+							output: "@page {} a { margin-inline-start: 0; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { transition: margin-left 1s; }",
+			errors: [
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 28,
+					data: {
+						property: "margin-left",
+						replacement: "margin-inline-start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "margin-left",
+								replacement: "margin-inline-start",
+							},
+							output: "a { transition: margin-inline-start 1s; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { TRANSITION: MARGIN-LEFT 1s; }",
+			errors: [
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 17,
+					endLine: 1,
+					endColumn: 28,
+					data: {
+						property: "MARGIN-LEFT",
+						replacement: "margin-inline-start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "MARGIN-LEFT",
+								replacement: "margin-inline-start",
+							},
+							output: "a { TRANSITION: margin-inline-start 1s; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { transition-property: width, top; }",
+			errors: [
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 31,
+					data: {
+						property: "width",
+						replacement: "inline-size",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "width",
+								replacement: "inline-size",
+							},
+							output: "a { transition-property: inline-size, top; }",
+						},
+					],
+				},
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 33,
+					endLine: 1,
+					endColumn: 36,
+					data: {
+						property: "top",
+						replacement: "inset-block-start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "top",
+								replacement: "inset-block-start",
+							},
+							output: "a { transition-property: width, inset-block-start; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { will-change: left; }",
+			errors: [
+				{
+					messageId: "notLogicalProperty",
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 22,
+					data: {
+						property: "left",
+						replacement: "inset-inline-start",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalProperty",
+							data: {
+								property: "left",
+								replacement: "inset-inline-start",
+							},
+							output: "a { will-change: inset-inline-start; }",
 						},
 					],
 				},

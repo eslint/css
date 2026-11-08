@@ -18,6 +18,7 @@ Examples of **incorrect** code for this rule:
 /* incorrect use of physical properties */
 a {
 	margin-left: 10px;
+	transition: margin-left 0.3s;
 }
 ```
 
@@ -28,6 +29,7 @@ Examples of **correct** code for this rule:
 
 a {
 	margin-inline-start: 10px;
+	transition: margin-inline-start 0.3s;
 }
 ```
 

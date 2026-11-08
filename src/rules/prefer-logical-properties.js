@@ -80,6 +80,13 @@ const propertyValuesReplacements = new Map([
 		},
 	],
 	[
+		"text-align-last",
+		{
+			left: "start",
+			right: "end",
+		},
+	],
+	[
 		"resize",
 		{
 			horizontal: "inline",
@@ -115,6 +122,12 @@ const unitReplacements = new Map([
 	["vw", "vi"],
 ]);
 
+const propertiesWithPropertyNames = new Set([
+	"transition",
+	"transition-property",
+	"will-change",
+]);
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -129,6 +142,7 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 		docs: {
 			description: "Enforce the use of logical properties",
 			dialects: ["CSS"],
+			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/prefer-logical-properties.md",
 		},
 
@@ -180,11 +194,18 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 
 	create(context) {
 		const [{ allowProperties, allowUnits }] = context.options;
+		let insidePage = false;
 
 		return {
+			"Atrule[name=/^page$/i]"() {
+				insidePage = true;
+			},
+			"Atrule[name=/^page$/i]:exit"() {
+				insidePage = false;
+			},
 			Declaration(node) {
 				const parent = context.sourceCode.getParent(node);
-				if (parent.type === "SupportsDeclaration") {
+				if (insidePage || parent.type === "SupportsDeclaration") {
 					return;
 				}
 
@@ -197,7 +218,15 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 					!allowProperties.includes(property)
 				) {
 					context.report({
-						loc: node.loc,
+						loc: {
+							start: node.loc.start,
+							end: {
+								line: node.loc.start.line,
+								column:
+									node.loc.start.column +
+									node.property.length,
+							},
+						},
 						messageId: "notLogicalProperty",
 						data: {
 							property: node.property,
@@ -262,6 +291,50 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 								},
 							],
 						});
+					}
+				}
+
+				if (
+					propertiesWithPropertyNames.has(property) &&
+					node.value.type === "Value"
+				) {
+					for (const child of node.value.children) {
+						if (child.type !== "Identifier") {
+							continue;
+						}
+
+						const name = child.name.toLowerCase();
+						const nameReplacement =
+							propertiesReplacements.get(name);
+
+						if (
+							nameReplacement &&
+							!allowProperties.includes(name)
+						) {
+							context.report({
+								loc: child.loc,
+								messageId: "notLogicalProperty",
+								data: {
+									property: child.name,
+									replacement: nameReplacement,
+								},
+								suggest: [
+									{
+										messageId: "replaceWithLogicalProperty",
+										data: {
+											property: child.name,
+											replacement: nameReplacement,
+										},
+										fix(fixer) {
+											return fixer.replaceText(
+												child,
+												nameReplacement,
+											);
+										},
+									},
+								],
+							});
+						}
 					}
 				}
 			},
