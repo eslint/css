@@ -27,6 +27,10 @@ ruleTester.run("prefer-logical-properties", rule, {
 		"a { padding: 20px; }",
 		"a { text-align: start }",
 		"a { TEXT-ALIGN: START }",
+		"a { caption-side: left; }",
+		"a { caption-side: right; }",
+		"a { box-orient: horizontal; }",
+		"a { box-orient: vertical; }",
 		"@supports (text-align: left) {}",
 		"@supports (padding-left: 10px) {}",
 		{

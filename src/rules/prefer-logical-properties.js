@@ -94,20 +94,6 @@ const propertyValuesReplacements = new Map([
 		},
 	],
 	[
-		"caption-side",
-		{
-			left: "inline-start",
-			right: "inline-end",
-		},
-	],
-	[
-		"box-orient",
-		{
-			horizontal: "inline-axis",
-			vertical: "block-axis",
-		},
-	],
-	[
 		"float",
 		{
 			left: "inline-start",
