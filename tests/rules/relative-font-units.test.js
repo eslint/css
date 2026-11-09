@@ -356,6 +356,10 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: clamp(1em, 120%, 2rem); }",
 			options: [{ allowUnits: ["rem", "em", "%"] }],
 		},
+		{
+			code: "a { font-size: clamp(12rem, 2vw, 20rem); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+		},
 	],
 	invalid: [
 		{
@@ -2071,6 +2075,20 @@ ruleTester.run("relative-font-units", rule, {
 					column: 33,
 					endLine: 1,
 					endColumn: 36,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: 2vw }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 19,
 					data: { allowedFontUnits: "rem" },
 				},
 			],
