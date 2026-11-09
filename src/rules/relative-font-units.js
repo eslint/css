@@ -11,7 +11,7 @@
  * @import { CSSRuleDefinition } from "../types.js"
  * @import { CssNode, CssNodePlain, FunctionNodePlain, Lexer } from "@eslint/css-tree"
  * @typedef {"allowedFontUnits"} RelativeFontUnitsMessageIds
- * @typedef {[{allowUnits?: string[]}]} RelativeFontUnitsOptions
+ * @typedef {[{allowUnits?: string[], allowUnitsInMathFunctions?: string[]}]} RelativeFontUnitsOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: RelativeFontUnitsOptions, MessageIds: RelativeFontUnitsMessageIds}>} RelativeFontUnitsRuleDefinition
  */
 
@@ -34,6 +34,8 @@ const relativeFontUnits = [
 	"ric",
 	"rlh",
 ];
+
+const unitsToAllowInMathFunctions = ["vw", "vi", "cqi", "cqw"];
 
 const disallowedFontSizeKeywords = new Set([
 	"xx-small",
@@ -120,9 +122,15 @@ function getFontSizeArguments(func) {
  * @param {CssNodePlain} value The font size value.
  * @param {string[]} allowedFontUnits The relative units that are allowed.
  * @param {Lexer} lexer The lexer used to identify lengths.
+ * @param {string[]} allowedUnitsInMathFunctions The relative units that are allowed inside math functions.
  * @returns {CssNodePlain[]} The disallowed nodes.
  */
-function getDisallowedFontSizeNodes(value, allowedFontUnits, lexer) {
+function getDisallowedFontSizeNodes(
+	value,
+	allowedFontUnits,
+	lexer,
+	allowedUnitsInMathFunctions,
+) {
 	if (value.type !== "Function") {
 		return isDisallowedFontSize(value, allowedFontUnits) ? [value] : [];
 	}
@@ -143,6 +151,8 @@ function getDisallowedFontSizeNodes(value, allowedFontUnits, lexer) {
 				checkArguments(node.children);
 			} else if (
 				isDisallowedFontSize(node, allowedFontUnits) &&
+				(node.type !== "Dimension" ||
+					!allowedUnitsInMathFunctions.includes(node.unit)) &&
 				(node.type !== "Dimension" ||
 					lexer.matchType("length", node).matched)
 			) {
@@ -183,6 +193,13 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 						},
 						uniqueItems: true,
 					},
+					allowUnitsInMathFunctions: {
+						type: "array",
+						items: {
+							enum: unitsToAllowInMathFunctions,
+						},
+						uniqueItems: true,
+					},
 				},
 				additionalProperties: false,
 			},
@@ -191,6 +208,7 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 		defaultOptions: [
 			{
 				allowUnits: ["rem"],
+				allowUnitsInMathFunctions: [],
 			},
 		],
 
@@ -201,7 +219,12 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 	},
 
 	create(context) {
-		const [{ allowUnits: allowedFontUnits }] = context.options;
+		const [
+			{
+				allowUnits: allowedFontUnits,
+				allowUnitsInMathFunctions: allowedUnitsInMathFunctions,
+			},
+		] = context.options;
 		const { lexer } = context.sourceCode;
 
 		/**
@@ -214,6 +237,7 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 				value,
 				allowedFontUnits,
 				lexer,
+				allowedUnitsInMathFunctions,
 			)) {
 				context.report({
 					loc: disallowedNode.loc,
