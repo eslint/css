@@ -46,6 +46,12 @@ const varFunctionStartPattern = /(?<![\w-])var\(/iuy;
 const MAX_SUBSTITUTED_VALUE_LENGTH = 100_000;
 
 /**
+ * Regex to check whether a character can be part of an identifier, number,
+ * or dimension token, so two such characters next to each other would merge.
+ */
+const nameCharPattern = /[\w\-.%#\\\u0080-\uffff]/u;
+
+/**
  * Finds the index of the quote that closes the string starting at the given index.
  * @param {string} text The text to search.
  * @param {number} openIndex The index of the opening quote.
@@ -66,8 +72,38 @@ function findStringEnd(text, openIndex) {
 }
 
 /**
+ * Finds the index of the last character of the comment starting at the given index.
+ * @param {string} text The text to search.
+ * @param {number} openIndex The index of the "/" that starts the comment.
+ * @returns {number} The index of the comment's closing "/", or the text length if the comment is unterminated.
+ */
+function findCommentEnd(text, openIndex) {
+	const end = text.indexOf("*/", openIndex + 2);
+	return end === -1 ? text.length : end + 1;
+}
+
+/**
+ * Joins two pieces of a value, adding a space between them when their
+ * adjacent characters would otherwise merge into a single token.
+ * @param {string} left The text before the join.
+ * @param {string} right The text after the join.
+ * @returns {string} The joined text.
+ */
+function joinTokens(left, right) {
+	if (
+		left &&
+		right &&
+		nameCharPattern.test(left.at(-1)) &&
+		nameCharPattern.test(right[0])
+	) {
+		return `${left} ${right}`;
+	}
+	return left + right;
+}
+
+/**
  * Finds the index of the closing parenthesis matching the opening one,
- * ignoring parentheses inside strings and escaped characters.
+ * ignoring parentheses inside strings, comments, and escaped characters.
  * @param {string} text The text to search.
  * @param {number} openIndex The index of the opening parenthesis.
  * @returns {number} The index of the matching closing parenthesis, or -1 if not found.
@@ -82,6 +118,8 @@ function findClosingParen(text, openIndex) {
 			i++;
 		} else if (char === '"' || char === "'") {
 			i = findStringEnd(text, i);
+		} else if (char === "/" && text[i + 1] === "*") {
+			i = findCommentEnd(text, i);
 		} else if (char === "(") {
 			depth++;
 		} else if (char === ")") {
@@ -96,7 +134,7 @@ function findClosingParen(text, openIndex) {
 }
 
 /**
- * Finds the start of the next var() function in a value, ignoring text inside strings.
+ * Finds the start of the next var() function in a value, ignoring text inside strings and comments.
  * @param {string} text The text to search.
  * @param {number} fromIndex The index to start searching from.
  * @returns {number} The index where the var() function starts, or -1 if not found.
@@ -109,6 +147,8 @@ function findVarFunctionStart(text, fromIndex) {
 			i++;
 		} else if (char === '"' || char === "'") {
 			i = findStringEnd(text, i);
+		} else if (char === "/" && text[i + 1] === "*") {
+			i = findCommentEnd(text, i);
 		} else {
 			varFunctionStartPattern.lastIndex = i;
 			if (varFunctionStartPattern.test(text)) {
@@ -406,14 +446,18 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 					return null;
 				}
 
-				result += text.slice(lastIndex, start) + resolved;
+				result = joinTokens(
+					joinTokens(result, text.slice(lastIndex, start)),
+					resolved,
+				);
 				if (result.length > MAX_SUBSTITUTED_VALUE_LENGTH) {
 					return null;
 				}
 				lastIndex = closeIndex + 1;
 			}
 
-			return result + text.slice(lastIndex);
+			result = joinTokens(result, text.slice(lastIndex));
+			return result.length > MAX_SUBSTITUTED_VALUE_LENGTH ? null : result;
 		}
 
 		/**

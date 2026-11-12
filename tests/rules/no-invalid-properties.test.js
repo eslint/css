@@ -300,6 +300,9 @@ ruleTester.run("no-invalid-properties", rule, {
 		":root { --label: 'rgba(var(--missing)'; --text: var(--label) var(--label); }\na::before { content: var(--text); }",
 		':root { --label: var(--missing, "a)b"); }\na::before { content: var(--label); }',
 		':root { --label: var(--missing, "a\\")b"); }\na::before { content: var(--label); }',
+		":root { --color: rgb(/* var(--missing) */ 0 0 0); }\na { color: var(--color); }",
+		":root { --color: var(--missing, red /* ) */); }\na { color: var(--color); }",
+		":root { --rgb: 0 0 0; --color: rgb(var(--rgb) /* var(--missing */); }\na { color: var(--color); }",
 
 		// CSS-wide keywords are valid for every property
 		"a { color: inherit; }",
@@ -1299,6 +1302,23 @@ ruleTester.run("no-invalid-properties", rule, {
 				{
 					messageId: "unknownVar",
 					data: { var: "--v40" },
+				},
+			],
+		},
+		{
+			code: `:root { --size: 1px; --width: var(--size) /* ${"x".repeat(100_000)} */; }\na { width: var(--width); }`,
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--width" },
+				},
+			],
+		},
+		{
+			code: ":root { --n: 20; --size: var(--n)px; }\na { margin-top: var(--size); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
 				},
 			],
 		},
