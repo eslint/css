@@ -35,12 +35,39 @@ import {
 const varFunctionPattern = /var\(\s*(--[^,\s)]+)\s*(?:,([\s\S]+))?\)/iu;
 
 /**
- * Regex to find the start of var() functions inside a value.
+ * Regex to check for the start of a var() function at a given index.
  */
-const varFunctionStartPattern = /(?<![\w-])var\(/giu;
+const varFunctionStartPattern = /(?<![\w-])var\(/iuy;
 
 /**
- * Finds the index of the closing parenthesis matching the opening one.
+ * Maximum length of a value after its nested var() functions are substituted.
+ * Values that would grow beyond this are treated as unresolvable.
+ */
+const MAX_SUBSTITUTED_VALUE_LENGTH = 100_000;
+
+/**
+ * Finds the index of the quote that closes the string starting at the given index.
+ * @param {string} text The text to search.
+ * @param {number} openIndex The index of the opening quote.
+ * @returns {number} The index of the closing quote, or the text length if the string is unterminated.
+ */
+function findStringEnd(text, openIndex) {
+	const quote = text[openIndex];
+
+	for (let i = openIndex + 1; i < text.length; i++) {
+		if (text[i] === "\\") {
+			i++;
+		} else if (text[i] === quote) {
+			return i;
+		}
+	}
+
+	return text.length;
+}
+
+/**
+ * Finds the index of the closing parenthesis matching the opening one,
+ * ignoring parentheses inside strings and escaped characters.
  * @param {string} text The text to search.
  * @param {number} openIndex The index of the opening parenthesis.
  * @returns {number} The index of the matching closing parenthesis, or -1 if not found.
@@ -49,11 +76,42 @@ function findClosingParen(text, openIndex) {
 	let depth = 0;
 
 	for (let i = openIndex; i < text.length; i++) {
-		if (text[i] === "(") {
+		const char = text[i];
+
+		if (char === "\\") {
+			i++;
+		} else if (char === '"' || char === "'") {
+			i = findStringEnd(text, i);
+		} else if (char === "(") {
 			depth++;
-		} else if (text[i] === ")") {
+		} else if (char === ")") {
 			depth--;
 			if (depth === 0) {
+				return i;
+			}
+		}
+	}
+
+	return -1;
+}
+
+/**
+ * Finds the start of the next var() function in a value, ignoring text inside strings.
+ * @param {string} text The text to search.
+ * @param {number} fromIndex The index to start searching from.
+ * @returns {number} The index where the var() function starts, or -1 if not found.
+ */
+function findVarFunctionStart(text, fromIndex) {
+	for (let i = fromIndex; i < text.length; i++) {
+		const char = text[i];
+
+		if (char === "\\") {
+			i++;
+		} else if (char === '"' || char === "'") {
+			i = findStringEnd(text, i);
+		} else {
+			varFunctionStartPattern.lastIndex = i;
+			if (varFunctionStartPattern.test(text)) {
 				return i;
 			}
 		}
@@ -318,18 +376,15 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 			let result = "";
 			let lastIndex = 0;
 
-			for (const match of text.matchAll(varFunctionStartPattern)) {
-				if (match.index < lastIndex) {
-					continue;
-				}
-
-				const closeIndex = findClosingParen(
-					text,
-					match.index + match[0].length - 1,
-				);
+			for (
+				let start = findVarFunctionStart(text, 0);
+				start !== -1;
+				start = findVarFunctionStart(text, lastIndex)
+			) {
+				const closeIndex = findClosingParen(text, start + 3);
 				const parsed =
 					closeIndex !== -1 &&
-					parseVarFunction(text.slice(match.index, closeIndex + 1));
+					parseVarFunction(text.slice(start, closeIndex + 1));
 
 				if (!parsed) {
 					return null;
@@ -351,7 +406,10 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 					return null;
 				}
 
-				result += text.slice(lastIndex, match.index) + resolved;
+				result += text.slice(lastIndex, start) + resolved;
+				if (result.length > MAX_SUBSTITUTED_VALUE_LENGTH) {
+					return null;
+				}
 				lastIndex = closeIndex + 1;
 			}
 

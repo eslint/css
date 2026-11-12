@@ -296,6 +296,10 @@ ruleTester.run("no-invalid-properties", rule, {
 			code: ":root { --color: rgba(var(--rgb), 0.5); }\na { color: var(--color); }",
 			options: [{ allowUnknownVariables: true }],
 		},
+		':root { --label: "var(--missing"; }\na::before { content: var(--label); }',
+		":root { --label: 'rgba(var(--missing)'; --text: var(--label) var(--label); }\na::before { content: var(--text); }",
+		':root { --label: var(--missing, "a)b"); }\na::before { content: var(--label); }',
+		':root { --label: var(--missing, "a\\")b"); }\na::before { content: var(--label); }',
 
 		// CSS-wide keywords are valid for every property
 		"a { color: inherit; }",
@@ -1286,6 +1290,15 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 16,
 					endLine: 2,
 					endColumn: 23,
+				},
+			],
+		},
+		{
+			code: `:root { --v0: 1px; ${Array.from({ length: 40 }, (_, i) => `--v${i + 1}: var(--v${i}) var(--v${i});`).join(" ")} }\na { margin: var(--v40); }`,
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--v40" },
 				},
 			],
 		},
