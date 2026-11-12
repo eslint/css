@@ -35,12 +35,48 @@ import {
 const varFunctionPattern = /var\(\s*(--[^,\s)]+)\s*(?:,([\s\S]+))?\)/iu;
 
 /**
+ * Regex to find the start of var() functions inside a value.
+ */
+const varFunctionStartPattern = /(?<![\w-])var\(/giu;
+
+/**
+ * Finds the index of the closing parenthesis matching the opening one.
+ * @param {string} text The text to search.
+ * @param {number} openIndex The index of the opening parenthesis.
+ * @returns {number} The index of the matching closing parenthesis, or -1 if not found.
+ */
+function findClosingParen(text, openIndex) {
+	let depth = 0;
+
+	for (let i = openIndex; i < text.length; i++) {
+		if (text[i] === "(") {
+			depth++;
+		} else if (text[i] === ")") {
+			depth--;
+			if (depth === 0) {
+				return i;
+			}
+		}
+	}
+
+	return -1;
+}
+
+/**
  * Parses a var() function text and extracts the custom property name and fallback.
  * @param {string} text The text containing a var() function.
- * @returns {{ name: string, fallbackText: string | null } | null} The parsed variable name and optional fallback, or null if not a var().
+ * @returns {{ name: string, fallbackText: string | null } | null} The parsed variable name and optional fallback, or null if the text is not a single var().
  */
 function parseVarFunction(text) {
-	const match = text.match(varFunctionPattern);
+	const trimmed = text.trim();
+	if (
+		!/^var\(/iu.test(trimmed) ||
+		findClosingParen(trimmed, 3) !== trimmed.length - 1
+	) {
+		return null;
+	}
+
+	const match = trimmed.match(varFunctionPattern);
 	if (!match) {
 		return null;
 	}
@@ -74,7 +110,7 @@ function getVarFallbackList(value) {
 		}
 
 		// If fallback is not another var(), we're done
-		if (!parsed.fallbackText.toLowerCase().includes("var(")) {
+		if (!parseVarFunction(parsed.fallbackText)) {
 			list.push(parsed.fallbackText);
 			break;
 		}
@@ -196,8 +232,17 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 				const parsed = parseVarFunction(valueText);
 
 				if (!parsed) {
-					cache.set(currentVarName, valueText);
-					return valueText;
+					// eslint-disable-next-line no-use-before-define -- substituteVarFunctions and resolveVariable are mutually recursive
+					const resolvedValue = substituteVarFunctions(
+						valueText,
+						cache,
+						seen,
+					);
+					if (resolvedValue === null) {
+						break;
+					}
+					cache.set(currentVarName, resolvedValue);
+					return resolvedValue;
 				}
 
 				if (parsed.fallbackText) {
@@ -233,7 +278,8 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 		function resolveFallback(rawFallbackText, cache, seen = new Set()) {
 			const fallbackVarList = getVarFallbackList(rawFallbackText);
 			if (fallbackVarList.length === 0) {
-				return rawFallbackText;
+				// eslint-disable-next-line no-use-before-define -- substituteVarFunctions and resolveFallback are mutually recursive
+				return substituteVarFunctions(rawFallbackText, cache, seen);
 			}
 
 			for (const fallbackCandidate of fallbackVarList) {
@@ -248,10 +294,68 @@ export default /** @satisfies {NoInvalidPropertiesRuleDefinition} */ ({
 					}
 					continue;
 				}
-				return fallbackCandidate.trim();
+				// eslint-disable-next-line no-use-before-define -- substituteVarFunctions and resolveFallback are mutually recursive
+				return substituteVarFunctions(
+					fallbackCandidate.trim(),
+					cache,
+					seen,
+				);
 			}
 
 			return null;
+		}
+
+		/**
+		 * Replaces every var() function nested in a value with its resolved value,
+		 * keeping the surrounding text. For example, `rgba(var(--rgb), 0.5)`
+		 * becomes `rgba(255, 255, 255, 0.5)` when `--rgb` is `255, 255, 255`.
+		 * @param {string} text The value text that may contain var() functions.
+		 * @param {Map<string, string>} cache Cache for memoization within a single resolution scope.
+		 * @param {Set<string>} seen Set of already seen variables to detect cycles.
+		 * @returns {string | null} The value with all var() functions replaced, or null if any can't be resolved.
+		 */
+		function substituteVarFunctions(text, cache, seen) {
+			let result = "";
+			let lastIndex = 0;
+
+			for (const match of text.matchAll(varFunctionStartPattern)) {
+				if (match.index < lastIndex) {
+					continue;
+				}
+
+				const closeIndex = findClosingParen(
+					text,
+					match.index + match[0].length - 1,
+				);
+				const parsed =
+					closeIndex !== -1 &&
+					parseVarFunction(text.slice(match.index, closeIndex + 1));
+
+				if (!parsed) {
+					return null;
+				}
+
+				let resolved = resolveVariable(
+					parsed.name,
+					cache,
+					new Set(seen),
+				);
+				if (resolved === null && parsed.fallbackText) {
+					resolved = resolveFallback(
+						parsed.fallbackText,
+						cache,
+						new Set(seen),
+					);
+				}
+				if (resolved === null) {
+					return null;
+				}
+
+				result += text.slice(lastIndex, match.index) + resolved;
+				lastIndex = closeIndex + 1;
+			}
+
+			return result + text.slice(lastIndex);
 		}
 
 		/**

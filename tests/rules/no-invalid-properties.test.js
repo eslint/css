@@ -283,6 +283,20 @@ ruleTester.run("no-invalid-properties", rule, {
 		"a { padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0; }",
 		"a { padding: env(safe-area-inset-top) red }",
 
+		// var() nested inside a function in a custom property value
+		":root { --rgb: 255, 255, 255; --color: rgba(var(--rgb), 0.5); }\na { color: var(--color); }",
+		":root { --RGB: 255, 255, 255; --color: rgba(VAR(--RGB), 0.5); }\na { color: var(--color); }",
+		":root { --r: 255; --rgb: var(--r), 0, 0; --color: rgb(var(--rgb)); --main: var(--color); }\na { color: var(--main); }",
+		":root { --size: 10px; --width: calc(var(--size) + var(--size)); }\na { width: var(--width); }",
+		":root { --color: rgba(var(--rgb, 0, 0, 0), 0.5); }\na { color: var(--color); }",
+		":root { --color: rgba(var(--rgb, var(--fallback-rgb)), 0.5); --fallback-rgb: 0, 0, 0; }\na { color: var(--color); }",
+		":root { --rgb: 255, 255, 255; }\na { color: var(--color, rgba(var(--rgb), 0.5)); }",
+		":root { --rgb: 255, 255, 255; }\na { color: var(--color, var(--other, rgba(var(--rgb), 0.5))); }",
+		{
+			code: ":root { --color: rgba(var(--rgb), 0.5); }\na { color: var(--color); }",
+			options: [{ allowUnknownVariables: true }],
+		},
+
 		// CSS-wide keywords are valid for every property
 		"a { color: inherit; }",
 		"a { color: initial; }",
@@ -1225,6 +1239,66 @@ ruleTester.run("no-invalid-properties", rule, {
 					column: 18,
 					endLine: 2,
 					endColumn: 26,
+				},
+			],
+		},
+		{
+			code: ":root { --rgb: 255, 255, 255; --color: rgba(var(--rgb), 0.5); }\na { padding-top: var(--color); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "padding-top",
+						value: "rgba(",
+						expected: "<length-percentage [0,∞]>",
+					},
+					line: 2,
+					column: 18,
+					endLine: 2,
+					endColumn: 30,
+				},
+			],
+		},
+		{
+			code: ":root { --rgb: 255, 255, 255; }\na { padding-top: var(--color, rgba(var(--rgb), 0.5)); }",
+			errors: [
+				{
+					messageId: "invalidPropertyValue",
+					data: {
+						property: "padding-top",
+						value: "rgba(",
+						expected: "<length-percentage [0,∞]>",
+					},
+					line: 2,
+					column: 18,
+					endLine: 2,
+					endColumn: 53,
+				},
+			],
+		},
+		{
+			code: ":root { --color: rgba(var(--rgb), 0.5); }\na { color: var(--color); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--color" },
+					line: 2,
+					column: 16,
+					endLine: 2,
+					endColumn: 23,
+				},
+			],
+		},
+		{
+			code: ":root { --color: rgba(var(--color), 0.5); }\na { color: var(--color); }",
+			errors: [
+				{
+					messageId: "unknownVar",
+					data: { var: "--color" },
+					line: 2,
+					column: 16,
+					endLine: 2,
+					endColumn: 23,
 				},
 			],
 		},
