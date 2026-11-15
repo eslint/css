@@ -201,10 +201,17 @@ function getDisallowedFontSizeNodes(
 				);
 			} else if (node.type === "Parentheses") {
 				checkArguments(
-					node.children.map(child => ({
-						node: child,
-						isMathFunction,
-					})),
+					node.children
+						.filter(
+							child =>
+								!isMathFunction ||
+								child.type !== "Dimension" ||
+								(child.unit &&
+									!allowedUnitsInMathFunctions.includes(
+										child.unit.toLowerCase(),
+									)),
+						)
+						.map(child => ({ node: child, isMathFunction })),
 				);
 			} else if (
 				isDisallowedFontSize(node, allowedFontUnits) &&

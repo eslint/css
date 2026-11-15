@@ -481,6 +481,10 @@ ruleTester.run("relative-font-units", rule, {
 			options: [{ allowUnitsInMathFunctions: ["vw"] }],
 		},
 		{
+			code: "a { font-size: calc((2vw + 1rem) * 2); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+		},
+		{
 			code: "a { font-size: clamp(1rem, 2cqi, 2em); }",
 			options: [
 				{
