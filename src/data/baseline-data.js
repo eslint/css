@@ -697,6 +697,7 @@ export const functions = new Map([
 	["repeating-linear-gradient", "10:2015"],
 	["repeating-radial-gradient", "10:2015"],
 	["hsl", "10:2015"],
+	["hsla", "10:2015"],
 	["hwb", "10:2022"],
 	["if", "0:"],
 	["image", "0:"],
@@ -863,6 +864,7 @@ export const selectors = new Map([
 	["volume-locked", "0:"],
 	["modal", "10:2022"],
 	["namespace", "10:2015"],
+	["navigation-source", "0:"],
 	["nesting", "10:2023"],
 	["not", "10:2015"],
 	["first-child", "10:2015"],
@@ -2328,6 +2330,7 @@ export const propertyValues = new Map([
 			["grayscale", "10:2016"],
 			["hue-rotate", "10:2016"],
 			["invert", "10:2016"],
+			["none", "10:2016"],
 			["opacity", "10:2016"],
 			["saturate", "10:2016"],
 			["sepia", "10:2016"],
@@ -2359,6 +2362,7 @@ export const propertyValues = new Map([
 			["fit-content", "10:2022"],
 			["max-content", "10:2022"],
 			["min-content", "10:2022"],
+			["stretch", "0:"],
 		]),
 	],
 	[
@@ -2368,6 +2372,18 @@ export const propertyValues = new Map([
 			["column-reverse", "10:2020"],
 			["row", "10:2015"],
 			["row-reverse", "10:2020"],
+		]),
+	],
+	[
+		"flex-flow",
+		new Map([
+			["column", "10:2015"],
+			["column-reverse", "10:2015"],
+			["nowrap", "10:2015"],
+			["row", "10:2015"],
+			["row-reverse", "10:2015"],
+			["wrap", "10:2015"],
+			["wrap-reverse", "10:2015"],
 		]),
 	],
 	[
@@ -2382,7 +2398,11 @@ export const propertyValues = new Map([
 	[
 		"flex",
 		new Map([
+			["auto", "10:2015"],
 			["content", "10:2021"],
+			["fit-content", "10:2022"],
+			["max-content", "10:2022"],
+			["min-content", "10:2022"],
 			["none", "10:2015"],
 		]),
 	],
@@ -2936,6 +2956,15 @@ export const propertyValues = new Map([
 		]),
 	],
 	["gap", new Map([["normal", "10:2017"]])],
+	["grid-area", new Map([["auto", "10:2017"]])],
+	[
+		"grid-auto-columns",
+		new Map([
+			["auto", "10:2020"],
+			["max-content", "10:2020"],
+			["min-content", "10:2020"],
+		]),
+	],
 	[
 		"grid-auto-flow",
 		new Map([
@@ -2944,6 +2973,20 @@ export const propertyValues = new Map([
 			["row", "10:2020"],
 		]),
 	],
+	[
+		"grid-auto-rows",
+		new Map([
+			["auto", "10:2020"],
+			["max-content", "10:2020"],
+			["min-content", "10:2020"],
+		]),
+	],
+	["grid-column-end", new Map([["auto", "10:2017"]])],
+	["grid-column-start", new Map([["auto", "10:2017"]])],
+	["grid-column", new Map([["auto", "10:2017"]])],
+	["grid-row-end", new Map([["auto", "10:2017"]])],
+	["grid-row-start", new Map([["auto", "10:2017"]])],
+	["grid-row", new Map([["auto", "10:2017"]])],
 	["grid-template-areas", new Map([["none", "10:2020"]])],
 	[
 		"grid-template-columns",
@@ -2974,6 +3017,7 @@ export const propertyValues = new Map([
 		]),
 	],
 	["grid-template", new Map([["none", "10:2020"]])],
+	["grid", new Map([["none", "10:2017"]])],
 	["row-gap", new Map([["normal", "10:2017"]])],
 	[
 		"fit-tolerance",
@@ -3435,8 +3479,6 @@ export const propertyValues = new Map([
 			["transparent", "10:2021"],
 		]),
 	],
-	["overflow-block", new Map([["overlay", "0:"]])],
-	["overflow-inline", new Map([["overlay", "0:"]])],
 	[
 		"margin-trim",
 		new Map([
@@ -3502,6 +3544,7 @@ export const propertyValues = new Map([
 			["subtract", "10:2023"],
 		]),
 	],
+	["mask-image", new Map([["none", "10:2023"]])],
 	[
 		"mask-mode",
 		new Map([
@@ -3570,6 +3613,7 @@ export const propertyValues = new Map([
 			["match-source", "10:2023"],
 			["no-clip", "0:"],
 			["no-repeat", "10:2023"],
+			["none", "10:2023"],
 			["padding-box", "0:"],
 			["repeat", "10:2023"],
 			["repeat-x", "10:2023"],
@@ -4033,6 +4077,7 @@ export const propertyValues = new Map([
 			["none", "10:2022"],
 			["x", "10:2022"],
 			["y", "10:2022"],
+			["pair", "0:"],
 		]),
 	],
 	[
