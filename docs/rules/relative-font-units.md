@@ -25,7 +25,7 @@ Values inside functions are checked as well. This includes the arguments of math
 
 ## Options
 
-This rule accepts an option which is an object with the following property:
+This rule accepts an object with following properties as options:
 
 - `allowUnits` (default: `["rem"]`) - Specify an array of relative units that are allowed to be used. You can use the following units:
     - **%**: Represents the "percentage" of the parent element's font size, allowing the text to scale relative to its container.
@@ -41,6 +41,8 @@ This rule accepts an option which is an object with the following property:
     - **rex**: Represents the x-height of the root element's font.
     - **ric**: Equal to the ic unit on the root element's font.
     - **rlh**: Equal to the lh unit on the root element's font.
+
+- `allowUnitsInMathFunctions` (default: `[]`) - Specify an array of additional relative units that are allowed only in math functions. This option can be used to allow viewport-relative units (`vw`, `vh`, `vi`, `vb`, `vmin`, `vmax`, `svw`, `svh`, `svi`, `svb`, `svmin`, `svmax`, `lvw`, `lvh`, `lvi`, `lvb`, `lvmin`, `lvmax`, `dvw`, `dvh`, `dvi`, `dvb`, `dvmin`, `dvmax`) and container-relative units (`cqw`, `cqh`, `cqi`, `cqb`, `cqmin`, `cqmax`) inside math functions to enable fluid typography in CSS.
 
 Example of **incorrect** code for default `{ allowUnits: ["rem"] }` option:
 
@@ -146,6 +148,42 @@ Example of **correct** code for `{ allowUnits: ["em", "%"] }` option:
 	font:
 		inherit Arial,
 		sans-serif;
+}
+```
+
+Example of **incorrect** code for default `{ allowUnitsInMathFunctions: ["vw"] }` option:
+
+```css
+/* eslint css/relative-font-units: ["error", { allowUnitsInMathFunctions: ["vw"] }] */
+
+.a {
+	font-size: 2vw;
+}
+
+.b {
+	font-size: env(safe-area-inset-top, 12vw);
+}
+
+.c {
+	font-size: calc(1rem + 2vh);
+}
+```
+
+Example of **correct** code for default `{ allowUnitsInMathFunctions: ["vw"] }` option:
+
+```css
+/* eslint css/relative-font-units: ["error", { allowUnitsInMathFunctions: ["vw"] }] */
+
+.a {
+	font-size: clamp(12rem, 2vw, 20rem);
+}
+
+.b {
+	font: calc(1rem + 2vw) Arial;
+}
+
+.c {
+	font-size: env(safe-area-inset-top, calc(1rem + 2vw));
 }
 ```
 
