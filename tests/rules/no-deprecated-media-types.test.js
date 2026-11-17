@@ -247,6 +247,19 @@ ruleTester.run("no-deprecated-media-types", rule, {
 			],
 		},
 		{
+			code: "@media not /* aural */ aural {}",
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "aural" },
+					line: 1,
+					column: 24,
+					endLine: 1,
+					endColumn: 29,
+				},
+			],
+		},
+		{
 			code: "@media only aural {}",
 			errors: [
 				{

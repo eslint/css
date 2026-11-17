@@ -28,6 +28,8 @@ const deprecatedMediaTypes = new Set([
 	"tv",
 ]);
 
+const commentPattern = /\/\*[\s\S]*?\*\//gu;
+
 //-----------------------------------------------------------------------------
 // Rule Definition
 //-----------------------------------------------------------------------------
@@ -63,9 +65,14 @@ export default /** @satisfies {NoDeprecatedMediaTypesRuleDefinition} */ ({
 
 				const text = context.sourceCode.getText(node);
 
+				const textWithoutComments = text.replace(
+					commentPattern,
+					comment => " ".repeat(comment.length),
+				);
+
 				const startIndex =
 					node.loc.start.offset +
-					text.toLowerCase().indexOf(mediaType);
+					textWithoutComments.toLowerCase().indexOf(mediaType);
 
 				const endIndex = startIndex + node.mediaType.length;
 
