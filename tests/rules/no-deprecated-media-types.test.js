@@ -148,6 +148,19 @@ ruleTester.run("no-deprecated-media-types", rule, {
 			],
 		},
 		{
+			code: "@media screen, aural and (color) {}",
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "aural" },
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 21,
+				},
+			],
+		},
+		{
 			code: "@media aural, braille {}",
 			errors: [
 				{
@@ -235,6 +248,19 @@ ruleTester.run("no-deprecated-media-types", rule, {
 		},
 		{
 			code: "@media only aural {}",
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "aural" },
+					line: 1,
+					column: 13,
+					endLine: 1,
+					endColumn: 18,
+				},
+			],
+		},
+		{
+			code: "@media only aural and (color) {}",
 			errors: [
 				{
 					messageId: "deprecatedMediaType",
