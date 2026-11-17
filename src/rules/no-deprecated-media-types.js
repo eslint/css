@@ -4,20 +4,11 @@
  */
 
 //-----------------------------------------------------------------------------
-// Imports
-//-----------------------------------------------------------------------------
-
-import { tokenize, tokenTypes } from "@eslint/css-tree";
-
-//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
 /**
- * @import { SourceLocation } from "@eslint/core"
- * @import { MediaQueryPlain } from "@eslint/css-tree"
  * @import { CSSRuleDefinition } from "../types.js"
- * @import { CSSSourceCode } from "../languages/css-source-code.js"
  * @typedef {"deprecatedMediaType"} NoDeprecatedMediaTypesMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoDeprecatedMediaTypesMessageIds }>} NoDeprecatedMediaTypesRuleDefinition
  */
@@ -36,39 +27,6 @@ const deprecatedMediaTypes = new Set([
 	"tty",
 	"tv",
 ]);
-
-/**
- * Gets the location of the media type in a media query.
- * @param {CSSSourceCode} sourceCode The source code object.
- * @param {MediaQueryPlain} node The media query node.
- * @returns {SourceLocation} The media type location.
- */
-function getMediaTypeLocation(sourceCode, node) {
-	let location;
-	const text = sourceCode.getText(node);
-
-	tokenize(text, (type, start, end) => {
-		if (location || type !== tokenTypes.Ident) {
-			return;
-		}
-
-		const tokenText = text.slice(start, end).toLowerCase();
-
-		if (tokenText === "not" || tokenText === "only") {
-			return;
-		}
-
-		const startIndex = node.loc.start.offset + start;
-		const endIndex = node.loc.start.offset + end;
-
-		location = {
-			start: sourceCode.getLocFromIndex(startIndex),
-			end: sourceCode.getLocFromIndex(endIndex),
-		};
-	});
-
-	return location;
-}
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -100,10 +58,18 @@ export default /** @satisfies {NoDeprecatedMediaTypesRuleDefinition} */ ({
 				const mediaType = node.mediaType?.toLowerCase();
 
 				if (deprecatedMediaTypes.has(mediaType)) {
-					const location = getMediaTypeLocation(
-						context.sourceCode,
-						node,
-					);
+					const text = context.sourceCode.getText(node);
+
+					const startIndex =
+						node.loc.start.offset +
+						text.toLowerCase().indexOf(mediaType);
+
+					const endIndex = startIndex + node.mediaType.length;
+
+					const location = {
+						start: context.sourceCode.getLocFromIndex(startIndex),
+						end: context.sourceCode.getLocFromIndex(endIndex),
+					};
 
 					context.report({
 						loc: location,
