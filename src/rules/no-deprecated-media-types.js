@@ -57,26 +57,28 @@ export default /** @satisfies {NoDeprecatedMediaTypesRuleDefinition} */ ({
 			) {
 				const mediaType = node.mediaType?.toLowerCase();
 
-				if (deprecatedMediaTypes.has(mediaType)) {
-					const text = context.sourceCode.getText(node);
-
-					const startIndex =
-						node.loc.start.offset +
-						text.toLowerCase().indexOf(mediaType);
-
-					const endIndex = startIndex + node.mediaType.length;
-
-					const location = {
-						start: context.sourceCode.getLocFromIndex(startIndex),
-						end: context.sourceCode.getLocFromIndex(endIndex),
-					};
-
-					context.report({
-						loc: location,
-						messageId: "deprecatedMediaType",
-						data: { mediaType },
-					});
+				if (!deprecatedMediaTypes.has(mediaType)) {
+					return;
 				}
+
+				const text = context.sourceCode.getText(node);
+
+				const startIndex =
+					node.loc.start.offset +
+					text.toLowerCase().indexOf(mediaType);
+
+				const endIndex = startIndex + node.mediaType.length;
+
+				const location = {
+					start: context.sourceCode.getLocFromIndex(startIndex),
+					end: context.sourceCode.getLocFromIndex(endIndex),
+				};
+
+				context.report({
+					loc: location,
+					messageId: "deprecatedMediaType",
+					data: { mediaType },
+				});
 			},
 		};
 	},
