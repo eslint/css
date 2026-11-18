@@ -22,7 +22,7 @@ If a selector is repeated within the same `@keyframes` block, the last declarati
 
 ## Rule Details
 
-This rule warns when it finds a keyframe block that contains duplicate selectors. It treats `from` and `0%` as equivalent selectors, as well as `to` and `100%`.
+This rule warns when it finds a keyframe block that contains duplicate selectors. It treats `from` and `0%` as equivalent selectors, as well as `to` and `100%`. Percentages are compared by numeric value, so `0%` and `0.0%` are also duplicates.
 
 Examples of **incorrect** code for this rule:
 
@@ -89,6 +89,16 @@ Examples of **incorrect** code for this rule:
 
 	100% {
 		opacity: 0.75;
+	}
+}
+
+@keyframes test {
+	0% {
+		opacity: 0;
+	}
+
+	0.0% {
+		opacity: 1;
 	}
 }
 ```
