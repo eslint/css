@@ -485,6 +485,10 @@ ruleTester.run("relative-font-units", rule, {
 			options: [{ allowUnitsInMathFunctions: ["vw"] }],
 		},
 		{
+			code: "a { font-size: calc(1rem + env(safe-area-inset-top, 2vw)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+		},
+		{
 			code: "a { font-size: clamp(1rem, 2cqi, 2em); }",
 			options: [
 				{
@@ -2711,6 +2715,24 @@ ruleTester.run("relative-font-units", rule, {
 			],
 		},
 		{
+			code: "a { font-size: calc(1rem + env(safe-area-inset-top, 12px)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 53,
+					endLine: 1,
+					endColumn: 57,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctionsMessage:
+							". Additional units allowed in math functions - vw",
+					},
+				},
+			],
+		},
+		{
 			code: "a { font-size: env(some-font-size, (2vw + 1rem)); }",
 			options: [{ allowUnitsInMathFunctions: ["vw"] }],
 			errors: [
@@ -2773,6 +2795,24 @@ ruleTester.run("relative-font-units", rule, {
 					column: 28,
 					endLine: 1,
 					endColumn: 31,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctionsMessage:
+							". Additional units allowed in math functions - vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc((1rem + 2vh) * 2); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 29,
+					endLine: 1,
+					endColumn: 32,
 					data: {
 						allowedFontUnits: "rem",
 						allowedUnitsInMathFunctionsMessage:

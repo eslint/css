@@ -127,22 +127,18 @@ function isDisallowedFontSize(value, allowedFontUnits) {
  * returned because it is unknown how those functions use them.
  * @param {FunctionNodePlain} func The function node.
  * @param {string[]} allowedUnitsInMathFunctions The relative units that are allowed inside math functions.
+ * @param {boolean} isMathFunction Whether the function is a math function.
  * @returns {Array<{ node: CssNodePlain, isMathFunction: boolean }>} The arguments to check.
  */
-function getFontSizeArguments(func, allowedUnitsInMathFunctions) {
+function getFontSizeArguments(
+	func,
+	allowedUnitsInMathFunctions,
+	isMathFunction = false,
+) {
 	const name = func.name.toLowerCase();
 
 	if (mathFunctions.has(name)) {
-		const disallowedInMathFunction = func.children.filter(
-			child =>
-				child.type !== "Dimension" ||
-				(child.unit &&
-					!allowedUnitsInMathFunctions.includes(
-						child.unit.toLowerCase(),
-					)),
-		);
-
-		return disallowedInMathFunction.map(node => ({
+		return func.children.map(node => ({
 			node,
 			isMathFunction: true,
 		}));
@@ -157,7 +153,7 @@ function getFontSizeArguments(func, allowedUnitsInMathFunctions) {
 			? []
 			: func.children
 					.slice(commaIndex + 1)
-					.map(node => ({ node, isMathFunction: false }));
+					.map(node => ({ node, isMathFunction }));
 	}
 
 	return [];
@@ -197,24 +193,27 @@ function getDisallowedFontSizeNodes(
 		for (const { node, isMathFunction } of nodes) {
 			if (node.type === "Function") {
 				checkArguments(
-					getFontSizeArguments(node, allowedUnitsInMathFunctions),
+					getFontSizeArguments(
+						node,
+						allowedUnitsInMathFunctions,
+						isMathFunction,
+					),
 				);
 			} else if (node.type === "Parentheses") {
 				checkArguments(
-					node.children
-						.filter(
-							child =>
-								!isMathFunction ||
-								child.type !== "Dimension" ||
-								(child.unit &&
-									!allowedUnitsInMathFunctions.includes(
-										child.unit.toLowerCase(),
-									)),
-						)
-						.map(child => ({ node: child, isMathFunction })),
+					node.children.map(child => ({
+						node: child,
+						isMathFunction,
+					})),
 				);
 			} else if (
 				isDisallowedFontSize(node, allowedFontUnits) &&
+				(node.type !== "Dimension" ||
+					!isMathFunction ||
+					(node.unit &&
+						!allowedUnitsInMathFunctions.includes(
+							node.unit.toLowerCase(),
+						))) &&
 				(node.type !== "Dimension" ||
 					lexer.matchType("length", node).matched)
 			) {
