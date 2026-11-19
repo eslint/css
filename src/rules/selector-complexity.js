@@ -248,7 +248,7 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 					},
 					maxCompounds: {
 						type: "integer",
-						minimum: 0,
+						minimum: 1,
 					},
 					maxCombinators: {
 						type: "integer",
