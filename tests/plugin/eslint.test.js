@@ -446,5 +446,74 @@ describe("Plugin", () => {
 			assert.strictEqual(results[0].messages.length, 0);
 			assert.strictEqual(results[0].suppressedMessages.length, 0);
 		});
+
+		it("should not report empty block when a disable configuration comment is indented", async () => {
+			const code = "  /* eslint-disable css/no-empty-blocks */\n  a {}";
+			const results = await eslint.lintText(code, {
+				filePath: "test.css",
+			});
+
+			assert.strictEqual(results.length, 1);
+			assert.strictEqual(results[0].messages.length, 0);
+			assert.strictEqual(results[0].suppressedMessages.length, 1);
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
+			assert.strictEqual(results[0].suppressedMessages[0].line, 2);
+			assert.strictEqual(results[0].suppressedMessages[0].column, 5);
+		});
+
+		it("should not report empty block when a disable configuration comment has trailing space", async () => {
+			const code = "/* eslint-disable css/no-empty-blocks */ \na {}";
+			const results = await eslint.lintText(code, {
+				filePath: "test.css",
+			});
+
+			assert.strictEqual(results.length, 1);
+			assert.strictEqual(results[0].messages.length, 0);
+			assert.strictEqual(results[0].suppressedMessages.length, 1);
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
+			assert.strictEqual(results[0].suppressedMessages[0].line, 2);
+			assert.strictEqual(results[0].suppressedMessages[0].column, 3);
+		});
+
+		it("should not report empty block when text follows a disable configuration comment", async () => {
+			const code =
+				"/* eslint-disable css/no-empty-blocks */ /* note */\na {}";
+			const results = await eslint.lintText(code, {
+				filePath: "test.css",
+			});
+
+			assert.strictEqual(results.length, 1);
+			assert.strictEqual(results[0].messages.length, 0);
+			assert.strictEqual(results[0].suppressedMessages.length, 1);
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
+			assert.strictEqual(results[0].suppressedMessages[0].line, 2);
+			assert.strictEqual(results[0].suppressedMessages[0].column, 3);
+		});
+
+		it("should not report empty block when a disable configuration comment has text before and after", async () => {
+			const code = "a /* eslint-disable css/no-empty-blocks */ {}";
+			const results = await eslint.lintText(code, {
+				filePath: "test.css",
+			});
+
+			assert.strictEqual(results.length, 1);
+			assert.strictEqual(results[0].messages.length, 0);
+			assert.strictEqual(results[0].suppressedMessages.length, 1);
+			assert.strictEqual(
+				results[0].suppressedMessages[0].message,
+				"Unexpected empty block found.",
+			);
+			assert.strictEqual(results[0].suppressedMessages[0].line, 1);
+			assert.strictEqual(results[0].suppressedMessages[0].column, 44);
+		});
 	});
 });
