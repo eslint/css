@@ -11,7 +11,7 @@
  * @import { CSSRuleDefinition } from "../types.js"
  * @import { CssNode, CssNodePlain, FunctionNodePlain, Lexer } from "@eslint/css-tree"
  * @typedef {"allowedFontUnits"} RelativeFontUnitsMessageIds
- * @typedef {[{allowUnits?: string[]}]} RelativeFontUnitsOptions
+ * @typedef {[{allowUnits?: string[], allowUnitsInMathFunctions?: string[]}]} RelativeFontUnitsOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: RelativeFontUnitsOptions, MessageIds: RelativeFontUnitsMessageIds}>} RelativeFontUnitsRuleDefinition
  */
 
@@ -33,6 +33,39 @@ const relativeFontUnits = [
 	"rex",
 	"ric",
 	"rlh",
+];
+
+const unitsToAllowInMathFunctions = [
+	"vw",
+	"vh",
+	"vi",
+	"vb",
+	"vmin",
+	"vmax",
+	"svw",
+	"svh",
+	"svi",
+	"svb",
+	"svmin",
+	"svmax",
+	"lvw",
+	"lvh",
+	"lvi",
+	"lvb",
+	"lvmin",
+	"lvmax",
+	"dvw",
+	"dvh",
+	"dvi",
+	"dvb",
+	"dvmin",
+	"dvmax",
+	"cqw",
+	"cqh",
+	"cqi",
+	"cqb",
+	"cqmin",
+	"cqmax",
 ];
 
 const disallowedFontSizeKeywords = new Set([
@@ -93,13 +126,22 @@ function isDisallowedFontSize(value, allowedFontUnits) {
  * math function and the fallback of `env()`. Arguments of other functions are not
  * returned because it is unknown how those functions use them.
  * @param {FunctionNodePlain} func The function node.
- * @returns {CssNodePlain[]} The arguments to check.
+ * @param {string[]} allowedUnitsInMathFunctions The relative units that are allowed inside math functions.
+ * @param {boolean} isMathFunction Whether the function is a math function.
+ * @returns {Array<{ node: CssNodePlain, isMathFunction: boolean }>} The arguments to check.
  */
-function getFontSizeArguments(func) {
+function getFontSizeArguments(
+	func,
+	allowedUnitsInMathFunctions,
+	isMathFunction = false,
+) {
 	const name = func.name.toLowerCase();
 
 	if (mathFunctions.has(name)) {
-		return func.children;
+		return func.children.map(node => ({
+			node,
+			isMathFunction: true,
+		}));
 	}
 
 	if (name === "env") {
@@ -107,7 +149,11 @@ function getFontSizeArguments(func) {
 			child => child.type === "Operator" && child.value === ",",
 		);
 
-		return commaIndex === -1 ? [] : func.children.slice(commaIndex + 1);
+		return commaIndex === -1
+			? []
+			: func.children
+					.slice(commaIndex + 1)
+					.map(node => ({ node, isMathFunction }));
 	}
 
 	return [];
@@ -120,38 +166,63 @@ function getFontSizeArguments(func) {
  * @param {CssNodePlain} value The font size value.
  * @param {string[]} allowedFontUnits The relative units that are allowed.
  * @param {Lexer} lexer The lexer used to identify lengths.
- * @returns {CssNodePlain[]} The disallowed nodes.
+ * @param {string[]} allowedUnitsInMathFunctions The relative units that are allowed inside math functions.
+ * @returns {Array<{ node: CssNodePlain, isMathFunction: boolean }>} The disallowed nodes.
  */
-function getDisallowedFontSizeNodes(value, allowedFontUnits, lexer) {
+function getDisallowedFontSizeNodes(
+	value,
+	allowedFontUnits,
+	lexer,
+	allowedUnitsInMathFunctions,
+) {
 	if (value.type !== "Function") {
-		return isDisallowedFontSize(value, allowedFontUnits) ? [value] : [];
+		return isDisallowedFontSize(value, allowedFontUnits)
+			? [{ node: value, isMathFunction: false }]
+			: [];
 	}
 
-	/** @type {CssNodePlain[]} */
+	/** @type {Array<{ node: CssNodePlain, isMathFunction: boolean }>} */
 	const disallowedNodes = [];
 
 	/**
 	 * Collects the disallowed nodes among the given function arguments.
-	 * @param {CssNodePlain[]} nodes The function arguments to check.
+	 * @param {Array<{ node: CssNodePlain, isMathFunction: boolean }>} nodes The function arguments to check.
 	 * @returns {void}
 	 */
 	function checkArguments(nodes) {
-		for (const node of nodes) {
+		for (const { node, isMathFunction } of nodes) {
 			if (node.type === "Function") {
-				checkArguments(getFontSizeArguments(node));
+				checkArguments(
+					getFontSizeArguments(
+						node,
+						allowedUnitsInMathFunctions,
+						isMathFunction,
+					),
+				);
 			} else if (node.type === "Parentheses") {
-				checkArguments(node.children);
+				checkArguments(
+					node.children.map(child => ({
+						node: child,
+						isMathFunction,
+					})),
+				);
 			} else if (
 				isDisallowedFontSize(node, allowedFontUnits) &&
 				(node.type !== "Dimension" ||
+					!isMathFunction ||
+					(node.unit &&
+						!allowedUnitsInMathFunctions.includes(
+							node.unit.toLowerCase(),
+						))) &&
+				(node.type !== "Dimension" ||
 					lexer.matchType("length", node).matched)
 			) {
-				disallowedNodes.push(node);
+				disallowedNodes.push({ node, isMathFunction });
 			}
 		}
 	}
 
-	checkArguments(getFontSizeArguments(value));
+	checkArguments(getFontSizeArguments(value, allowedUnitsInMathFunctions));
 
 	return disallowedNodes;
 }
@@ -183,6 +254,13 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 						},
 						uniqueItems: true,
 					},
+					allowUnitsInMathFunctions: {
+						type: "array",
+						items: {
+							enum: unitsToAllowInMathFunctions,
+						},
+						uniqueItems: true,
+					},
 				},
 				additionalProperties: false,
 			},
@@ -191,17 +269,23 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 		defaultOptions: [
 			{
 				allowUnits: ["rem"],
+				allowUnitsInMathFunctions: [],
 			},
 		],
 
 		messages: {
 			allowedFontUnits:
-				"Use only allowed relative units for 'font-size' - {{allowedFontUnits}}.",
+				"Use only allowed relative units for 'font-size' - {{allowedFontUnits}}{{allowedUnitsInMathFunctionsMessage}}.",
 		},
 	},
 
 	create(context) {
-		const [{ allowUnits: allowedFontUnits }] = context.options;
+		const [
+			{
+				allowUnits: allowedFontUnits,
+				allowUnitsInMathFunctions: allowedUnitsInMathFunctions,
+			},
+		] = context.options;
 		const { lexer } = context.sourceCode;
 
 		/**
@@ -210,16 +294,24 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 		 * @returns {void}
 		 */
 		function checkFontSize(value) {
-			for (const disallowedNode of getDisallowedFontSizeNodes(
+			for (const {
+				node: disallowedNode,
+				isMathFunction,
+			} of getDisallowedFontSizeNodes(
 				value,
 				allowedFontUnits,
 				lexer,
+				allowedUnitsInMathFunctions,
 			)) {
 				context.report({
 					loc: disallowedNode.loc,
 					messageId: "allowedFontUnits",
 					data: {
 						allowedFontUnits: allowedFontUnits.join(", "),
+						allowedUnitsInMathFunctionsMessage:
+							allowedUnitsInMathFunctions.length && isMathFunction
+								? `. Additional units allowed in math functions - ${allowedUnitsInMathFunctions.join(", ")}`
+								: "",
 					},
 				});
 			}
