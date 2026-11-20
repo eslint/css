@@ -7,7 +7,7 @@ import type {
 	DefaultSyntaxConfig,
 	SyntaxExtensionCallback,
 } from "@eslint/css";
-import type { Plugin, SourceLocation, SourceRange } from "@eslint/core";
+import type { File, Plugin, SourceLocation, SourceRange } from "@eslint/core";
 import type { ESLint } from "eslint";
 import type {
 	AnPlusB,
@@ -72,6 +72,13 @@ css.meta.version satisfies string;
 
 // Check that these languages are defined:
 css.languages.css satisfies object;
+
+css.languages.css.validateLanguageOptions();
+css.languages.css.validateLanguageOptions(undefined);
+
+declare const file: File;
+css.languages.css.parse(file);
+css.languages.css.parse(file, undefined);
 
 declare const ruleName: keyof typeof css.rules;
 css.rules[ruleName] satisfies CSSRuleDefinition;

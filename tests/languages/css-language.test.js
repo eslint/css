@@ -25,6 +25,17 @@ describe("CSSLanguage", () => {
 		});
 	});
 
+	describe("validateLanguageOptions()", () => {
+		it("should accept omitted or undefined language options", () => {
+			const language = new CSSLanguage();
+
+			assert.doesNotThrow(() => language.validateLanguageOptions());
+			assert.doesNotThrow(() =>
+				language.validateLanguageOptions(undefined),
+			);
+		});
+	});
+
 	describe("parse()", () => {
 		it("should parse CSS", () => {
 			const language = new CSSLanguage();
