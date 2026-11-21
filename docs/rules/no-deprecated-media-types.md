@@ -4,22 +4,15 @@ Disallow deprecated media types.
 
 ## Background
 
-Some media types were defined in earlier specifications but they should no longer be used.
+Several media types defined in earlier specifications have been deprecated and should no longer be used.
 
 That's because they indicate the type of device, but this alone is no longer enough to distinguish between devices with different styling requirements.
 
-For example:
-
-<!-- prettier-ignore -->
-```css
-@media tv {}
-
-@media handheld {}
-```
+Browsers still recognize these media types as valid, but they [match nothing](https://drafts.csswg.org/mediaqueries-5/#media-types), so the styles in a rule such as `@media tv {}` are never applied.
 
 ## Rule Details
 
-This rule reports these eight deprecated media types in `@media` rules.
+This rule reports these eight deprecated media types in `@media` rules:
 
 - `aural`
 - `braille`
@@ -60,7 +53,7 @@ This rule has no options.
 
 ## When Not to Use It
 
-If you intentionally use deprecated media types for demonstration purposes, you can disable this rule.
+If you intentionally use deprecated media types (for example, to support older browsers that still match them), then you can safely disable this rule.
 
 ## Prior Art
 

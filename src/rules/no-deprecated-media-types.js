@@ -42,7 +42,7 @@ export default /** @satisfies {NoDeprecatedMediaTypesRuleDefinition} */ ({
 		docs: {
 			description: "Disallow deprecated media types",
 			dialects: ["CSS"],
-			recommended: true,
+			recommended: false,
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-deprecated-media-types.md",
 		},
 
@@ -53,17 +53,19 @@ export default /** @satisfies {NoDeprecatedMediaTypesRuleDefinition} */ ({
 	},
 
 	create(context) {
+		const { sourceCode } = context;
+
 		return {
 			"Atrule[name=/^media$/i] > AtrulePrelude > MediaQueryList > MediaQuery"(
 				node,
 			) {
-				const mediaType = node.mediaType?.toLowerCase();
+				const { mediaType } = node;
 
-				if (!deprecatedMediaTypes.has(mediaType)) {
+				if (!deprecatedMediaTypes.has(mediaType?.toLowerCase())) {
 					return;
 				}
 
-				const text = context.sourceCode.getText(node);
+				const text = sourceCode.getText(node);
 
 				const textWithoutComments = text.replace(
 					commentPattern,
@@ -72,17 +74,15 @@ export default /** @satisfies {NoDeprecatedMediaTypesRuleDefinition} */ ({
 
 				const startIndex =
 					node.loc.start.offset +
-					textWithoutComments.toLowerCase().indexOf(mediaType);
+					textWithoutComments.indexOf(mediaType);
 
-				const endIndex = startIndex + node.mediaType.length;
-
-				const location = {
-					start: context.sourceCode.getLocFromIndex(startIndex),
-					end: context.sourceCode.getLocFromIndex(endIndex),
-				};
+				const endIndex = startIndex + mediaType.length;
 
 				context.report({
-					loc: location,
+					loc: {
+						start: sourceCode.getLocFromIndex(startIndex),
+						end: sourceCode.getLocFromIndex(endIndex),
+					},
 					messageId: "deprecatedMediaType",
 					data: { mediaType },
 				});
