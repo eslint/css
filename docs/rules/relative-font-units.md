@@ -143,9 +143,7 @@ Example of **correct** code for `{ allowUnits: ["em", "%"] }` option:
 }
 
 .e {
-	font:
-		inherit Arial,
-		sans-serif;
+	font: inherit;
 }
 ```
 
