@@ -18,7 +18,7 @@ Sometimes during refactoring, you can end up with empty blocks in your code. Thi
 
 ## Rule Details
 
-This rule warns when it finds a block that is empty. For the purposes of this rule, comments do not count as content and this rule warns when the only content inside of a block is a comment.
+This rule warns when it finds a block that is empty. By default, blocks that contain only comments are not reported.
 
 Examples of **incorrect** code:
 
@@ -28,18 +28,24 @@ Examples of **incorrect** code:
 a {
 }
 
+.class-name {
+}
+
+@media (print) {
+}
+```
+
+Examples of **correct** code:
+
+```css
+/* eslint css/no-empty-blocks: "error" */
+
 a {
 	/* a comment */
 }
 
 .class-name {
-}
-
-.class-name {
 	/* a comment */
-}
-
-@media (print) {
 }
 
 @media (print) {
@@ -49,7 +55,27 @@ a {
 
 ## Options
 
-This rule has no options.
+This rule accepts an option which is an object with the following property:
+
+- `reportCommentOnlyBlocks` (default: `false`) - Set to `true` to report blocks that contain only comments.
+
+Examples of **incorrect** code with `{ reportCommentOnlyBlocks: true }`:
+
+```css
+/* eslint css/no-empty-blocks: ["error", { reportCommentOnlyBlocks: true }] */
+
+a {
+	/* a comment */
+}
+
+.class-name {
+	/* a comment */
+}
+
+@media (print) {
+	/* a comment */
+}
+```
 
 ## When Not to Use It
 

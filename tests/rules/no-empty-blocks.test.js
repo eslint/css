@@ -23,7 +23,11 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run("no-empty-blocks", rule, {
-	valid: ["a { color: red; }", "@media print { a { color: red; } }"],
+	valid: [
+		"a { color: red; }",
+		"@media print { a { color: red; } }",
+		"a { /* comment */ }",
+	],
 	invalid: [
 		{
 			code: "a { }",
@@ -34,12 +38,19 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 1,
 					endColumn: 6,
-					suggestions: [{ messageId: "removeRule", output: "" }],
+					suggestions: [
+						{ messageId: "removeRule", output: "" },
+						{
+							messageId: "addComment",
+							output: "a { /* empty */ }",
+						},
+					],
 				},
 			],
 		},
 		{
 			code: "a { /* comment */ }",
+			options: [{ reportCommentOnlyBlocks: true }],
 			errors: [
 				{
 					messageId: "emptyBlock",
@@ -52,6 +63,47 @@ ruleTester.run("no-empty-blocks", rule, {
 			],
 		},
 		{
+			code: "@layer foo { /* comment */ }",
+			options: [{ reportCommentOnlyBlocks: true }],
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 12,
+					endLine: 1,
+					endColumn: 29,
+					suggestions: [
+						{
+							messageId: "convertToStatement",
+							output: "@layer foo;",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "a { } /* comment */",
+			errors: [
+				{
+					messageId: "emptyBlock",
+					line: 1,
+					column: 3,
+					endLine: 1,
+					endColumn: 6,
+					suggestions: [
+						{
+							messageId: "removeRule",
+							output: " /* comment */",
+						},
+						{
+							messageId: "addComment",
+							output: "a { /* empty */ } /* comment */",
+						},
+					],
+				},
+			],
+		},
+		{
 			code: "a {\n}",
 			errors: [
 				{
@@ -60,7 +112,13 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 2,
 					endColumn: 2,
-					suggestions: [{ messageId: "removeRule", output: "" }],
+					suggestions: [
+						{ messageId: "removeRule", output: "" },
+						{
+							messageId: "addComment",
+							output: "a { /* empty */ }",
+						},
+					],
 				},
 			],
 		},
@@ -73,7 +131,13 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 3,
 					endLine: 2,
 					endColumn: 3,
-					suggestions: [{ messageId: "removeRule", output: "" }],
+					suggestions: [
+						{ messageId: "removeRule", output: "" },
+						{
+							messageId: "addComment",
+							output: "a { /* empty */ }",
+						},
+					],
 				},
 			],
 		},
@@ -90,6 +154,10 @@ ruleTester.run("no-empty-blocks", rule, {
 						{
 							messageId: "removeRule",
 							output: "",
+						},
+						{
+							messageId: "addComment",
+							output: "@media print { /* empty */ }",
 						},
 					],
 				},
@@ -109,6 +177,10 @@ ruleTester.run("no-empty-blocks", rule, {
 							messageId: "removeRule",
 							output: "\n@media print { \nb { } \n}", // only a{} was removed
 						},
+						{
+							messageId: "addComment",
+							output: "a { /* empty */ }\n@media print { \nb { } \n}",
+						},
 					],
 				},
 				{
@@ -121,6 +193,10 @@ ruleTester.run("no-empty-blocks", rule, {
 						{
 							messageId: "removeRule",
 							output: "a { }\n@media print { \n \n}", // only b{} was removed
+						},
+						{
+							messageId: "addComment",
+							output: "a { }\n@media print { \nb { /* empty */ } \n}",
 						},
 					],
 				},
@@ -140,6 +216,10 @@ ruleTester.run("no-empty-blocks", rule, {
 							messageId: "convertToStatement",
 							output: "@layer defaults;",
 						},
+						{
+							messageId: "addComment",
+							output: "@layer defaults { /* empty */ }",
+						},
 					],
 				},
 			],
@@ -157,6 +237,10 @@ ruleTester.run("no-empty-blocks", rule, {
 						{
 							messageId: "convertToStatement",
 							output: "@layer a, b;",
+						},
+						{
+							messageId: "addComment",
+							output: "@layer a, b { /* empty */ }",
 						},
 					],
 				},
@@ -176,6 +260,10 @@ ruleTester.run("no-empty-blocks", rule, {
 							messageId: "convertToStatement",
 							output: "@layer defaults /* comment */;",
 						},
+						{
+							messageId: "addComment",
+							output: "@layer defaults /* comment */ { /* empty */ }",
+						},
 					],
 				},
 			],
@@ -193,6 +281,10 @@ ruleTester.run("no-empty-blocks", rule, {
 						{
 							messageId: "convertToStatement",
 							output: "@layer defaults /*\n * comment\n */;",
+						},
+						{
+							messageId: "addComment",
+							output: "@layer defaults /*\n * comment\n */ { /* empty */ }",
 						},
 					],
 				},
@@ -212,6 +304,10 @@ ruleTester.run("no-empty-blocks", rule, {
 							messageId: "convertToStatement",
 							output: "@layer defaults /* first */ /* second */;",
 						},
+						{
+							messageId: "addComment",
+							output: "@layer defaults /* first */ /* second */ { /* empty */ }",
+						},
 					],
 				},
 			],
@@ -229,6 +325,10 @@ ruleTester.run("no-empty-blocks", rule, {
 						{
 							messageId: "convertToStatement",
 							output: "@LAYER foo;",
+						},
+						{
+							messageId: "addComment",
+							output: "@LAYER foo{ /* empty */ }",
 						},
 					],
 				},
@@ -248,6 +348,10 @@ ruleTester.run("no-empty-blocks", rule, {
 							messageId: "convertToStatement",
 							output: "@laYer foo;",
 						},
+						{
+							messageId: "addComment",
+							output: "@laYer foo\n\t{ /* empty */ }",
+						},
 					],
 				},
 			],
@@ -265,6 +369,10 @@ ruleTester.run("no-empty-blocks", rule, {
 						{
 							messageId: "removeRule",
 							output: "",
+						},
+						{
+							messageId: "addComment",
+							output: "@layer { /* empty */ }",
 						},
 					],
 				},
@@ -284,6 +392,10 @@ ruleTester.run("no-empty-blocks", rule, {
 							messageId: "removeRule",
 							output: "",
 						},
+						{
+							messageId: "addComment",
+							output: "@supports not selector(h2 > p) { /* empty */ }",
+						},
 					],
 				},
 			],
@@ -302,6 +414,10 @@ ruleTester.run("no-empty-blocks", rule, {
 							messageId: "removeRule",
 							output: "@keyframes a {  100% {} }",
 						},
+						{
+							messageId: "addComment",
+							output: "@keyframes a { 0% { /* empty */ } 100% {} }",
+						},
 					],
 				},
 				{
@@ -314,6 +430,10 @@ ruleTester.run("no-empty-blocks", rule, {
 						{
 							messageId: "removeRule",
 							output: "@keyframes a { 0% {}  }",
+						},
+						{
+							messageId: "addComment",
+							output: "@keyframes a { 0% {} 100% { /* empty */ } }",
 						},
 					],
 				},
@@ -328,7 +448,13 @@ ruleTester.run("no-empty-blocks", rule, {
 					column: 14,
 					endLine: 1,
 					endColumn: 17,
-					suggestions: [{ messageId: "removeRule", output: "" }],
+					suggestions: [
+						{ messageId: "removeRule", output: "" },
+						{
+							messageId: "addComment",
+							output: "@keyframes a { /* empty */ }",
+						},
+					],
 				},
 			],
 		},
