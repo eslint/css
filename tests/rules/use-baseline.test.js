@@ -577,34 +577,34 @@ ruleTester.run("use-baseline", rule, {
 			],
 		},
 		{
-			code: "a { color: light-dark(black, white); }",
+			code: "a { color: contrast-color(black); }",
 			errors: [
 				{
 					messageId: "notBaselineFunction",
 					data: {
-						function: "light-dark",
+						function: "contrast-color",
 						availability: "widely",
 					},
 					line: 1,
 					column: 12,
 					endLine: 1,
-					endColumn: 36,
+					endColumn: 33,
 				},
 			],
 		},
 		{
-			code: "a { color: LIGHT-DARK(black, white); }",
+			code: "a { color: CONTRAST-COLOR(black); }",
 			errors: [
 				{
 					messageId: "notBaselineFunction",
 					data: {
-						function: "LIGHT-DARK",
+						function: "CONTRAST-COLOR",
 						availability: "widely",
 					},
 					line: 1,
 					column: 12,
 					endLine: 1,
-					endColumn: 36,
+					endColumn: 33,
 				},
 			],
 		},
