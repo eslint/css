@@ -28,7 +28,6 @@ ruleTester.run("no-deprecated-media-types", rule, {
 		"@media {}",
 		"@media (max-width: 1440px) {}",
 		"@media unknown {}",
-		'@import "legacy.css" aural;', // TODO: Report deprecated media types in @import rules.
 	],
 	invalid: [
 		{
@@ -322,6 +321,19 @@ ruleTester.run("no-deprecated-media-types", rule, {
 					column: 24,
 					endLine: 1,
 					endColumn: 29,
+				},
+			],
+		},
+		{
+			code: '@import "legacy.css" aural;',
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "aural" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 27,
 				},
 			],
 		},

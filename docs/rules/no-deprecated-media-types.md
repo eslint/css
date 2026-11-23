@@ -12,7 +12,7 @@ Browsers still recognize these media types as valid, but they [match nothing](ht
 
 ## Rule Details
 
-This rule reports these eight deprecated media types in `@media` rules:
+This rule reports these eight deprecated media types in `@import` and `@media` rules:
 
 - `aural`
 - `braille`
@@ -28,6 +28,7 @@ Examples of **incorrect** code:
 <!-- prettier-ignore -->
 ```css
 /* eslint css/no-deprecated-media-types: "error" */
+@import "legacy.css" aural;
 
 @media tv {}
 @media screen, print, tty {}
@@ -40,6 +41,7 @@ Examples of **correct** code:
 <!-- prettier-ignore -->
 ```css
 /* eslint css/no-deprecated-media-types: "error" */
+@import "legacy.css" screen;
 
 @media screen {}
 @media screen, print {}

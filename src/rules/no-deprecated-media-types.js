@@ -56,7 +56,7 @@ export default /** @satisfies {NoDeprecatedMediaTypesRuleDefinition} */ ({
 		const { sourceCode } = context;
 
 		return {
-			"Atrule[name=/^media$/i] > AtrulePrelude > MediaQueryList > MediaQuery"(
+			"Atrule[name=/^(media|import)$/i] > AtrulePrelude > MediaQueryList > MediaQuery"(
 				node,
 			) {
 				const { mediaType } = node;
