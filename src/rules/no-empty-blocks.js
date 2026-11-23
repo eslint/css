@@ -8,7 +8,6 @@
 //-----------------------------------------------------------------------------
 
 /**
- * @import { SuggestedEdit } from "@eslint/core"
  * @import { BlockPlain } from "@eslint/css-tree"
  * @import { CSSRuleDefinition } from "../types.js"
  * @import { CSSSourceCode } from "../languages/css-source-code.js"
@@ -96,60 +95,62 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 						parent.name.toLowerCase() === "layer" &&
 						parent.prelude;
 
-					/** @type {Array<SuggestedEdit<NoEmptyBlocksMessageIds>>} */
-					const suggest = [
-						isNamedAtLayer
-							? {
-									messageId: "convertToStatement",
-									fix(fixer) {
-										const commentsBeforeBlock =
-											sourceCode.comments.filter(
-												comment =>
-													comment.loc.start.offset >=
-														parent.prelude.loc.end
-															.offset &&
-													comment.loc.end.offset <=
-														node.loc.start.offset,
-											);
-										const lastComment =
-											commentsBeforeBlock.at(-1);
-
-										return fixer.replaceTextRange(
-											[
-												lastComment
-													? lastComment.loc.end.offset
-													: parent.prelude.loc.end
-															.offset,
-												node.loc.end.offset,
-											],
-											";",
-										);
-									},
-								}
-							: {
-									messageId: "removeRule",
-									fix(fixer) {
-										return fixer.remove(parent);
-									},
-								},
-					];
-
-					if (!reportCommentOnlyBlocks) {
-						suggest.push({
-							messageId: "addComment",
-							fix(fixer) {
-								return fixer.replaceText(
-									node,
-									"{ /* empty */ }",
-								);
-							},
-						});
-					}
-
 					context.report({
 						loc: node.loc,
 						messageId: "emptyBlock",
-						suggest,
+						suggest: [
+							isNamedAtLayer
+								? {
+										messageId: "convertToStatement",
+										fix(fixer) {
+											const commentsBeforeBlock =
+												sourceCode.comments.filter(
+													comment =>
+														comment.loc.start
+															.offset >=
+															parent.prelude.loc
+																.end.offset &&
+														comment.loc.end
+															.offset <=
+															node.loc.start
+																.offset,
+												);
+											const lastComment =
+												commentsBeforeBlock.at(-1);
+
+											return fixer.replaceTextRange(
+												[
+													lastComment
+														? lastComment.loc.end
+																.offset
+														: parent.prelude.loc.end
+																.offset,
+													node.loc.end.offset,
+												],
+												";",
+											);
+										},
+									}
+								: {
+										messageId: "removeRule",
+										fix(fixer) {
+											return fixer.remove(parent);
+										},
+									},
+							{
+								messageId: "addComment",
+								fix(fixer) {
+									if (reportCommentOnlyBlocks) {
+										return null;
+									}
+
+									return fixer.replaceText(
+										node,
+										"{ /* empty */ }",
+									);
+								},
+							},
+						],
 					});
 				}
 			},
