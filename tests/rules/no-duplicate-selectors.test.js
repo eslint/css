@@ -39,6 +39,8 @@ ruleTester.run("no-duplicate-selectors", rule, {
 		".a.b {} .a.c {}",
 		":is(.a, .b) {} :is(.a, .c) {}",
 		"* {} *|* {}",
+		".\\61 b {} .\\61/**/ b {}",
+		".\\61 .x {} .\\61/**/ .x {}",
 
 		dedent`
 			.foo {}
@@ -102,6 +104,7 @@ ruleTester.run("no-duplicate-selectors", rule, {
 		"span { div& {} } divspan {}",
 		"div { && {} } divdiv {}",
 		".x div { && {} } .x divdiv {}",
+		".a .b { && {} } .a .b.b {}",
 		"div { .a& {} } .adiv {}",
 		"a::before { &:hover {} } a::before:hover {}",
 
@@ -299,6 +302,19 @@ ruleTester.run("no-duplicate-selectors", rule, {
 					column: 1,
 					endLine: 4,
 					endColumn: 6,
+				},
+			],
+		},
+		{
+			code: ".a  .b {} .a \n.b {}",
+			errors: [
+				{
+					messageId: "duplicateSelector",
+					data: { selector: ".a  .b", line: 1 },
+					line: 1,
+					column: 11,
+					endLine: 2,
+					endColumn: 3,
 				},
 			],
 		},
@@ -643,6 +659,19 @@ ruleTester.run("no-duplicate-selectors", rule, {
 					column: 15,
 					endLine: 1,
 					endColumn: 19,
+				},
+			],
+		},
+		{
+			code: ".a { && {} } .a.a {}",
+			errors: [
+				{
+					messageId: "duplicateSelector",
+					data: { selector: ".a.a", line: 1 },
+					line: 1,
+					column: 14,
+					endLine: 1,
+					endColumn: 18,
 				},
 			],
 		},

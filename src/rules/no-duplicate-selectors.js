@@ -29,7 +29,8 @@ import { generate } from "@eslint/css-tree";
 //-----------------------------------------------------------------------------
 
 const keyframesPattern = /^(?:-(?:o|ms|moz|webkit)-)?keyframes$/iu;
-const lineBreakPattern = /\s*\n\s*/gu;
+// Only CSS whitespace: `\s` also matches identifier characters such as U+00A0.
+const lineBreakPattern = /[\t\n\f\r ]*\n[\t\n\f\r ]*/gu;
 
 const legacyPseudoElements = new Set([
 	"before",
@@ -211,20 +212,22 @@ function replaceNestingInCompound(compound, parents, isFirst) {
 		const [parent] = parents;
 		const lastCompoundStart = getLastCompoundStart(parent);
 		const lastCompound = parent.slice(lastCompoundStart);
+		const nestingCount = nodes.filter(isNestingSelector).length;
 		const typeSelectorCount =
 			nodes.filter(isTypeSelector).length +
-			nodes.filter(isNestingSelector).length *
-				lastCompound.filter(isTypeSelector).length;
+			nestingCount * lastCompound.filter(isTypeSelector).length;
 
 		/*
 		 * `:is(.a .b) .c` and `.a .b .c` have the same meaning, but
 		 * `.c :is(.a .b)` and `.c .a .b` do not. Thus, a complex parent
 		 * selector can replace `&` only in the first compound selector.
-		 * A compound selector can contain only one type selector, and `&`
-		 * cannot represent pseudo-elements.
+		 * It can replace only one `&` there, because each `&` adds the
+		 * specificity of the full parent selector. A compound selector can
+		 * contain only one type selector, and `&` cannot represent
+		 * pseudo-elements.
 		 */
 		if (
-			(lastCompoundStart === 0 || isFirst) &&
+			(lastCompoundStart === 0 || (isFirst && nestingCount === 1)) &&
 			typeSelectorCount <= 1 &&
 			!parent.some(isPseudoElementSelector)
 		) {
@@ -444,10 +447,15 @@ function serializeCompound(compound) {
  * @returns {string} The comparison text.
  */
 function serializeSelector(selector) {
+	/*
+	 * An escape can end with a space, for example in `.\61 b` (the class
+	 * `ab`). NUL characters around each combinator keep this space apart
+	 * from a descendant combinator.
+	 */
 	return splitCompounds(selector)
 		.map(
 			({ combinator, compound }) =>
-				(combinator ? combinator.name : "") +
+				(combinator ? `\u0000${combinator.name}\u0000` : "") +
 				serializeCompound(compound),
 		)
 		.join("");
