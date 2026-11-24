@@ -28,6 +28,7 @@ Examples of **incorrect** code:
 <!-- prettier-ignore -->
 ```css
 /* eslint css/no-deprecated-media-types: "error" */
+
 @import "legacy.css" aural;
 
 @media tv {}
@@ -41,6 +42,7 @@ Examples of **correct** code:
 <!-- prettier-ignore -->
 ```css
 /* eslint css/no-deprecated-media-types: "error" */
+
 @import "legacy.css" screen;
 
 @media screen {}

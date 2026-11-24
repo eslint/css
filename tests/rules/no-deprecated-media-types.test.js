@@ -28,6 +28,7 @@ ruleTester.run("no-deprecated-media-types", rule, {
 		"@media {}",
 		"@media (max-width: 1440px) {}",
 		"@media unknown {}",
+		'@import "legacy.css" screen;',
 	],
 	invalid: [
 		{
@@ -326,6 +327,66 @@ ruleTester.run("no-deprecated-media-types", rule, {
 		},
 		{
 			code: '@import "legacy.css" aural;',
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "aural" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: '@import url("legacy.css") aural;',
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "aural" },
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 32,
+				},
+			],
+		},
+		{
+			code: '@import "legacy.css" layer(tv) supports(display: grid) tv;',
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "tv" },
+					line: 1,
+					column: 56,
+					endLine: 1,
+					endColumn: 58,
+				},
+			],
+		},
+		{
+			code: '@import "legacy.css" aural, braille;',
+			errors: [
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "aural" },
+					line: 1,
+					column: 22,
+					endLine: 1,
+					endColumn: 27,
+				},
+				{
+					messageId: "deprecatedMediaType",
+					data: { mediaType: "braille" },
+					line: 1,
+					column: 29,
+					endLine: 1,
+					endColumn: 36,
+				},
+			],
+		},
+		{
+			code: '@IMPORT "legacy.css" aural;',
 			errors: [
 				{
 					messageId: "deprecatedMediaType",
