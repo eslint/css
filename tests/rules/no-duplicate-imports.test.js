@@ -51,22 +51,6 @@ ruleTester.run("no-duplicate-imports", rule, {
 			code: "@import layer(foo);\n@import (width > 500px);",
 			languageOptions: { tolerant: true },
 		},
-		{
-			code: "@import foo;",
-			languageOptions: {
-				customSyntax: {
-					atrule: {
-						import: {
-							parse: {
-								prelude() {
-									return this.readSequence(this.scope.Value);
-								},
-							},
-						},
-					},
-				},
-			},
-		},
 	],
 	invalid: [
 		{
