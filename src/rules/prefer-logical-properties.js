@@ -195,6 +195,7 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 	create(context) {
 		const [{ allowProperties, allowUnits }] = context.options;
 		let insidePage = false;
+		let insideSupportsDeclaration = false;
 
 		return {
 			"Atrule[name=/^page$/i]"() {
@@ -203,9 +204,14 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 			"Atrule[name=/^page$/i]:exit"() {
 				insidePage = false;
 			},
+			SupportsDeclaration() {
+				insideSupportsDeclaration = true;
+			},
+			"SupportsDeclaration:exit"() {
+				insideSupportsDeclaration = false;
+			},
 			Declaration(node) {
-				const parent = context.sourceCode.getParent(node);
-				if (insidePage || parent.type === "SupportsDeclaration") {
+				if (insidePage || insideSupportsDeclaration) {
 					return;
 				}
 
@@ -339,6 +345,10 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 				}
 			},
 			Dimension(node) {
+				if (insidePage || insideSupportsDeclaration) {
+					return;
+				}
+
 				const unit = node.unit.toLowerCase();
 				const unitReplacement = unitReplacements.get(unit);
 

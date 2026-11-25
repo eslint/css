@@ -33,6 +33,10 @@ ruleTester.run("prefer-logical-properties", rule, {
 		"a { box-orient: vertical; }",
 		"@supports (text-align: left) {}",
 		"@supports (padding-left: 10px) {}",
+		"@supports (height: 100dvh) {}",
+		"@supports (height: calc(100dvh + 10px)) {}",
+		"@supports not (width: 100vw) {}",
+		"@SUPPORTS (height: 100dvh) {}",
 		{
 			code: "a { padding-left: 20px; }",
 			options: [
@@ -68,6 +72,9 @@ ruleTester.run("prefer-logical-properties", rule, {
 		"@page { margin-left: 1in; }",
 		"@page { @top-left { text-align: left; } }",
 		"@PAGE { margin-left: 1in; }",
+		"@page { margin: 10vw; }",
+		"@page { @top-left { margin: 10vw; } }",
+		"@PAGE { margin: 10vw; }",
 		{
 			code: "a { transition: margin-left 1s; }",
 			options: [
@@ -307,6 +314,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 								replacement: "margin-inline-start",
 							},
 							output: "@page {} a { margin-inline-start: 0; }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@supports (height: 100dvh) { a { block-size: 100dvh; } }",
+			errors: [
+				{
+					messageId: "notLogicalUnit",
+					line: 1,
+					column: 46,
+					endLine: 1,
+					endColumn: 52,
+					data: {
+						unit: "dvh",
+						replacement: "dvb",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalUnit",
+							data: {
+								unit: "dvh",
+								replacement: "dvb",
+							},
+							output: "@supports (height: 100dvh) { a { block-size: 100dvb; } }",
 						},
 					],
 				},
