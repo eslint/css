@@ -37,6 +37,9 @@ ruleTester.run("prefer-logical-properties", rule, {
 		"@supports (height: calc(100dvh + 10px)) {}",
 		"@supports not (width: 100vw) {}",
 		"@SUPPORTS (height: 100dvh) {}",
+		"@supports (height: 100dvh) and (width: 100dvh) {}",
+		"@supports (height: 100dvh) or (width: 100vw) {}",
+		"@supports ((height: 100dvh) and (width: 100vw)) or (not (height: 100vh)) {}",
 		{
 			code: "a { padding-left: 20px; }",
 			options: [
