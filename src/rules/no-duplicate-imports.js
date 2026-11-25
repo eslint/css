@@ -111,9 +111,21 @@ export default /** @satisfies {NoDuplicateImportsRuleDefinition} */ ({
 
 		return {
 			"Atrule[name=/^import$/i]"(node) {
-				const url = node.prelude?.children[0].value;
-				const implicitUrl =
-					url && url?.replace(leadingDotSlashPattern, "");
+				if (node.prelude?.type !== "AtrulePrelude") {
+					return;
+				}
+
+				const firstChild = node.prelude.children[0];
+
+				if (
+					firstChild?.type !== "String" &&
+					firstChild?.type !== "Url"
+				) {
+					return;
+				}
+
+				const url = firstChild.value;
+				const implicitUrl = url.replace(leadingDotSlashPattern, "");
 				const hasImport = imports.some(
 					importNode =>
 						importNode.prelude?.children[0].value.replace(

@@ -37,6 +37,36 @@ ruleTester.run("no-duplicate-imports", rule, {
 		"@import '../x.css'; @import 'x.css';",
 		"@import url('../x.css'); @import 'x.css';",
 		"@import url('./y/x.css'); @import 'x.css';",
+		"@import;\n@import;",
+		"@import;\n@import 'x.css';",
+		{
+			code: "@import foo;",
+			languageOptions: { tolerant: true },
+		},
+		{
+			code: "@import foo;\n@import foo;",
+			languageOptions: { tolerant: true },
+		},
+		{
+			code: "@import layer(foo);\n@import (width > 500px);",
+			languageOptions: { tolerant: true },
+		},
+		{
+			code: "@import foo;",
+			languageOptions: {
+				customSyntax: {
+					atrule: {
+						import: {
+							parse: {
+								prelude() {
+									return this.readSequence(this.scope.Value);
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 	],
 	invalid: [
 		{
@@ -766,6 +796,21 @@ ruleTester.run("no-duplicate-imports", rule, {
 					line: 2,
 					column: 1,
 					endLine: 2,
+					endColumn: 17,
+				},
+			],
+		},
+		{
+			code: "@import foo;\n@import 'x.css';\n@import 'x.css';",
+			output: "@import foo;\n@import 'x.css';\n",
+			languageOptions: { tolerant: true },
+			errors: [
+				{
+					messageId: "duplicateImport",
+					data: { url: "x.css" },
+					line: 3,
+					column: 1,
+					endLine: 3,
 					endColumn: 17,
 				},
 			],
