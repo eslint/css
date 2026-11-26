@@ -4,17 +4,12 @@
  */
 
 //-----------------------------------------------------------------------------
-// Imports
-//-----------------------------------------------------------------------------
-
-import { generate } from "@eslint/css-tree";
-
-//-----------------------------------------------------------------------------
 // Type Definitions
 //-----------------------------------------------------------------------------
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
+ * @import { CSSSourceCode } from "../languages/css-source-code.js"
  * @import { AtrulePlain, Combinator, CssNodePlain, SelectorListPlain, SelectorPlain } from "@eslint/css-tree"
  * @typedef {"duplicateSelector"} NoDuplicateSelectorsMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoDuplicateSelectorsMessageIds }>} NoDuplicateSelectorsRuleDefinition
@@ -31,6 +26,12 @@ import { generate } from "@eslint/css-tree";
 const keyframesPattern = /^(?:-(?:o|ms|moz|webkit)-)?keyframes$/iu;
 // Only CSS whitespace: `\s` also matches identifier characters such as U+00A0.
 const lineBreakPattern = /[\t\n\f\r ]*\n[\t\n\f\r ]*/gu;
+
+// A string, or a run of whitespace and comments, in an at-rule prelude.
+const preludePartPattern =
+	/("(?:[^"\\]|\\[\s\S])*"|'(?:[^'\\]|\\[\s\S])*')|(?:[\t\n\f\r ]|\/\*[\s\S]*?\*\/)+/gu;
+
+const preludePunctuation = new Set(["(", ")", ":", ","]);
 
 const legacyPseudoElements = new Set([
 	"before",
@@ -390,37 +391,76 @@ function joinSelectorTexts(texts) {
 }
 
 /**
+ * Normalizes the text of an at-rule prelude. The function removes comments and
+ * changes each run of whitespace to one space. It also removes the whitespace
+ * next to `(`, `)`, `:`, and `,`. Strings do not change.
+ * @param {string} text The text of the prelude.
+ * @returns {string} The normalized text.
+ */
+function normalizePrelude(text) {
+	return text.replace(preludePartPattern, (match, string, offset) => {
+		if (string) {
+			return string;
+		}
+
+		const before = text[offset - 1];
+		const after = text[offset + match.length];
+
+		return before === undefined ||
+			after === undefined ||
+			preludePunctuation.has(before) ||
+			preludePunctuation.has(after)
+			? ""
+			: " ";
+	});
+}
+
+/**
  * Creates the comparison text of a simple selector.
  * @param {CssNodePlain} node The simple selector.
+ * @param {CSSSourceCode} sourceCode The source code.
  * @returns {string} The comparison text.
  */
-function serializeSimpleSelector(node) {
+function serializeSimpleSelector(node, sourceCode) {
+	if (node.type === "NestingSelector") {
+		return "&";
+	}
+
+	// The parts leave out the whitespace and the comments in the brackets.
+	if (node.type === "AttributeSelector") {
+		const value = node.value ? sourceCode.getText(node.value) : "";
+		const flags = node.flags ? ` ${node.flags}` : "";
+
+		return `[${sourceCode.getText(node.name)}${node.matcher ?? ""}${value}${flags}]`;
+	}
+
 	if (
 		(node.type === "PseudoClassSelector" ||
 			node.type === "PseudoElementSelector") &&
-		node.children?.some(
-			child =>
-				child.type === "SelectorList" ||
-				child.type === "Selector" ||
-				child.type === "Nth",
-		)
+		node.children
 	) {
 		const prefix = node.type === "PseudoClassSelector" ? ":" : "::";
 
-		// eslint-disable-next-line no-use-before-define -- Recursive selector structure.
-		return `${prefix}${node.name}(${node.children.map(serializeArgument).join("")})`;
+		// Spaces keep the arguments apart, for example in `::part(a b)`.
+		const args = node.children
+			// eslint-disable-next-line no-use-before-define -- Recursive selector structure.
+			.map(child => serializeArgument(child, sourceCode))
+			.join(" ");
+
+		return `${prefix}${node.name}(${args})`;
 	}
 
-	return generate(node);
+	return sourceCode.getText(node);
 }
 
 /**
  * Creates the comparison text of a compound selector. The order of the simple
  * selectors before a pseudo-element does not change the result.
  * @param {CssNodePlain[]} compound The compound selector.
+ * @param {CSSSourceCode} sourceCode The source code.
  * @returns {string} The comparison text.
  */
-function serializeCompound(compound) {
+function serializeCompound(compound, sourceCode) {
 	const pseudoElementIndex = compound.findIndex(isPseudoElementSelector);
 	const end =
 		pseudoElementIndex === -1 ? compound.length : pseudoElementIndex;
@@ -431,12 +471,16 @@ function serializeCompound(compound) {
 	 * `.adiv` are the same after the sort.
 	 */
 	return [
-		...nodes.filter(isTypeSelector).map(serializeSimpleSelector),
+		...nodes
+			.filter(isTypeSelector)
+			.map(node => serializeSimpleSelector(node, sourceCode)),
 		...nodes
 			.filter(node => !isTypeSelector(node))
-			.map(serializeSimpleSelector)
+			.map(node => serializeSimpleSelector(node, sourceCode))
 			.sort(),
-		...compound.slice(end).map(serializeSimpleSelector),
+		...compound
+			.slice(end)
+			.map(node => serializeSimpleSelector(node, sourceCode)),
 	].join("");
 }
 
@@ -444,9 +488,10 @@ function serializeCompound(compound) {
  * Creates the comparison text of a complex selector. Equivalent spellings of
  * a selector have the same comparison text.
  * @param {ComplexSelector} selector The complex selector.
+ * @param {CSSSourceCode} sourceCode The source code.
  * @returns {string} The comparison text.
  */
-function serializeSelector(selector) {
+function serializeSelector(selector, sourceCode) {
 	/*
 	 * An escape can end with a space, for example in `.\61 b` (the class
 	 * `ab`). NUL characters around each combinator keep this space apart
@@ -456,7 +501,7 @@ function serializeSelector(selector) {
 		.map(
 			({ combinator, compound }) =>
 				(combinator ? `\u0000${combinator.name}\u0000` : "") +
-				serializeCompound(compound),
+				serializeCompound(compound, sourceCode),
 		)
 		.join("");
 }
@@ -465,29 +510,35 @@ function serializeSelector(selector) {
  * Creates the comparison text of an argument of a pseudo-class or a
  * pseudo-element.
  * @param {CssNodePlain} node The argument.
+ * @param {CSSSourceCode} sourceCode The source code.
  * @returns {string} The comparison text.
  */
-function serializeArgument(node) {
+function serializeArgument(node, sourceCode) {
 	switch (node.type) {
 		case "SelectorList":
 			return joinSelectorTexts(
 				node.children.map(selector =>
 					serializeSelector(
 						/** @type {SelectorPlain} */ (selector).children,
+						sourceCode,
 					),
 				),
 			);
 
 		case "Selector":
-			return serializeSelector(node.children);
+			return serializeSelector(node.children, sourceCode);
 
-		case "Nth":
+		case "Nth": {
+			// Whitespace in `An+B` has no meaning.
+			const nth = sourceCode.getText(node.nth).replace(/\s+/gu, "");
+
 			return node.selector
-				? `${generate(node.nth)} of ${serializeArgument(node.selector)}`
-				: generate(node.nth);
+				? `${nth} of ${serializeArgument(node.selector, sourceCode)}`
+				: nth;
+		}
 
 		default:
-			return generate(node);
+			return sourceCode.getText(node);
 	}
 }
 
@@ -520,20 +571,12 @@ export default /** @satisfies {NoDuplicateSelectorsRuleDefinition} */ ({
 		const atRuleKeys = [];
 
 		/** @type {NestingContext[]} */
-		const nestingContexts = [];
+		const nestingContexts = [{ check: true, parent: null }];
 
 		/** @type {Map<string, number>} */
 		const firstLines = new Map();
 
 		let anonymousLayerCount = 0;
-
-		/**
-		 * Returns the state of the style rules in the current block.
-		 * @returns {NestingContext} The state of the style rules.
-		 */
-		function getNestingContext() {
-			return nestingContexts.at(-1) ?? { check: true, parent: null };
-		}
 
 		/**
 		 * Returns the text of a selector for a message, without line breaks.
@@ -559,7 +602,7 @@ export default /** @satisfies {NoDuplicateSelectorsRuleDefinition} */ ({
 			}
 
 			const key = node.prelude
-				? `@${name} ${generate(node.prelude)}`
+				? `@${name} ${normalizePrelude(sourceCode.getText(node.prelude))}`
 				: `@${name}`;
 
 			/*
@@ -569,7 +612,7 @@ export default /** @satisfies {NoDuplicateSelectorsRuleDefinition} */ ({
 			 * https://github.com/eslint/csstree/issues/175
 			 */
 			if (name === "scope" && parent) {
-				return `${key} ${joinSelectorTexts(parent.selectors.map(serializeSelector))}`;
+				return `${key} ${joinSelectorTexts(parent.selectors.map(selector => serializeSelector(selector, sourceCode)))}`;
 			}
 
 			return key;
@@ -577,7 +620,7 @@ export default /** @satisfies {NoDuplicateSelectorsRuleDefinition} */ ({
 
 		return {
 			Atrule(node) {
-				const { check, parent } = getNestingContext();
+				const { check, parent } = nestingContexts.at(-1);
 				const name = node.name.toLowerCase();
 
 				atRuleKeys.push(getAtRuleKey(node, parent));
@@ -604,7 +647,7 @@ export default /** @satisfies {NoDuplicateSelectorsRuleDefinition} */ ({
 			},
 
 			Rule(node) {
-				const { check, parent } = getNestingContext();
+				const { check, parent } = nestingContexts.at(-1);
 
 				// The nested selectors of an invalid selector list cannot be resolved.
 				if (!check || node.prelude.type !== "SelectorList") {
@@ -618,7 +661,9 @@ export default /** @satisfies {NoDuplicateSelectorsRuleDefinition} */ ({
 				const resolvedSelectors = selectors.map(selector =>
 					resolveSelector(selector, parent),
 				);
-				const texts = resolvedSelectors.map(serializeSelector);
+				const texts = resolvedSelectors.map(selector =>
+					serializeSelector(selector, sourceCode),
+				);
 
 				/** @type {Map<string, SelectorPlain>} */
 				const firstSelectors = new Map();

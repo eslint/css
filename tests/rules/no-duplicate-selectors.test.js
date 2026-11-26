@@ -41,6 +41,7 @@ ruleTester.run("no-duplicate-selectors", rule, {
 		"* {} *|* {}",
 		".\\61 b {} .\\61/**/ b {}",
 		".\\61 .x {} .\\61/**/ .x {}",
+		"::part(a b) {} ::part(ab) {}",
 
 		dedent`
 			.foo {}
@@ -53,9 +54,11 @@ ruleTester.run("no-duplicate-selectors", rule, {
 		"@media print { a {} } a {}",
 		"@supports (display: grid) { a {} } @supports (display: flex) { a {} }",
 		"@container (min-width: 1px) { a {} } a {}",
+		'@supports (content: "a b") { a {} } @supports (content: "a  b") { a {} }',
 		"@layer a { .x {} } @layer b { .x {} }",
 		"@layer a { .x {} } .x {}",
 		"@layer { .x {} } @layer { .x {} }",
+		"@layer a { .x {} } @layer { .x {} }",
 		"@media print { @supports (display: grid) { a {} } } @supports (display: grid) { @media print { a {} } }",
 		"@scope (.a) { .b {} } @scope (.c) { .b {} }",
 		"@scope (.a) { .b {} } .b {}",
@@ -409,6 +412,45 @@ ruleTester.run("no-duplicate-selectors", rule, {
 				},
 			],
 		},
+		{
+			code: '[ type = "text" i ] {} [type="text" i] {}',
+			errors: [
+				{
+					messageId: "duplicateSelector",
+					data: { selector: '[type="text" i]', line: 1 },
+					line: 1,
+					column: 24,
+					endLine: 1,
+					endColumn: 39,
+				},
+			],
+		},
+		{
+			code: ":lang(en, fr) {} :lang(en,fr) {}",
+			errors: [
+				{
+					messageId: "duplicateSelector",
+					data: { selector: ":lang(en,fr)", line: 1 },
+					line: 1,
+					column: 18,
+					endLine: 1,
+					endColumn: 30,
+				},
+			],
+		},
+		{
+			code: ":nth-child(2n + 1) {} :nth-child(2n+1) {}",
+			errors: [
+				{
+					messageId: "duplicateSelector",
+					data: { selector: ":nth-child(2n+1)", line: 1 },
+					line: 1,
+					column: 23,
+					endLine: 1,
+					endColumn: 39,
+				},
+			],
+		},
 
 		{
 			code: dedent`
@@ -459,6 +501,32 @@ ruleTester.run("no-duplicate-selectors", rule, {
 					column: 39,
 					endLine: 1,
 					endColumn: 40,
+				},
+			],
+		},
+		{
+			code: "@media (min-width:600px) { a {} } @media ( min-width : 600px ) { a {} }",
+			errors: [
+				{
+					messageId: "duplicateSelector",
+					data: { selector: "a", line: 1 },
+					line: 1,
+					column: 66,
+					endLine: 1,
+					endColumn: 67,
+				},
+			],
+		},
+		{
+			code: "@media /* x */ print { a {} } @media print { a {} }",
+			errors: [
+				{
+					messageId: "duplicateSelector",
+					data: { selector: "a", line: 1 },
+					line: 1,
+					column: 46,
+					endLine: 1,
+					endColumn: 47,
 				},
 			],
 		},
