@@ -9,7 +9,7 @@
 
 /**
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"emptyGridArea" | "unevenGridArea" | "nonRectangularGridArea"} NoInvalidNamedGridAreasMessageIds
+ * @typedef {"emptyGridArea" | "unevenGridArea" | "nonRectangularGridArea" | "disconnectedGridArea"} NoInvalidNamedGridAreasMessageIds
  * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoInvalidNamedGridAreasMessageIds }>} NoInvalidNamedGridAreasRuleDefinition
  */
 
@@ -28,11 +28,11 @@ const nullCellToken = /^\.+$/u;
 const cssWhitespace = /[\t ]+/u;
 
 /**
- * Finds non-rectangular grid areas in a 2D grid
+ * Finds non-rectangular and disconnected named grid areas in a 2D grid
  * @param {string[][]} grid 2D array representing the grid areas
- * @returns {Array<{name: string, row: number}>} Array of errors found
+ * @returns {Array<{name: string, row: number, messageId: "nonRectangularGridArea" | "disconnectedGridArea"}>} Array of errors found
  */
-function findNonRectangularAreas(grid) {
+function findInvalidGridAreas(grid) {
 	const errors = [];
 	const reported = new Set();
 	const names = [...new Set(grid.flat())].filter(
@@ -52,6 +52,8 @@ function findNonRectangularAreas(grid) {
 			return indices;
 		});
 
+		let hasNonRectangularError = false;
+
 		for (let i = 0; i < indicesByRow.length; i++) {
 			for (let j = i + 1; j < indicesByRow.length; j++) {
 				const row1 = indicesByRow[i];
@@ -65,12 +67,55 @@ function findNonRectangularAreas(grid) {
 					row1.length !== row2.length ||
 					!row1.every((val, idx) => val === row2[idx])
 				) {
+					hasNonRectangularError = true;
 					const key = `${name}|${j}`;
 					if (!reported.has(key)) {
-						errors.push({ name, row: j });
+						errors.push({
+							name,
+							row: j,
+							messageId: "nonRectangularGridArea",
+						});
 						reported.add(key);
 					}
 				}
+			}
+		}
+
+		if (hasNonRectangularError) {
+			continue;
+		}
+
+		const nonEmptyRows = [];
+
+		for (let r = 0; r < indicesByRow.length; r++) {
+			if (indicesByRow[r].length > 0) {
+				nonEmptyRows.push(r);
+			}
+		}
+
+		const firstCols = indicesByRow[nonEmptyRows[0]];
+		const hasDisconnectedColumns = firstCols.some(
+			(col, idx) => idx > 0 && col !== firstCols[idx - 1] + 1,
+		);
+
+		if (hasDisconnectedColumns) {
+			for (const row of nonEmptyRows) {
+				errors.push({
+					name,
+					row,
+					messageId: "disconnectedGridArea",
+				});
+			}
+			continue;
+		}
+
+		for (let k = 1; k < nonEmptyRows.length; k++) {
+			if (nonEmptyRows[k] - nonEmptyRows[0] !== k) {
+				errors.push({
+					name,
+					row: nonEmptyRows[k],
+					messageId: "disconnectedGridArea",
+				});
 			}
 		}
 	}
@@ -102,6 +147,8 @@ export default /** @satisfies {NoInvalidNamedGridAreasRuleDefinition} */ ({
 				"Grid area strings must have the same number of cell tokens.",
 			nonRectangularGridArea:
 				"Cell tokens with name '{{name}}' must form a rectangle.",
+			disconnectedGridArea:
+				"Cell tokens with name '{{name}}' must form a single connected rectangle.",
 		},
 	},
 
@@ -166,12 +213,12 @@ export default /** @satisfies {NoInvalidNamedGridAreasRuleDefinition} */ ({
 						return;
 					}
 
-					const nonRectErrors = findNonRectangularAreas(grid);
-					nonRectErrors.forEach(({ name, row }) => {
+					const areaErrors = findInvalidGridAreas(grid);
+					areaErrors.forEach(({ name, row, messageId }) => {
 						const stringNode = stringNodes[row];
 						context.report({
 							node: stringNode,
-							messageId: "nonRectangularGridArea",
+							messageId,
 							data: {
 								name,
 							},
