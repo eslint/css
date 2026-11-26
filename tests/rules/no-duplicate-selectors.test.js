@@ -63,6 +63,9 @@ ruleTester.run("no-duplicate-selectors", rule, {
 		"@scope (.a) { .b {} } @scope (.c) { .b {} }",
 		"@scope (.a) { .b {} } .b {}",
 		"@scope (.a) { :scope .b {} .b {} }",
+		"@scope (.a :hover) { .x {} } @scope (.a:hover) { .x {} }",
+		"@scope (.a/**/.b) { .x {} } @scope (.a .b) { .x {} }",
+		"@scope (:is(.a) .b) { .x {} } @scope (:is(.a).b) { .x {} }",
 
 		/*
 		 * The parser does not support style rules in a nested `@scope` rule yet.
@@ -505,15 +508,15 @@ ruleTester.run("no-duplicate-selectors", rule, {
 			],
 		},
 		{
-			code: "@media (min-width:600px) { a {} } @media ( min-width : 600px ) { a {} }",
+			code: "@media (min-width:600px) { a {} } @media ( min-width: 600px ) { a {} }",
 			errors: [
 				{
 					messageId: "duplicateSelector",
 					data: { selector: "a", line: 1 },
 					line: 1,
-					column: 66,
+					column: 65,
 					endLine: 1,
-					endColumn: 67,
+					endColumn: 66,
 				},
 			],
 		},

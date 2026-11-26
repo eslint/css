@@ -31,7 +31,15 @@ const lineBreakPattern = /[\t\n\f\r ]*\n[\t\n\f\r ]*/gu;
 const preludePartPattern =
 	/("(?:[^"\\]|\\[\s\S])*"|'(?:[^'\\]|\\[\s\S])*')|(?:[\t\n\f\r ]|\/\*[\s\S]*?\*\/)+/gu;
 
-const preludePunctuation = new Set(["(", ")", ":", ","]);
+const whitespacePattern = /[\t\n\f\r ]/u;
+
+/*
+ * Whitespace after these characters, or before the characters in the next
+ * set, has no meaning in a condition or in a selector. In a selector,
+ * whitespace before `:` or after `)` is a descendant combinator.
+ */
+const noSpaceAfter = new Set(["(", ":", ","]);
+const noSpaceBefore = new Set([")", ","]);
 
 const legacyPseudoElements = new Set([
 	"before",
@@ -392,8 +400,9 @@ function joinSelectorTexts(texts) {
 
 /**
  * Normalizes the text of an at-rule prelude. The function removes comments and
- * changes each run of whitespace to one space. It also removes the whitespace
- * next to `(`, `)`, `:`, and `,`. Strings do not change.
+ * changes each run of whitespace to one space. It removes the whitespace after
+ * `(`, `:`, and `,`, and before `)` and `,`. Whitespace in strings does not
+ * change.
  * @param {string} text The text of the prelude.
  * @returns {string} The normalized text.
  */
@@ -403,13 +412,18 @@ function normalizePrelude(text) {
 			return string;
 		}
 
+		// A comment is not whitespace, so `.a/**/.b` is the same as `.a.b`.
+		if (!whitespacePattern.test(match)) {
+			return "";
+		}
+
 		const before = text[offset - 1];
 		const after = text[offset + match.length];
 
 		return before === undefined ||
 			after === undefined ||
-			preludePunctuation.has(before) ||
-			preludePunctuation.has(after)
+			noSpaceAfter.has(before) ||
+			noSpaceBefore.has(after)
 			? ""
 			: " ";
 	});
