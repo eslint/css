@@ -8,10 +8,31 @@
 //-----------------------------------------------------------------------------
 
 /**
+ * @import { BlockPlain } from "@eslint/css-tree"
  * @import { CSSRuleDefinition } from "../types.js"
- * @typedef {"emptyBlock" | "removeRule" | "convertToStatement"} NoEmptyBlocksMessageIds
- * @typedef {CSSRuleDefinition<{ RuleOptions: [], MessageIds: NoEmptyBlocksMessageIds }>} NoEmptyBlocksRuleDefinition
+ * @import { CSSSourceCode } from "../languages/css-source-code.js"
+ * @typedef {"emptyBlock" | "removeRule" | "convertToStatement" | "addComment"} NoEmptyBlocksMessageIds
+ * @typedef {[{reportCommentOnlyBlocks?: boolean}]} NoEmptyBlocksOptions
+ * @typedef {CSSRuleDefinition<{ RuleOptions: NoEmptyBlocksOptions, MessageIds: NoEmptyBlocksMessageIds }>} NoEmptyBlocksRuleDefinition
  */
+
+//-----------------------------------------------------------------------------
+// Helpers
+//-----------------------------------------------------------------------------
+
+/**
+ * Determines if a block contains a comment.
+ * @param {CSSSourceCode} sourceCode The source code object.
+ * @param {BlockPlain} block The block to check.
+ * @returns {boolean} `true` if the block contains a comment, `false` otherwise.
+ */
+function containsComment(sourceCode, block) {
+	return sourceCode.comments.some(
+		comment =>
+			comment.loc.start.offset >= block.loc.start.offset &&
+			comment.loc.end.offset <= block.loc.end.offset,
+	);
+}
 
 //-----------------------------------------------------------------------------
 // Rule Definition
@@ -31,18 +52,44 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 			url: "https://github.com/eslint/css/blob/main/docs/rules/no-empty-blocks.md",
 		},
 
+		schema: [
+			{
+				type: "object",
+				properties: {
+					reportCommentOnlyBlocks: {
+						type: "boolean",
+					},
+				},
+				additionalProperties: false,
+			},
+		],
+
+		defaultOptions: [
+			{
+				reportCommentOnlyBlocks: false,
+			},
+		],
+
 		messages: {
 			emptyBlock: "Unexpected empty block found.",
 			removeRule: "Remove the empty rule.",
 			convertToStatement: "Convert to layer statement.",
+			addComment: "Add a comment inside the empty block.",
 		},
 	},
 
 	create(context) {
+		const { sourceCode } = context;
+		const [{ reportCommentOnlyBlocks }] = context.options;
+
 		return {
 			Block(node) {
-				if (node.children.length === 0) {
-					const parent = context.sourceCode.getParent(node);
+				if (
+					node.children.length === 0 &&
+					(reportCommentOnlyBlocks ||
+						!containsComment(sourceCode, node))
+				) {
+					const parent = sourceCode.getParent(node);
 					const isNamedAtLayer =
 						parent.type === "Atrule" &&
 						parent.name.toLowerCase() === "layer" &&
@@ -51,13 +98,13 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 					context.report({
 						loc: node.loc,
 						messageId: "emptyBlock",
-						suggest: isNamedAtLayer
-							? [
-									{
+						suggest: [
+							isNamedAtLayer
+								? {
 										messageId: "convertToStatement",
 										fix(fixer) {
 											const commentsBeforeBlock =
-												context.sourceCode.comments.filter(
+												sourceCode.comments.filter(
 													comment =>
 														comment.loc.start
 															.offset >=
@@ -83,16 +130,27 @@ export default /** @satisfies {NoEmptyBlocksRuleDefinition} */ ({
 												";",
 											);
 										},
-									},
-								]
-							: [
-									{
+									}
+								: {
 										messageId: "removeRule",
 										fix(fixer) {
 											return fixer.remove(parent);
 										},
 									},
-								],
+							{
+								messageId: "addComment",
+								fix(fixer) {
+									if (reportCommentOnlyBlocks) {
+										return null;
+									}
+
+									return fixer.replaceText(
+										node,
+										"{ /* empty */ }",
+									);
+								},
+							},
+						],
 					});
 				}
 			},

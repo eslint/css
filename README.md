@@ -132,8 +132,7 @@ a {
 }
 /* eslint-enable css/no-empty-blocks */
 
-b { /* eslint-disable-line css/no-empty-blocks */
-}
+b {} /* eslint-disable-line css/no-empty-blocks */
 
 /* eslint-disable-next-line css/no-empty-blocks */
 em {
