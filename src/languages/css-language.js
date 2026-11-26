@@ -128,11 +128,11 @@ export class CSSLanguage {
 
 	/**
 	 * Validates the language options.
-	 * @param {CSSLanguageOptions} languageOptions The language options to validate.
+	 * @param {CSSLanguageOptions} [languageOptions] The language options to validate.
 	 * @returns {void}
 	 * @throws {TypeError} When the language options are invalid.
 	 */
-	validateLanguageOptions(languageOptions) {
+	validateLanguageOptions(languageOptions = {}) {
 		if (
 			"tolerant" in languageOptions &&
 			typeof languageOptions.tolerant !== "boolean"
