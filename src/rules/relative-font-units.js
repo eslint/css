@@ -10,7 +10,7 @@
 /**
  * @import { CSSRuleDefinition } from "../types.js"
  * @import { CssNode, CssNodePlain, FunctionNodePlain, Lexer } from "@eslint/css-tree"
- * @typedef {"allowedFontUnits"} RelativeFontUnitsMessageIds
+ * @typedef {"allowedFontUnits" | "allowedUnitsWithAdditionalForMathFunctions"} RelativeFontUnitsMessageIds
  * @typedef {[{allowUnits?: string[], allowUnitsInMathFunctions?: string[]}]} RelativeFontUnitsOptions
  * @typedef {CSSRuleDefinition<{ RuleOptions: RelativeFontUnitsOptions, MessageIds: RelativeFontUnitsMessageIds}>} RelativeFontUnitsRuleDefinition
  */
@@ -126,15 +126,10 @@ function isDisallowedFontSize(value, allowedFontUnits) {
  * math function and the fallback of `env()`. Arguments of other functions are not
  * returned because it is unknown how those functions use them.
  * @param {FunctionNodePlain} func The function node.
- * @param {string[]} allowedUnitsInMathFunctions The relative units that are allowed inside math functions.
  * @param {boolean} isMathFunction Whether the function is a math function.
  * @returns {Array<{ node: CssNodePlain, isMathFunction: boolean }>} The arguments to check.
  */
-function getFontSizeArguments(
-	func,
-	allowedUnitsInMathFunctions,
-	isMathFunction = false,
-) {
+function getFontSizeArguments(func, isMathFunction = false) {
 	const name = func.name.toLowerCase();
 
 	if (mathFunctions.has(name)) {
@@ -192,13 +187,7 @@ function getDisallowedFontSizeNodes(
 	function checkArguments(nodes) {
 		for (const { node, isMathFunction } of nodes) {
 			if (node.type === "Function") {
-				checkArguments(
-					getFontSizeArguments(
-						node,
-						allowedUnitsInMathFunctions,
-						isMathFunction,
-					),
-				);
+				checkArguments(getFontSizeArguments(node, isMathFunction));
 			} else if (node.type === "Parentheses") {
 				checkArguments(
 					node.children.map(child => ({
@@ -222,7 +211,7 @@ function getDisallowedFontSizeNodes(
 		}
 	}
 
-	checkArguments(getFontSizeArguments(value, allowedUnitsInMathFunctions));
+	checkArguments(getFontSizeArguments(value));
 
 	return disallowedNodes;
 }
@@ -275,7 +264,9 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 
 		messages: {
 			allowedFontUnits:
-				"Use only allowed relative units for 'font-size' - {{allowedFontUnits}}{{allowedUnitsInMathFunctionsMessage}}.",
+				"Use only allowed relative units for 'font-size' - {{allowedFontUnits}}.",
+			allowedUnitsWithAdditionalForMathFunctions:
+				"Use only allowed relative units - {{allowedFontUnits}} or additional units in math functions - {{allowedUnitsInMathFunctions}} for 'font-size'.",
 		},
 	},
 
@@ -305,13 +296,14 @@ export default /** @satisfies {RelativeFontUnitsRuleDefinition} */ ({
 			)) {
 				context.report({
 					loc: disallowedNode.loc,
-					messageId: "allowedFontUnits",
+					messageId:
+						isMathFunction && allowedUnitsInMathFunctions.length
+							? "allowedUnitsWithAdditionalForMathFunctions"
+							: "allowedFontUnits",
 					data: {
 						allowedFontUnits: allowedFontUnits.join(", "),
-						allowedUnitsInMathFunctionsMessage:
-							allowedUnitsInMathFunctions.length && isMathFunction
-								? `. Additional units allowed in math functions - ${allowedUnitsInMathFunctions.join(", ")}`
-								: "",
+						allowedUnitsInMathFunctions:
+							allowedUnitsInMathFunctions.join(", "),
 					},
 				});
 			}
