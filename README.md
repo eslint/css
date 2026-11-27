@@ -83,6 +83,7 @@ export default defineConfig([
 | [`no-deprecated-media-types`](./docs/rules/no-deprecated-media-types.md)             | Disallow deprecated media types                       |       no        |
 | [`no-duplicate-imports`](./docs/rules/no-duplicate-imports.md)                       | Disallow duplicate @import rules                      |       yes       |
 | [`no-duplicate-keyframe-selectors`](./docs/rules/no-duplicate-keyframe-selectors.md) | Disallow duplicate selectors within keyframe blocks   |       yes       |
+| [`no-duplicate-selectors`](./docs/rules/no-duplicate-selectors.md)                   | Disallow duplicate selectors                          |       no        |
 | [`no-empty-blocks`](./docs/rules/no-empty-blocks.md)                                 | Disallow empty blocks                                 |       yes       |
 | [`no-important`](./docs/rules/no-important.md)                                       | Disallow !important flags                             |       yes       |
 | [`no-invalid-at-rule-placement`](./docs/rules/no-invalid-at-rule-placement.md)       | Disallow invalid placement of at-rules                |       yes       |
