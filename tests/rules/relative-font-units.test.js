@@ -356,6 +356,147 @@ ruleTester.run("relative-font-units", rule, {
 			code: "a { font-size: clamp(1em, 120%, 2rem); }",
 			options: [{ allowUnits: ["rem", "em", "%"] }],
 		},
+		{
+			code: "a { font-size: clamp(12rem, 2vw, 20rem); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2vh); }",
+			options: [{ allowUnitsInMathFunctions: ["vh"] }],
+		},
+		{
+			code: "a { font-size: min(2rem, 5vi); }",
+			options: [{ allowUnitsInMathFunctions: ["vi"] }],
+		},
+		{
+			code: "a { font-size: max(1rem, 2vb); }",
+			options: [{ allowUnitsInMathFunctions: ["vb"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2vmin, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["vmin"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2vmax, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["vmax"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2svw); }",
+			options: [{ allowUnitsInMathFunctions: ["svw"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2svh); }",
+			options: [{ allowUnitsInMathFunctions: ["svh"] }],
+		},
+		{
+			code: "a { font-size: min(2rem, 5svi); }",
+			options: [{ allowUnitsInMathFunctions: ["svi"] }],
+		},
+		{
+			code: "a { font-size: max(1rem, 2svb); }",
+			options: [{ allowUnitsInMathFunctions: ["svb"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2svmin, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["svmin"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2svmax, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["svmax"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2dvw); }",
+			options: [{ allowUnitsInMathFunctions: ["dvw"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2dvh); }",
+			options: [{ allowUnitsInMathFunctions: ["dvh"] }],
+		},
+		{
+			code: "a { font-size: min(2rem, 5dvi); }",
+			options: [{ allowUnitsInMathFunctions: ["dvi"] }],
+		},
+		{
+			code: "a { font-size: max(1rem, 2dvb); }",
+			options: [{ allowUnitsInMathFunctions: ["dvb"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2dvmin, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["dvmin"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2dvmax, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["dvmax"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2lvw); }",
+			options: [{ allowUnitsInMathFunctions: ["lvw"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2lvh); }",
+			options: [{ allowUnitsInMathFunctions: ["lvh"] }],
+		},
+		{
+			code: "a { font-size: min(2rem, 5lvi); }",
+			options: [{ allowUnitsInMathFunctions: ["lvi"] }],
+		},
+		{
+			code: "a { font-size: max(1rem, 2lvb); }",
+			options: [{ allowUnitsInMathFunctions: ["lvb"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2lvmin, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["lvmin"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2lvmax, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["lvmax"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2cqw); }",
+			options: [{ allowUnitsInMathFunctions: ["cqw"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2cqh); }",
+			options: [{ allowUnitsInMathFunctions: ["cqh"] }],
+		},
+		{
+			code: "a { font-size: abs(2cqi); }",
+			options: [{ allowUnitsInMathFunctions: ["cqi"] }],
+		},
+		{
+			code: "a { font-size: max(1rem, 2cqb); }",
+			options: [{ allowUnitsInMathFunctions: ["cqb"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2cqmin, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["cqmin"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2cqmax, 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["cqmax"] }],
+		},
+		{
+			code: "a { font-size: env(safe-area-inset-top, calc(1rem + 2vw)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+		},
+		{
+			code: "a { font-size: calc((2vw + 1rem) * 2); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+		},
+		{
+			code: "a { font-size: calc(1rem + env(safe-area-inset-top, 2vw)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+		},
+		{
+			code: "a { font-size: clamp(1rem, 2cqi, 2em); }",
+			options: [
+				{
+					allowUnits: ["rem", "em"],
+					allowUnitsInMathFunctions: ["cqi"],
+				},
+			],
+		},
 	],
 	invalid: [
 		{
@@ -864,7 +1005,9 @@ ruleTester.run("relative-font-units", rule, {
 					column: 11,
 					endLine: 1,
 					endColumn: 18,
-					data: { allowedFontUnits: "rem" },
+					data: {
+						allowedFontUnits: "rem",
+					},
 				},
 			],
 		},
@@ -2114,6 +2257,296 @@ ruleTester.run("relative-font-units", rule, {
 					endLine: 1,
 					endColumn: 27,
 					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: 2vw }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 16,
+					endLine: 1,
+					endColumn: 19,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font: 2vw Arial; }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 11,
+					endLine: 1,
+					endColumn: 14,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font: clamp(2rem, 2vw, 20px) Arial; }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 32,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: env(safe-area-inset-top, 12vw); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 41,
+					endLine: 1,
+					endColumn: 45,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a { font-size: env(safe-area-inset-top, clamp(1rem, 2cqi, 2rem)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 53,
+					endLine: 1,
+					endColumn: 57,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(1rem + env(safe-area-inset-top, 12px)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 53,
+					endLine: 1,
+					endColumn: 57,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: env(some-font-size, (2vw + 1rem)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedFontUnits",
+					line: 1,
+					column: 37,
+					endLine: 1,
+					endColumn: 40,
+					data: { allowedFontUnits: "rem" },
+				},
+			],
+		},
+		{
+			code: "a {  font-size: env(some-font-size, calc((2vw + 1rem) * 2)); }",
+			options: [{ allowUnitsInMathFunctions: ["vi"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 43,
+					endLine: 1,
+					endColumn: 46,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vi",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(12px + 1rem); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 21,
+					endLine: 1,
+					endColumn: 25,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2vh); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 31,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc((1rem + 2vh) * 2); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 29,
+					endLine: 1,
+					endColumn: 32,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: round(nearest, 2vw, 1px); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 36,
+					endLine: 1,
+					endColumn: 39,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: abs(2cqi); }",
+			options: [{ allowUnitsInMathFunctions: ["cqw", "cqh"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 20,
+					endLine: 1,
+					endColumn: 24,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "cqw, cqh",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(1rem + 2vi); }",
+			options: [{ allowUnitsInMathFunctions: ["vw", "vh"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 28,
+					endLine: 1,
+					endColumn: 31,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw, vh",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: clamp(1rem, calc(1rem + max(2vw, 2cqi)), 2rem); }",
+			options: [{ allowUnitsInMathFunctions: ["vw", "vh"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 49,
+					endLine: 1,
+					endColumn: 53,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw, vh",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: clamp(1em, 2cqi, 2em); }",
+			options: [
+				{ allowUnits: ["em"], allowUnitsInMathFunctions: ["vw"] },
+			],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 27,
+					endLine: 1,
+					endColumn: 31,
+					data: {
+						allowedFontUnits: "em",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+			],
+		},
+		{
+			code: "a { font-size: calc(1rem + 1rem * progress(100vw, 320px, 1200px)); }",
+			options: [{ allowUnitsInMathFunctions: ["vw"] }],
+			errors: [
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 51,
+					endLine: 1,
+					endColumn: 56,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
+				},
+				{
+					messageId: "allowedUnitsWithAdditionalForMathFunctions",
+					line: 1,
+					column: 58,
+					endLine: 1,
+					endColumn: 64,
+					data: {
+						allowedFontUnits: "rem",
+						allowedUnitsInMathFunctions: "vw",
+					},
 				},
 			],
 		},
