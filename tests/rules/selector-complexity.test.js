@@ -190,6 +190,14 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ maxCompounds: 1 }],
 		},
 		{
+			code: "@import 'foo.css';",
+			options: [{ maxCompounds: 0 }],
+		},
+		{
+			code: "@font-face {}",
+			options: [{ maxCompounds: 0 }],
+		},
+		{
 			code: "div > p {}",
 			options: [{ maxCombinators: 1 }],
 		},
@@ -363,10 +371,9 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ maxIds: 0 }],
 			errors: [
 				{
-					messageId: "maxSelectors",
+					messageId: "selectorNotAllowed",
 					data: {
 						selector: "id",
-						limit: 0,
 					},
 					line: 1,
 					column: 1,
@@ -586,7 +593,7 @@ ruleTester.run("selector-complexity", rule, {
 				{
 					messageId: "maxSelectors",
 					data: {
-						selector: "compound",
+						selector: "compounds in",
 						limit: 2,
 					},
 					line: 1,
@@ -603,7 +610,7 @@ ruleTester.run("selector-complexity", rule, {
 				{
 					messageId: "maxSelectors",
 					data: {
-						selector: "compound",
+						selector: "compounds in",
 						limit: 1,
 					},
 					line: 1,
@@ -620,7 +627,7 @@ ruleTester.run("selector-complexity", rule, {
 				{
 					messageId: "maxSelectors",
 					data: {
-						selector: "compound",
+						selector: "compounds in",
 						limit: 1,
 					},
 					line: 1,
@@ -637,7 +644,7 @@ ruleTester.run("selector-complexity", rule, {
 				{
 					messageId: "maxSelectors",
 					data: {
-						selector: "compound",
+						selector: "compounds in",
 						limit: 1,
 					},
 					line: 1,
@@ -654,7 +661,7 @@ ruleTester.run("selector-complexity", rule, {
 				{
 					messageId: "maxSelectors",
 					data: {
-						selector: "compound",
+						selector: "compounds in",
 						limit: 1,
 					},
 					line: 1,
@@ -671,7 +678,7 @@ ruleTester.run("selector-complexity", rule, {
 				{
 					messageId: "maxSelectors",
 					data: {
-						selector: "compound",
+						selector: "compounds in",
 						limit: 1,
 					},
 					line: 1,
@@ -682,15 +689,24 @@ ruleTester.run("selector-complexity", rule, {
 			],
 		},
 		{
+			code: "a {}",
+			options: [{ maxCompounds: 0 }],
+			errors: [
+				{
+					messageId: "allSelectorsDisallowed",
+					line: 1,
+					column: 1,
+					endLine: 1,
+					endColumn: 2,
+				},
+			],
+		},
+		{
 			code: "a:has(> img) {}",
 			options: [{ maxCombinators: 0 }],
 			errors: [
 				{
-					messageId: "maxSelectors",
-					data: {
-						selector: "combinator",
-						limit: 0,
-					},
+					messageId: "combinatorsNotAllowed",
 					line: 1,
 					column: 7,
 					endLine: 1,
@@ -705,7 +721,7 @@ ruleTester.run("selector-complexity", rule, {
 				{
 					messageId: "maxSelectors",
 					data: {
-						selector: "combinator",
+						selector: "combinators in",
 						limit: 1,
 					},
 					line: 1,
@@ -720,11 +736,7 @@ ruleTester.run("selector-complexity", rule, {
 			options: [{ maxCombinators: 0 }],
 			errors: [
 				{
-					messageId: "maxSelectors",
-					data: {
-						selector: "combinator",
-						limit: 0,
-					},
+					messageId: "combinatorsNotAllowed",
 					line: 1,
 					column: 1,
 					endLine: 1,

@@ -250,6 +250,21 @@ a:has(> span img) {
 }
 ```
 
+When `maxCompounds` is set to `0`, all selectors are disallowed. This can be useful if you want to dedicate a stylesheet to imports, custom font definitions, or other purposes.
+
+Examples of **correct** code with `{ maxCompounds: 0 }`:
+
+```css
+/* eslint css/selector-complexity: ["error", { maxCompounds: 0 }] */
+
+@import "foo.css";
+
+@font-face {
+	font-family: "MyFont";
+	src: url("my-font.woff2");
+}
+```
+
 ### `maxCombinators`
 
 Examples of **incorrect** code with `{ maxCombinators: 1 }`:

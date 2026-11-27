@@ -10,7 +10,7 @@
 /**
  * @import { CSSRuleDefinition } from "../types.js"
  * @import { CssNodePlain, PseudoClassSelectorPlain, PseudoElementSelectorPlain } from "@eslint/css-tree"
- * @typedef {"maxSelectors" | "disallowedSelectors"} SelectorComplexityMessageIds
+ * @typedef {"maxSelectors" | "selectorNotAllowed" | "allSelectorsDisallowed" | "combinatorsNotAllowed" | "disallowedSelectors"} SelectorComplexityMessageIds
  * @typedef {[{
  *     maxIds?: number,
  *     maxClasses?: number,
@@ -87,11 +87,24 @@ function isPseudoElementSelector(node) {
  * @returns {void}
  */
 function exceedLimitError(context, selectorLoc, maxValue, selectorType) {
+	let messageOnZeroValue = "selectorNotAllowed";
+	let selectorData = selectorType;
+
+	if (selectorType === "compound") {
+		messageOnZeroValue = "allSelectorsDisallowed";
+		selectorData = "compounds in";
+	} else if (selectorType === "combinator") {
+		messageOnZeroValue = "combinatorsNotAllowed";
+		selectorData = "combinators in";
+	}
+
+	const message = maxValue === 0 ? messageOnZeroValue : "maxSelectors";
+
 	context.report({
 		loc: selectorLoc,
-		messageId: "maxSelectors",
+		messageId: message,
 		data: {
-			selector: selectorType,
+			selector: selectorData,
 			limit: maxValue,
 		},
 	});
@@ -319,6 +332,10 @@ export default /** @satisfies {SelectorComplexityRuleDefinition} */ ({
 		messages: {
 			maxSelectors:
 				"Exceeded maximum {{selector}} selector. Only {{limit}} allowed.",
+			selectorNotAllowed: "'{{selector}}' selector is not allowed.",
+			allSelectorsDisallowed:
+				"Selectors are not allowed because 'maxCompounds' is set to 0.",
+			combinatorsNotAllowed: "Combinators are not allowed.",
 			disallowedSelectors:
 				"'{{selectorName}}' {{selector}} is not allowed.",
 		},
