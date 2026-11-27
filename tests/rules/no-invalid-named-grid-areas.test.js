@@ -65,6 +65,8 @@ ruleTester.run("no-invalid-named-grid-areas", rule, {
 				"b c c" 40px
 				"b c c" 40px / 1fr 1fr 1fr;
 		}`,
+		'.grid { grid-template-areas: ". a ." ". a ."; }',
+		'.grid { grid-template-areas: ". ." "a a" ". ."; }',
 	],
 	invalid: [
 		{
@@ -304,6 +306,142 @@ ruleTester.run("no-invalid-named-grid-areas", rule, {
 					column: 11,
 					endLine: 1,
 					endColumn: 13,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a b a"; }',
+			errors: [
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a . a"; }',
+			errors: [
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 33,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a b a" "a b a"; }',
+			errors: [
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 33,
+				},
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 34,
+					endLine: 1,
+					endColumn: 41,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a b" "c b" "a b"; }',
+			errors: [
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 38,
+					endLine: 1,
+					endColumn: 43,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a b" "c b" "a b" "a b"; }',
+			errors: [
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 38,
+					endLine: 1,
+					endColumn: 43,
+				},
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 44,
+					endLine: 1,
+					endColumn: 49,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a b a" "c d e" "a b a"; }',
+			errors: [
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 26,
+					endLine: 1,
+					endColumn: 33,
+				},
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 42,
+					endLine: 1,
+					endColumn: 49,
+				},
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "b" },
+					line: 1,
+					column: 42,
+					endLine: 1,
+					endColumn: 49,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template: "a b a" 40px / 1fr 1fr 1fr; }',
+			errors: [
+				{
+					messageId: "disconnectedGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 20,
+					endLine: 1,
+					endColumn: 27,
+				},
+			],
+		},
+		{
+			code: 'a { grid-template-areas: "a b a" "a a a"; }',
+			errors: [
+				{
+					messageId: "nonRectangularGridArea",
+					data: { name: "a" },
+					line: 1,
+					column: 34,
+					endLine: 1,
+					endColumn: 41,
 				},
 			],
 		},

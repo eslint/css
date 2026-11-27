@@ -11,6 +11,7 @@ A named grid area is considered invalid if:
 1. The strings in the value have different numbers of cell tokens
 2. No cell tokens are present
 3. Cell tokens with the same name do not form a rectangle
+4. Cell tokens with the same name are disconnected
 
 ## Rule Details
 
@@ -44,6 +45,25 @@ Examples of **incorrect** code:
 		"header header header"
 		"nav main main"
 		"nav . main";
+}
+```
+
+```css
+/* eslint css/no-invalid-named-grid-areas: "error" */
+
+.grid {
+	grid-template-areas: "a b a";
+}
+```
+
+```css
+/* eslint css/no-invalid-named-grid-areas: "error" */
+
+.grid {
+	grid-template-areas:
+		"a b"
+		"c b"
+		"a b";
 }
 ```
 
