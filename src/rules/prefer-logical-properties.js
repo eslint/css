@@ -204,10 +204,10 @@ export default /** @satisfies {PreferLogicalPropertiesRuleDefinition} */ ({
 			"Atrule[name=/^page$/i]:exit"() {
 				insidePage = false;
 			},
-			SupportsDeclaration() {
+			"SupportsDeclaration, Atrule[name=/^import$/i] > AtrulePrelude > Function[name=/^supports$/i]"() {
 				insideSupportsDeclaration = true;
 			},
-			"SupportsDeclaration:exit"() {
+			"SupportsDeclaration, Atrule[name=/^import$/i] > AtrulePrelude > Function[name=/^supports$/i]:exit"() {
 				insideSupportsDeclaration = false;
 			},
 			Declaration(node) {

@@ -40,6 +40,9 @@ ruleTester.run("prefer-logical-properties", rule, {
 		"@supports (height: 100dvh) and (width: 100dvh) {}",
 		"@supports (height: 100dvh) or (width: 100vw) {}",
 		"@supports ((height: 100dvh) and (width: 100vw)) or (not (height: 100vh)) {}",
+		"@import url('x.css') supports(height: 100dvh);",
+		"@IMPORT url('x.css') SUPPORTS(height: 100dvh);",
+		"@import url('x.css') supports((height: 100dvh) and (width: 100vw));",
 		{
 			code: "a { padding-left: 20px; }",
 			options: [
@@ -343,6 +346,32 @@ ruleTester.run("prefer-logical-properties", rule, {
 								replacement: "dvb",
 							},
 							output: "@supports (height: 100dvh) { a { block-size: 100dvb; } }",
+						},
+					],
+				},
+			],
+		},
+		{
+			code: "@import url('x.css') supports(height: 100dvh); a { block-size: 100dvh; }",
+			errors: [
+				{
+					messageId: "notLogicalUnit",
+					line: 1,
+					column: 64,
+					endLine: 1,
+					endColumn: 70,
+					data: {
+						unit: "dvh",
+						replacement: "dvb",
+					},
+					suggestions: [
+						{
+							messageId: "replaceWithLogicalUnit",
+							data: {
+								unit: "dvh",
+								replacement: "dvb",
+							},
+							output: "@import url('x.css') supports(height: 100dvh); a { block-size: 100dvb; }",
 						},
 					],
 				},
